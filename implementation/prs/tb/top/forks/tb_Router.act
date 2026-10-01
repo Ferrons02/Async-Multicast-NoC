@@ -1,0 +1,58 @@
+import "../../../src/top/forks/Router.act";
+import "golden/data.act";
+import "../testbench_support.act";
+
+chan(int<32>) raw_C0i;
+TbPush<32> C0i;
+bool source_enable_C0i;
+chan(int<32>) raw_C1i;
+TbPush<32> C1i;
+bool source_enable_C1i;
+chan(int<32>) raw_C2i;
+TbPush<32> C2i;
+bool source_enable_C2i;
+chan(int<32>) raw_C3i;
+TbPush<32> C3i;
+bool source_enable_C3i;
+chan(int<32>) raw_Pi;
+TbPush<32> Pi;
+bool source_enable_Pi;
+TbPush<32> C0o;
+TbPush<32> C1o;
+TbPush<32> C2o;
+TbPush<32> C3o;
+TbPush<32> Po;
+
+defproc tb_Router()
+{
+    Router dut;
+    dut.reset = reset;
+    sim::source_file<32,0,true,0,false> src_C0i(raw_C0i, source_enable_C0i);
+    RouterInput<0,COUNT_0,LENGTH_0,OFFSET_0> driver_C0i(raw_C0i, C0i);
+    TbPushSender<32> wire_C0i(C0i, dut.C0i.t, dut.C0i.f, dut.C0i.a);
+    sim::source_file<32,1,true,1,false> src_C1i(raw_C1i, source_enable_C1i);
+    RouterInput<1,COUNT_1,LENGTH_1,OFFSET_1> driver_C1i(raw_C1i, C1i);
+    TbPushSender<32> wire_C1i(C1i, dut.C1i.t, dut.C1i.f, dut.C1i.a);
+    sim::source_file<32,2,true,2,false> src_C2i(raw_C2i, source_enable_C2i);
+    RouterInput<2,COUNT_2,LENGTH_2,OFFSET_2> driver_C2i(raw_C2i, C2i);
+    TbPushSender<32> wire_C2i(C2i, dut.C2i.t, dut.C2i.f, dut.C2i.a);
+    sim::source_file<32,3,true,3,false> src_C3i(raw_C3i, source_enable_C3i);
+    RouterInput<3,COUNT_3,LENGTH_3,OFFSET_3> driver_C3i(raw_C3i, C3i);
+    TbPushSender<32> wire_C3i(C3i, dut.C3i.t, dut.C3i.f, dut.C3i.a);
+    sim::source_file<32,4,true,4,false> src_Pi(raw_Pi, source_enable_Pi);
+    RouterInput<4,COUNT_4,LENGTH_4,OFFSET_4> driver_Pi(raw_Pi, Pi);
+    TbPushSender<32> wire_Pi(Pi, dut.Pi.t, dut.Pi.f, dut.Pi.a);
+    TbPushReceiver<32> wire_C0o(C0o, dut.C0o.t, dut.C0o.f, dut.C0o.a);
+    RouterCollector<0> collector_C0o(C0o, complete[0]);
+    TbPushReceiver<32> wire_C1o(C1o, dut.C1o.t, dut.C1o.f, dut.C1o.a);
+    RouterCollector<1> collector_C1o(C1o, complete[1]);
+    TbPushReceiver<32> wire_C2o(C2o, dut.C2o.t, dut.C2o.f, dut.C2o.a);
+    RouterCollector<2> collector_C2o(C2o, complete[2]);
+    TbPushReceiver<32> wire_C3o(C3o, dut.C3o.t, dut.C3o.f, dut.C3o.a);
+    RouterCollector<3> collector_C3o(C3o, complete[3]);
+    TbPushReceiver<32> wire_Po(Po, dut.Po.t, dut.Po.f, dut.Po.a);
+    RouterCollector<4> collector_Po(Po, complete[4]);
+    RouterMatcher checker(complete);
+    TbFailure<6> failure(ready, bad, fail);
+    RouterControl control(ready, stop, done, initialized, stopped);
+}

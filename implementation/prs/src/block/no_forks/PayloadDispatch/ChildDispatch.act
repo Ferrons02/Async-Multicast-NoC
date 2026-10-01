@@ -1,0 +1,37 @@
+import "no_forks/commons/Channels.act";
+
+export defproc ChildDispatch(bool? reset; ActiveDualRail1? C; ActiveDualRail32? I; ActiveDualRail32! O)
+{
+    bool c, j, v, w0, w1;
+
+    // Original non-bubble PRS: RouterDecompositionBubbleReshuffling.pdf, pp. 67–68.
+    prs {
+        C.t[0] -> c+
+        (w0 & I.a & ~O.a) | reset -> c-
+        (C.t[0] & c) | (C.f[0] & ~c) -> C.a+
+        ~C.t[0] & ~C.f[0] -> C.a-
+        I.t[0] & c -> w0+
+        (~c & I.a & ~O.a) | reset -> w0-
+        I.f[0] & c -> w1+
+        (c & I.a & ~O.a) | reset -> w1-
+        j & I.a & (&i:32: (~I.t[i] & ~I.f[i])) -> v+
+        ~I.a | reset -> v-
+        ~v & ~c & (I.t[31] | I.f[31]) -> j+
+        v | reset -> j-
+        j | O.a -> I.a+
+        (~j & (v | (~w0 & ~w1 & ~O.a))) | reset -> I.a-
+        (i:32:
+            c & I.t[i] -> O.t[i]+
+            ~I.t[i] -> O.t[i]-
+            c & I.f[i] -> O.f[i]+
+            ~I.f[i] -> O.f[i]-
+        )
+    }
+
+    // Existing timing constraints translated to original PRS signal names.
+    spec {
+        timing O.a+ : O.a+ < I.a+
+        timing I.a- : I.a- < w0+
+        timing I.a- : I.a- < w1+
+    }
+}

@@ -1,0 +1,207 @@
+import "../../block/testbench_support.act";
+import "sim/sources.act";
+
+/* IDs 0..4 = C0,C1,C2,C3,P; MODE 0=no_forks, 1=forks.
+ * One owner for each issued case, collector flag, and all golden state.
+ * Cumulative hits represent overlapping rounds without synchronizing sources.
+ * At each input packet launch exactly one copy of each associated golden is
+ * authorized. A received packet consumes the oldest eligible exact copy.
+ */
+bool reset, stop, fail, done, ready;
+bool bad[6], initialized[11], stopped[5];
+int<32> rounds, issued[CASES], hits[N], matched_count;
+int<32> tx_count[5], tx_next[5], tx_case[5];
+int<32> rx_count[5], rx_last[5], buffered[5];
+chan(int<MAX_WORDS*32+8>) complete[5];
+Initialize { actions { ready-; (;i:11: initialized[i]-) } }
+
+template<pint ID, NC; pint LENGTH[NC]; pint OFFSET>
+defproc RouterInput(chan?(int<32>) raw; TbPush!<32> X)
+{
+    int<32> value, ci, left, iteration, lengths[NC];
+    bool running;
+    chp {
+        initialized[ID] := false; stopped[ID] := false;
+        tx_count[ID] := 0; tx_next[ID] := 0; tx_case[ID] := OFFSET;
+        (;i:NC: lengths[i] := LENGTH[i]; issued[OFFSET+i] := 0);
+        initialized[ID] := true;
+        [ready & ~reset]; ci := 0; iteration := 1; running := true;
+        *[running ->
+            tx_case[ID] := OFFSET + ci;
+            (;k:NC: [ci = k -> issued[OFFSET+k] := issued[OFFSET+k] + 1 [] else -> skip]);
+            (;k:NC: [ci = k -> left := LENGTH[k] [] else -> skip]);
+            *[left != 0 ->
+                raw?value; tx_next[ID] := value;
+                X!value;
+                tx_count[ID] := tx_count[ID] + 1;
+                [iteration = 1 ->
+                    log("TB_TX source=", ID, " case=", OFFSET+ci,
+                        "%x value=0x", value) [] else -> skip];
+                left := left - 1
+            ];
+            tx_next[ID] := 0; ci := (ci + 1) % NC;
+            [ci = 0 -> iteration := iteration + 1 [] else -> skip];
+            [stop | TRACE_ONLY -> running := false [] else -> skip]
+        ];
+        stopped[ID] := true
+    }
+}
+
+template<pint ID>
+defproc RouterIdle()
+{
+    chp {
+        stopped[ID] := true; tx_count[ID] := 0;
+        tx_next[ID] := 0; tx_case[ID] := 0;
+        initialized[ID] := true
+    }
+}
+
+template<pint ID>
+defproc RouterCollector(TbPush?<32> X; chan!(int<MAX_WORDS*32+8>) S)
+{
+    int<32> value, length;
+    int<MAX_WORDS*32+8> packet;
+    chp {
+        bad[ID] := false; initialized[5+ID] := false;
+        rx_count[ID] := 0; rx_last[ID] := 0; buffered[ID] := 0;
+        length := 0; packet := 0;
+        initialized[5+ID] := true;
+        [ready & ~reset];
+        *[
+            X?value;
+            rx_count[ID] := rx_count[ID] + 1; rx_last[ID] := value;
+            [length = MAX_WORDS ->
+                bad[ID] := true;
+                log("FAILED: buffer overflow mode=", MODE, " port=", ID,
+                    " round=", rounds, "%x packed_sequence=0x", packet,
+                    "%x next=0x", value);
+                assert(false, "output sequence buffer overflow"); [reset]
+            [] else -> skip];
+            packet := packet | (int(value,MAX_WORDS*32+8) << (8+32*length));
+            length := length + 1; buffered[ID] := length;
+            /* Arb2, MltcSel and PayloadDispatch all use bit 0 as packet tail. */
+            [(value & 1) != 0 ->
+                S!(packet | length);
+                length := 0; packet := 0; buffered[ID] := 0
+            [] else -> skip]
+        ]
+    }
+}
+
+defproc RouterMatcher(chan?(int<MAX_WORDS*32+8>) S[5])
+{
+    int<MAX_WORDS*32+8> packet, golden[N];
+    int<32> port, length, match, min_hits, candidate, reason;
+    chp {
+        initialized[10] := false; bad[5] := false;
+        rounds := 0; matched_count := 0;
+        (;k:N:
+            hits[k] := 0; golden[k] := GOLD_LEN[k];
+            (;j:MAX_WORDS:
+                golden[k] := golden[k] |
+                    (int(GOLD_WORDS[k*MAX_WORDS+j],MAX_WORDS*32+8) << (8+32*j)))
+        );
+        initialized[10] := true;
+        [ready & ~reset];
+        *[
+            [| #S[0] -> S[0]?packet; port := 0
+            [] #S[1] -> S[1]?packet; port := 1
+            [] #S[2] -> S[2]?packet; port := 2
+            [] #S[3] -> S[3]?packet; port := 3
+            [] #S[4] -> S[4]?packet; port := 4 |];
+            length := int(packet & 255,32);
+            match := N; min_hits := 0xffffffff; candidate := N; reason := 0;
+            /* Elaborated scans avoid this ACTsim build's dynamic-array limits.
+             * Packed comparison contains every bit and the length; no hashing. */
+            (;k:N:
+                [packet = golden[k] ->
+                    candidate := k;
+                    [GOLD_PORT[k] != port -> reason := 1
+                    [] else ->
+                        [hits[k] >= issued[GOLD_CASE[k]] -> reason := 2
+                        [] else ->
+                            [hits[k] < min_hits -> match := k; min_hits := hits[k]
+                            [] else -> skip]]
+                    ]
+                [] else -> skip]
+            );
+            [match = N ->
+                bad[5] := true;
+                log("FAILED: golden mismatch mode=", MODE, " port=", port,
+                    " round=", rounds, " length=", length, " candidate=", candidate,
+                    " reason=", reason, " (0=content/unknown,1=destination,2=excess)");
+                (;j:MAX_WORDS: [j < length ->
+                    log("RECEIVED[", j, "%x ]=0x", int(packet >> (8+32*j),32))
+                    [] else -> skip]);
+                (;k:N: [candidate = k ->
+                    log("EXPECTED entry=", k, " port=", GOLD_PORT[k],
+                        " case=", GOLD_CASE[k], " hits=", hits[k],
+                        " issued=", issued[GOLD_CASE[k]]);
+                    (;j:MAX_WORDS: [j < GOLD_LEN[k] ->
+                        log("EXPECTED[", j, "%x ]=0x", GOLD_WORDS[k*MAX_WORDS+j])
+                        [] else -> skip])
+                    [] else -> skip]);
+                [candidate = N -> log("No byte-identical candidate; see golden/data.act")
+                    [] else -> skip];
+                assert(false, "unordered output golden mismatch"); [reset]
+            [] else ->
+                (;k:N: [match = k ->
+                    hits[k] := hits[k] + 1;
+                    [hits[k] = 1 ->
+                        log("TB_MATCH entry=", k, " port=", port,
+                            " case=", GOLD_CASE[k], " length=", length)
+                    [] else -> skip]
+                [] else -> skip]);
+                matched_count := matched_count + 1;
+                min_hits := 0xffffffff;
+                (;k:N: [hits[k] < min_hits -> min_hits := hits[k] [] else -> skip]);
+                [min_hits > rounds ->
+                    rounds := min_hits;
+                    [rounds < 4 -> log("TB_ROUND ", rounds) [] else -> skip]
+                [] else -> skip]
+            ]
+        ]
+    }
+}
+
+defproc RouterControl(bool ready, stop, done; bool initialized[11], stopped[5])
+{
+    chp {
+        ready := false; stop := false; done := false;
+        [(&i:11: initialized[i])]; ready := true;
+        [stop]; [(&i:5: stopped[i])];
+        [(&i:N: hits[i] = issued[GOLD_CASE[i]]) & (&i:5: buffered[i] = 0)];
+        [rounds != 0 & ~fail ->
+            done := true; log("PASSED: rounds=", rounds, " matched=", matched_count)
+        [] else -> log("FAILED: incomplete dataset or checker failure")]
+    }
+}
+
+/* Original incomplete/ambiguous packets: observe, without assigning a golden.
+ * These traces are diagnostic evidence and can never be reported as PASS. */
+template<pint ID>
+defproc RouterTrace(TbPush?<32> X)
+{
+    int<32> value;
+    chp {
+        initialized[5+ID] := false; bad[ID] := false;
+        rx_count[ID] := 0; rx_last[ID] := 0; buffered[ID] := 0;
+        initialized[5+ID] := true; [ready & ~reset];
+        *[X?value; rx_count[ID] := rx_count[ID]+1; rx_last[ID] := value;
+          buffered[ID] := buffered[ID]+1;
+          log("TB_TRACE mode=", MODE, " port=", ID, " flit=", value);
+          [(value & 1) != 0 -> log("TB_TRACE_TAIL port=", ID,
+              " length=", buffered[ID]); buffered[ID] := 0 [] else -> skip]]
+    }
+}
+
+defproc RouterTraceControl(bool ready, stop; bool initialized[11])
+{
+    chp {
+        ready := false; stop := false; done := false; fail := false;
+        rounds := 0; matched_count := 0; initialized[10] := true;
+        [(&i:11: initialized[i])]; ready := true;
+        [stop]; log("TRACE_FINISHED: diagnostic only; no external golden asserted")
+    }
+}

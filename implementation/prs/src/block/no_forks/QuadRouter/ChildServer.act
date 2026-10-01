@@ -1,0 +1,159 @@
+import "no_forks/QuadRouter/CounterDec.act";
+import "no_forks/commons/Channels.act";
+
+/* Cnt and R actively request data (PassiveDualRail8? drives req). A is the passive sequencer handshake. */
+export defproc ChildServer(
+    bool? reset;
+    ActiveDualRail4? I;
+    PassiveDualRail8? Cnt;
+    PassiveDualRail8? R;
+    ActiveDualRail4! Od;
+    ActiveDualRail4! Oc;
+    ActiveDualRail8! W;
+    Dataless? A
+)
+{
+    bool b0, b1, b2, b3, j, p0, p1, q0, q1, q2, q3, q4, q5, q6, q7, s;
+
+    CounterDec dec;
+    dec.reset = reset;
+
+    // Original non-bubble PRS: RouterDecompositionBubbleReshuffling.pdf, pp. 48–50.
+    prs {
+        A.req & ~s & ~A.a & ~p0 & ~Oc.a & ~Od.a & ~W.a -> R.req+
+        s | reset -> R.req-
+        R.req & (((R.t[7] & q7) | (R.f[7] & ~q7)) & ((R.t[6] & q6) | (R.f[6] & ~q6)) & ((R.t[5] & q5) | (R.f[5] & ~q5)) & ((R.t[4] & q4) | (R.f[4] & ~q4)) & ((R.t[3] & q3) | (R.f[3] & ~q3)) & ((R.t[2] & q2) | (R.f[2] & ~q2)) & ((R.t[1] & q1) | (R.f[1] & ~q1)) & ((R.t[0] & q0) | (R.f[0] & ~q0))) -> s+
+        (p0 & (((I.t[3] & b3) | (I.f[3] & ~b3)) & ((I.t[2] & b2) | (I.f[2] & ~b2)) & ((I.t[1] & b1) | (I.f[1] & ~b1)) & ((I.t[0] & b0) | (I.f[0] & ~b0)))) | A.a | reset -> s-
+        s & ~A.a & (&i:8: (~R.t[i] & ~R.f[i])) -> j+
+        (~s & (&i:4: (~I.t[i] & ~I.f[i]))) | A.a | reset -> j-
+        j & (q7 | q6 | q5 | q4 | q3 | q2 | q1 | q0) -> p0+
+        (Oc.a & Od.a & W.a) | reset -> p0-
+        ~A.a & j & ~q7 & ~q6 & ~q5 & ~q4 & ~q3 & ~q2 & ~q1 & ~q0 -> p1+
+        A.a | reset -> p1-
+        j & p0 & ~s -> I.a+
+        ~j -> I.a-
+        p1 -> Cnt.req+
+        ~j & ~s & ~p1 -> Cnt.req-
+        W.a & p1 -> A.a+
+        ~W.a & ~A.req -> A.a-
+        R.t[7] -> q7+
+        R.f[7] | reset -> q7-
+        p0 & ~j & ~I.a & q7 -> dec.I.t[7]+
+        ~p0 -> dec.I.t[7]-
+        p0 & ~j & ~I.a & ~q7 -> dec.I.f[7]+
+        ~p0 -> dec.I.f[7]-
+        R.t[6] -> q6+
+        R.f[6] | reset -> q6-
+        p0 & ~j & ~I.a & q6 -> dec.I.t[6]+
+        ~p0 -> dec.I.t[6]-
+        p0 & ~j & ~I.a & ~q6 -> dec.I.f[6]+
+        ~p0 -> dec.I.f[6]-
+        R.t[5] -> q5+
+        R.f[5] | reset -> q5-
+        p0 & ~j & ~I.a & q5 -> dec.I.t[5]+
+        ~p0 -> dec.I.t[5]-
+        p0 & ~j & ~I.a & ~q5 -> dec.I.f[5]+
+        ~p0 -> dec.I.f[5]-
+        R.t[4] -> q4+
+        R.f[4] | reset -> q4-
+        p0 & ~j & ~I.a & q4 -> dec.I.t[4]+
+        ~p0 -> dec.I.t[4]-
+        p0 & ~j & ~I.a & ~q4 -> dec.I.f[4]+
+        ~p0 -> dec.I.f[4]-
+        R.t[3] -> q3+
+        R.f[3] | reset -> q3-
+        p0 & ~j & ~I.a & q3 -> dec.I.t[3]+
+        ~p0 -> dec.I.t[3]-
+        p0 & ~j & ~I.a & ~q3 -> dec.I.f[3]+
+        ~p0 -> dec.I.f[3]-
+        R.t[2] -> q2+
+        R.f[2] | reset -> q2-
+        p0 & ~j & ~I.a & q2 -> dec.I.t[2]+
+        ~p0 -> dec.I.t[2]-
+        p0 & ~j & ~I.a & ~q2 -> dec.I.f[2]+
+        ~p0 -> dec.I.f[2]-
+        R.t[1] -> q1+
+        R.f[1] | reset -> q1-
+        p0 & ~j & ~I.a & q1 -> dec.I.t[1]+
+        ~p0 -> dec.I.t[1]-
+        p0 & ~j & ~I.a & ~q1 -> dec.I.f[1]+
+        ~p0 -> dec.I.f[1]-
+        R.t[0] -> q0+
+        R.f[0] | reset -> q0-
+        p0 & ~j & ~I.a & q0 -> dec.I.t[0]+
+        ~p0 -> dec.I.t[0]-
+        p0 & ~j & ~I.a & ~q0 -> dec.I.f[0]+
+        ~p0 -> dec.I.f[0]-
+        p0 & s & I.t[3] -> b3+
+        (p0 & s & I.f[3]) | reset -> b3-
+        p0 & ~j & ~I.a & b3 -> Oc.t[3]+
+        ~p0 -> Oc.t[3]-
+        p0 & ~j & ~I.a & ~b3 -> Oc.f[3]+
+        ~p0 -> Oc.f[3]-
+        p0 & ~j & ~I.a & b3 -> Od.t[3]+
+        ~p0 -> Od.t[3]-
+        p0 & ~j & ~I.a & ~b3 -> Od.f[3]+
+        ~p0 -> Od.f[3]-
+        p0 & s & I.t[2] -> b2+
+        (p0 & s & I.f[2]) | reset -> b2-
+        p0 & ~j & ~I.a & b2 -> Oc.t[2]+
+        ~p0 -> Oc.t[2]-
+        p0 & ~j & ~I.a & ~b2 -> Oc.f[2]+
+        ~p0 -> Oc.f[2]-
+        p0 & ~j & ~I.a & b2 -> Od.t[2]+
+        ~p0 -> Od.t[2]-
+        p0 & ~j & ~I.a & ~b2 -> Od.f[2]+
+        ~p0 -> Od.f[2]-
+        p0 & s & I.t[1] -> b1+
+        (p0 & s & I.f[1]) | reset -> b1-
+        p0 & ~j & ~I.a & b1 -> Oc.t[1]+
+        ~p0 -> Oc.t[1]-
+        p0 & ~j & ~I.a & ~b1 -> Oc.f[1]+
+        ~p0 -> Oc.f[1]-
+        p0 & ~j & ~I.a & b1 -> Od.t[1]+
+        ~p0 -> Od.t[1]-
+        p0 & ~j & ~I.a & ~b1 -> Od.f[1]+
+        ~p0 -> Od.f[1]-
+        p0 & s & I.t[0] -> b0+
+        (p0 & s & I.f[0]) | reset -> b0-
+        p0 & ~j & ~I.a & b0 -> Oc.t[0]+
+        ~p0 -> Oc.t[0]-
+        p0 & ~j & ~I.a & ~b0 -> Oc.f[0]+
+        ~p0 -> Oc.f[0]-
+        p0 & ~j & ~I.a & b0 -> Od.t[0]+
+        ~p0 -> Od.t[0]-
+        p0 & ~j & ~I.a & ~b0 -> Od.f[0]+
+        ~p0 -> Od.f[0]-
+        (i:8:
+            Cnt.t[i] | dec.O.t[i] => W.t[i]+
+            Cnt.f[i] | dec.O.f[i] => W.f[i]+
+        )
+    }
+
+    // Existing timing constraints translated to original PRS signal names.
+    spec {
+        timing p0+ : p0+ < s-
+        timing j+ : j+ < p0+
+        timing j+ : j+ < p0+
+        timing W.a+ : W.a+ < p0-
+        timing W.a+ : W.a+ < A.a+
+        timing I.a+ : I.a+ < j-
+        timing I.a+ : I.a+ < j-
+        timing R.t[0]+ : R.t[0]+ < s+
+        timing R.t[1]+ : R.t[1]+ < s+
+        timing R.t[2]+ : R.t[2]+ < s+
+        timing R.t[3]+ : R.t[3]+ < s+
+        timing R.t[4]+ : R.t[4]+ < s+
+        timing R.t[5]+ : R.t[5]+ < s+
+        timing R.t[6]+ : R.t[6]+ < s+
+        timing R.t[7]+ : R.t[7]+ < s+
+        timing R.f[0]+ : R.f[0]+ < s+
+        timing R.f[1]+ : R.f[1]+ < s+
+        timing R.f[2]+ : R.f[2]+ < s+
+        timing R.f[3]+ : R.f[3]+ < s+
+        timing R.f[4]+ : R.f[4]+ < s+
+        timing R.f[5]+ : R.f[5]+ < s+
+        timing R.f[6]+ : R.f[6]+ < s+
+        timing R.f[7]+ : R.f[7]+ < s+
+    }
+}

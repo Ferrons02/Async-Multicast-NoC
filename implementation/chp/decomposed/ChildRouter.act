@@ -1,0 +1,70 @@
+template<pint BW; pint SCAST_ADDR_LEN>
+defproc StopcodeSel(
+    chan(int<BW>)? I;
+    chan(int<BW>)! O0,O1
+){
+
+    int<BW> buf;
+
+    chp{
+        *[I?buf; [
+            buf{BW-1 .. BW-SCAST_ADDR_LEN} = 1<<(SCAST_ADDR_LEN-1)-> *[buf{0}=0 -> I?buf; O0!buf]
+            [] buf{BW-1 .. BW-SCAST_ADDR_LEN} != 1<<(SCAST_ADDR_LEN-1)-> *[buf{0}=0 -> O1!buf; I?buf]; O1!buf
+        ]]
+    }
+
+}
+
+template<pint BW; pint SCAST_ADDR_LEN>
+defproc UpdownSel(
+    chan(int<BW>)? I;
+    chan(int<BW>)! O0,O1
+){
+
+    int<BW> buf;
+    int<1> Up;
+
+    chp{
+        *[I?buf; Up:=buf{BW-1}; buf{BW-1 .. BW-SCAST_ADDR_LEN}:=buf{BW-1 .. BW-SCAST_ADDR_LEN}<<1;[
+            Up = 1-> *[buf{0}=0 -> O0!buf; I?buf]; O0!buf
+            [] Up = 0-> *[buf{0}=0 -> O1!buf; I?buf]; O1!buf
+        ]]
+    }
+
+}
+
+template<pint BW; pint SCAST_ADDR_LEN>
+defproc ChildSel(
+    chan(int<BW>)? I;
+    chan(int<BW>)! O0,O1,O2,O3
+){
+
+    int<BW> buf;
+    int<2> ch;
+
+    chp{
+        *[I?buf; ch:=buf{BW-1..BW-2}; buf{BW-1 .. BW-SCAST_ADDR_LEN}:=buf{BW-1 .. BW-SCAST_ADDR_LEN}<<2;[
+            ch = 0-> *[buf{0}=0 -> O0!buf; I?buf]; O0!buf
+            [] ch = 1-> *[buf{0}=0 -> O1!buf; I?buf]; O1!buf
+            [] ch = 2-> *[buf{0}=0 -> O2!buf; I?buf]; O2!buf
+            [] ch = 3-> *[buf{0}=0 -> O3!buf; I?buf]; O3!buf
+        ]]
+    }
+
+}
+
+template<pint BW; pint SCAST_ADDR_LEN>
+defproc ChildRouter(
+  chan(int<BW>)? I;
+  chan(int<BW>)! C0,C1,C2,C3,P,M
+) {
+
+    chan(int<BW>) NoScode,Down; 
+
+    StopcodeSel<BW,SCAST_ADDR_LEN> SS(I,M,NoScode);
+
+    UpdownSel<BW,SCAST_ADDR_LEN> US(NoScode,P,Down);
+
+    ChildSel<BW,SCAST_ADDR_LEN> CS(Down,C0,C1,C2,C3);
+
+}

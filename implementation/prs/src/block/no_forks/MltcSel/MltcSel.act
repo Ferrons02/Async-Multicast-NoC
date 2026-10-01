@@ -1,0 +1,43 @@
+import "no_forks/commons/Channels.act";
+
+/* MltcSel: PRS-only process without testbench managers. */
+
+export defproc MltcSel(bool? reset; ActiveDualRail32? I; ActiveDualRail32! O0, O1)
+{
+    bool p, s, w_0i, ws0, ws1;
+
+    // Original non-bubble PRS: RouterDecompositionBubbleReshuffling.pdf, pp. 29–30.
+    prs {
+        (I.t[1] & s) | reset -> p+
+        I.f[1] & s -> p-
+        s & ((I.t[1] & p) | (I.f[1] & ~p)) -> w_0i+
+        (~s & (O0.a | O1.a)) | reset -> w_0i-
+        ~s & I.f[0] -> ws0+
+        (~s & I.a & ~O0.a & ~O1.a) | reset -> ws0-
+        ~s & I.t[0] -> ws1+
+        (s & I.a & ~O0.a & ~O1.a) | reset -> ws1-
+        (ws1 & I.a & ~O0.a & ~O1.a) | reset -> s+
+        w_0i -> s-
+        (O0.a | O1.a) & (ws1 | ws0) & ~w_0i -> I.a+
+        ~O0.a & ~O1.a & ~ws1 & ~ws0 -> I.a-
+        (i:32:
+            p & ~s & I.t[i] -> O0.t[i]+
+            ~I.t[i] -> O0.t[i]-
+            p & ~s & I.f[i] -> O0.f[i]+
+            ~I.f[i] -> O0.f[i]-
+            ~p & ~s & I.t[i] -> O1.t[i]+
+            ~I.t[i] -> O1.t[i]-
+            ~p & ~s & I.f[i] -> O1.f[i]+
+            ~I.f[i] -> O1.f[i]-
+        )
+    }
+
+    // Existing timing constraints translated to original PRS signal names.
+    spec {
+        timing p+ : p+ < w_0i+
+        timing p- : p- < w_0i+
+        timing O0.a+ : O0.a+ < I.a+
+        timing O1.a+ : O1.a+ < I.a+
+        timing I.a- : I.a- < ws1+
+    }
+}

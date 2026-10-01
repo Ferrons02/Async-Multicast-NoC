@@ -1,0 +1,78 @@
+Module: Counter
+Status: COMPLETE - functional PASS
+Waveform: /home/cad/ferroma/benchmark/analog_sim/pipelined/tb/block/results/Counter/Counter_waves.csv
+Events: /home/cad/ferroma/benchmark/analog_sim/pipelined/tb/block/results/Counter/Counter.log
+Last Complete Sample: 158.830000 ns
+Operating Point: PTM65 TT; VDD=1.1 V; temperature=27 C
+Timing boundary: complete dual-rail validity at VDD/2, linearly interpolated.
+Energy basis: idle-leakage-subtracted physical window (dynamic estimate).
+Simulation campaign: /tmp/ferroma_analog_campaign_yveSTbeK
+
+Leakage Power
+-------------
+16.074745 uW
+No transitions on saved functional nodes; interfaces idle; reset low.
+Idle-only interval: 147.830000 .. 157.830000 ns
+Neighboring idle means (uW): 16.102848, 16.088806, 16.078446, 16.071045
+LEAKAGE_AUDIT {"drift": 0.00046041054501300366, "neighbor_means": [1.6102848218160545e-05, 1.6088805504310174e-05, 1.6078445846539434e-05, 1.6071044864269407e-05], "power": 1.607474535540442e-05, "reason": "No transitions on saved functional nodes; interfaces idle; reset low.", "relative_std": 0.0005805387283828222, "transitions": 0, "voltage_columns_checked": 27, "window": [1.4783000000000002e-07, 1.5783e-07]}
+
+Input Cycle Time
+----------------
+2.410991 ns
+
+Output Cycle Time
+-----------------
+0.416599 ns
+
+Input Cycle Energy
+------------------
+0.663666 pJ
+
+Output Cycle Energy
+-------------------
+0.138876 pJ
+
+Measurement Interpretation
+--------------------------
+Timing values subtract only observed external waits of the measured handshake/batch; overlapping waits are counted once.
+The corrected values are trace-based de-embedding estimates. Concurrent internal work and arbitration cannot be replayed from boundary traces.
+They are not a guarantee of identical timing in an unmeasured zero-delay environment. Raw physical times and all removed intervals follow.
+Energy uses the physical start/end interval, with idle leakage subtracted when available. Switching energy during waits is retained.
+No whole-round average or arbitrary inter-transaction idle time is assigned to a transfer. Energy per Bit uses the requested 32-bit normalization.
+Supply boundary is the entire DUT. Simultaneous output copies share one transaction energy; unrelated concurrent traffic is not separable.
+Overlapping destination windows must not be added: they can integrate the same supply current twice.
+If leakage is N/A, displayed energy/bit is gross observed DUT window energy/32, not isolated dynamic transfer energy.
+Input/output edge slew and loading are those of the saved simulation. N/A means unsupported, unobserved or not yet complete.
+All saved functional nodes are checked for idle transitions; unsaved internal nodes cannot be certified directly from these traces.
+
+Selected Transactions and Reproducible Boundaries
+-------------------------------------------------
+input cycle: input cycle I[0]
+  input valid=100.116000 ns; output/batch end=102.641063 ns; input ack low=N/A
+  raw forward/cycle=2.525063 ns; removed testbench wait=0.114073 ns; corrected=2.410991 ns
+  raw recovery=N/A; removed testbench wait=0.000000 ns; corrected=N/A
+  physical energy window=100.116000 .. 102.641063 ns; gross=0.704256 pJ; leakage-subtracted=0.663666 pJ
+  excluded forward waits (ns): [(101.08222955073619, 101.19630219025629)]
+  excluded recovery waits (ns): []
+  overlapping other input handshakes: none observed
+SELECTED_AUDIT {"ack_low": null, "destinations": [], "dynamic_energy": 6.636664832624851e-13, "energy_end": 1.026410634598042e-07, "energy_per_bit": 2.073957760195266e-14, "energy_start": 1.00116e-07, "forward": 2.4109908202841077e-09, "forward_raw": 2.525063459804207e-09, "forward_tb_wait": 1.1407263952009915e-10, "gross_energy": 7.042562353850742e-13, "input_indices": [0], "input_words": ["0xf"], "inputs": [{"ack_high": 1.0108222955073619e-07, "ack_low": 1.026410634598042e-07, "index": 0, "invalid": 1.0119630219025629e-07, "port": "i", "spacer": 1.0119630219025629e-07, "valid": 1.00116e-07, "word": 15}], "key": "input cycle", "label": "input cycle I[0]", "output_indices": [], "output_valid": 1.026410634598042e-07, "outputs": [], "overlapping_input_handshakes": [], "recovery": null, "recovery_raw": null, "recovery_tb_wait": 0, "removed_forward_intervals": [[1.0108222955073619e-07, 1.0119630219025629e-07]], "removed_recovery_intervals": [], "source": "i", "start": 1.00116e-07}
+output cycle: output cycle Cnt[0]
+  input valid=108.026000 ns; output/batch end=108.554848 ns; input ack low=N/A
+  raw forward/cycle=0.528848 ns; removed testbench wait=0.112249 ns; corrected=0.416599 ns
+  raw recovery=N/A; removed testbench wait=0.000000 ns; corrected=N/A
+  physical energy window=108.026000 .. 108.554848 ns; gross=0.147377 pJ; leakage-subtracted=0.138876 pJ
+  excluded forward waits (ns): [(108.29279091034691, 108.40503998267731)]
+  excluded recovery waits (ns): []
+  overlapping other input handshakes: none observed
+SELECTED_AUDIT {"ack_low": null, "destinations": ["cnt"], "dynamic_energy": 1.38875824465366e-13, "energy_end": 1.0855484796503047e-07, "energy_per_bit": 4.339869514542687e-15, "energy_start": 1.08026e-07, "forward": 4.1659889270006084e-10, "forward_raw": 5.288479650304653e-10, "forward_tb_wait": 1.1224907233040446e-10, "gross_energy": 1.4737692083495454e-13, "input_indices": [0], "input_words": ["0xc"], "inputs": [{"ack_high": null, "ack_low": null, "index": 0, "invalid": null, "port": "cnt", "spacer": null, "valid": 1.08026e-07, "word": 12}], "key": "output cycle", "label": "output cycle Cnt[0]", "output_indices": [["cnt", 0]], "output_valid": 1.0855484796503047e-07, "outputs": [{"ack_high": null, "ack_low": null, "index": 0, "invalid": 1.085547168431449e-07, "port": "cnt", "spacer": 1.0855484796503047e-07, "valid": 1.0829279091034691e-07, "word": 12}], "overlapping_input_handshakes": [], "recovery": null, "recovery_raw": null, "recovery_tb_wait": 0, "removed_forward_intervals": [[1.0829279091034691e-07, 1.0840503998267731e-07]], "removed_recovery_intervals": [], "source": "cnt", "start": 1.08026e-07}
+
+All Matched Physical Transactions (audit, SI units)
+---------------------------------------------------
+TRANSACTION_AUDIT {"ack_low": null, "destinations": [], "dynamic_energy": 6.636664832624851e-13, "energy_end": 1.026410634598042e-07, "energy_per_bit": 2.073957760195266e-14, "energy_start": 1.00116e-07, "forward": 2.4109908202841077e-09, "forward_raw": 2.525063459804207e-09, "forward_tb_wait": 1.1407263952009915e-10, "gross_energy": 7.042562353850742e-13, "input_indices": [0], "input_words": ["0xf"], "inputs": [{"ack_high": 1.0108222955073619e-07, "ack_low": 1.026410634598042e-07, "index": 0, "invalid": 1.0119630219025629e-07, "port": "i", "spacer": 1.0119630219025629e-07, "valid": 1.00116e-07, "word": 15}], "label": "input cycle I[0]", "output_indices": [], "output_valid": 1.026410634598042e-07, "outputs": [], "overlapping_input_handshakes": [], "recovery": null, "recovery_raw": null, "recovery_tb_wait": 0, "removed_forward_intervals": [[1.0108222955073619e-07, 1.0119630219025629e-07]], "removed_recovery_intervals": [], "source": "i", "start": 1.00116e-07}
+TRANSACTION_AUDIT {"ack_low": null, "destinations": [], "dynamic_energy": 6.615155400180388e-13, "energy_end": 1.0527950939278963e-07, "energy_per_bit": 2.0672360625563713e-14, "energy_start": 1.0275503780551458e-07, "forward": 2.4156244952118693e-09, "forward_raw": 2.524471587275052e-09, "forward_tb_wait": 1.0884709206318258e-10, "gross_energy": 7.020957779404389e-13, "input_indices": [1], "input_words": ["0xf"], "inputs": [{"ack_high": 1.0372661355339021e-07, "ack_low": 1.0527950939278963e-07, "index": 1, "invalid": 1.0383546064545339e-07, "port": "i", "spacer": 1.0383546064545339e-07, "valid": 1.0275503780551458e-07, "word": 15}], "label": "input cycle I[1]", "output_indices": [], "output_valid": 1.0527950939278963e-07, "outputs": [], "overlapping_input_handshakes": [], "recovery": null, "recovery_raw": null, "recovery_tb_wait": 0, "removed_forward_intervals": [[1.0372661355339021e-07, 1.0383546064545339e-07]], "removed_recovery_intervals": [], "source": "i", "start": 1.0275503780551458e-07}
+TRANSACTION_AUDIT {"ack_low": null, "destinations": [], "dynamic_energy": 6.585204913614579e-13, "energy_end": 1.0791072545217164e-07, "energy_per_bit": 2.057876535504556e-14, "energy_start": 1.05386e-07, "forward": 2.4180906067648895e-09, "forward_raw": 2.5247254521716374e-09, "forward_tb_wait": 1.0663484540674792e-10, "gross_energy": 6.991048100974253e-13, "input_indices": [2], "input_words": ["0xf"], "inputs": [{"ack_high": 1.0635837302955325e-07, "ack_low": 1.0791072545217164e-07, "index": 2, "invalid": 1.0646500787496e-07, "port": "i", "spacer": 1.0646500787496e-07, "valid": 1.05386e-07, "word": 15}], "label": "input cycle I[2]", "output_indices": [], "output_valid": 1.0791072545217164e-07, "outputs": [], "overlapping_input_handshakes": [], "recovery": null, "recovery_raw": null, "recovery_tb_wait": 0, "removed_forward_intervals": [[1.0635837302955325e-07, 1.0646500787496e-07]], "removed_recovery_intervals": [], "source": "i", "start": 1.05386e-07}
+TRANSACTION_AUDIT {"ack_low": null, "destinations": [], "dynamic_energy": 8.300995141485757e-13, "energy_end": 1.1200250990742946e-07, "energy_per_bit": 2.594060981714299e-14, "energy_start": 1.08666e-07, "forward": 3.2237174542701443e-09, "forward_raw": 3.336509907429458e-09, "forward_tb_wait": 1.1279245315931371e-10, "gross_energy": 8.837330612862882e-13, "input_indices": [3], "input_words": ["0x0"], "inputs": [{"ack_high": 1.1046308275731217e-07, "ack_low": 1.1200250990742946e-07, "index": 3, "invalid": 1.1057587521047148e-07, "port": "i", "spacer": 1.1057587521047148e-07, "valid": 1.08666e-07, "word": 0}], "label": "input cycle I[3]", "output_indices": [], "output_valid": 1.1200250990742946e-07, "outputs": [], "overlapping_input_handshakes": [], "recovery": null, "recovery_raw": null, "recovery_tb_wait": 0, "removed_forward_intervals": [[1.1046308275731217e-07, 1.1057587521047148e-07]], "removed_recovery_intervals": [], "source": "i", "start": 1.08666e-07}
+TRANSACTION_AUDIT {"ack_low": null, "destinations": [], "dynamic_energy": 6.50693617001195e-13, "energy_end": 1.1459256518465261e-07, "energy_per_bit": 2.0334175531287343e-14, "energy_start": 1.12116e-07, "forward": 2.3703856631411624e-09, "forward_raw": 2.4765651846526133e-09, "forward_tb_wait": 1.0617952151145096e-10, "gross_energy": 6.905037717005459e-13, "input_indices": [4], "input_words": ["0x0"], "inputs": [{"ack_high": 1.1305934077274564e-07, "ack_low": 1.1459256518465261e-07, "index": 4, "invalid": 1.1316552029425709e-07, "port": "i", "spacer": 1.1316552029425709e-07, "valid": 1.12116e-07, "word": 0}], "label": "input cycle I[4]", "output_indices": [], "output_valid": 1.1459256518465261e-07, "outputs": [], "overlapping_input_handshakes": [], "recovery": null, "recovery_raw": null, "recovery_tb_wait": 0, "removed_forward_intervals": [[1.1305934077274564e-07, 1.1316552029425709e-07]], "removed_recovery_intervals": [], "source": "i", "start": 1.12116e-07}
+TRANSACTION_AUDIT {"ack_low": null, "destinations": [], "dynamic_energy": 6.509919300354671e-13, "energy_end": 1.1718205029153455e-07, "energy_per_bit": 2.0343497813608346e-14, "energy_start": 1.14706e-07, "forward": 2.3693119151325196e-09, "forward_raw": 2.4760502915345505e-09, "forward_tb_wait": 1.067383764020309e-10, "gross_energy": 6.907938079590599e-13, "input_indices": [5], "input_words": ["0x0"], "inputs": [{"ack_high": 1.1564869763143674e-07, "ack_low": 1.1718205029153455e-07, "index": 5, "invalid": 1.1575543600783877e-07, "port": "i", "spacer": 1.1575543600783877e-07, "valid": 1.14706e-07, "word": 0}], "label": "input cycle I[5]", "output_indices": [], "output_valid": 1.1718205029153455e-07, "outputs": [], "overlapping_input_handshakes": [], "recovery": null, "recovery_raw": null, "recovery_tb_wait": 0, "removed_forward_intervals": [[1.1564869763143674e-07, 1.1575543600783877e-07]], "removed_recovery_intervals": [], "source": "i", "start": 1.14706e-07}
+TRANSACTION_AUDIT {"ack_low": null, "destinations": ["cnt"], "dynamic_energy": 1.38875824465366e-13, "energy_end": 1.0855484796503047e-07, "energy_per_bit": 4.339869514542687e-15, "energy_start": 1.08026e-07, "forward": 4.1659889270006084e-10, "forward_raw": 5.288479650304653e-10, "forward_tb_wait": 1.1224907233040446e-10, "gross_energy": 1.4737692083495454e-13, "input_indices": [0], "input_words": ["0xc"], "inputs": [{"ack_high": null, "ack_low": null, "index": 0, "invalid": null, "port": "cnt", "spacer": null, "valid": 1.08026e-07, "word": 12}], "label": "output cycle Cnt[0]", "output_indices": [["cnt", 0]], "output_valid": 1.0855484796503047e-07, "outputs": [{"ack_high": null, "ack_low": null, "index": 0, "invalid": 1.085547168431449e-07, "port": "cnt", "spacer": 1.0855484796503047e-07, "valid": 1.0829279091034691e-07, "word": 12}], "overlapping_input_handshakes": [], "recovery": null, "recovery_raw": null, "recovery_tb_wait": 0, "removed_forward_intervals": [[1.0829279091034691e-07, 1.0840503998267731e-07]], "removed_recovery_intervals": [], "source": "cnt", "start": 1.08026e-07}
+TRANSACTION_AUDIT {"ack_low": null, "destinations": ["cnt"], "dynamic_energy": 1.3791133734991148e-13, "energy_end": 1.1782378010419738e-07, "energy_per_bit": 4.309729292184734e-15, "energy_start": 1.1729600000000001e-07, "forward": 4.1384368556690044e-10, "forward_raw": 5.277801041973734e-10, "forward_tb_wait": 1.1393641863047294e-10, "gross_energy": 1.4639526812853306e-13, "input_indices": [1], "input_words": ["0x0"], "inputs": [{"ack_high": null, "ack_low": null, "index": 1, "invalid": null, "port": "cnt", "spacer": null, "valid": 1.1729600000000001e-07, "word": 0}], "label": "output cycle Cnt[1]", "output_indices": [["cnt", 1]], "output_valid": 1.1782378010419738e-07, "outputs": [{"ack_high": null, "ack_low": null, "index": 1, "invalid": 1.1782377923676636e-07, "port": "cnt", "spacer": 1.1782378010419738e-07, "valid": 1.1756206358136953e-07, "word": 0}], "overlapping_input_handshakes": [], "recovery": null, "recovery_raw": null, "recovery_tb_wait": 0, "removed_forward_intervals": [[1.1756206358136953e-07, 1.17676e-07]], "removed_recovery_intervals": [], "source": "cnt", "start": 1.1729600000000001e-07}

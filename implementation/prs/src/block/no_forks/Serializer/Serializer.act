@@ -1,0 +1,47 @@
+import "no_forks/Serializer/WordBuffer.act";
+import "no_forks/Serializer/QSlicer.act";
+import "no_forks/Serializer/MergeTree7.act";
+import "no_forks/commons/Seq7.act";
+
+/* Capture the full input word once; transmit bits 31:28 through 7:4. */
+export defproc Serializer(bool? reset; ActiveDualRail32? I; ActiveDualRail4! O)
+{
+    WordBuffer wb;
+    QSlicer qs1, qs2, qs3, qs4, qs5, qs6, qs7;
+    MergeTree7 merge;
+    Seq7 seq;
+
+    wb.reset = reset;
+    wb.I = I;
+    seq.reset = reset;
+    merge.O = O;
+
+    qs1.reset = reset;
+    qs1.I = wb.O1;
+    qs1.O = merge.I0;
+    qs1.A = seq.A6;
+    qs2.reset = reset;
+    qs2.I = wb.O2;
+    qs2.O = merge.I1;
+    qs2.A = seq.A5;
+    qs3.reset = reset;
+    qs3.I = wb.O3;
+    qs3.O = merge.I2;
+    qs3.A = seq.A4;
+    qs4.reset = reset;
+    qs4.I = wb.O4;
+    qs4.O = merge.I3;
+    qs4.A = seq.A3;
+    qs5.reset = reset;
+    qs5.I = wb.O5;
+    qs5.O = merge.I4;
+    qs5.A = seq.A2;
+    qs6.reset = reset;
+    qs6.I = wb.O6;
+    qs6.O = merge.I5;
+    qs6.A = seq.A1;
+    qs7.reset = reset;
+    qs7.I = wb.O7;
+    qs7.O = merge.I6;
+    qs7.A = seq.A0;
+}

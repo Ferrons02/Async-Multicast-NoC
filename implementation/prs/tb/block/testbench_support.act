@@ -1,0 +1,135 @@
+/* Shared support for the block testbenches.
+ *
+ * The DUT channel types in each variant's commons/Channels.act declare physical
+ * pins but have no CHP send/receive methods. This file translates testbench
+ * operations such as I!value and O?value into the four-phase handshakes on
+ * those pins: TbPush uses dual-rail t/f data and acknowledgement a; TbPull
+ * uses dual-rail data and a receiver-initiated req. The methods initialize
+ * environment pins; the adapter processes connect them to the DUT pins.
+ *
+ * TbQuiet checks outputs that should stay silent, TbFailure latches failures,
+ * and TbStageCheck checks QuadRouter outputs in the required stage order.
+ * Sharing these definitions avoids repeating them in every testbench.
+ *
+ * Push receivers use PRS validity/spacer detectors to speed up simulation.
+ * These gates add environment completion delays and affect receiver timing;
+ * they are a modeling choice, not a requirement of the DUT channel types.
+ * No data buffers or DUT logic are added.
+ *
+ * Keep the CHP driver in its own process: this actsim build misallocates state
+ * for a top-level CHP body that also owns the hierarchical PRS DUT.
+ */
+template<pint N>
+defchan TbPush <: chan(int<N>) (bool?! t[N], f[N]; bool!? a; bool?! valid, spacer)
+{
+    methods {
+        send_init { (,i:N: t[i]-, f[i]-) }
+        recv_init { a- }
+        set {
+            [~a];
+            (,i:N: [((self >> i) & 1) != 0 -> t[i]+ [] else -> f[i]+])
+        }
+        send_up { [a] }
+        send_rest { (,i:N: t[i]-, f[i]-); [~a] }
+        get {
+            [valid & ~spacer];
+            self := 0;
+            (;i:N: self := self | (int(t[i]) << i))
+        }
+        recv_up { a+ }
+        recv_rest { [spacer & ~valid]; a- }
+        recv_probe = valid & ~spacer;
+    }
+}
+
+/* Pull channel: the receiver initiates req; the sender supplies data only
+ * after that request and holds it until req falls. */
+template<pint N>
+defchan TbPull <: chan(int<N>) (bool?! t[N], f[N]; bool!? req)
+{
+    methods {
+        send_init { (,i:N: t[i]-, f[i]-) }
+        recv_init { req- }
+        set {
+            [req];
+            (,i:N: [((self >> i) & 1) != 0 -> t[i]+ [] else -> f[i]+])
+        }
+        send_up { [~req] }
+        send_rest { (,i:N: t[i]-, f[i]-) }
+        get {
+            req+;
+            [(&i:N: t[i] | f[i])];
+            self := 0;
+            (;i:N: self := self | (int(t[i]) << i))
+        }
+        recv_up { req- }
+        recv_rest { [(&i:N: ~t[i] & ~f[i])] }
+        send_probe = req;
+    }
+}
+
+template<pint N>
+defproc TbPushSender(TbPush?<N> X; bool t[N], f[N]; bool a) {
+    X.t=t; X.f=f; X.a=a;
+}
+template<pint N>
+defproc TbPushReceiver(TbPush!<N> X; bool t[N], f[N]; bool a) {
+    X.t=t; X.f=f; X.a=a;
+    prs {
+        (&i:N: t[i] | f[i]) => X.valid+
+        (&i:N: ~t[i] & ~f[i]) => X.spacer+
+    }
+}
+
+template<pint N>
+defproc TbPullSender(TbPull?<N> X; bool t[N], f[N], req) {
+    X.t=t; X.f=f; X.req=req;
+}
+template<pint N>
+defproc TbPullReceiver(TbPull!<N> X; bool t[N], f[N], req) {
+    X.t=t; X.f=f; X.req=req;
+}
+
+/* Probe-only monitor: initialize acknowledge low, never consume a token. */
+template<pint N>
+defproc TbQuiet(bool? reset; TbPush?<N> X; bool! bad)
+{
+    chp {
+        bad := false;
+        [~reset]; [#X];
+        bad := true;
+        log("FAILED: unexpected output on a silent channel");
+        assert(false, "silent output became valid")
+    }
+}
+
+/* One writer per failure flag, including when independent monitors fail at
+ * the same instant. A mismatch latches the public fail signal immediately. */
+template<pint N>
+defproc TbFailure(bool? ready; bool? bad[N]; bool! fail)
+{
+    chp { fail := false; [ready]; [(|i:N: bad[i])]; fail := true }
+}
+
+/* A stage sends its golden token on E. Complete that rendezvous only after
+ * receiving and checking X, so parallel E sends form a checked stage barrier.
+ * Each physical output has one persistent receiver, even across nested stages. */
+template<pint N>
+defproc TbStageCheck(bool? reset; TbPush?<N> X; chan?(int<N>) E; bool bad)
+{
+    int<N> expected, actual;
+    chp {
+        [~reset];
+        *[
+            [#E]; expected := E;
+            X?actual;
+            [actual != expected ->
+                bad := true;
+                log("FAILED: expected ", expected, ", got ", actual);
+                assert(actual = expected, "staged output golden mismatch");
+                [reset]
+            [] else -> skip];
+            E?
+        ]
+    }
+}

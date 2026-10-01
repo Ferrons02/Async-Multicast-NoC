@@ -1,0 +1,17 @@
+import "no_forks/commons/Channels.act";
+
+export defproc FullAdder(DualRailBit? a; DualRailBit? b; DualRailBit? c; DualRailBit! d; DualRailBit! s)
+{
+
+    // Original non-bubble PRS: RouterDecompositionBubbleReshuffling.pdf, pp. 57.
+    prs {
+        (a.t & b.t) | ((a.t | b.t) & c.t) -> d.t+
+        ~a.t & ~a.f & ~b.t & ~b.f -> d.t-
+        (a.f & b.f) | ((a.f | b.f) & c.f) -> d.f+
+        ~a.t & ~a.f & ~b.t & ~b.f -> d.f-
+        (c.t & ((a.t & b.t) | (a.f & b.f))) | (c.f & ((a.t & b.f) | (a.f & b.t))) -> s.t+
+        ~c.t & ~c.f -> s.t-
+        (c.f & ((a.t & b.t) | (a.f & b.f))) | (c.t & ((a.t & b.f) | (a.f & b.t))) -> s.f+
+        ~c.t & ~c.f -> s.f-
+    }
+}

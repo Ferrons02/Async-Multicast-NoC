@@ -1,0 +1,49 @@
+import "commons/Channels.act";
+
+/* Literal transcription of the user-supplied bubble-reshuffled PRS.
+ * r=reset; underscored nodes retain the supplied physical polarity.
+ * No artificial fork delays. The original Implementation/PRS sources are
+ * the interface/testbench reference and are not modified by this flow.
+ */
+export defproc InputRouter(bool? reset; ActiveDualRail32? I; ActiveDualRail32! O0, O1)
+{
+    bool p, w1, a;
+    bool _p, _a, _i_a, _r, _w0, _w1, _o0a, _o1a;
+    bool _i_t[32], _i_f[32], _o0t[32], _o0f[32];
+
+    prs {
+        ((I.t[0] & _p) | ((I.t[7] | I.t[6] | I.t[5] | I.t[4]) & p)) -> _w0-
+        (~_p & ~_a) | ~_r -> _w0+
+        ((I.f[0] & _p) | ((I.f[7] & I.f[6] & I.f[5] & I.f[4]) & p)) -> _w1-
+        (~p & ~_a) | ~_r -> _w1+
+        ~_i_a & ~O0.a & ~O1.a & (~_w0 | ~_w1) -> a+
+        _w0 & _w1 -> a-
+        (~_w0 & ~_a) | ~_r -> p+
+        w1 & a -> p-
+        (~_w0 | ~_w1) & (~_o0a | ~_o1a) -> I.a+
+        _w0 & _w1 & _a -> I.a-
+        (k:0..31:
+            p & I.t[k] -> _o0t[k]-
+            ~I.t[k] -> _o0t[k]+
+            p & I.f[k] -> _o0f[k]-
+            ~I.f[k] -> _o0f[k]+
+            ~p & ~_i_t[k] -> O1.t[k]+
+            _i_t[k] -> O1.t[k]-
+            ~p & ~_i_f[k] -> O1.f[k]+
+            _i_f[k] -> O1.f[k]-
+        )
+        ~p => _p+
+        ~a => _a+
+        ~I.a => _i_a+
+        ~reset => _r+
+        ~_w1 => w1+
+        ~O0.a => _o0a+
+        ~O1.a => _o1a+
+        (k:0..31:
+            ~I.t[k] => _i_t[k]+
+            ~I.f[k] => _i_f[k]+
+            ~_o0t[k] => O0.t[k]+
+            ~_o0f[k] => O0.f[k]+
+        )
+    }
+}

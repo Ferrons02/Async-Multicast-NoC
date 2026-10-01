@@ -1,0 +1,13 @@
+WARNING: TbFailure<4>: substituting chp model (requested prs, not found)
+WARNING: PayloadDispatchDriver<>: substituting chp model (requested prs, not found)
+TB_RANDOM_CHOICE off
+TB_WARNING_POLICY resume-on-warn
+TB_STRESS_BEGIN 10000
+TB_STRESS_END 500009992
+[           500010761] <driver>  PASSED: rounds=142448
+TB_FINAL
+done: 1
+fail: 0
+rounds: 142448  (0x22c70)
+TB_X_BEGIN
+TB_X_END

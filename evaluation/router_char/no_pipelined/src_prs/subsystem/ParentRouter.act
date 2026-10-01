@@ -1,0 +1,62 @@
+import "MltcSel/MltcSel.act";
+import "StopcodeSel/StopcodeSel.act";
+import "ChildSel/ChildSel.act";
+import "commons/Merge.act";
+
+/*
+ * Topology and instance names follow src/ParentRouter.png.
+ * Merge<32,true> uses bit 31 for acknowledgement and releases it on ~O.a.
+ * CS.O0..O3 connect to C0..C3 by port name; ChildSel keeps its existing leaf mapping.
+ * ACT_PATH must include src/block. Reset is shared directly, as in the blocks.
+ */
+export defproc ParentRouter(
+    bool? reset;
+    ActiveDualRail32? I;
+    ActiveDualRail32! M, C0, C1, C2, C3
+)
+{
+    MltcSel MUS;
+    StopcodeSel SS;
+    ChildSel CS;
+    Merge<32,true> M2;
+
+    MUS.reset = reset;
+    SS.reset = reset;
+    CS.reset = reset;
+
+    // Input to multicast selector.
+    MUS.I = I;
+
+    // mltc=1: first merge input.
+    M2.I0.t = MUS.O0.t;
+    M2.I0.f = MUS.O0.f;
+    M2.I0.a = MUS.O0.a;
+
+    // mltc=0: test the stopcode.
+    SS.I = MUS.O1;
+
+    // USCODE detected: second merge input.
+    M2.I1.t = SS.O0.t;
+    M2.I1.f = SS.O0.f;
+    M2.I1.a = SS.O0.a;
+
+    // No USCODE: select a child.
+    CS.I = SS.O1;
+
+    // Merged multicast output.
+    M.t = M2.O.t;
+    M.f = M2.O.f;
+    M.a = M2.O.a;
+
+    // Child 0.
+    C0 = CS.O0;
+
+    // Child 1.
+    C1 = CS.O1;
+
+    // Child 2.
+    C2 = CS.O2;
+
+    // Child 3.
+    C3 = CS.O3;
+}

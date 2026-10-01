@@ -1,0 +1,64 @@
+import "commons/Merge.act";
+
+export defproc MergeTree7(
+    ActiveDualRail4? I0;
+    ActiveDualRail4? I1;
+    ActiveDualRail4? I2;
+    ActiveDualRail4? I3;
+    ActiveDualRail4? I4;
+    ActiveDualRail4? I5;
+    ActiveDualRail4? I6;
+    ActiveDualRail4! O
+)
+{
+    Merge<4,true> merge12;
+    merge12.I0.t[0..3] = I0.t[0..3];
+    merge12.I0.f[0..3] = I0.f[0..3];
+    merge12.I0.a = I0.a;
+    merge12.I1.t[0..3] = I1.t[0..3];
+    merge12.I1.f[0..3] = I1.f[0..3];
+    merge12.I1.a = I1.a;
+
+    Merge<4,true> merge34;
+    merge34.I0.t[0..3] = I2.t[0..3];
+    merge34.I0.f[0..3] = I2.f[0..3];
+    merge34.I0.a = I2.a;
+    merge34.I1.t[0..3] = I3.t[0..3];
+    merge34.I1.f[0..3] = I3.f[0..3];
+    merge34.I1.a = I3.a;
+
+    Merge<4,true> merge56;
+    merge56.I0.t[0..3] = I4.t[0..3];
+    merge56.I0.f[0..3] = I4.f[0..3];
+    merge56.I0.a = I4.a;
+    merge56.I1.t[0..3] = I5.t[0..3];
+    merge56.I1.f[0..3] = I5.f[0..3];
+    merge56.I1.a = I5.a;
+
+    Merge<4,true> merge1234;
+    merge1234.I0.t[0..3] = merge12.O.t[0..3];
+    merge1234.I0.f[0..3] = merge12.O.f[0..3];
+    merge1234.I0.a = merge12.O.a;
+    merge1234.I1.t[0..3] = merge34.O.t[0..3];
+    merge1234.I1.f[0..3] = merge34.O.f[0..3];
+    merge1234.I1.a = merge34.O.a;
+
+    Merge<4,true> merge567;
+    merge567.I0.t[0..3] = merge56.O.t[0..3];
+    merge567.I0.f[0..3] = merge56.O.f[0..3];
+    merge567.I0.a = merge56.O.a;
+    merge567.I1.t[0..3] = I6.t[0..3];
+    merge567.I1.f[0..3] = I6.f[0..3];
+    merge567.I1.a = I6.a;
+
+    Merge<4,true> root;
+    root.I0.t[0..3] = merge1234.O.t[0..3];
+    root.I0.f[0..3] = merge1234.O.f[0..3];
+    root.I0.a = merge1234.O.a;
+    root.I1.t[0..3] = merge567.O.t[0..3];
+    root.I1.f[0..3] = merge567.O.f[0..3];
+    root.I1.a = merge567.O.a;
+    root.O.t[0..3] = O.t[0..3];
+    root.O.f[0..3] = O.f[0..3];
+    root.O.a = O.a;
+}

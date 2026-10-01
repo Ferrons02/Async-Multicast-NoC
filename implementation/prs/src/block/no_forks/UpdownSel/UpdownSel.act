@@ -1,0 +1,66 @@
+import "no_forks/commons/Channels.act";
+
+/* Literal translation of the PRS with completion node a (2026-09-14).
+ * r maps to reset; i_a maps to I.a. Negation is expressed directly.
+ * All four bit-13 rails include the user-requested explicit reset.
+ * No extra inverters, wire delays, or timing assumptions. */
+export defproc UpdownSel(bool? reset; ActiveDualRail32? I; ActiveDualRail32! O0, O1)
+{
+    bool p, s, a, w_0i, w_0, w_1;
+
+    prs {
+        ((I.t[31] & s) | reset) -> p+
+        (I.f[31] & s) -> p-
+
+        (s & ((I.t[31] & p) | (I.f[31] & ~p))) -> w_0i+
+        ((~s & (O0.a | O1.a)) | reset) -> w_0i-
+
+        (I.a & (~O0.a & ~O1.a) & ((s & w_0i) | (~s & (w_0 | w_1)))) -> a+
+        (((~w_1 & ~w_0) & ((w_0i & ~s) | ~w_0i)) | reset) -> a-
+
+        (~s & I.f[0]) -> w_0+
+        ((~s & a) | reset) -> w_0-
+        (~s & I.t[0]) -> w_1+
+        ((s & a) | reset) -> w_1-
+
+        ((w_1 & a) | reset) -> s+
+        (w_0i & a) -> s-
+
+        ((O0.a | O1.a) & ((~s & (~w_0i & (w_1 | w_0))) | s)) -> I.a+
+        ((~a & (~w_0 & ~w_1) & ((w_0i & ~s) | ~w_0i)) | reset) -> I.a-
+
+        /* Bits 31..14: shift in phase s, direct copy in phase ~s. */
+        (k:14..31:
+            (p & ((I.t[k] & ~s) | (I.t[k-1] & s & w_0i))) -> O0.t[k]+
+            ((~I.t[k] & ~s) | (~I.t[k-1] & s)) -> O0.t[k]-
+            (p & ((I.f[k] & ~s) | (I.f[k-1] & s & w_0i))) -> O0.f[k]+
+            ((~I.f[k] & ~s) | (~I.f[k-1] & s)) -> O0.f[k]-
+            (~p & ((I.t[k] & ~s) | (I.t[k-1] & s & w_0i))) -> O1.t[k]+
+            ((~I.t[k] & ~s) | (~I.t[k-1] & s)) -> O1.t[k]-
+            (~p & ((I.f[k] & ~s) | (I.f[k-1] & s & w_0i))) -> O1.f[k]+
+            ((~I.f[k] & ~s) | (~I.f[k-1] & s)) -> O1.f[k]-
+        )
+
+        /* Bit 13: inserted zero during the shifted word. */
+        (p & I.t[13] & ~s) -> O0.t[13]+
+        ((~I.t[13] & ~s) | reset) -> O0.t[13]-
+        (p & ((I.f[13] & ~s) | (~I.a & w_0i & s))) -> O0.f[13]+
+        ((~I.f[13] & ~s) | (I.a & s) | reset) -> O0.f[13]-
+        (~p & I.t[13] & ~s) -> O1.t[13]+
+        ((~I.t[13] & ~s) | reset) -> O1.t[13]-
+        (~p & ((I.f[13] & ~s) | (~I.a & w_0i & s))) -> O1.f[13]+
+        ((~I.f[13] & ~s) | (I.a & s) | reset) -> O1.f[13]-
+
+        /* Bits 12..0: direct copy, waiting for w_0i in phase s. */
+        (k:0..12:
+            (p & I.t[k] & (~s | (s & w_0i))) -> O0.t[k]+
+            ~I.t[k] -> O0.t[k]-
+            (p & I.f[k] & (~s | (s & w_0i))) -> O0.f[k]+
+            ~I.f[k] -> O0.f[k]-
+            (~p & I.t[k] & (~s | (s & w_0i))) -> O1.t[k]+
+            ~I.t[k] -> O1.t[k]-
+            (~p & I.f[k] & (~s | (s & w_0i))) -> O1.f[k]+
+            ~I.f[k] -> O1.f[k]-
+        )
+    }
+}

@@ -1,0 +1,250 @@
+import "../../../src/block/no_forks/QuadRouter/QuadRouter.act";
+import "../testbench_support.act";
+
+/* Cnt0..Cnt3 are DUT-initiated pull reads; service their requests
+ * concurrently. Each numbered output stage joins before the next starts.
+ * E_* sends finish only after the corresponding TbStageCheck receives and
+ * checks its output. Persistent receivers avoid an actsim stall when one
+ * fragmented channel is received from different nested CHP thread slots. */
+/* Global controls avoid an actsim state-offset bug for parent-owned CHP
+ * Boolean ports beside the PRS hierarchy. The command file uses these names. */
+bool reset, stop, fail, done, ready;
+int<32> rounds;
+Initialize { actions { ready- } }
+bool bad[9];
+TbPush<4> I;
+TbPull<8> Cnt0;
+TbPull<8> Cnt1;
+TbPull<8> Cnt2;
+TbPull<8> Cnt3;
+TbPush<4> OC0;
+TbPush<4> OC1;
+TbPush<4> OC2;
+TbPush<4> OC3;
+TbPush<4> OD0;
+TbPush<4> OD1;
+TbPush<4> OD2;
+TbPush<4> OD3;
+TbPush<4> Ch;
+
+chan(int<4>) E_OC0;
+chan(int<4>) E_OC1;
+chan(int<4>) E_OC2;
+chan(int<4>) E_OC3;
+chan(int<4>) E_OD0;
+chan(int<4>) E_OD1;
+chan(int<4>) E_OD2;
+chan(int<4>) E_OD3;
+chan(int<4>) E_Ch;
+
+defproc QuadRouterDriver(
+    bool bad_OC0, bad_OC1, bad_OC2, bad_OC3, bad_OD0, bad_OD1, bad_OD2, bad_OD3, bad_Ch;
+    TbPush!<4> I;
+    TbPull!<8> Cnt0;
+    TbPull!<8> Cnt1;
+    TbPull!<8> Cnt2;
+    TbPull!<8> Cnt3;
+    chan!(int<4>) E_OC0;
+    chan!(int<4>) E_OC1;
+    chan!(int<4>) E_OC2;
+    chan!(int<4>) E_OC3;
+    chan!(int<4>) E_OD0;
+    chan!(int<4>) E_OD1;
+    chan!(int<4>) E_OD2;
+    chan!(int<4>) E_OD3;
+    chan!(int<4>) E_Ch
+)
+{
+    /* ACT disallows nonlocal ports directly in loop guards. Sample the
+     * external stop/fail flags at each completed sequence boundary. */
+    bool running;
+    chp {
+        ready := false; stop := false; done := false; rounds := 0;
+        bad_OC0 := false; bad_OC1 := false; bad_OC2 := false; bad_OC3 := false; bad_OD0 := false; bad_OD1 := false; bad_OD2 := false; bad_OD3 := false; bad_Ch := false;
+        ready := true; running := true;
+        [~reset];
+        *[running ->
+            ((
+            I!6;
+            I!0xF;
+            I!0xF;
+            I!0xF;
+            I!0xF;
+            I!0xF;
+            I!0xF;
+            I!0xF;
+            I!0xF;
+            I!0xF;
+            I!0xF;
+            I!0;
+            I!0;
+            I!0;
+            I!9;
+            I!0xF;
+            I!0xF;
+            I!0xF;
+            I!0xF;
+            I!0xF;
+            I!0xF;
+            I!0xF;
+            I!0xF;
+            I!0xF;
+            I!0xF;
+            I!0
+            ),(
+            Cnt0!0;
+            Cnt0!0;
+            Cnt0!4;
+            Cnt0!16
+            ),(
+            Cnt1!4;
+            Cnt1!16;
+            Cnt1!0;
+            Cnt1!0
+            ),(
+            Cnt2!4;
+            Cnt2!16;
+            Cnt2!0;
+            Cnt2!0
+            ),(
+            Cnt3!0;
+            Cnt3!0;
+            Cnt3!4;
+            Cnt3!16
+            ),(
+            /* Ordered stage 1. */
+            E_Ch!6;
+            /* Ordered stage 2. */
+            ((
+            E_OC1!0xF
+            ),(
+            E_OD1!0xF
+            ));
+            /* Ordered stage 3. */
+            ((
+            E_OC2!0xF
+            ),(
+            E_OD2!0xF
+            ));
+            /* Ordered stage 4. */
+            ((
+            (;i:4:
+            E_OC1!0xF
+            )
+            ),(
+            (;i:4:
+            E_OD1!0xF
+            )
+            ));
+            /* Ordered stage 5. */
+            ((
+            (;i:4:
+            E_OC2!0xF
+            )
+            ),(
+            (;i:4:
+            E_OD2!0xF
+            )
+            ));
+            /* Ordered stage 6. */
+            ((
+            (;i:3:
+            E_OD0!0
+            )
+            ),(
+            (;i:3:
+            E_OD1!0
+            )
+            ),(
+            (;i:3:
+            E_OD2!0
+            )
+            ),(
+            (;i:3:
+            E_OD3!0
+            )
+            ));
+            /* Ordered stage 7. */
+            E_Ch!9;
+            /* Ordered stage 8. */
+            ((
+            E_OC0!0xF
+            ),(
+            E_OD0!0xF
+            ));
+            /* Ordered stage 9. */
+            ((
+            E_OC3!0xF
+            ),(
+            E_OD3!0xF
+            ));
+            /* Ordered stage 10. */
+            ((
+            (;i:4:
+            E_OC0!0xF
+            )
+            ),(
+            (;i:4:
+            E_OD0!0xF
+            )
+            ));
+            /* Ordered stage 11. */
+            ((
+            (;i:4:
+            E_OC3!0xF
+            )
+            ),(
+            (;i:4:
+            E_OD3!0xF
+            )
+            ));
+            /* Ordered stage 12. */
+            ((
+            E_OD0!0
+            ),(
+            E_OD1!0
+            ),(
+            E_OD2!0
+            ),(
+            E_OD3!0
+            ))
+            ));
+            rounds := rounds + 1;
+            [stop | fail -> running := false [] else -> skip]
+        ];
+        done := true;
+        [fail -> log("FAILED")
+        [] else -> log("PASSED: rounds=", rounds)]
+    }
+}
+
+defproc tb_QuadRouter()
+{
+    QuadRouter dut;
+    dut.reset = reset;
+    TbPushSender<4> wire_I(I, dut.I.t, dut.I.f, dut.I.a);
+    TbPullSender<8> wire_Cnt0(Cnt0, dut.Cnt0.t, dut.Cnt0.f, dut.Cnt0.req);
+    TbPullSender<8> wire_Cnt1(Cnt1, dut.Cnt1.t, dut.Cnt1.f, dut.Cnt1.req);
+    TbPullSender<8> wire_Cnt2(Cnt2, dut.Cnt2.t, dut.Cnt2.f, dut.Cnt2.req);
+    TbPullSender<8> wire_Cnt3(Cnt3, dut.Cnt3.t, dut.Cnt3.f, dut.Cnt3.req);
+    TbPushReceiver<4> wire_OC0(OC0, dut.OC0.t, dut.OC0.f, dut.OC0.a);
+    TbPushReceiver<4> wire_OC1(OC1, dut.OC1.t, dut.OC1.f, dut.OC1.a);
+    TbPushReceiver<4> wire_OC2(OC2, dut.OC2.t, dut.OC2.f, dut.OC2.a);
+    TbPushReceiver<4> wire_OC3(OC3, dut.OC3.t, dut.OC3.f, dut.OC3.a);
+    TbPushReceiver<4> wire_OD0(OD0, dut.OD0.t, dut.OD0.f, dut.OD0.a);
+    TbPushReceiver<4> wire_OD1(OD1, dut.OD1.t, dut.OD1.f, dut.OD1.a);
+    TbPushReceiver<4> wire_OD2(OD2, dut.OD2.t, dut.OD2.f, dut.OD2.a);
+    TbPushReceiver<4> wire_OD3(OD3, dut.OD3.t, dut.OD3.f, dut.OD3.a);
+    TbPushReceiver<4> wire_Ch(Ch, dut.Ch.t, dut.Ch.f, dut.Ch.a);
+    TbFailure<9> failure(ready, bad, fail);
+    TbStageCheck<4> check_OC0(reset, OC0, E_OC0, bad[0]);
+    TbStageCheck<4> check_OC1(reset, OC1, E_OC1, bad[1]);
+    TbStageCheck<4> check_OC2(reset, OC2, E_OC2, bad[2]);
+    TbStageCheck<4> check_OC3(reset, OC3, E_OC3, bad[3]);
+    TbStageCheck<4> check_OD0(reset, OD0, E_OD0, bad[4]);
+    TbStageCheck<4> check_OD1(reset, OD1, E_OD1, bad[5]);
+    TbStageCheck<4> check_OD2(reset, OD2, E_OD2, bad[6]);
+    TbStageCheck<4> check_OD3(reset, OD3, E_OD3, bad[7]);
+    TbStageCheck<4> check_Ch(reset, Ch, E_Ch, bad[8]);
+    QuadRouterDriver driver(bad[0], bad[1], bad[2], bad[3], bad[4], bad[5], bad[6], bad[7], bad[8], I, Cnt0, Cnt1, Cnt2, Cnt3, E_OC0, E_OC1, E_OC2, E_OC3, E_OD0, E_OD1, E_OD2, E_OD3, E_Ch);
+}

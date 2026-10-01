@@ -1,0 +1,66 @@
+import "commons/Channels.act";
+
+// User-supplied ChildDispatch PRS with a four-bit-leaf completion tree.
+// C.t/f[0] = c_ht/c_hf. The supplied tree root is called completion here:
+// c remains the independent child-selection state, also named c in the PRS.
+// Underscored variables retain the supplied complemented physical polarity.
+export defproc ChildDispatch(bool? reset; ActiveDualRail1? C;
+    ActiveDualRail32? I; ActiveDualRail32! O)
+{
+    bool c, v, w0, w1;
+    bool _m[8], d[4], _e[2], completion;
+    bool _cht, _c, _oa, _ia, _v, _r, _w0, _w1, _it0, _if0, _cha, _j;
+    bool _ot[32], _of[32];
+    prs {
+        (k:8:
+            (&n:4: (I.t[4*k+3-n] | I.f[4*k+3-n])) -> _m[k]-
+            (&n:4: (~I.t[4*k+3-n] & ~I.f[4*k+3-n])) -> _m[k]+
+        )
+        (k:4:
+            ~_m[2*k+1] & ~_m[2*k] -> d[k]+
+            _m[2*k+1] & _m[2*k] -> d[k]-
+        )
+        (k:2:
+            d[2*k+1] & d[2*k] -> _e[k]-
+            ~d[2*k+1] & ~d[2*k] -> _e[k]+
+        )
+        ~_e[1] & ~_e[0] -> completion+
+        _e[1] & _e[0] -> completion-
+        ~_j & ~_ia & ~completion -> v+
+        _ia | reset -> v-
+
+        ~_cht -> c+
+        (w0 & I.a & _oa) | reset -> c-
+        (C.t[0] & c) | (C.f[0] & _c) -> _cha-
+        ~C.t[0] & ~C.f[0] -> _cha+
+        ~_it0 & ~_c -> w0+
+        (_c & I.a & _oa) | reset -> w0-
+        ~_if0 & ~_c -> w1+
+        (c & I.a & _oa) | reset -> w1-
+        _v & _c & (I.t[31] | I.f[31]) -> _j-
+        ~_v | ~_r -> _j+
+        ~_j | ~_oa -> I.a+
+        (_j & (v | (_w0 & _w1 & _oa))) | reset -> I.a-
+        (k:32:
+            c & I.t[k] -> _ot[k]-
+            ~I.t[k] -> _ot[k]+
+            c & I.f[k] -> _of[k]-
+            ~I.f[k] -> _of[k]+
+        )
+        ~C.t[0] => _cht+
+        ~c => _c+
+        ~O.a => _oa+
+        ~I.a => _ia+
+        ~v => _v+
+        ~reset => _r+
+        ~w0 => _w0+
+        ~w1 => _w1+
+        ~I.t[0] => _it0+
+        ~I.f[0] => _if0+
+        ~_cha => C.a+
+        (k:32:
+            ~_ot[k] => O.t[k]+
+            ~_of[k] => O.f[k]+
+        )
+    }
+}

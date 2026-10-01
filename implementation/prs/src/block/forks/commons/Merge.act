@@ -1,0 +1,52 @@
+import "forks/commons/Channels.act";
+
+/* N is the data width. WAIT_SPACER is retained for interface/sizing
+ * compatibility; both values release acknowledge on ~O.a. */
+export template<pint N = 4; pbool WAIT_SPACER = true>
+defproc Merge(ActiveDualRail?<N> I0; ActiveDualRail?<N> I1; ActiveDualRail!<N> O)
+{
+    bool fd_I0_f_N_1__I0_a;
+    bool fd_I0_t_N_1__I0_a;
+    bool fd_I1_f_N_1__I1_a;
+    bool fd_I1_t_N_1__I1_a;
+    bool fd_O_a__I0_a;
+    bool fd_O_a__I1_a;
+    bool fd_I0_f_i__O_f_i[N];
+    bool fd_I0_t_i__O_t_i[N];
+    bool fd_I1_f_i__O_f_i[N];
+    bool fd_I1_t_i__O_t_i[N];
+
+    // Original PRS, PDF p.40; WAIT_SPACER remains an interface parameter; both values release on ~O.a.
+    prs {
+        fd_O_a__I0_a & (fd_I0_t_N_1__I0_a | fd_I0_f_N_1__I0_a) -> I0.a+
+        ~fd_O_a__I0_a -> I0.a-
+        fd_O_a__I1_a & (fd_I1_t_N_1__I1_a | fd_I1_f_N_1__I1_a) -> I1.a+
+        ~fd_O_a__I1_a -> I1.a-
+        (i:N:
+            fd_I0_t_i__O_t_i[i] | fd_I1_t_i__O_t_i[i] => O.t[i]+
+            fd_I0_f_i__O_f_i[i] | fd_I1_f_i__O_f_i[i] => O.f[i]+
+        )
+        I0.f[N-1] -> fd_I0_f_N_1__I0_a+
+        ~I0.f[N-1] -> fd_I0_f_N_1__I0_a-
+        I0.t[N-1] -> fd_I0_t_N_1__I0_a+
+        ~I0.t[N-1] -> fd_I0_t_N_1__I0_a-
+        I1.f[N-1] -> fd_I1_f_N_1__I1_a+
+        ~I1.f[N-1] -> fd_I1_f_N_1__I1_a-
+        I1.t[N-1] -> fd_I1_t_N_1__I1_a+
+        ~I1.t[N-1] -> fd_I1_t_N_1__I1_a-
+        O.a -> fd_O_a__I0_a+
+        ~O.a -> fd_O_a__I0_a-
+        O.a -> fd_O_a__I1_a+
+        ~O.a -> fd_O_a__I1_a-
+        (i:N:
+            I0.f[i] -> fd_I0_f_i__O_f_i[i]+
+            ~I0.f[i] -> fd_I0_f_i__O_f_i[i]-
+            I0.t[i] -> fd_I0_t_i__O_t_i[i]+
+            ~I0.t[i] -> fd_I0_t_i__O_t_i[i]-
+            I1.f[i] -> fd_I1_f_i__O_f_i[i]+
+            ~I1.f[i] -> fd_I1_f_i__O_f_i[i]-
+            I1.t[i] -> fd_I1_t_i__O_t_i[i]+
+            ~I1.t[i] -> fd_I1_t_i__O_t_i[i]-
+        )
+    }
+}

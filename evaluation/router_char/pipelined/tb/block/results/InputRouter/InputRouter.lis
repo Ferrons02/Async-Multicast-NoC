@@ -1,0 +1,1049 @@
+ ****** PrimeSim HSPICE -- R-2020.12-SP1 linux64 (Apr 10 2021 6983340) ******
+  Copyright (c) 1986 - 2026 by Synopsys, Inc. All Rights Reserved.
+  This software and the associated documentation are proprietary
+  to Synopsys, Inc. This software may only be used in accordance
+  with the terms and conditions of a written license agreement with
+  Synopsys, Inc. All other use, reproduction, or distribution of
+  this software is strictly prohibited.
+  Input File: tb/block/InputRouter/InputRouter_tb.sp                            
+  Command line options: /cad/synopsys/hspice/R-2020.12-SP1/hspice/linux64/hspice -mt 1 -i tb/block/InputRouter/InputRouter_tb.sp -o /tmp/ferroma_analog_campaign_XQRtrlCf/results/block/InputRouter/InputRouter
+  Start time: Thu Sep 17 22:54:36 2026
+ lic:  
+ lic: FLEXlm: SDK_12.9.5 
+ lic: USER:   ferroma              HOSTNAME: caddy10.stanford.edu 
+ lic: HOSTID: 9611907472f9         PID:      3295037 
+ lic: Using FLEXlm license file: 
+ lic: 27000@cadlic0.stanford.edu 
+ lic: Checkout 1 hspice 
+ lic: License/Maintenance for hspice will expire on 06-nov-2026/2025.06 
+ lic: 6(in_use)/200(total) FLOATING license(s) on SERVER 27000@cadlic0.stanford.edu 
+ lic:   
+ **info** *pvaI* current limit stacksize=8388608, set new limit stacksize=62914560
+
+ **info** *pvaI* Module (inputrouter_environment): 198 unexpanded port, 22 init, 466 behav, 68 contrib, 202/365 expr(s)
+
+ **info** *pvaI*        Has DIS(AE TR ST SB), 0/0 afCount, 0 MT, dlg, IO(0/1/1/1)
+
+ **info** *pvaI*        0 gmdIsThreadSafe (AE TR ST SB)
+
+ **info** *pvaI*        0 const-G and 0 const-C, Has switchBranch, 0 bypassOpt, 0 bus2scalar, 0 vwb
+
+ **info** *pvaI*        set_va_exp = 80 [80.0, 704.0] set by default
+
+ **info** *pvaI*        generated 68 flow node(s) during compilation.
+
+ **info** *pvaI* #### Total 3498 line-size(s), 202/365 expr(s), 68 contr(s), 22 init(s), 466 behav(s), 198 port(s)
+
+ Loading pVA library /tmp/ferroma_analog_campaign_XQRtrlCf/results/block/InputRouter/InputRouter.pvadir/pvaRTL_linux64.so...
+1****** PrimeSim HSPICE -- R-2020.12-SP1 linux64 (Apr 10 2021 6983340) ******
+ ******  
+ inputrouter bubble reshuffled: existing actsim sequences, four-phase feedback
+
+ ****** circuit name directory
+ circuit number to circuit name directory
+   number circuitname                     definition         multiplier
+        0 main circuit
+        1 xdut.                           inputrouter        1.00 
+        2 xenv.                           inputrouter_environment(va)
+                                                                 1.00 
+ ******  
+ inputrouter bubble reshuffled: existing actsim sequences, four-phase feedback
+
+ ****** mos   model parameters tnom=  25.000 temp=  25.000 ******
+ Model file: /cad/cktbook/tech/ptm065/spice/65nm_NMOS_bulk_tt.pm
+ Model line:            3
+ Model Name: nmos  
+ BSIM4 Model (Level 54)
+    MOBMOD = 0
+    BINUNIT = 1
+    PARAMCHK = 1
+    CAPMOD = 2
+    DIOMOD = 1
+    RDSMOD = 0
+    TRNQSMOD = 0
+    ACNQSMOD = 0
+    RBODYMOD = 1
+    RGATEMOD = 1
+    PERMOD = 1
+    GEOMOD = 0
+    RGEOMOD = 0
+    FNOIMOD = 1
+    TNOIMOD = 0
+    IGCMOD = 1
+    IGBMOD = 1
+    STIMOD = 0
+    VERSION =      4 
+    TOXREF = 1.85e-09 
+    TOXE = 1.85e-09 
+    TOXP = 1.2e-09 
+    TOXM = 1.85e-09 
+    DTOX = 6.5e-10 
+    EPSROX =    3.9 
+    CDSC =      0 
+    CDSCB =      0 
+    CDSCD =      0 
+    CIT =      0 
+    NFACTOR =    1.9 
+    XJ = 1.96e-08 
+    VSAT = 1.243e+05 
+    A0 =      1 
+    AGS =  1e-20 
+    A1 =      0 
+    A2 =      1 
+    AT = 3.3e+04 
+    KETA =   0.04 
+    NSUB =  6e+16 
+    NDEP = 2.6e+18 
+    NSD =  2e+20 
+    NGATE =  2e+20 
+    GAMMA1 =      0 
+    GAMMA2 =      0 
+    VBX =      0 
+    VBM =     -3 
+    XT = 1.55e-07 
+    K1 =  0.497 
+    KT1 =  -0.11 
+    KT1L =      0 
+    KT2 =  0.022 
+    K2 =   0.01 
+    K3 =      0 
+    K3B =      0 
+    LPE0 =      0 
+    LPEB =      0 
+    DVTP0 =  1e-09 
+    DVTP1 =    0.1 
+    W0 = 2.5e-06 
+    DVT0 =      1 
+    DVT1 =      2 
+    DVT2 = -0.032 
+    DVT0W =      0 
+    DVT1W =      0 
+    DVT2W =      0 
+    DROUT =    0.5 
+    DSUB =    0.1 
+    VTH0 =  0.429 
+    EU =   1.67 
+    UA =  6e-10 
+    UA1 = 4.31e-09 
+    UB = 1.2e-18 
+    UB1 = 7.61e-18 
+    UC =      0 
+    UC1 = -5.6e-11 
+    U0 = 0.04861 
+    UTE =   -1.5 
+    VOFF =  -0.13 
+    VOFFL =      0 
+    MINV =   0.05 
+    FPROUT =    0.2 
+    PDITS =   0.08 
+    PDITSD =   0.23 
+    PDITSL = 2.3e+06 
+    DELTA =   0.01 
+    RDSW =    165 
+    RDSWMIN =      0 
+    RDWMIN =      0 
+    RSWMIN =      0 
+    RDW =     85 
+    RSW =     85 
+    PRWG =      0 
+    PRWB = 6.8e-11 
+    PRT =      0 
+    ETA0 = 0.0058 
+    ETAB =      0 
+    PCLM =   0.04 
+    PDIBLC1 =  0.001 
+    PDIBLC2 =  0.001 
+    PDIBLCB = -0.005 
+    PSCBE1 = 8.14e+08 
+    PSCBE2 =  1e-07 
+    PVAG =  1e-20 
+    WR =      1 
+    DWG =      0 
+    DWB =      0 
+    XW =      0 
+    XWREF =      0 
+    XL = -3e-08 
+    XLREF = -3e-08 
+    B0 =      0 
+    B1 =      0 
+    ALPHA0 =  0.074 
+    ALPHA1 =  0.005 
+    AGIDL = 0.0002 
+    BGIDL = 2.1e+09 
+    CGIDL = 0.0002 
+    PHIN =      0 
+    EGIDL =    0.8 
+    AIGC =  0.012 
+    BIGC = 0.0028 
+    CIGC =  0.002 
+    AIGSD =  0.012 
+    BIGSD = 0.0028 
+    CIGSD =  0.002 
+    AIGBACC =  0.012 
+    BIGBACC = 0.0028 
+    CIGBACC =  0.002 
+    AIGBINV =  0.014 
+    BIGBINV =  0.004 
+    CIGBINV =  0.004 
+    NIGC =      1 
+    NIGBINV =      3 
+    NIGBACC =      1 
+    NTOX =      1 
+    EIGBINV =    1.1 
+    PIGCD =      1 
+    POXEDGE =      1 
+    XRCRG1 =     12 
+    TNOIA =    1.5 
+    TNOIB =    3.5 
+    NTNOI =      1 
+    XRCRG2 =      5 
+    BETA0 =     30 
+    IJTHDFWD =   0.01 
+    IJTHSFWD =   0.01 
+    IJTHDREV =  0.001 
+    IJTHSREV =  0.001 
+    XJBVD =      1 
+    XJBVS =      1 
+    BVD =     10 
+    BVS =     10 
+    VFB =  -0.55 
+    GBMIN =  1e-10 
+    RBDB =     15 
+    RBPB =      5 
+    RBSB =     15 
+    RBPS =     15 
+    RBPD =     15 
+    CGSL = 2.653e-10 
+    CGDL = 2.653e-10 
+    CKAPPAS =   0.03 
+    CKAPPAD =   0.03 
+    CF = 1.183e-10 
+    CLC =  1e-07 
+    CLE =    0.6 
+    DWC =  5e-09 
+    DLC = 5.25e-09 
+    DLCIG = 5.25e-09 
+    DWJ =      0 
+    VFBCV =     -1 
+    ACDE =      1 
+    MOIN =     15 
+    NOFF =    0.9 
+    VOFFCV =   0.02 
+    DMCG = 9.75e-08 
+    DMCI = 6.5e-08 
+    DMDG = 4.875e-08 
+    DMCGT = 9.75e-08 
+    XGW = 1.3e-07 
+    XGL =      0 
+    RSHG =    0.4 
+    NGCON =      1 
+    TCJ =  0.001 
+    TPB =  0.005 
+    TCJSW =  0.001 
+    TPBSW =  0.005 
+    TCJSWG =  0.001 
+    TPBSWG =  0.005 
+    SK0 =      0 
+    SK1 =      0 
+    SK2 =      0 
+    SL =  2e-06 
+    SW =  2e-06 
+    K =      0 
+    TNOM =  300.1 
+    CGSO = 1.5e-10 
+    CGDO = 1.5e-10 
+    CGBO = 2.56e-11 
+    XPART =      0 
+    RSH =      5 
+    JSS = 0.0001 
+    JSWS =  1e-11 
+    JSWGS =  1e-10 
+    PBS =      1 
+    MJS =    0.5 
+    PBSWS =      1 
+    MJSWS =   0.33 
+    CJS = 0.0005 
+    CJSWS =  5e-10 
+    NJS =      1 
+    PBSWGS =      1 
+    MJSWGS =   0.33 
+    CJSWGS =  3e-10 
+    XTIS =      3 
+    JSD = 0.0001 
+    JSWD =  1e-11 
+    JSWGD =  1e-10 
+    PBD =      1 
+    MJD =    0.5 
+    PBSWD =      1 
+    MJSWD =   0.33 
+    CJD = 0.0005 
+    CJSWD =  5e-10 
+    NJD =      1 
+    PBSWGD =      1 
+    MJSWGD =   0.33 
+    CJSWGD =  5e-10 
+    XTID =      3 
+    LMLT =      1 
+    WMLT =      1 
+    LINT = 5.25e-09 
+    LL =      0 
+    LLC =      0 
+    LLN =      1 
+    LW =      0 
+    LWC =      0 
+    LWN =      1 
+    LWL =      0 
+    LWLC =      0 
+    LMIN =      0 
+    LMAX =      1 
+    WINT =  5e-09 
+    WL =      0 
+    WLC =      0 
+    WLN =      1 
+    WW =      0 
+    WWC =      0 
+    WWN =      1 
+    WWL =      0 
+    WWLC =      0 
+    WMIN =      0 
+    WMAX =      1 
+    NOIA = 6.25e+41 
+    NOIB = 3.125e+26 
+    NOIC = 8.75e+09 
+    EM = 4.1e+07 
+    EF =      1 
+    AF =      1 
+    KF =      0 
+    TRS =      0 
+    TRD =      0 
+ Model file: /cad/cktbook/tech/ptm065/spice/65nm_PMOS_bulk_tt.pm
+ Model line:            3
+ Model Name: pmos  
+ BSIM4 Model (Level 54)
+    MOBMOD = 0
+    BINUNIT = 1
+    PARAMCHK = 1
+    CAPMOD = 2
+    DIOMOD = 1
+    RDSMOD = 0
+    TRNQSMOD = 0
+    ACNQSMOD = 0
+    RBODYMOD = 1
+    RGATEMOD = 1
+    PERMOD = 1
+    GEOMOD = 0
+    RGEOMOD = 0
+    FNOIMOD = 1
+    TNOIMOD = 0
+    IGCMOD = 1
+    IGBMOD = 1
+    STIMOD = 0
+    VERSION =      4 
+    TOXREF = 1.95e-09 
+    TOXE = 1.95e-09 
+    TOXP = 1.2e-09 
+    TOXM = 1.95e-09 
+    DTOX = 7.5e-10 
+    EPSROX =    3.9 
+    CDSC =      0 
+    CDSCB =      0 
+    CDSCD =      0 
+    CIT =      0 
+    NFACTOR =    1.9 
+    XJ = 1.96e-08 
+    VSAT =  7e+04 
+    A0 =      1 
+    AGS =  1e-20 
+    A1 =      0 
+    A2 =      1 
+    AT = 3.3e+04 
+    KETA = -0.047 
+    NSUB =  6e+16 
+    NDEP = 1.97e+18 
+    NSD =  2e+20 
+    NGATE =  2e+20 
+    GAMMA1 =      0 
+    GAMMA2 =      0 
+    VBX =      0 
+    VBM =     -3 
+    XT = 1.55e-07 
+    K1 =  0.456 
+    KT1 =  -0.11 
+    KT1L =      0 
+    KT2 =  0.022 
+    K2 =  -0.01 
+    K3 =      0 
+    K3B =      0 
+    LPE0 =      0 
+    LPEB =      0 
+    DVTP0 =  1e-09 
+    DVTP1 =   0.05 
+    W0 = 2.5e-06 
+    DVT0 =      1 
+    DVT1 =      2 
+    DVT2 = -0.032 
+    DVT0W =      0 
+    DVT1W =      0 
+    DVT2W =      0 
+    DROUT =   0.56 
+    DSUB =    0.1 
+    VTH0 = -0.378 
+    EU =      1 
+    UA =  2e-09 
+    UA1 = 4.31e-09 
+    UB =  5e-19 
+    UB1 = 7.61e-18 
+    UC =      0 
+    UC1 = -5.6e-11 
+    U0 = 0.00548 
+    UTE =   -1.5 
+    VOFF = -0.126 
+    VOFFL =      0 
+    MINV =   0.05 
+    FPROUT =    0.2 
+    PDITS =   0.08 
+    PDITSD =   0.23 
+    PDITSL = 2.3e+06 
+    DELTA =   0.01 
+    RDSW =    165 
+    RDSWMIN =      0 
+    RDWMIN =      0 
+    RSWMIN =      0 
+    RDW =     85 
+    RSW =     85 
+    PRWG = 3.22e-08 
+    PRWB = 6.8e-11 
+    PRT =      0 
+    ETA0 = 0.0058 
+    ETAB =      0 
+    PCLM =   0.12 
+    PDIBLC1 =  0.001 
+    PDIBLC2 =  0.001 
+    PDIBLCB = 3.4e-08 
+    PSCBE1 = 8.14e+08 
+    PSCBE2 = 9.58e-07 
+    PVAG =  1e-20 
+    WR =      1 
+    DWG =      0 
+    DWB =      0 
+    XW =      0 
+    XWREF =      0 
+    XL = -3e-08 
+    XLREF = -3e-08 
+    B0 = -1e-20 
+    B1 =      0 
+    ALPHA0 =  0.074 
+    ALPHA1 =  0.005 
+    AGIDL = 0.0002 
+    BGIDL = 2.1e+09 
+    CGIDL = 0.0002 
+    PHIN =      0 
+    EGIDL =    0.8 
+    AIGC =   0.69 
+    BIGC = 0.0012 
+    CIGC = 0.0008 
+    AIGSD = 0.0087 
+    BIGSD = 0.0012 
+    CIGSD = 0.0008 
+    AIGBACC =  0.012 
+    BIGBACC = 0.0028 
+    CIGBACC =  0.002 
+    AIGBINV =  0.014 
+    BIGBINV =  0.004 
+    CIGBINV =  0.004 
+    NIGC =      1 
+    NIGBINV =      3 
+    NIGBACC =      1 
+    NTOX =      1 
+    EIGBINV =    1.1 
+    PIGCD =      1 
+    POXEDGE =      1 
+    XRCRG1 =     12 
+    TNOIA =    1.5 
+    TNOIB =    3.5 
+    NTNOI =      1 
+    XRCRG2 =      5 
+    BETA0 =     30 
+    IJTHDFWD =   0.01 
+    IJTHSFWD =   0.01 
+    IJTHDREV =  0.001 
+    IJTHSREV =  0.001 
+    XJBVD =      1 
+    XJBVS =      1 
+    BVD =     10 
+    BVS =     10 
+    VFB =   0.55 
+    GBMIN =  1e-10 
+    RBDB =     15 
+    RBPB =      5 
+    RBSB =     15 
+    RBPS =     15 
+    RBPD =     15 
+    CGSL = 2.653e-10 
+    CGDL = 2.653e-10 
+    CKAPPAS =   0.03 
+    CKAPPAD =   0.03 
+    CF = 1.171e-10 
+    CLC =  1e-07 
+    CLE =    0.6 
+    DWC =  5e-09 
+    DLC = 5.25e-09 
+    DLCIG = 5.25e-09 
+    DWJ =      0 
+    VFBCV =     -1 
+    ACDE =      1 
+    MOIN =     15 
+    NOFF =    0.9 
+    VOFFCV =   0.02 
+    DMCG = 9.75e-08 
+    DMCI = 6.5e-08 
+    DMDG = 4.875e-08 
+    DMCGT = 9.75e-08 
+    XGW = 1.3e-07 
+    XGL =      0 
+    RSHG =    0.4 
+    NGCON =      1 
+    TCJ =  0.001 
+    TPB =  0.005 
+    TCJSW =  0.001 
+    TPBSW =  0.005 
+    TCJSWG =  0.001 
+    TPBSWG =  0.005 
+    SK0 =      0 
+    SK1 =      0 
+    SK2 =      0 
+    SL =  2e-06 
+    SW =  2e-06 
+    K =      0 
+    TNOM =  300.1 
+    CGSO = 1.5e-10 
+    CGDO = 1.5e-10 
+    CGBO = 2.56e-11 
+    XPART =      0 
+    RSH =      5 
+    JSS = 0.0001 
+    JSWS =  1e-11 
+    JSWGS =  1e-10 
+    PBS =      1 
+    MJS =    0.5 
+    PBSWS =      1 
+    MJSWS =   0.33 
+    CJS = 0.0005 
+    CJSWS =  5e-10 
+    NJS =      1 
+    PBSWGS =      1 
+    MJSWGS =   0.33 
+    CJSWGS =  3e-10 
+    XTIS =      3 
+    JSD = 0.0001 
+    JSWD =  1e-11 
+    JSWGD =  1e-10 
+    PBD =      1 
+    MJD =    0.5 
+    PBSWD =      1 
+    MJSWD =   0.33 
+    CJD = 0.0005 
+    CJSWD =  5e-10 
+    NJD =      1 
+    PBSWGD =      1 
+    MJSWGD =   0.33 
+    CJSWGD =  5e-10 
+    XTID =      3 
+    LMLT =      1 
+    WMLT =      1 
+    LINT = 5.25e-09 
+    LL =      0 
+    LLC =      0 
+    LLN =      1 
+    LW =      0 
+    LWC =      0 
+    LWN =      1 
+    LWL =      0 
+    LWLC =      0 
+    LMIN =      0 
+    LMAX =      1 
+    WINT =  5e-09 
+    WL =      0 
+    WLC =      0 
+    WLN =      1 
+    WW =      0 
+    WWC =      0 
+    WWN =      1 
+    WWL =      0 
+    WWLC =      0 
+    WMIN =      0 
+    WMAX =      1 
+    NOIA = 6.188e+40 
+    NOIB = 1.5e+25 
+    NOIC = 8.75e+09 
+    EM = 4.1e+07 
+    EF =      1 
+    AF =      1 
+    KF =      0 
+    TRS =      0 
+    TRD =      0 
+  **info** (tb/block/InputRouter/InputRouter_tb.sp:19) DC voltage reset to initial transient source value in source 0:vreset. new dc=0.1100D+01
+  **warning** (nmos:xdut.m538_ (src_spice/block/InputRouter/InputRouter.sp:846)) Warning:  Acde = 0.296152 may be too small in BSIM4 model with w=9.75e-08 l=6.5e-08.
+ **info** *pvaI* Creating VA module (inputrouter_environment) for instance XENV with gmd reduction
+
+ **info** *pvaI*        termCount=266 diwSize=538 probeSize=376 Qsize=0 Isize=136
+
+ End of GMD creation on Thu Sep 17 22:54:40 2026	GTM/In-use: 7.7500/4.6844 MB
+
+
+  
+      
+ **info** set option symb=1 internally to help for convergence.
+ *****************************************************************
+ ******  option summary
+ ******
+ runlvl  = 3         bypass  = 2.0000    
+  Opening plot unit= 15
+ file=/tmp/ferroma_analog_campaign_XQRtrlCf/results/block/InputRouter/InputRouter.pa0
+
+ End of pVA setup    on Thu Sep 17 22:54:40 2026	GTM/In-use: 7.7500/4.7524 MB
+
+
+ Begin of pVA simulation on Thu Sep 17 22:54:40 2026	GTM/In-use: 7.7500/4.7524 MB
+
+
+ **info** dc convergence successful at Newton-Raphson method 
+ ******  
+ inputrouter bubble reshuffled: existing actsim sequences, four-phase feedback
+
+ ****** operating point information tnom=  25.000 temp=  27.000 ******
+ ****** operating point status is voltage   simulation time is     0.     
+    node    =voltage      node    =voltage      node    =voltage
+
+ +0:i_aa    = 247.5797u 0:i_af_50_=   0.      0:i_af_510=   0.     
+ +0:i_af_511=   0.      0:i_af_512=   0.      0:i_af_513=   0.     
+ +0:i_af_514=   0.      0:i_af_515=   0.      0:i_af_516=   0.     
+ +0:i_af_517=   0.      0:i_af_518=   0.      0:i_af_519=   0.     
+ +0:i_af_51_=   0.      0:i_af_520=   0.      0:i_af_521=   0.     
+ +0:i_af_522=   0.      0:i_af_523=   0.      0:i_af_524=   0.     
+ +0:i_af_525=   0.      0:i_af_526=   0.      0:i_af_527=   0.     
+ +0:i_af_528=   0.      0:i_af_529=   0.      0:i_af_52_=   0.     
+ +0:i_af_530=   0.      0:i_af_531=   0.      0:i_af_53_=   0.     
+ +0:i_af_54_=   0.      0:i_af_55_=   0.      0:i_af_56_=   0.     
+ +0:i_af_57_=   0.      0:i_af_58_=   0.      0:i_af_59_=   0.     
+ +0:i_at_50_=   0.      0:i_at_510=   0.      0:i_at_511=   0.     
+ +0:i_at_512=   0.      0:i_at_513=   0.      0:i_at_514=   0.     
+ +0:i_at_515=   0.      0:i_at_516=   0.      0:i_at_517=   0.     
+ +0:i_at_518=   0.      0:i_at_519=   0.      0:i_at_51_=   0.     
+ +0:i_at_520=   0.      0:i_at_521=   0.      0:i_at_522=   0.     
+ +0:i_at_523=   0.      0:i_at_524=   0.      0:i_at_525=   0.     
+ +0:i_at_526=   0.      0:i_at_527=   0.      0:i_at_528=   0.     
+ +0:i_at_529=   0.      0:i_at_52_=   0.      0:i_at_530=   0.     
+ +0:i_at_531=   0.      0:i_at_53_=   0.      0:i_at_54_=   0.     
+ +0:i_at_55_=   0.      0:i_at_56_=   0.      0:i_at_57_=   0.     
+ +0:i_at_58_=   0.      0:i_at_59_=   0.      0:o0_aa   =   0.     
+ +0:o0_af_50=  14.3117u 0:o0_af_51=  14.3117u 0:o0_af_51=  14.3117u
+ +0:o0_af_51=  14.3117u 0:o0_af_51=  14.3117u 0:o0_af_51=  14.3117u
+ +0:o0_af_51=  14.3117u 0:o0_af_51=  14.3117u 0:o0_af_51=  14.3117u
+ +0:o0_af_51=  14.3117u 0:o0_af_51=  14.3117u 0:o0_af_51=  14.3117u
+ +0:o0_af_52=  14.3117u 0:o0_af_52=  14.3117u 0:o0_af_52=  14.3117u
+ +0:o0_af_52=  14.3117u 0:o0_af_52=  14.3117u 0:o0_af_52=  14.3117u
+ +0:o0_af_52=  14.3117u 0:o0_af_52=  14.3117u 0:o0_af_52=  14.3117u
+ +0:o0_af_52=  14.3117u 0:o0_af_52=  14.3117u 0:o0_af_53=  14.3117u
+ +0:o0_af_53=  14.3117u 0:o0_af_53=  14.3117u 0:o0_af_54=  14.3117u
+ +0:o0_af_55=  14.3117u 0:o0_af_56=  14.3117u 0:o0_af_57=  14.3117u
+ +0:o0_af_58=  14.3117u 0:o0_af_59=  14.3117u 0:o0_at_50=  14.3117u
+ +0:o0_at_51=  14.3117u 0:o0_at_51=  14.3117u 0:o0_at_51=  14.3117u
+ +0:o0_at_51=  14.3117u 0:o0_at_51=  14.3117u 0:o0_at_51=  14.3117u
+ +0:o0_at_51=  14.3117u 0:o0_at_51=  14.3117u 0:o0_at_51=  14.3117u
+ +0:o0_at_51=  14.3117u 0:o0_at_51=  14.3117u 0:o0_at_52=  14.3117u
+ +0:o0_at_52=  14.3117u 0:o0_at_52=  14.3117u 0:o0_at_52=  14.3117u
+ +0:o0_at_52=  14.3117u 0:o0_at_52=  14.3117u 0:o0_at_52=  14.3117u
+ +0:o0_at_52=  14.3117u 0:o0_at_52=  14.3117u 0:o0_at_52=  14.3117u
+ +0:o0_at_52=  14.3117u 0:o0_at_53=  14.3117u 0:o0_at_53=  14.3117u
+ +0:o0_at_53=  14.3117u 0:o0_at_54=  14.3117u 0:o0_at_55=  14.3117u
+ +0:o0_at_56=  14.3117u 0:o0_at_57=  14.3117u 0:o0_at_58=  14.3117u
+ +0:o0_at_59=  14.3117u 0:o1_aa   =   0.      0:o1_af_50=  84.9196u
+ +0:o1_af_51=  84.9196u 0:o1_af_51=  84.9196u 0:o1_af_51=  84.9196u
+ +0:o1_af_51=  84.9196u 0:o1_af_51=  84.9196u 0:o1_af_51=  84.9196u
+ +0:o1_af_51=  84.9196u 0:o1_af_51=  84.9196u 0:o1_af_51=  84.9196u
+ +0:o1_af_51=  84.9196u 0:o1_af_51=  84.9196u 0:o1_af_52=  84.9196u
+ +0:o1_af_52=  84.9196u 0:o1_af_52=  84.9196u 0:o1_af_52=  84.9196u
+ +0:o1_af_52=  84.9196u 0:o1_af_52=  84.9196u 0:o1_af_52=  84.9196u
+ +0:o1_af_52=  84.9196u 0:o1_af_52=  84.9196u 0:o1_af_52=  84.9196u
+ +0:o1_af_52=  84.9196u 0:o1_af_53=  84.9196u 0:o1_af_53=  84.9196u
+ +0:o1_af_53=  84.9196u 0:o1_af_54=  84.9196u 0:o1_af_55=  84.9196u
+ +0:o1_af_56=  84.9196u 0:o1_af_57=  84.9196u 0:o1_af_58=  84.9196u
+ +0:o1_af_59=  84.9196u 0:o1_at_50=  84.9196u 0:o1_at_51=  84.9196u
+ +0:o1_at_51=  84.9196u 0:o1_at_51=  84.9196u 0:o1_at_51=  84.9196u
+ +0:o1_at_51=  84.9196u 0:o1_at_51=  84.9196u 0:o1_at_51=  84.9196u
+ +0:o1_at_51=  84.9196u 0:o1_at_51=  84.9196u 0:o1_at_51=  84.9196u
+ +0:o1_at_51=  84.9196u 0:o1_at_52=  84.9196u 0:o1_at_52=  84.9196u
+ +0:o1_at_52=  84.9196u 0:o1_at_52=  84.9196u 0:o1_at_52=  84.9196u
+ +0:o1_at_52=  84.9196u 0:o1_at_52=  84.9196u 0:o1_at_52=  84.9196u
+ +0:o1_at_52=  84.9196u 0:o1_at_52=  84.9196u 0:o1_at_52=  84.9196u
+ +0:o1_at_53=  84.9196u 0:o1_at_53=  84.9196u 0:o1_at_53=  84.9196u
+ +0:o1_at_54=  84.9196u 0:o1_at_55=  84.9196u 0:o1_at_56=  84.9196u
+ +0:o1_at_57=  84.9196u 0:o1_at_58=  84.9196u 0:o1_at_59=  84.9196u
+ +0:reset   =   1.1000  0:tb_done =   0.      0:tb_faile=   0.     
+ +0:vdd     =   1.1000  1:#101    =  14.1666u 1:#103    =  14.1666u
+ +1:#105    = 993.9525m 1:#108    = 993.9525m 1:#111    =  14.1666u
+ +1:#113    =  14.1666u 1:#115    = 993.9525m 1:#118    = 993.9525m
+ +1:#12     =   1.1000  1:#121    =  14.1666u 1:#123    =  14.1666u
+ +1:#125    = 993.9525m 1:#128    = 993.9525m 1:#131    =  14.1666u
+ +1:#134    =  14.1666u 1:#137    = 993.9525m 1:#140    = 993.9525m
+ +1:#143    =  14.1666u 1:#146    =  14.1666u 1:#149    = 993.9525m
+ +1:#152    = 993.9525m 1:#155    =  14.1666u 1:#158    =  14.1666u
+ +1:#16     =  86.4397m 1:#161    = 993.9525m 1:#164    = 993.9525m
+ +1:#167    =  14.1666u 1:#170    =  14.1666u 1:#173    = 993.9525m
+ +1:#176    = 993.9525m 1:#179    =  14.1666u 1:#18     = 887.3487m
+ +1:#182    =  14.1666u 1:#185    = 993.9525m 1:#188    = 993.9525m
+ +1:#19     =  98.9081m 1:#191    =  14.1666u 1:#194    =  14.1666u
+ +1:#197    = 993.9525m 1:#20     =  30.7894m 1:#200    = 993.9525m
+ +1:#203    =  14.1666u 1:#206    =  14.1666u 1:#209    = 993.9525m
+ +1:#21     =  11.6005m 1:#212    = 993.9525m 1:#215    =  14.1666u
+ +1:#218    =  14.1666u 1:#221    = 993.9525m 1:#224    = 993.9525m
+ +1:#227    =  14.1666u 1:#230    =  14.1666u 1:#233    = 993.9525m
+ +1:#236    = 993.9525m 1:#239    =  14.1666u 1:#242    =  14.1666u
+ +1:#245    = 993.9525m 1:#248    = 993.9525m 1:#251    =  14.1666u
+ +1:#254    =  14.1666u 1:#257    = 993.9525m 1:#26     =   1.0999 
+ +1:#260    = 993.9525m 1:#263    =  14.1666u 1:#266    =  14.1666u
+ +1:#269    = 993.9525m 1:#272    = 993.9525m 1:#275    =  14.1666u
+ +1:#278    =  14.1666u 1:#28     = 975.1123m 1:#281    = 993.9525m
+ +1:#284    = 993.9525m 1:#287    =  14.1666u 1:#29     = 975.1129m
+ +1:#290    =  14.1666u 1:#293    = 993.9525m 1:#296    = 993.9525m
+ +1:#299    =  14.1666u 1:#3      =  86.4383m 1:#30     = 975.1136m
+ +1:#302    =  14.1666u 1:#305    = 993.9525m 1:#308    = 993.9525m
+ +1:#311    =  14.1666u 1:#314    =  14.1666u 1:#317    = 993.9525m
+ +1:#320    = 993.9525m 1:#323    =  14.1666u 1:#326    =  14.1666u
+ +1:#329    = 993.9525m 1:#332    = 993.9525m 1:#335    =  14.1666u
+ +1:#338    =  14.1666u 1:#34     =  91.1271u 1:#341    = 993.9525m
+ +1:#344    = 993.9525m 1:#347    =  14.1666u 1:#35     =   1.0999 
+ +1:#350    =  14.1666u 1:#353    = 993.9525m 1:#356    = 993.9525m
+ +1:#359    =  14.1666u 1:#36     =  86.5404m 1:#362    =  14.1666u
+ +1:#365    = 993.9525m 1:#368    = 993.9525m 1:#371    =  14.1666u
+ +1:#374    =  14.1666u 1:#377    = 993.9525m 1:#380    = 993.9525m
+ +1:#383    =  14.1666u 1:#386    =  14.1666u 1:#389    = 993.9525m
+ +1:#39     = 993.9413m 1:#392    = 993.9525m 1:#395    =  14.1666u
+ +1:#398    =  14.1666u 1:#401    = 993.9525m 1:#404    = 993.9525m
+ +1:#407    =  14.1666u 1:#410    =  14.1666u 1:#413    = 993.9525m
+ +1:#416    = 993.9525m 1:#42     = 169.4899u 1:#43     =  86.9631u
+ +1:#45     =  14.1666u 1:#47     =  14.1666u 1:#484    =   1.0999 
+ +1:#485    =   1.7545m 1:#487    =   1.0998  1:#488    =   1.7545m
+ +1:#49     = 993.9525m 1:#490    =   1.0999  1:#491    =   1.7545m
+ +1:#493    =   1.0995  1:#494    = 332.6490u 1:#496    =   1.0992 
+ +1:#497    = 312.0753u 1:#499    =   1.0999  1:#500    = 458.5758u
+ +1:#502    =   1.0999  1:#503    = 458.5758u 1:#505    =   1.0998 
+ +1:#506    = 157.3103u 1:#508    =   1.0998  1:#509    = 157.3103u
+ +1:#511    =   1.0999  1:#512    = 458.5758u 1:#514    =   1.0999 
+ +1:#515    = 458.5758u 1:#517    =   1.0998  1:#518    = 157.3103u
+ +1:#52     = 993.9525m 1:#520    =   1.0998  1:#521    = 157.3103u
+ +1:#523    =   1.0999  1:#524    = 458.5758u 1:#526    =   1.0999 
+ +1:#527    = 458.5758u 1:#529    =   1.0998  1:#530    = 157.3103u
+ +1:#532    =   1.0998  1:#533    = 157.3103u 1:#535    =   1.0999 
+ +1:#536    = 458.5758u 1:#538    =   1.0999  1:#539    = 458.5758u
+ +1:#541    =   1.0998  1:#542    = 157.3103u 1:#544    =   1.0998 
+ +1:#545    = 157.3103u 1:#547    =   1.0999  1:#548    = 458.5758u
+ +1:#55     =  14.1666u 1:#550    =   1.0999  1:#551    = 458.5758u
+ +1:#553    =   1.0998  1:#554    = 157.3103u 1:#556    =   1.0998 
+ +1:#557    = 157.3103u 1:#559    =   1.0999  1:#560    = 458.5758u
+ +1:#562    =   1.0999  1:#563    = 458.5758u 1:#565    =   1.0998 
+ +1:#566    = 157.3103u 1:#568    =   1.0998  1:#569    = 157.3103u
+ +1:#571    =   1.0999  1:#572    = 458.5758u 1:#574    =   1.0999 
+ +1:#575    = 458.5758u 1:#577    =   1.0998  1:#578    = 157.3103u
+ +1:#58     =  14.1666u 1:#580    =   1.0998  1:#581    = 157.3103u
+ +1:#583    =   1.0999  1:#584    = 458.5758u 1:#586    =   1.0999 
+ +1:#587    = 458.5758u 1:#589    =   1.0998  1:#590    = 157.3103u
+ +1:#592    =   1.0998  1:#593    = 157.3103u 1:#595    =   1.0999 
+ +1:#596    = 458.5758u 1:#598    =   1.0999  1:#599    = 458.5758u
+ +1:#6      = 785.5116m 1:#601    =   1.0998  1:#602    = 157.3103u
+ +1:#604    =   1.0998  1:#605    = 157.3103u 1:#607    =   1.0999 
+ +1:#608    = 458.5758u 1:#61     = 993.9525m 1:#610    =   1.0999 
+ +1:#611    = 458.5758u 1:#613    =   1.0998  1:#614    = 157.3103u
+ +1:#616    =   1.0998  1:#617    = 157.3103u 1:#619    =   1.0999 
+ +1:#620    = 458.5758u 1:#622    =   1.0999  1:#623    = 458.5758u
+ +1:#625    =   1.0998  1:#626    = 157.3103u 1:#628    =   1.0998 
+ +1:#629    = 157.3103u 1:#631    =   1.0999  1:#632    = 458.5758u
+ +1:#634    =   1.0999  1:#635    = 458.5758u 1:#637    =   1.0998 
+ +1:#638    = 157.3103u 1:#64     = 993.9525m 1:#640    =   1.0998 
+ +1:#641    = 157.3103u 1:#643    =   1.0999  1:#644    = 458.5758u
+ +1:#646    =   1.0999  1:#647    = 458.5758u 1:#649    =   1.0998 
+ +1:#650    = 157.3103u 1:#652    =   1.0998  1:#653    = 157.3103u
+ +1:#655    =   1.0999  1:#656    = 458.5758u 1:#658    =   1.0999 
+ +1:#659    = 458.5758u 1:#661    =   1.0998  1:#662    = 157.3103u
+ +1:#664    =   1.0998  1:#665    = 157.3103u 1:#667    =   1.0999 
+ +1:#668    = 458.5758u 1:#67     =  14.1666u 1:#670    =   1.0999 
+ +1:#671    = 458.5758u 1:#673    =   1.0998  1:#674    = 157.3103u
+ +1:#676    =   1.0998  1:#677    = 157.3103u 1:#679    =   1.0999 
+ +1:#680    = 458.5758u 1:#682    =   1.0999  1:#683    = 458.5758u
+ +1:#685    =   1.0998  1:#686    = 157.3103u 1:#688    =   1.0998 
+ +1:#689    = 157.3103u 1:#691    =   1.0999  1:#692    = 458.5758u
+ +1:#694    =   1.0999  1:#695    = 458.5758u 1:#697    =   1.0998 
+ +1:#698    = 157.3103u 1:#70     =  14.1666u 1:#700    =   1.0998 
+ +1:#701    = 157.3103u 1:#703    =   1.0999  1:#704    = 458.5758u
+ +1:#706    =   1.0999  1:#707    = 458.5758u 1:#709    =   1.0998 
+ +1:#710    = 157.3103u 1:#712    =   1.0998  1:#713    = 157.3103u
+ +1:#715    =   1.0999  1:#716    = 458.5758u 1:#718    =   1.0999 
+ +1:#719    = 458.5758u 1:#721    =   1.0998  1:#722    = 157.3103u
+ +1:#724    =   1.0998  1:#725    = 157.3103u 1:#727    =   1.0999 
+ +1:#728    = 458.5758u 1:#73     = 993.9525m 1:#730    =   1.0999 
+ +1:#731    = 458.5758u 1:#733    =   1.0998  1:#734    = 157.3103u
+ +1:#736    =   1.0998  1:#737    = 157.3103u 1:#739    =   1.0999 
+ +1:#740    = 458.5758u 1:#742    =   1.0999  1:#743    = 458.5758u
+ +1:#745    =   1.0998  1:#746    = 157.3103u 1:#748    =   1.0998 
+ +1:#749    = 157.3103u 1:#751    =   1.0999  1:#752    = 458.5758u
+ +1:#754    =   1.0999  1:#755    = 458.5758u 1:#757    =   1.0998 
+ +1:#758    = 157.3103u 1:#76     = 993.9525m 1:#760    =   1.0998 
+ +1:#761    = 157.3103u 1:#763    =   1.0999  1:#764    = 458.5758u
+ +1:#766    =   1.0999  1:#767    = 458.5758u 1:#769    =   1.0998 
+ +1:#770    = 157.3103u 1:#772    =   1.0998  1:#773    = 157.3103u
+ +1:#775    =   1.0999  1:#776    = 458.5758u 1:#778    =   1.0999 
+ +1:#779    = 458.5758u 1:#781    =   1.0998  1:#782    = 157.3103u
+ +1:#784    =   1.0998  1:#785    = 157.3103u 1:#787    =   1.0999 
+ +1:#788    = 458.5758u 1:#79     =  14.1666u 1:#790    =   1.0999 
+ +1:#791    = 458.5758u 1:#793    =   1.0998  1:#794    = 157.3103u
+ +1:#796    =   1.0998  1:#797    = 157.3103u 1:#799    =   1.0999 
+ +1:#800    = 458.5758u 1:#802    =   1.0999  1:#803    = 458.5758u
+ +1:#805    =   1.0998  1:#806    = 157.3103u 1:#808    =   1.0998 
+ +1:#809    = 157.3103u 1:#811    =   1.0999  1:#812    = 458.5758u
+ +1:#814    =   1.0999  1:#815    = 458.5758u 1:#817    =   1.0998 
+ +1:#818    = 157.3103u 1:#82     =  14.1666u 1:#820    =   1.0998 
+ +1:#821    = 157.3103u 1:#823    =   1.0999  1:#824    = 458.5758u
+ +1:#826    =   1.0999  1:#827    = 458.5758u 1:#829    =   1.0998 
+ +1:#830    = 157.3103u 1:#832    =   1.0998  1:#833    = 157.3103u
+ +1:#835    =   1.0999  1:#836    = 458.5758u 1:#838    =   1.0999 
+ +1:#839    = 458.5758u 1:#841    =   1.0998  1:#842    = 157.3103u
+ +1:#844    =   1.0998  1:#845    = 157.3103u 1:#847    =   1.0999 
+ +1:#848    = 458.5758u 1:#85     = 993.9525m 1:#850    =   1.0999 
+ +1:#851    = 458.5758u 1:#853    =   1.0998  1:#854    = 157.3103u
+ +1:#856    =   1.0998  1:#857    = 157.3103u 1:#859    =   1.0999 
+ +1:#860    = 458.5758u 1:#862    =   1.0999  1:#863    = 458.5758u
+ +1:#865    =   1.0998  1:#866    = 157.3103u 1:#868    =   1.0998 
+ +1:#869    = 157.3103u 1:#871    =   1.0999  1:#872    = 458.5758u
+ +1:#874    =   1.0999  1:#875    = 458.5758u 1:#877    =   1.0998 
+ +1:#878    = 157.3103u 1:#88     = 993.9525m 1:#880    =   1.0998 
+ +1:#881    = 157.3103u 1:#91     =  14.1666u 1:#93     =  14.1666u
+ +1:#95     = 993.9525m 1:#98     = 993.9525m 1:#fb483# =  12.3093u
+ +1:#fb486# =  12.3067u 1:#fb489# =  12.3104u 1:#fb492# =   1.1000 
+ +1:#fb495# =   1.1000  1:#fb498# =  12.3115u 1:#fb501# =  12.3115u
+ +1:#fb504# =   1.1000  1:#fb507# =   1.1000  1:#fb510# =  12.3115u
+ +1:#fb513# =  12.3115u 1:#fb516# =   1.1000  1:#fb519# =   1.1000 
+ +1:#fb522# =  12.3115u 1:#fb525# =  12.3115u 1:#fb528# =   1.1000 
+ +1:#fb531# =   1.1000  1:#fb534# =  12.3115u 1:#fb537# =  12.3115u
+ +1:#fb540# =   1.1000  1:#fb543# =   1.1000  1:#fb546# =  12.3115u
+ +1:#fb549# =  12.3115u 1:#fb552# =   1.1000  1:#fb555# =   1.1000 
+ +1:#fb558# =  12.3115u 1:#fb561# =  12.3115u 1:#fb564# =   1.1000 
+ +1:#fb567# =   1.1000  1:#fb570# =  12.3115u 1:#fb573# =  12.3115u
+ +1:#fb576# =   1.1000  1:#fb579# =   1.1000  1:#fb582# =  12.3115u
+ +1:#fb585# =  12.3115u 1:#fb588# =   1.1000  1:#fb591# =   1.1000 
+ +1:#fb594# =  12.3115u 1:#fb597# =  12.3115u 1:#fb600# =   1.1000 
+ +1:#fb603# =   1.1000  1:#fb606# =  12.3115u 1:#fb609# =  12.3115u
+ +1:#fb612# =   1.1000  1:#fb615# =   1.1000  1:#fb618# =  12.3115u
+ +1:#fb621# =  12.3115u 1:#fb624# =   1.1000  1:#fb627# =   1.1000 
+ +1:#fb630# =  12.3115u 1:#fb633# =  12.3115u 1:#fb636# =   1.1000 
+ +1:#fb639# =   1.1000  1:#fb642# =  12.3115u 1:#fb645# =  12.3115u
+ +1:#fb648# =   1.1000  1:#fb651# =   1.1000  1:#fb654# =  12.3115u
+ +1:#fb657# =  12.3115u 1:#fb660# =   1.1000  1:#fb663# =   1.1000 
+ +1:#fb666# =  12.3115u 1:#fb669# =  12.3115u 1:#fb672# =   1.1000 
+ +1:#fb675# =   1.1000  1:#fb678# =  12.3115u 1:#fb681# =  12.3115u
+ +1:#fb684# =   1.1000  1:#fb687# =   1.1000  1:#fb690# =  12.3115u
+ +1:#fb693# =  12.3115u 1:#fb696# =   1.1000  1:#fb699# =   1.1000 
+ +1:#fb702# =  12.3115u 1:#fb705# =  12.3115u 1:#fb708# =   1.1000 
+ +1:#fb711# =   1.1000  1:#fb714# =  12.3115u 1:#fb717# =  12.3115u
+ +1:#fb720# =   1.1000  1:#fb723# =   1.1000  1:#fb726# =  12.3115u
+ +1:#fb729# =  12.3115u 1:#fb732# =   1.1000  1:#fb735# =   1.1000 
+ +1:#fb738# =  12.3115u 1:#fb741# =  12.3115u 1:#fb744# =   1.1000 
+ +1:#fb747# =   1.1000  1:#fb750# =  12.3115u 1:#fb753# =  12.3115u
+ +1:#fb756# =   1.1000  1:#fb759# =   1.1000  1:#fb762# =  12.3115u
+ +1:#fb765# =  12.3115u 1:#fb768# =   1.1000  1:#fb771# =   1.1000 
+ +1:#fb774# =  12.3115u 1:#fb777# =  12.3115u 1:#fb780# =   1.1000 
+ +1:#fb783# =   1.1000  1:#fb786# =  12.3115u 1:#fb789# =  12.3115u
+ +1:#fb792# =   1.1000  1:#fb795# =   1.1000  1:#fb798# =  12.3115u
+ +1:#fb801# =  12.3115u 1:#fb804# =   1.1000  1:#fb807# =   1.1000 
+ +1:#fb810# =  12.3115u 1:#fb813# =  12.3115u 1:#fb816# =   1.1000 
+ +1:#fb819# =   1.1000  1:#fb822# =  12.3115u 1:#fb825# =  12.3115u
+ +1:#fb828# =   1.1000  1:#fb831# =   1.1000  1:#fb834# =  12.3115u
+ +1:#fb837# =  12.3115u 1:#fb840# =   1.1000  1:#fb843# =   1.1000 
+ +1:#fb846# =  12.3115u 1:#fb849# =  12.3115u 1:#fb852# =   1.1000 
+ +1:#fb855# =   1.1000  1:#fb858# =  12.3115u 1:#fb861# =  12.3115u
+ +1:#fb864# =   1.1000  1:#fb867# =   1.1000  1:#fb870# =  12.3115u
+ +1:#fb873# =  12.3115u 1:#fb876# =   1.1000  1:#fb879# =   1.1000 
+ +1:__a     =   1.1000  1:__i__a  =   1.1000  1:__i__f_5=   1.1000 
+ +1:__i__f_5=   1.1000  1:__i__f_5=   1.1000  1:__i__f_5=   1.1000 
+ +1:__i__f_5=   1.1000  1:__i__f_5=   1.1000  1:__i__f_5=   1.1000 
+ +1:__i__f_5=   1.1000  1:__i__f_5=   1.1000  1:__i__f_5=   1.1000 
+ +1:__i__f_5=   1.1000  1:__i__f_5=   1.1000  1:__i__f_5=   1.1000 
+ +1:__i__f_5=   1.1000  1:__i__f_5=   1.1000  1:__i__f_5=   1.1000 
+ +1:__i__f_5=   1.1000  1:__i__f_5=   1.1000  1:__i__f_5=   1.1000 
+ +1:__i__f_5=   1.1000  1:__i__f_5=   1.1000  1:__i__f_5=   1.1000 
+ +1:__i__f_5=   1.1000  1:__i__f_5=   1.1000  1:__i__f_5=   1.1000 
+ +1:__i__f_5=   1.1000  1:__i__f_5=   1.1000  1:__i__f_5=   1.1000 
+ +1:__i__f_5=   1.1000  1:__i__f_5=   1.1000  1:__i__f_5=   1.1000 
+ +1:__i__f_5=   1.1000  1:__i__t_5=   1.1000  1:__i__t_5=   1.1000 
+ +1:__i__t_5=   1.1000  1:__i__t_5=   1.1000  1:__i__t_5=   1.1000 
+ +1:__i__t_5=   1.1000  1:__i__t_5=   1.1000  1:__i__t_5=   1.1000 
+ +1:__i__t_5=   1.1000  1:__i__t_5=   1.1000  1:__i__t_5=   1.1000 
+ +1:__i__t_5=   1.1000  1:__i__t_5=   1.1000  1:__i__t_5=   1.1000 
+ +1:__i__t_5=   1.1000  1:__i__t_5=   1.1000  1:__i__t_5=   1.1000 
+ +1:__i__t_5=   1.1000  1:__i__t_5=   1.1000  1:__i__t_5=   1.1000 
+ +1:__i__t_5=   1.1000  1:__i__t_5=   1.1000  1:__i__t_5=   1.1000 
+ +1:__i__t_5=   1.1000  1:__i__t_5=   1.1000  1:__i__t_5=   1.1000 
+ +1:__i__t_5=   1.1000  1:__i__t_5=   1.1000  1:__i__t_5=   1.1000 
+ +1:__i__t_5=   1.1000  1:__i__t_5=   1.1000  1:__i__t_5=   1.1000 
+ +1:__o0a   =   1.1000  1:__o0f_50=   1.0999  1:__o0f_51=   1.0999 
+ +1:__o0f_51=   1.0999  1:__o0f_51=   1.0999  1:__o0f_51=   1.0999 
+ +1:__o0f_51=   1.0999  1:__o0f_51=   1.0999  1:__o0f_51=   1.0999 
+ +1:__o0f_51=   1.0999  1:__o0f_51=   1.0999  1:__o0f_51=   1.0999 
+ +1:__o0f_51=   1.0999  1:__o0f_52=   1.0999  1:__o0f_52=   1.0999 
+ +1:__o0f_52=   1.0999  1:__o0f_52=   1.0999  1:__o0f_52=   1.0999 
+ +1:__o0f_52=   1.0999  1:__o0f_52=   1.0999  1:__o0f_52=   1.0999 
+ +1:__o0f_52=   1.0999  1:__o0f_52=   1.0999  1:__o0f_52=   1.0999 
+ +1:__o0f_53=   1.0999  1:__o0f_53=   1.0999  1:__o0f_53=   1.0999 
+ +1:__o0f_54=   1.0999  1:__o0f_55=   1.0999  1:__o0f_56=   1.0999 
+ +1:__o0f_57=   1.0999  1:__o0f_58=   1.0999  1:__o0f_59=   1.0999 
+ +1:__o0t_50=   1.0999  1:__o0t_51=   1.0999  1:__o0t_51=   1.0999 
+ +1:__o0t_51=   1.0999  1:__o0t_51=   1.0999  1:__o0t_51=   1.0999 
+ +1:__o0t_51=   1.0999  1:__o0t_51=   1.0999  1:__o0t_51=   1.0999 
+ +1:__o0t_51=   1.0999  1:__o0t_51=   1.0999  1:__o0t_51=   1.0999 
+ +1:__o0t_52=   1.0999  1:__o0t_52=   1.0999  1:__o0t_52=   1.0999 
+ +1:__o0t_52=   1.0999  1:__o0t_52=   1.0999  1:__o0t_52=   1.0999 
+ +1:__o0t_52=   1.0999  1:__o0t_52=   1.0999  1:__o0t_52=   1.0999 
+ +1:__o0t_52=   1.0999  1:__o0t_52=   1.0999  1:__o0t_53=   1.0999 
+ +1:__o0t_53=   1.0999  1:__o0t_53=   1.0999  1:__o0t_54=   1.0999 
+ +1:__o0t_55=   1.0999  1:__o0t_56=   1.0999  1:__o0t_57=   1.0999 
+ +1:__o0t_58=   1.0999  1:__o0t_59=   1.0999  1:__o1a   =   1.1000 
+ +1:__p     =  16.1991u 1:__r     =  14.4348u 1:__w0    =   1.0999 
+ +1:__w1    =   1.0999  1:a       = 177.6485u 1:p       =   1.0998 
+ +1:w1      =  14.5764u
+
+ **info** *pvaI* minimum timestep = 1e-20
+
+ SIM_RESET t=1.000100e-07
+SIM_TX t=1.000100e-07 index=0 word=fffffffe
+
+ SIM_RX t=1.001500e-07 channel=O0 index=0 expected=fffffffe actual=fffffffe PASS
+
+ SIM_IACK_HIGH t=1.003400e-07 index=0
+
+ SIM_SPACER t=1.004800e-07 channel=O0 index=0
+
+ SIM_ACK_LOW t=1.005900e-07 channel=O0 index=0
+
+ SIM_IACK_LOW t=1.008900e-07 index=0
+SIM_TX t=1.008900e-07 index=1 word=fffffffe
+
+ SIM_RX t=1.010300e-07 channel=O0 index=1 expected=fffffffe actual=fffffffe PASS
+
+ SIM_IACK_HIGH t=1.012200e-07 index=1
+
+ SIM_SPACER t=1.013600e-07 channel=O0 index=1
+
+ SIM_ACK_LOW t=1.014700e-07 channel=O0 index=1
+
+ SIM_IACK_LOW t=1.017700e-07 index=1
+SIM_TX t=1.017700e-07 index=2 word=ffffff0e
+
+ SIM_RX t=1.019100e-07 channel=O0 index=2 expected=ffffff0e actual=ffffff0e PASS
+
+ SIM_IACK_HIGH t=1.021000e-07 index=2
+
+ SIM_SPACER t=1.022400e-07 channel=O0 index=2
+
+ SIM_ACK_LOW t=1.023500e-07 channel=O0 index=2
+
+ SIM_IACK_LOW t=1.027500e-07 index=2
+SIM_TX t=1.027500e-07 index=3 word=fffffffe
+
+ SIM_RX t=1.029100e-07 channel=O1 index=0 expected=fffffffe actual=fffffffe PASS
+
+ SIM_IACK_HIGH t=1.030900e-07 index=3
+
+ SIM_SPACER t=1.032200e-07 channel=O1 index=0
+
+ SIM_ACK_LOW t=1.033300e-07 channel=O1 index=0
+
+ SIM_IACK_LOW t=1.036100e-07 index=3
+SIM_TX t=1.036100e-07 index=4 word=fffffffe
+
+ SIM_RX t=1.037700e-07 channel=O1 index=1 expected=fffffffe actual=fffffffe PASS
+
+ SIM_IACK_HIGH t=1.039500e-07 index=4
+
+ SIM_SPACER t=1.040800e-07 channel=O1 index=1
+
+ SIM_ACK_LOW t=1.041900e-07 channel=O1 index=1
+
+ SIM_IACK_LOW t=1.044700e-07 index=4
+SIM_TX t=1.044700e-07 index=5 word=ffffffff
+
+ SIM_RX t=1.046300e-07 channel=O1 index=2 expected=ffffffff actual=ffffffff PASS
+
+ SIM_IACK_HIGH t=1.048100e-07 index=5
+
+ SIM_SPACER t=1.049400e-07 channel=O1 index=2
+
+ SIM_ACK_LOW t=1.050500e-07 channel=O1 index=2
+
+ SIM_IACK_LOW t=1.054900e-07 index=5
+SIM_ROUND t=1.054900e-07 inputs=6 O0=3 O1=3
+
+ SIM_IDLE_BEGIN t=1.254900e-07 reset=0.000000e+00
+
+ SIM_IDLE_END t=1.454900e-07 reset=0.000000e+00
+
+ SIM_PASS t=1.464900e-07 rounds=1 inputs=6 O0=3 O1=3
+
+
+          ***** job concluded
+ ******  
+ inputrouter bubble reshuffled: existing actsim sequences, four-phase feedback
+
+ ****** job statistics summary tnom=  25.000 temp=  27.000 ******
+  
+ ******  Machine Information  ******
+ CPU:
+ model name	: QEMU Virtual CPU version 2.5+
+ cpu MHz	: 2294.608
+ CPU(s)		: 16
+  
+ OS:
+ Linux version 4.18.0-553.129.1.el8_10.x86_64 (mockbuild@iad1-prod-build001.bld.equ.rockylinux.org) (gcc version 8.5.0 20210514 (Red Hat 8.5.0-28) (GCC)) #1 SMP Tue Jun 9 16:05:10 UTC 2026
+
+ System loadavg : 9.59 9.84 9.44 10/404 3295248
+
+
+  ******  HSPICE Threads Information  ******
+
+  Command Line Threads Count :     1
+  Available CPU Count        :    16
+  Actual Threads Count       :     1
+
+
+  ******  Circuit Statistics  ******
+  # nodes       =    6848 # elements   =    1494
+  # resistors   =       0 # capacitors =       0 # inductors   =       0
+  # mutual_inds =       0 # vccs       =       0 # vcvs        =       0
+  # cccs        =       0 # ccvs       =       0 # volt_srcs   =       2
+  # curr_srcs   =       0 # diodes     =       0 # bjts        =       0
+  # jfets       =       0 # mosfets    =    1491 # U elements  =       0
+  # T elements  =       0 # W elements =       0 # B elements  =       0
+  # S elements  =       0 # P elements =       0 # va device   =       1
+  # vector_srcs =       0 # N elements =       0
+
+
+  ******  Runtime Statistics (seconds)  ******
+
+  analysis           time    # points   tot. iter  conv.iter
+  op point           0.12           1          25
+  transient         37.19      200001       31010       15195 rev=         4
+  readin             3.56
+  errchk             0.07
+  setup              0.18
+  output             0.00
+
+
+           peak memory used        518.47 megabytes
+           total cpu time           41.14 seconds
+           total elapsed time       41.21 seconds
+           job started at     22:54:36 09/17/2026
+           job ended   at     22:55:18 09/17/2026
+           job total runtime        41.21 seconds
+
+
+ lic: Release hspice token(s) 
+ lic: total license checkout elapse time:        0.06(s)

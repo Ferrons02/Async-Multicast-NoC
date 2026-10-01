@@ -1,0 +1,161 @@
+import "QuadRouter/SUpdate.act";
+import "QuadRouter/ChildServer.act";
+import "commons/Merge.act";
+import "commons/Reg8.act";
+import "commons/Seq7.act";
+
+export defproc QuadRouter(
+    bool? reset;
+    ActiveDualRail4? I;
+    PassiveDualRail8? Cnt0;
+    PassiveDualRail8? Cnt1;
+    PassiveDualRail8? Cnt2;
+    PassiveDualRail8? Cnt3;
+    ActiveDualRail4! OC0;
+    ActiveDualRail4! OC1;
+    ActiveDualRail4! OC2;
+    ActiveDualRail4! OC3;
+    ActiveDualRail4! OD0;
+    ActiveDualRail4! OD1;
+    ActiveDualRail4! OD2;
+    ActiveDualRail4! OD3;
+    ActiveDualRail4! Ch
+)
+{
+
+    SUpdate update;
+    ChildServer child0, child1, child2, child3;
+    Merge<8,false> q0_merge, q1_merge, q2_merge, q3_merge;
+    Reg8 q0_reg, q1_reg, q2_reg, q3_reg;
+    Merge<4,false> od0, od1, od2, od3;
+    Seq7 seq;
+    update.reset = reset;
+    update.I.t = I.t;
+    update.I.f = I.f;
+    update.Ch = Ch;
+    update.A = seq.A0;
+    seq.reset = reset;
+    child0.reset = reset;
+    q0_reg.reset = reset;
+    child0.I.t = I.t;
+    child0.I.f = I.f;
+    child0.Cnt = Cnt0;
+    child0.Oc = OC0;
+    child0.A = seq.A1;
+    q0_merge.I0.t = update.W0.t;
+    q0_merge.I0.f = update.W0.f;
+    q0_merge.I0.a = update.W0.a;
+    q0_merge.I1.t = child0.W.t;
+    q0_merge.I1.f = child0.W.f;
+    q0_merge.I1.a = child0.W.a;
+    q0_reg.W.t = q0_merge.O.t;
+    q0_reg.W.f = q0_merge.O.f;
+    q0_reg.W.a = q0_merge.O.a;
+    q0_reg.R.t = child0.R.t;
+    q0_reg.R.f = child0.R.f;
+    q0_reg.R.req = child0.R.req;
+    od0.I0.t = update.Od0.t;
+    od0.I0.f = update.Od0.f;
+    od0.I0.a = update.Od0.a;
+    od0.I1.t = child0.Od.t;
+    od0.I1.f = child0.Od.f;
+    od0.I1.a = child0.Od.a;
+    od0.O.t = OD0.t;
+    od0.O.f = OD0.f;
+    od0.O.a = OD0.a;
+    child1.reset = reset;
+    q1_reg.reset = reset;
+    child1.I.t = I.t;
+    child1.I.f = I.f;
+    child1.Cnt = Cnt1;
+    child1.Oc = OC1;
+    child1.A = seq.A2;
+    q1_merge.I0.t = update.W1.t;
+    q1_merge.I0.f = update.W1.f;
+    q1_merge.I0.a = update.W1.a;
+    q1_merge.I1.t = child1.W.t;
+    q1_merge.I1.f = child1.W.f;
+    q1_merge.I1.a = child1.W.a;
+    q1_reg.W.t = q1_merge.O.t;
+    q1_reg.W.f = q1_merge.O.f;
+    q1_reg.W.a = q1_merge.O.a;
+    q1_reg.R.t = child1.R.t;
+    q1_reg.R.f = child1.R.f;
+    q1_reg.R.req = child1.R.req;
+    od1.I0.t = update.Od1.t;
+    od1.I0.f = update.Od1.f;
+    od1.I0.a = update.Od1.a;
+    od1.I1.t = child1.Od.t;
+    od1.I1.f = child1.Od.f;
+    od1.I1.a = child1.Od.a;
+    od1.O.t = OD1.t;
+    od1.O.f = OD1.f;
+    od1.O.a = OD1.a;
+    child2.reset = reset;
+    q2_reg.reset = reset;
+    child2.I.t = I.t;
+    child2.I.f = I.f;
+    child2.Cnt = Cnt2;
+    child2.Oc = OC2;
+    child2.A = seq.A3;
+    q2_merge.I0.t = update.W2.t;
+    q2_merge.I0.f = update.W2.f;
+    q2_merge.I0.a = update.W2.a;
+    q2_merge.I1.t = child2.W.t;
+    q2_merge.I1.f = child2.W.f;
+    q2_merge.I1.a = child2.W.a;
+    q2_reg.W.t = q2_merge.O.t;
+    q2_reg.W.f = q2_merge.O.f;
+    q2_reg.W.a = q2_merge.O.a;
+    q2_reg.R.t = child2.R.t;
+    q2_reg.R.f = child2.R.f;
+    q2_reg.R.req = child2.R.req;
+    od2.I0.t = update.Od2.t;
+    od2.I0.f = update.Od2.f;
+    od2.I0.a = update.Od2.a;
+    od2.I1.t = child2.Od.t;
+    od2.I1.f = child2.Od.f;
+    od2.I1.a = child2.Od.a;
+    od2.O.t = OD2.t;
+    od2.O.f = OD2.f;
+    od2.O.a = OD2.a;
+    child3.reset = reset;
+    q3_reg.reset = reset;
+    child3.I.t = I.t;
+    child3.I.f = I.f;
+    child3.Cnt = Cnt3;
+    child3.Oc = OC3;
+    child3.A = seq.A4;
+    q3_merge.I0.t = update.W3.t;
+    q3_merge.I0.f = update.W3.f;
+    q3_merge.I0.a = update.W3.a;
+    q3_merge.I1.t = child3.W.t;
+    q3_merge.I1.f = child3.W.f;
+    q3_merge.I1.a = child3.W.a;
+    q3_reg.W.t = q3_merge.O.t;
+    q3_reg.W.f = q3_merge.O.f;
+    q3_reg.W.a = q3_merge.O.a;
+    q3_reg.R.t = child3.R.t;
+    q3_reg.R.f = child3.R.f;
+    q3_reg.R.req = child3.R.req;
+    od3.I0.t = update.Od3.t;
+    od3.I0.f = update.Od3.f;
+    od3.I0.a = update.Od3.a;
+    od3.I1.t = child3.Od.t;
+    od3.I1.f = child3.Od.f;
+    od3.I1.a = child3.Od.a;
+    od3.O.t = OD3.t;
+    od3.O.f = OD3.f;
+    od3.O.a = OD3.a;
+
+    // Skip the final two actions with request-to-acknowledge loopbacks.
+    seq.A5.a = seq.A5.req;
+    seq.A6.a = seq.A6.req;
+
+    // Same shared acknowledgement OR, implemented as CMOS NOR plus inverter.
+    bool _ia;
+    prs {
+        ~(update.I.a | child0.I.a | child1.I.a | child2.I.a | child3.I.a) => _ia+
+        ~_ia => I.a+
+    }
+}

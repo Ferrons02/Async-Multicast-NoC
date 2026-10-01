@@ -1,0 +1,521 @@
+import "forks/InputRouter/InputRouter.act";
+import "forks/Serializer/Serializer.act";
+import "forks/QuadRouter/QuadRouter.act";
+import "forks/Counter/Counter.act";
+import "forks/Deserializer/Deserializer.act";
+import "forks/PayloadDispatch/PayloadDispatch.act";
+import "forks/commons/Merge.act";
+
+/*
+ * Topology and instance names follow src/MltcUnit.png.
+ * Diagram QR.Oc/Od, QR.C_h and PD.O0..O3 use the actual ports
+ * QR.OC/OD, QR.Ch and PD.C0..C3, respectively.
+ * Merge<32,true> uses bit 31 for acknowledgement and releases it on ~O.a.
+ * Cnt is a pull channel: QR drives req; CT supplies the eight data bits.
+ *
+ * ACT_PATH must include src/block. Reset is shared directly, as in the blocks.
+ * Every channel wire at this level, including external ports, has a CMOS inverter pair
+ * implementing its transport buffer: t/f follow the data direction; a/req travel in the reverse direction.
+ * Both transitions use the same source, following the existing fork-delay style.
+ */
+export defproc MltcUnit(
+    bool? reset;
+    ActiveDualRail32? I;
+    ActiveDualRail32! C0, C1, C2, C3
+)
+{
+    /* Logical holding-state senses are unchanged.
+     * Channel restoring inverters retain the public active-high encoding.
+     * inv_* nodes are combinational complements, not additional HSE state. */
+    bool inv_C0_a;
+    bool inv_C1_a;
+    bool inv_C2_a;
+    bool inv_C3_a;
+    bool inv_CT0_Cnt_f[8];
+    bool inv_CT0_Cnt_t[8];
+    bool inv_CT0_I_a;
+    bool inv_CT1_Cnt_f[8];
+    bool inv_CT1_Cnt_t[8];
+    bool inv_CT1_I_a;
+    bool inv_CT2_Cnt_f[8];
+    bool inv_CT2_Cnt_t[8];
+    bool inv_CT2_I_a;
+    bool inv_CT3_Cnt_f[8];
+    bool inv_CT3_Cnt_t[8];
+    bool inv_CT3_I_a;
+    bool inv_DS0_I_a;
+    bool inv_DS0_O_f[32];
+    bool inv_DS0_O_t[32];
+    bool inv_DS1_I_a;
+    bool inv_DS1_O_f[32];
+    bool inv_DS1_O_t[32];
+    bool inv_DS2_I_a;
+    bool inv_DS2_O_f[32];
+    bool inv_DS2_O_t[32];
+    bool inv_DS3_I_a;
+    bool inv_DS3_O_f[32];
+    bool inv_DS3_O_t[32];
+    bool inv_I_f[32];
+    bool inv_I_t[32];
+    bool inv_IR_I_a;
+    bool inv_IR_O0_f[32];
+    bool inv_IR_O0_t[32];
+    bool inv_IR_O1_f[32];
+    bool inv_IR_O1_t[32];
+    bool inv_M0_I0_a;
+    bool inv_M0_I1_a;
+    bool inv_M0_O_f[32];
+    bool inv_M0_O_t[32];
+    bool inv_M1_I0_a;
+    bool inv_M1_I1_a;
+    bool inv_M1_O_f[32];
+    bool inv_M1_O_t[32];
+    bool inv_M2_I0_a;
+    bool inv_M2_I1_a;
+    bool inv_M2_O_f[32];
+    bool inv_M2_O_t[32];
+    bool inv_M3_I0_a;
+    bool inv_M3_I1_a;
+    bool inv_M3_O_f[32];
+    bool inv_M3_O_t[32];
+    bool inv_PD_C0_f[32];
+    bool inv_PD_C0_t[32];
+    bool inv_PD_C1_f[32];
+    bool inv_PD_C1_t[32];
+    bool inv_PD_C2_f[32];
+    bool inv_PD_C2_t[32];
+    bool inv_PD_C3_f[32];
+    bool inv_PD_C3_t[32];
+    bool inv_PD_Ch_a;
+    bool inv_PD_I_a;
+    bool inv_QR_Ch_f[4];
+    bool inv_QR_Ch_t[4];
+    bool inv_QR_Cnt0_req;
+    bool inv_QR_Cnt1_req;
+    bool inv_QR_Cnt2_req;
+    bool inv_QR_Cnt3_req;
+    bool inv_QR_I_a;
+    bool inv_QR_OC0_f[4];
+    bool inv_QR_OC0_t[4];
+    bool inv_QR_OC1_f[4];
+    bool inv_QR_OC1_t[4];
+    bool inv_QR_OC2_f[4];
+    bool inv_QR_OC2_t[4];
+    bool inv_QR_OC3_f[4];
+    bool inv_QR_OC3_t[4];
+    bool inv_QR_OD0_f[4];
+    bool inv_QR_OD0_t[4];
+    bool inv_QR_OD1_f[4];
+    bool inv_QR_OD1_t[4];
+    bool inv_QR_OD2_f[4];
+    bool inv_QR_OD2_t[4];
+    bool inv_QR_OD3_f[4];
+    bool inv_QR_OD3_t[4];
+    bool inv_SE_I_a;
+    bool inv_SE_O_f[4];
+    bool inv_SE_O_t[4];
+
+    InputRouter IR;
+    Serializer SE;
+    QuadRouter QR;
+    Counter CT0, CT1, CT2, CT3;
+    Deserializer DS0, DS1, DS2, DS3;
+    PayloadDispatch PD;
+    Merge<32,true> M0, M1, M2, M3;
+
+    IR.reset = reset;
+    SE.reset = reset;
+    QR.reset = reset;
+    PD.reset = reset;
+    CT0.reset = reset;
+    DS0.reset = reset;
+    CT1.reset = reset;
+    DS1.reset = reset;
+    CT2.reset = reset;
+    DS2.reset = reset;
+    CT3.reset = reset;
+    DS3.reset = reset;
+
+    prs {
+        // Input classification.
+        (i:32:
+            ~inv_I_t[i] -> IR.I.t[i]+
+            inv_I_t[i] -> IR.I.t[i]-
+            ~inv_I_f[i] -> IR.I.f[i]+
+            inv_I_f[i] -> IR.I.f[i]-
+        )
+        ~inv_IR_I_a -> I.a+
+        inv_IR_I_a -> I.a-
+
+        // Routing words to serializer.
+        (i:32:
+            ~inv_IR_O0_t[i] -> SE.I.t[i]+
+            inv_IR_O0_t[i] -> SE.I.t[i]-
+            ~inv_IR_O0_f[i] -> SE.I.f[i]+
+            inv_IR_O0_f[i] -> SE.I.f[i]-
+        )
+        ~inv_SE_I_a -> IR.O0.a+
+        inv_SE_I_a -> IR.O0.a-
+
+        // Serialized routing nibbles.
+        (i:4:
+            ~inv_SE_O_t[i] -> QR.I.t[i]+
+            inv_SE_O_t[i] -> QR.I.t[i]-
+            ~inv_SE_O_f[i] -> QR.I.f[i]+
+            inv_SE_O_f[i] -> QR.I.f[i]-
+        )
+        ~inv_QR_I_a -> SE.O.a+
+        inv_QR_I_a -> SE.O.a-
+
+        // Payload words to dispatcher.
+        (i:32:
+            ~inv_IR_O1_t[i] -> PD.I.t[i]+
+            inv_IR_O1_t[i] -> PD.I.t[i]-
+            ~inv_IR_O1_f[i] -> PD.I.f[i]+
+            inv_IR_O1_f[i] -> PD.I.f[i]-
+        )
+        ~inv_PD_I_a -> IR.O1.a+
+        inv_PD_I_a -> IR.O1.a-
+
+        // Child-selection mask.
+        (i:4:
+            ~inv_QR_Ch_t[i] -> PD.Ch.t[i]+
+            inv_QR_Ch_t[i] -> PD.Ch.t[i]-
+            ~inv_QR_Ch_f[i] -> PD.Ch.f[i]+
+            inv_QR_Ch_f[i] -> PD.Ch.f[i]-
+        )
+        ~inv_PD_Ch_a -> QR.Ch.a+
+        inv_PD_Ch_a -> QR.Ch.a-
+
+        // Child 0: counter updates.
+        (i:4:
+            ~inv_QR_OC0_t[i] -> CT0.I.t[i]+
+            inv_QR_OC0_t[i] -> CT0.I.t[i]-
+            ~inv_QR_OC0_f[i] -> CT0.I.f[i]+
+            inv_QR_OC0_f[i] -> CT0.I.f[i]-
+        )
+        ~inv_CT0_I_a -> QR.OC0.a+
+        inv_CT0_I_a -> QR.OC0.a-
+
+        // Child 0: counter data to QR, request back to CT.
+        (i:8:
+            ~inv_CT0_Cnt_t[i] -> QR.Cnt0.t[i]+
+            inv_CT0_Cnt_t[i] -> QR.Cnt0.t[i]-
+            ~inv_CT0_Cnt_f[i] -> QR.Cnt0.f[i]+
+            inv_CT0_Cnt_f[i] -> QR.Cnt0.f[i]-
+        )
+        ~inv_QR_Cnt0_req -> CT0.Cnt.req+
+        inv_QR_Cnt0_req -> CT0.Cnt.req-
+
+        // Child 0: routing nibbles to deserializer.
+        (i:4:
+            ~inv_QR_OD0_t[i] -> DS0.I.t[i]+
+            inv_QR_OD0_t[i] -> DS0.I.t[i]-
+            ~inv_QR_OD0_f[i] -> DS0.I.f[i]+
+            inv_QR_OD0_f[i] -> DS0.I.f[i]-
+        )
+        ~inv_DS0_I_a -> QR.OD0.a+
+        inv_DS0_I_a -> QR.OD0.a-
+
+        // Child 0: reconstructed routing words.
+        (i:32:
+            ~inv_DS0_O_t[i] -> M0.I0.t[i]+
+            inv_DS0_O_t[i] -> M0.I0.t[i]-
+            ~inv_DS0_O_f[i] -> M0.I0.f[i]+
+            inv_DS0_O_f[i] -> M0.I0.f[i]-
+        )
+        ~inv_M0_I0_a -> DS0.O.a+
+        inv_M0_I0_a -> DS0.O.a-
+
+        // Child 0: dispatched payload words.
+        (i:32:
+            ~inv_PD_C0_t[i] -> M0.I1.t[i]+
+            inv_PD_C0_t[i] -> M0.I1.t[i]-
+            ~inv_PD_C0_f[i] -> M0.I1.f[i]+
+            inv_PD_C0_f[i] -> M0.I1.f[i]-
+        )
+        ~inv_M0_I1_a -> PD.C0.a+
+        inv_M0_I1_a -> PD.C0.a-
+
+        // Child 0: merged output.
+        (i:32:
+            ~inv_M0_O_t[i] -> C0.t[i]+
+            inv_M0_O_t[i] -> C0.t[i]-
+            ~inv_M0_O_f[i] -> C0.f[i]+
+            inv_M0_O_f[i] -> C0.f[i]-
+        )
+        ~inv_C0_a -> M0.O.a+
+        inv_C0_a -> M0.O.a-
+
+        // Child 1: counter updates.
+        (i:4:
+            ~inv_QR_OC1_t[i] -> CT1.I.t[i]+
+            inv_QR_OC1_t[i] -> CT1.I.t[i]-
+            ~inv_QR_OC1_f[i] -> CT1.I.f[i]+
+            inv_QR_OC1_f[i] -> CT1.I.f[i]-
+        )
+        ~inv_CT1_I_a -> QR.OC1.a+
+        inv_CT1_I_a -> QR.OC1.a-
+
+        // Child 1: counter data to QR, request back to CT.
+        (i:8:
+            ~inv_CT1_Cnt_t[i] -> QR.Cnt1.t[i]+
+            inv_CT1_Cnt_t[i] -> QR.Cnt1.t[i]-
+            ~inv_CT1_Cnt_f[i] -> QR.Cnt1.f[i]+
+            inv_CT1_Cnt_f[i] -> QR.Cnt1.f[i]-
+        )
+        ~inv_QR_Cnt1_req -> CT1.Cnt.req+
+        inv_QR_Cnt1_req -> CT1.Cnt.req-
+
+        // Child 1: routing nibbles to deserializer.
+        (i:4:
+            ~inv_QR_OD1_t[i] -> DS1.I.t[i]+
+            inv_QR_OD1_t[i] -> DS1.I.t[i]-
+            ~inv_QR_OD1_f[i] -> DS1.I.f[i]+
+            inv_QR_OD1_f[i] -> DS1.I.f[i]-
+        )
+        ~inv_DS1_I_a -> QR.OD1.a+
+        inv_DS1_I_a -> QR.OD1.a-
+
+        // Child 1: reconstructed routing words.
+        (i:32:
+            ~inv_DS1_O_t[i] -> M1.I0.t[i]+
+            inv_DS1_O_t[i] -> M1.I0.t[i]-
+            ~inv_DS1_O_f[i] -> M1.I0.f[i]+
+            inv_DS1_O_f[i] -> M1.I0.f[i]-
+        )
+        ~inv_M1_I0_a -> DS1.O.a+
+        inv_M1_I0_a -> DS1.O.a-
+
+        // Child 1: dispatched payload words.
+        (i:32:
+            ~inv_PD_C1_t[i] -> M1.I1.t[i]+
+            inv_PD_C1_t[i] -> M1.I1.t[i]-
+            ~inv_PD_C1_f[i] -> M1.I1.f[i]+
+            inv_PD_C1_f[i] -> M1.I1.f[i]-
+        )
+        ~inv_M1_I1_a -> PD.C1.a+
+        inv_M1_I1_a -> PD.C1.a-
+
+        // Child 1: merged output.
+        (i:32:
+            ~inv_M1_O_t[i] -> C1.t[i]+
+            inv_M1_O_t[i] -> C1.t[i]-
+            ~inv_M1_O_f[i] -> C1.f[i]+
+            inv_M1_O_f[i] -> C1.f[i]-
+        )
+        ~inv_C1_a -> M1.O.a+
+        inv_C1_a -> M1.O.a-
+
+        // Child 2: counter updates.
+        (i:4:
+            ~inv_QR_OC2_t[i] -> CT2.I.t[i]+
+            inv_QR_OC2_t[i] -> CT2.I.t[i]-
+            ~inv_QR_OC2_f[i] -> CT2.I.f[i]+
+            inv_QR_OC2_f[i] -> CT2.I.f[i]-
+        )
+        ~inv_CT2_I_a -> QR.OC2.a+
+        inv_CT2_I_a -> QR.OC2.a-
+
+        // Child 2: counter data to QR, request back to CT.
+        (i:8:
+            ~inv_CT2_Cnt_t[i] -> QR.Cnt2.t[i]+
+            inv_CT2_Cnt_t[i] -> QR.Cnt2.t[i]-
+            ~inv_CT2_Cnt_f[i] -> QR.Cnt2.f[i]+
+            inv_CT2_Cnt_f[i] -> QR.Cnt2.f[i]-
+        )
+        ~inv_QR_Cnt2_req -> CT2.Cnt.req+
+        inv_QR_Cnt2_req -> CT2.Cnt.req-
+
+        // Child 2: routing nibbles to deserializer.
+        (i:4:
+            ~inv_QR_OD2_t[i] -> DS2.I.t[i]+
+            inv_QR_OD2_t[i] -> DS2.I.t[i]-
+            ~inv_QR_OD2_f[i] -> DS2.I.f[i]+
+            inv_QR_OD2_f[i] -> DS2.I.f[i]-
+        )
+        ~inv_DS2_I_a -> QR.OD2.a+
+        inv_DS2_I_a -> QR.OD2.a-
+
+        // Child 2: reconstructed routing words.
+        (i:32:
+            ~inv_DS2_O_t[i] -> M2.I0.t[i]+
+            inv_DS2_O_t[i] -> M2.I0.t[i]-
+            ~inv_DS2_O_f[i] -> M2.I0.f[i]+
+            inv_DS2_O_f[i] -> M2.I0.f[i]-
+        )
+        ~inv_M2_I0_a -> DS2.O.a+
+        inv_M2_I0_a -> DS2.O.a-
+
+        // Child 2: dispatched payload words.
+        (i:32:
+            ~inv_PD_C2_t[i] -> M2.I1.t[i]+
+            inv_PD_C2_t[i] -> M2.I1.t[i]-
+            ~inv_PD_C2_f[i] -> M2.I1.f[i]+
+            inv_PD_C2_f[i] -> M2.I1.f[i]-
+        )
+        ~inv_M2_I1_a -> PD.C2.a+
+        inv_M2_I1_a -> PD.C2.a-
+
+        // Child 2: merged output.
+        (i:32:
+            ~inv_M2_O_t[i] -> C2.t[i]+
+            inv_M2_O_t[i] -> C2.t[i]-
+            ~inv_M2_O_f[i] -> C2.f[i]+
+            inv_M2_O_f[i] -> C2.f[i]-
+        )
+        ~inv_C2_a -> M2.O.a+
+        inv_C2_a -> M2.O.a-
+
+        // Child 3: counter updates.
+        (i:4:
+            ~inv_QR_OC3_t[i] -> CT3.I.t[i]+
+            inv_QR_OC3_t[i] -> CT3.I.t[i]-
+            ~inv_QR_OC3_f[i] -> CT3.I.f[i]+
+            inv_QR_OC3_f[i] -> CT3.I.f[i]-
+        )
+        ~inv_CT3_I_a -> QR.OC3.a+
+        inv_CT3_I_a -> QR.OC3.a-
+
+        // Child 3: counter data to QR, request back to CT.
+        (i:8:
+            ~inv_CT3_Cnt_t[i] -> QR.Cnt3.t[i]+
+            inv_CT3_Cnt_t[i] -> QR.Cnt3.t[i]-
+            ~inv_CT3_Cnt_f[i] -> QR.Cnt3.f[i]+
+            inv_CT3_Cnt_f[i] -> QR.Cnt3.f[i]-
+        )
+        ~inv_QR_Cnt3_req -> CT3.Cnt.req+
+        inv_QR_Cnt3_req -> CT3.Cnt.req-
+
+        // Child 3: routing nibbles to deserializer.
+        (i:4:
+            ~inv_QR_OD3_t[i] -> DS3.I.t[i]+
+            inv_QR_OD3_t[i] -> DS3.I.t[i]-
+            ~inv_QR_OD3_f[i] -> DS3.I.f[i]+
+            inv_QR_OD3_f[i] -> DS3.I.f[i]-
+        )
+        ~inv_DS3_I_a -> QR.OD3.a+
+        inv_DS3_I_a -> QR.OD3.a-
+
+        // Child 3: reconstructed routing words.
+        (i:32:
+            ~inv_DS3_O_t[i] -> M3.I0.t[i]+
+            inv_DS3_O_t[i] -> M3.I0.t[i]-
+            ~inv_DS3_O_f[i] -> M3.I0.f[i]+
+            inv_DS3_O_f[i] -> M3.I0.f[i]-
+        )
+        ~inv_M3_I0_a -> DS3.O.a+
+        inv_M3_I0_a -> DS3.O.a-
+
+        // Child 3: dispatched payload words.
+        (i:32:
+            ~inv_PD_C3_t[i] -> M3.I1.t[i]+
+            inv_PD_C3_t[i] -> M3.I1.t[i]-
+            ~inv_PD_C3_f[i] -> M3.I1.f[i]+
+            inv_PD_C3_f[i] -> M3.I1.f[i]-
+        )
+        ~inv_M3_I1_a -> PD.C3.a+
+        inv_M3_I1_a -> PD.C3.a-
+
+        // Child 3: merged output.
+        (i:32:
+            ~inv_M3_O_t[i] -> C3.t[i]+
+            inv_M3_O_t[i] -> C3.t[i]-
+            ~inv_M3_O_f[i] -> C3.f[i]+
+            inv_M3_O_f[i] -> C3.f[i]-
+        )
+        ~inv_C3_a -> M3.O.a+
+        inv_C3_a -> M3.O.a-
+    }
+
+    // Residual CMOS inverters; no independent HSE sequencing state.
+    prs {
+        ~C0.a => inv_C0_a+
+        ~C1.a => inv_C1_a+
+        ~C2.a => inv_C2_a+
+        ~C3.a => inv_C3_a+
+        (bi:8: ~CT0.Cnt.f[bi] => inv_CT0_Cnt_f[bi]+)
+        (bi:8: ~CT0.Cnt.t[bi] => inv_CT0_Cnt_t[bi]+)
+        ~CT0.I.a => inv_CT0_I_a+
+        (bi:8: ~CT1.Cnt.f[bi] => inv_CT1_Cnt_f[bi]+)
+        (bi:8: ~CT1.Cnt.t[bi] => inv_CT1_Cnt_t[bi]+)
+        ~CT1.I.a => inv_CT1_I_a+
+        (bi:8: ~CT2.Cnt.f[bi] => inv_CT2_Cnt_f[bi]+)
+        (bi:8: ~CT2.Cnt.t[bi] => inv_CT2_Cnt_t[bi]+)
+        ~CT2.I.a => inv_CT2_I_a+
+        (bi:8: ~CT3.Cnt.f[bi] => inv_CT3_Cnt_f[bi]+)
+        (bi:8: ~CT3.Cnt.t[bi] => inv_CT3_Cnt_t[bi]+)
+        ~CT3.I.a => inv_CT3_I_a+
+        ~DS0.I.a => inv_DS0_I_a+
+        (bi:32: ~DS0.O.f[bi] => inv_DS0_O_f[bi]+)
+        (bi:32: ~DS0.O.t[bi] => inv_DS0_O_t[bi]+)
+        ~DS1.I.a => inv_DS1_I_a+
+        (bi:32: ~DS1.O.f[bi] => inv_DS1_O_f[bi]+)
+        (bi:32: ~DS1.O.t[bi] => inv_DS1_O_t[bi]+)
+        ~DS2.I.a => inv_DS2_I_a+
+        (bi:32: ~DS2.O.f[bi] => inv_DS2_O_f[bi]+)
+        (bi:32: ~DS2.O.t[bi] => inv_DS2_O_t[bi]+)
+        ~DS3.I.a => inv_DS3_I_a+
+        (bi:32: ~DS3.O.f[bi] => inv_DS3_O_f[bi]+)
+        (bi:32: ~DS3.O.t[bi] => inv_DS3_O_t[bi]+)
+        (bi:32: ~I.f[bi] => inv_I_f[bi]+)
+        (bi:32: ~I.t[bi] => inv_I_t[bi]+)
+        ~IR.I.a => inv_IR_I_a+
+        (bi:32: ~IR.O0.f[bi] => inv_IR_O0_f[bi]+)
+        (bi:32: ~IR.O0.t[bi] => inv_IR_O0_t[bi]+)
+        (bi:32: ~IR.O1.f[bi] => inv_IR_O1_f[bi]+)
+        (bi:32: ~IR.O1.t[bi] => inv_IR_O1_t[bi]+)
+        ~M0.I0.a => inv_M0_I0_a+
+        ~M0.I1.a => inv_M0_I1_a+
+        (bi:32: ~M0.O.f[bi] => inv_M0_O_f[bi]+)
+        (bi:32: ~M0.O.t[bi] => inv_M0_O_t[bi]+)
+        ~M1.I0.a => inv_M1_I0_a+
+        ~M1.I1.a => inv_M1_I1_a+
+        (bi:32: ~M1.O.f[bi] => inv_M1_O_f[bi]+)
+        (bi:32: ~M1.O.t[bi] => inv_M1_O_t[bi]+)
+        ~M2.I0.a => inv_M2_I0_a+
+        ~M2.I1.a => inv_M2_I1_a+
+        (bi:32: ~M2.O.f[bi] => inv_M2_O_f[bi]+)
+        (bi:32: ~M2.O.t[bi] => inv_M2_O_t[bi]+)
+        ~M3.I0.a => inv_M3_I0_a+
+        ~M3.I1.a => inv_M3_I1_a+
+        (bi:32: ~M3.O.f[bi] => inv_M3_O_f[bi]+)
+        (bi:32: ~M3.O.t[bi] => inv_M3_O_t[bi]+)
+        (bi:32: ~PD.C0.f[bi] => inv_PD_C0_f[bi]+)
+        (bi:32: ~PD.C0.t[bi] => inv_PD_C0_t[bi]+)
+        (bi:32: ~PD.C1.f[bi] => inv_PD_C1_f[bi]+)
+        (bi:32: ~PD.C1.t[bi] => inv_PD_C1_t[bi]+)
+        (bi:32: ~PD.C2.f[bi] => inv_PD_C2_f[bi]+)
+        (bi:32: ~PD.C2.t[bi] => inv_PD_C2_t[bi]+)
+        (bi:32: ~PD.C3.f[bi] => inv_PD_C3_f[bi]+)
+        (bi:32: ~PD.C3.t[bi] => inv_PD_C3_t[bi]+)
+        ~PD.Ch.a => inv_PD_Ch_a+
+        ~PD.I.a => inv_PD_I_a+
+        (bi:4: ~QR.Ch.f[bi] => inv_QR_Ch_f[bi]+)
+        (bi:4: ~QR.Ch.t[bi] => inv_QR_Ch_t[bi]+)
+        ~QR.Cnt0.req => inv_QR_Cnt0_req+
+        ~QR.Cnt1.req => inv_QR_Cnt1_req+
+        ~QR.Cnt2.req => inv_QR_Cnt2_req+
+        ~QR.Cnt3.req => inv_QR_Cnt3_req+
+        ~QR.I.a => inv_QR_I_a+
+        (bi:4: ~QR.OC0.f[bi] => inv_QR_OC0_f[bi]+)
+        (bi:4: ~QR.OC0.t[bi] => inv_QR_OC0_t[bi]+)
+        (bi:4: ~QR.OC1.f[bi] => inv_QR_OC1_f[bi]+)
+        (bi:4: ~QR.OC1.t[bi] => inv_QR_OC1_t[bi]+)
+        (bi:4: ~QR.OC2.f[bi] => inv_QR_OC2_f[bi]+)
+        (bi:4: ~QR.OC2.t[bi] => inv_QR_OC2_t[bi]+)
+        (bi:4: ~QR.OC3.f[bi] => inv_QR_OC3_f[bi]+)
+        (bi:4: ~QR.OC3.t[bi] => inv_QR_OC3_t[bi]+)
+        (bi:4: ~QR.OD0.f[bi] => inv_QR_OD0_f[bi]+)
+        (bi:4: ~QR.OD0.t[bi] => inv_QR_OD0_t[bi]+)
+        (bi:4: ~QR.OD1.f[bi] => inv_QR_OD1_f[bi]+)
+        (bi:4: ~QR.OD1.t[bi] => inv_QR_OD1_t[bi]+)
+        (bi:4: ~QR.OD2.f[bi] => inv_QR_OD2_f[bi]+)
+        (bi:4: ~QR.OD2.t[bi] => inv_QR_OD2_t[bi]+)
+        (bi:4: ~QR.OD3.f[bi] => inv_QR_OD3_f[bi]+)
+        (bi:4: ~QR.OD3.t[bi] => inv_QR_OD3_t[bi]+)
+        ~SE.I.a => inv_SE_I_a+
+        (bi:4: ~SE.O.f[bi] => inv_SE_O_f[bi]+)
+        (bi:4: ~SE.O.t[bi] => inv_SE_O_t[bi]+)
+    }
+}

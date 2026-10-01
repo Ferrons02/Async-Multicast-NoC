@@ -1,0 +1,85 @@
+import "commons/Channels.act";
+
+/* Faithful transcription of the user's bubble-reshuffled PRS, 2026-09-14.
+ * LaTeX _i_a and _o_j{t,f} map to n_I_a and n_Oj_{t,f} (holding nodes).
+ * _w_1 maps to inv_w_1 (holding node); w_1 is restored by its inverter.
+ * The other underscored signals map to the combinational inv_* nodes below.
+ * r maps to reset. Bit-13 false-rail reset follows the user's correction:
+ * (~I.f[13] & ~s) | (~n_I_a & ~inv_s) | ~inv_reset, on O0 and O1.
+ */
+export defproc UpdownSel(bool? reset; ActiveDualRail32? I; ActiveDualRail32! O0, O1)
+{
+    bool p, s, a, w_0i, w_0, w_1;
+    bool n_I_a, inv_w_1;
+    bool n_O0_t[32], n_O0_f[32], n_O1_t[32], n_O1_f[32];
+    bool inv_s, inv_reset, inv_p, inv_a, inv_w_0i, inv_w_0;
+    bool inv_I_t31, inv_I_f31, inv_I_f0;
+
+    prs {
+        ((~inv_I_t31 & ~inv_s) | ~inv_reset) -> p+
+        (I.f[31] & s) -> p-
+        (~inv_s & ((~inv_I_t31 & ~inv_p) | (~inv_I_f31 & ~p))) -> w_0i+
+        ((inv_s & (O0.a | O1.a)) | reset) -> w_0i-
+
+        (~n_I_a & (~O0.a & ~O1.a) & ((~inv_s & ~inv_w_0i) | (~s & (~inv_w_0 | ~inv_w_1)))) -> a+
+        (((inv_w_1 & inv_w_0) & ((w_0i & inv_s) | inv_w_0i)) | reset) -> a-
+        (~s & ~inv_I_f0) -> w_0+
+        ((inv_s & a) | reset) -> w_0-
+        (inv_s & I.t[0]) -> inv_w_1-
+        ((~inv_s & ~inv_a) | ~inv_reset) -> inv_w_1+
+        ((~inv_w_1 & ~inv_a) | ~inv_reset) -> s+
+        (w_0i & a) -> s-
+
+        ((O0.a | O1.a) & ((inv_s & (inv_w_0i & (w_1 | w_0))) | s)) -> n_I_a-
+        ((~a & (~w_0 & ~w_1) & ((~inv_w_0i & ~s) | ~w_0i)) | ~inv_reset) -> n_I_a+
+
+        (k:14..31:
+            (p & ((I.t[k] & inv_s) | (I.t[k-1] & s & w_0i))) -> n_O0_t[k]-
+            ((~I.t[k] & ~s) | (~I.t[k-1] & ~inv_s)) -> n_O0_t[k]+
+            (p & ((I.f[k] & inv_s) | (I.f[k-1] & s & w_0i))) -> n_O0_f[k]-
+            ((~I.f[k] & ~s) | (~I.f[k-1] & ~inv_s)) -> n_O0_f[k]+
+            (inv_p & ((I.t[k] & inv_s) | (I.t[k-1] & s & w_0i))) -> n_O1_t[k]-
+            ((~I.t[k] & ~s) | (~I.t[k-1] & ~inv_s)) -> n_O1_t[k]+
+            (inv_p & ((I.f[k] & inv_s) | (I.f[k-1] & s & w_0i))) -> n_O1_f[k]-
+            ((~I.f[k] & ~s) | (~I.f[k-1] & ~inv_s)) -> n_O1_f[k]+
+        )
+
+        (p & I.t[13] & inv_s) -> n_O0_t[13]-
+        ((~I.t[13] & ~s) | ~inv_reset) -> n_O0_t[13]+
+        (p & ((I.f[13] & inv_s) | (n_I_a & w_0i & s))) -> n_O0_f[13]-
+        ((~I.f[13] & ~s) | (~n_I_a & ~inv_s) | ~inv_reset) -> n_O0_f[13]+
+        (inv_p & I.t[13] & inv_s) -> n_O1_t[13]-
+        ((~I.t[13] & ~s) | ~inv_reset) -> n_O1_t[13]+
+        (inv_p & ((I.f[13] & inv_s) | (n_I_a & w_0i & s))) -> n_O1_f[13]-
+        ((~I.f[13] & ~s) | (~n_I_a & ~inv_s) | ~inv_reset) -> n_O1_f[13]+
+
+        (k:0..12:
+            (p & I.t[k] & (inv_s | (s & w_0i))) -> n_O0_t[k]-
+            ~I.t[k] -> n_O0_t[k]+
+            (p & I.f[k] & (inv_s | (s & w_0i))) -> n_O0_f[k]-
+            ~I.f[k] -> n_O0_f[k]+
+            (inv_p & I.t[k] & (inv_s | (s & w_0i))) -> n_O1_t[k]-
+            ~I.t[k] -> n_O1_t[k]+
+            (inv_p & I.f[k] & (inv_s | (s & w_0i))) -> n_O1_f[k]-
+            ~I.f[k] -> n_O1_f[k]+
+        )
+
+        ~s => inv_s+
+        ~reset => inv_reset+
+        ~p => inv_p+
+        ~a => inv_a+
+        ~w_0i => inv_w_0i+
+        ~w_0 => inv_w_0+
+        ~inv_w_1 => w_1+
+        ~I.t[31] => inv_I_t31+
+        ~I.f[31] => inv_I_f31+
+        ~I.f[0] => inv_I_f0+
+        ~n_I_a => I.a+
+        (k:0..31:
+            ~n_O0_t[k] => O0.t[k]+
+            ~n_O0_f[k] => O0.f[k]+
+            ~n_O1_t[k] => O1.t[k]+
+            ~n_O1_f[k] => O1.f[k]+
+        )
+    }
+}

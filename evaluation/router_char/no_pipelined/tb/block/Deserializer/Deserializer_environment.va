@@ -1,0 +1,350 @@
+// One reference round, concurrent sender and receiver from tb_Deserializer.act.
+// Inputs: F,F,0,0,0,F,F,F,F,F,F,F,F,F,F,0.
+// Expected outputs: FF000002, FFFFFFF2, FFF00002.
+`include "disciplines.vams"
+module deserializer_environment(
+    reset,
+    I_t_0,
+    I_t_1,
+    I_t_2,
+    I_t_3,
+    I_f_0,
+    I_f_1,
+    I_f_2,
+    I_f_3,
+    I_a,
+    O_t_0,
+    O_t_1,
+    O_t_2,
+    O_t_3,
+    O_t_4,
+    O_t_5,
+    O_t_6,
+    O_t_7,
+    O_t_8,
+    O_t_9,
+    O_t_10,
+    O_t_11,
+    O_t_12,
+    O_t_13,
+    O_t_14,
+    O_t_15,
+    O_t_16,
+    O_t_17,
+    O_t_18,
+    O_t_19,
+    O_t_20,
+    O_t_21,
+    O_t_22,
+    O_t_23,
+    O_t_24,
+    O_t_25,
+    O_t_26,
+    O_t_27,
+    O_t_28,
+    O_t_29,
+    O_t_30,
+    O_t_31,
+    O_f_0,
+    O_f_1,
+    O_f_2,
+    O_f_3,
+    O_f_4,
+    O_f_5,
+    O_f_6,
+    O_f_7,
+    O_f_8,
+    O_f_9,
+    O_f_10,
+    O_f_11,
+    O_f_12,
+    O_f_13,
+    O_f_14,
+    O_f_15,
+    O_f_16,
+    O_f_17,
+    O_f_18,
+    O_f_19,
+    O_f_20,
+    O_f_21,
+    O_f_22,
+    O_f_23,
+    O_f_24,
+    O_f_25,
+    O_f_26,
+    O_f_27,
+    O_f_28,
+    O_f_29,
+    O_f_30,
+    O_f_31,
+    O_a,
+    done,
+    failed);
+inout reset, I_t_0, I_t_1, I_t_2, I_t_3, I_f_0, I_f_1, I_f_2, I_f_3, I_a, O_t_0, O_t_1, O_t_2, O_t_3, O_t_4, O_t_5, O_t_6, O_t_7, O_t_8, O_t_9, O_t_10, O_t_11, O_t_12, O_t_13, O_t_14, O_t_15, O_t_16, O_t_17, O_t_18, O_t_19, O_t_20, O_t_21, O_t_22, O_t_23, O_t_24, O_t_25, O_t_26, O_t_27, O_t_28, O_t_29, O_t_30, O_t_31, O_f_0, O_f_1, O_f_2, O_f_3, O_f_4, O_f_5, O_f_6, O_f_7, O_f_8, O_f_9, O_f_10, O_f_11, O_f_12, O_f_13, O_f_14, O_f_15, O_f_16, O_f_17, O_f_18, O_f_19, O_f_20, O_f_21, O_f_22, O_f_23, O_f_24, O_f_25, O_f_26, O_f_27, O_f_28, O_f_29, O_f_30, O_f_31, O_a, done, failed;
+electrical reset, I_t_0, I_t_1, I_t_2, I_t_3, I_f_0, I_f_1, I_f_2, I_f_3, I_a, O_t_0, O_t_1, O_t_2, O_t_3, O_t_4, O_t_5, O_t_6, O_t_7, O_t_8, O_t_9, O_t_10, O_t_11, O_t_12, O_t_13, O_t_14, O_t_15, O_t_16, O_t_17, O_t_18, O_t_19, O_t_20, O_t_21, O_t_22, O_t_23, O_t_24, O_t_25, O_t_26, O_t_27, O_t_28, O_t_29, O_t_30, O_t_31, O_f_0, O_f_1, O_f_2, O_f_3, O_f_4, O_f_5, O_f_6, O_f_7, O_f_8, O_f_9, O_f_10, O_f_11, O_f_12, O_f_13, O_f_14, O_f_15, O_f_16, O_f_17, O_f_18, O_f_19, O_f_20, O_f_21, O_f_22, O_f_23, O_f_24, O_f_25, O_f_26, O_f_27, O_f_28, O_f_29, O_f_30, O_f_31, O_a, done, failed;
+parameter real SUPPLY=0.0;
+parameter real TICK=10p from (0:inf);
+parameter real TD=100p from (0:inf);
+parameter real EDGE=10p from (0:inf);
+parameter real STOP_TIME=2u from (0:inf);
+integer active, finished, failure, reported;
+integer tx_index, tx_phase, tx_valid, tx_word;
+integer rx_index, rx_phase, ack, valid_word, spacer, illegal;
+integer word_hi, word_lo, expected_hi, expected_lo, input_spacer;
+real threshold, stop_after;
+// Supply-current sampling continues after the functional round, with reset low.
+parameter real IDLE_SETTLE=20n from (0:inf);
+parameter real IDLE_WINDOW=20n from (0:inf);
+parameter real IDLE_MARGIN=1n from (0:inf);
+integer idle_started, idle_completed;
+real idle_start;
+analog begin
+  @(initial_step) begin
+    idle_start=-1; idle_started=0; idle_completed=0;
+    active=0; finished=0; failure=0; reported=0;
+    tx_index=0; tx_phase=0; tx_valid=0; tx_word=0;
+    rx_index=0; rx_phase=0; ack=0; expected_hi=0; expected_lo=0;
+    threshold=0.5*SUPPLY; stop_after=-1;
+    if (SUPPLY<=0) begin failure=1; $display("SIM_ERROR reason=invalid_supply"); end
+  end
+  @(timer(TICK,TICK)) begin
+    valid_word=1; spacer=1; illegal=0; word_hi=0; word_lo=0; input_spacer=1;
+    if (V(I_t_0)>=threshold || V(I_f_0)>=threshold) input_spacer=0;
+    if (V(I_t_1)>=threshold || V(I_f_1)>=threshold) input_spacer=0;
+    if (V(I_t_2)>=threshold || V(I_f_2)>=threshold) input_spacer=0;
+    if (V(I_t_3)>=threshold || V(I_f_3)>=threshold) input_spacer=0;
+    if (V(O_t_0)<threshold && V(O_f_0)<threshold) valid_word=0;
+    if (V(O_t_0)>=threshold || V(O_f_0)>=threshold) spacer=0;
+    if (V(O_t_0)>=threshold && V(O_f_0)>=threshold) illegal=1;
+    if (V(O_t_0)>=threshold) word_lo=word_lo | (1 << 0);
+    if (V(O_t_1)<threshold && V(O_f_1)<threshold) valid_word=0;
+    if (V(O_t_1)>=threshold || V(O_f_1)>=threshold) spacer=0;
+    if (V(O_t_1)>=threshold && V(O_f_1)>=threshold) illegal=1;
+    if (V(O_t_1)>=threshold) word_lo=word_lo | (1 << 1);
+    if (V(O_t_2)<threshold && V(O_f_2)<threshold) valid_word=0;
+    if (V(O_t_2)>=threshold || V(O_f_2)>=threshold) spacer=0;
+    if (V(O_t_2)>=threshold && V(O_f_2)>=threshold) illegal=1;
+    if (V(O_t_2)>=threshold) word_lo=word_lo | (1 << 2);
+    if (V(O_t_3)<threshold && V(O_f_3)<threshold) valid_word=0;
+    if (V(O_t_3)>=threshold || V(O_f_3)>=threshold) spacer=0;
+    if (V(O_t_3)>=threshold && V(O_f_3)>=threshold) illegal=1;
+    if (V(O_t_3)>=threshold) word_lo=word_lo | (1 << 3);
+    if (V(O_t_4)<threshold && V(O_f_4)<threshold) valid_word=0;
+    if (V(O_t_4)>=threshold || V(O_f_4)>=threshold) spacer=0;
+    if (V(O_t_4)>=threshold && V(O_f_4)>=threshold) illegal=1;
+    if (V(O_t_4)>=threshold) word_lo=word_lo | (1 << 4);
+    if (V(O_t_5)<threshold && V(O_f_5)<threshold) valid_word=0;
+    if (V(O_t_5)>=threshold || V(O_f_5)>=threshold) spacer=0;
+    if (V(O_t_5)>=threshold && V(O_f_5)>=threshold) illegal=1;
+    if (V(O_t_5)>=threshold) word_lo=word_lo | (1 << 5);
+    if (V(O_t_6)<threshold && V(O_f_6)<threshold) valid_word=0;
+    if (V(O_t_6)>=threshold || V(O_f_6)>=threshold) spacer=0;
+    if (V(O_t_6)>=threshold && V(O_f_6)>=threshold) illegal=1;
+    if (V(O_t_6)>=threshold) word_lo=word_lo | (1 << 6);
+    if (V(O_t_7)<threshold && V(O_f_7)<threshold) valid_word=0;
+    if (V(O_t_7)>=threshold || V(O_f_7)>=threshold) spacer=0;
+    if (V(O_t_7)>=threshold && V(O_f_7)>=threshold) illegal=1;
+    if (V(O_t_7)>=threshold) word_lo=word_lo | (1 << 7);
+    if (V(O_t_8)<threshold && V(O_f_8)<threshold) valid_word=0;
+    if (V(O_t_8)>=threshold || V(O_f_8)>=threshold) spacer=0;
+    if (V(O_t_8)>=threshold && V(O_f_8)>=threshold) illegal=1;
+    if (V(O_t_8)>=threshold) word_lo=word_lo | (1 << 8);
+    if (V(O_t_9)<threshold && V(O_f_9)<threshold) valid_word=0;
+    if (V(O_t_9)>=threshold || V(O_f_9)>=threshold) spacer=0;
+    if (V(O_t_9)>=threshold && V(O_f_9)>=threshold) illegal=1;
+    if (V(O_t_9)>=threshold) word_lo=word_lo | (1 << 9);
+    if (V(O_t_10)<threshold && V(O_f_10)<threshold) valid_word=0;
+    if (V(O_t_10)>=threshold || V(O_f_10)>=threshold) spacer=0;
+    if (V(O_t_10)>=threshold && V(O_f_10)>=threshold) illegal=1;
+    if (V(O_t_10)>=threshold) word_lo=word_lo | (1 << 10);
+    if (V(O_t_11)<threshold && V(O_f_11)<threshold) valid_word=0;
+    if (V(O_t_11)>=threshold || V(O_f_11)>=threshold) spacer=0;
+    if (V(O_t_11)>=threshold && V(O_f_11)>=threshold) illegal=1;
+    if (V(O_t_11)>=threshold) word_lo=word_lo | (1 << 11);
+    if (V(O_t_12)<threshold && V(O_f_12)<threshold) valid_word=0;
+    if (V(O_t_12)>=threshold || V(O_f_12)>=threshold) spacer=0;
+    if (V(O_t_12)>=threshold && V(O_f_12)>=threshold) illegal=1;
+    if (V(O_t_12)>=threshold) word_lo=word_lo | (1 << 12);
+    if (V(O_t_13)<threshold && V(O_f_13)<threshold) valid_word=0;
+    if (V(O_t_13)>=threshold || V(O_f_13)>=threshold) spacer=0;
+    if (V(O_t_13)>=threshold && V(O_f_13)>=threshold) illegal=1;
+    if (V(O_t_13)>=threshold) word_lo=word_lo | (1 << 13);
+    if (V(O_t_14)<threshold && V(O_f_14)<threshold) valid_word=0;
+    if (V(O_t_14)>=threshold || V(O_f_14)>=threshold) spacer=0;
+    if (V(O_t_14)>=threshold && V(O_f_14)>=threshold) illegal=1;
+    if (V(O_t_14)>=threshold) word_lo=word_lo | (1 << 14);
+    if (V(O_t_15)<threshold && V(O_f_15)<threshold) valid_word=0;
+    if (V(O_t_15)>=threshold || V(O_f_15)>=threshold) spacer=0;
+    if (V(O_t_15)>=threshold && V(O_f_15)>=threshold) illegal=1;
+    if (V(O_t_15)>=threshold) word_lo=word_lo | (1 << 15);
+    if (V(O_t_16)<threshold && V(O_f_16)<threshold) valid_word=0;
+    if (V(O_t_16)>=threshold || V(O_f_16)>=threshold) spacer=0;
+    if (V(O_t_16)>=threshold && V(O_f_16)>=threshold) illegal=1;
+    if (V(O_t_16)>=threshold) word_hi=word_hi | (1 << 0);
+    if (V(O_t_17)<threshold && V(O_f_17)<threshold) valid_word=0;
+    if (V(O_t_17)>=threshold || V(O_f_17)>=threshold) spacer=0;
+    if (V(O_t_17)>=threshold && V(O_f_17)>=threshold) illegal=1;
+    if (V(O_t_17)>=threshold) word_hi=word_hi | (1 << 1);
+    if (V(O_t_18)<threshold && V(O_f_18)<threshold) valid_word=0;
+    if (V(O_t_18)>=threshold || V(O_f_18)>=threshold) spacer=0;
+    if (V(O_t_18)>=threshold && V(O_f_18)>=threshold) illegal=1;
+    if (V(O_t_18)>=threshold) word_hi=word_hi | (1 << 2);
+    if (V(O_t_19)<threshold && V(O_f_19)<threshold) valid_word=0;
+    if (V(O_t_19)>=threshold || V(O_f_19)>=threshold) spacer=0;
+    if (V(O_t_19)>=threshold && V(O_f_19)>=threshold) illegal=1;
+    if (V(O_t_19)>=threshold) word_hi=word_hi | (1 << 3);
+    if (V(O_t_20)<threshold && V(O_f_20)<threshold) valid_word=0;
+    if (V(O_t_20)>=threshold || V(O_f_20)>=threshold) spacer=0;
+    if (V(O_t_20)>=threshold && V(O_f_20)>=threshold) illegal=1;
+    if (V(O_t_20)>=threshold) word_hi=word_hi | (1 << 4);
+    if (V(O_t_21)<threshold && V(O_f_21)<threshold) valid_word=0;
+    if (V(O_t_21)>=threshold || V(O_f_21)>=threshold) spacer=0;
+    if (V(O_t_21)>=threshold && V(O_f_21)>=threshold) illegal=1;
+    if (V(O_t_21)>=threshold) word_hi=word_hi | (1 << 5);
+    if (V(O_t_22)<threshold && V(O_f_22)<threshold) valid_word=0;
+    if (V(O_t_22)>=threshold || V(O_f_22)>=threshold) spacer=0;
+    if (V(O_t_22)>=threshold && V(O_f_22)>=threshold) illegal=1;
+    if (V(O_t_22)>=threshold) word_hi=word_hi | (1 << 6);
+    if (V(O_t_23)<threshold && V(O_f_23)<threshold) valid_word=0;
+    if (V(O_t_23)>=threshold || V(O_f_23)>=threshold) spacer=0;
+    if (V(O_t_23)>=threshold && V(O_f_23)>=threshold) illegal=1;
+    if (V(O_t_23)>=threshold) word_hi=word_hi | (1 << 7);
+    if (V(O_t_24)<threshold && V(O_f_24)<threshold) valid_word=0;
+    if (V(O_t_24)>=threshold || V(O_f_24)>=threshold) spacer=0;
+    if (V(O_t_24)>=threshold && V(O_f_24)>=threshold) illegal=1;
+    if (V(O_t_24)>=threshold) word_hi=word_hi | (1 << 8);
+    if (V(O_t_25)<threshold && V(O_f_25)<threshold) valid_word=0;
+    if (V(O_t_25)>=threshold || V(O_f_25)>=threshold) spacer=0;
+    if (V(O_t_25)>=threshold && V(O_f_25)>=threshold) illegal=1;
+    if (V(O_t_25)>=threshold) word_hi=word_hi | (1 << 9);
+    if (V(O_t_26)<threshold && V(O_f_26)<threshold) valid_word=0;
+    if (V(O_t_26)>=threshold || V(O_f_26)>=threshold) spacer=0;
+    if (V(O_t_26)>=threshold && V(O_f_26)>=threshold) illegal=1;
+    if (V(O_t_26)>=threshold) word_hi=word_hi | (1 << 10);
+    if (V(O_t_27)<threshold && V(O_f_27)<threshold) valid_word=0;
+    if (V(O_t_27)>=threshold || V(O_f_27)>=threshold) spacer=0;
+    if (V(O_t_27)>=threshold && V(O_f_27)>=threshold) illegal=1;
+    if (V(O_t_27)>=threshold) word_hi=word_hi | (1 << 11);
+    if (V(O_t_28)<threshold && V(O_f_28)<threshold) valid_word=0;
+    if (V(O_t_28)>=threshold || V(O_f_28)>=threshold) spacer=0;
+    if (V(O_t_28)>=threshold && V(O_f_28)>=threshold) illegal=1;
+    if (V(O_t_28)>=threshold) word_hi=word_hi | (1 << 12);
+    if (V(O_t_29)<threshold && V(O_f_29)<threshold) valid_word=0;
+    if (V(O_t_29)>=threshold || V(O_f_29)>=threshold) spacer=0;
+    if (V(O_t_29)>=threshold && V(O_f_29)>=threshold) illegal=1;
+    if (V(O_t_29)>=threshold) word_hi=word_hi | (1 << 13);
+    if (V(O_t_30)<threshold && V(O_f_30)<threshold) valid_word=0;
+    if (V(O_t_30)>=threshold || V(O_f_30)>=threshold) spacer=0;
+    if (V(O_t_30)>=threshold && V(O_f_30)>=threshold) illegal=1;
+    if (V(O_t_30)>=threshold) word_hi=word_hi | (1 << 14);
+    if (V(O_t_31)<threshold && V(O_f_31)<threshold) valid_word=0;
+    if (V(O_t_31)>=threshold || V(O_f_31)>=threshold) spacer=0;
+    if (V(O_t_31)>=threshold && V(O_f_31)>=threshold) illegal=1;
+    if (V(O_t_31)>=threshold) word_hi=word_hi | (1 << 15);
+    if (!active && !finished && !failure && V(reset)<threshold) begin
+      if (!spacer || V(I_a)>=threshold) begin
+        failure=1; $display("SIM_ERROR t=%e reason=reset_spacer I.a=%e",$abstime,V(I_a));
+      end else begin active=1; $display("SIM_RESET t=%e",$abstime); end
+    end
+    if ((active || finished) && !failure && !reported) begin
+      if (illegal) begin
+        failure=1; $display("SIM_ERROR t=%e reason=illegal_dual_rail channel=O",$abstime);
+      end
+      if (!failure) begin
+        if (rx_phase==0 && valid_word && !spacer) begin
+          if (rx_index>=3) begin
+            failure=1; $display("SIM_ERROR t=%e reason=unexpected_output channel=O",$abstime);
+          end else begin
+            case (rx_index)
+              0: begin expected_hi=65280; expected_lo=2; end
+              1: begin expected_hi=65535; expected_lo=65522; end
+              2: begin expected_hi=65520; expected_lo=2; end
+            endcase
+            if (word_hi!=expected_hi || word_lo!=expected_lo) begin
+              failure=1;
+              $display("SIM_RX t=%e channel=O index=%d expected=%h actual=%h FAIL",$abstime,rx_index,(expected_hi << 16) | expected_lo,(word_hi << 16) | word_lo);
+              $display("SIM_ERROR t=%e reason=golden_mismatch",$abstime);
+            end else begin
+              $display("SIM_RX t=%e channel=O index=%d expected=%h actual=%h PASS",$abstime,rx_index,(expected_hi << 16) | expected_lo,(word_hi << 16) | word_lo);
+              ack=1; rx_phase=1;
+            end
+          end
+        end else if (rx_phase==1) begin
+          if (valid_word && (word_hi!=expected_hi || word_lo!=expected_lo)) begin
+            failure=1; $display("SIM_ERROR t=%e reason=word_changed_without_spacer",$abstime);
+          end else if (!valid_word && V(O_a)<threshold) begin
+            failure=1; $display("SIM_ERROR t=%e reason=data_withdrawn_before_ack",$abstime);
+          end else if (spacer && V(O_a)>=threshold) begin
+            ack=0; rx_phase=2;
+            $display("SIM_SPACER t=%e channel=O index=%d",$abstime,rx_index);
+          end
+        end else if (rx_phase==2) begin
+          if (!spacer) begin
+            failure=1; $display("SIM_ERROR t=%e reason=data_before_ack_low",$abstime);
+          end else if (V(O_a)<threshold) begin
+            $display("SIM_ACK_LOW t=%e channel=O index=%d",$abstime,rx_index);
+            rx_index=rx_index+1; rx_phase=0;
+          end
+        end
+      end
+      if (active && !failure) begin
+        if (tx_phase==1 && V(I_a)>=threshold) begin
+          tx_valid=0; tx_phase=2;
+          $display("SIM_IACK_HIGH t=%e index=%d",$abstime,tx_index);
+        end else if (tx_phase==2 && V(I_a)<threshold && input_spacer) begin
+          $display("SIM_IACK_LOW t=%e index=%d",$abstime,tx_index);
+          tx_index=tx_index+1; tx_phase=0;
+        end
+        if (!failure && tx_index==16 && rx_index==3 && tx_phase==0 && rx_phase==0 &&
+            input_spacer && spacer && V(I_a)<threshold && V(O_a)<threshold) begin
+          finished=1; active=0;
+          $display("SIM_ROUND t=%e inputs=16 O=3",$abstime);
+        end
+        if (!failure && !finished && tx_phase==0 && tx_index<16 && V(I_a)<threshold && input_spacer) begin
+          if ((tx_index>=2 && tx_index<=4) || tx_index==15) tx_word=0;
+          else tx_word=15;
+          tx_valid=1; tx_phase=1;
+          $display("SIM_TX t=%e channel=I index=%d word=%h",$abstime,tx_index,tx_word);
+        end
+      end
+      if (finished && (!input_spacer || !spacer || V(I_a)>=threshold || V(O_a)>=threshold)) begin
+        failure=1; $display("SIM_ERROR t=%e reason=nonquiescent_completion",$abstime);
+      end
+    end
+    if (finished && !failure && idle_start < 0) idle_start=$abstime+IDLE_SETTLE;
+    if (finished && !failure && !idle_started && $abstime>=idle_start) begin
+      idle_started=1;
+      $display("SIM_IDLE_BEGIN t=%e reset=%e",$abstime,V(reset));
+    end
+    if (idle_started && !failure && !idle_completed && $abstime>=idle_start+IDLE_WINDOW) begin
+      idle_completed=1;
+      $display("SIM_IDLE_END t=%e reset=%e",$abstime,V(reset));
+    end
+    if (failure && (stop_after<0 || stop_after>$abstime+TD+2*EDGE)) stop_after=$abstime+TD+2*EDGE;
+    else if (finished && stop_after<0) stop_after=$abstime+IDLE_SETTLE+IDLE_WINDOW+IDLE_MARGIN;
+    if (!reported && stop_after>0 && $abstime>=stop_after) begin
+      reported=1;
+      if (failure) $display("SIM_FAIL t=%e reason=see_SIM_ERROR",$abstime);
+      else $display("SIM_PASS t=%e rounds=1 inputs=16 O=3",$abstime);
+      $finish(0);
+    end
+  end
+  @(timer(STOP_TIME-4*TD-4*EDGE)) begin
+    if (!finished && !failure) begin
+      failure=1;
+      $display("SIM_ERROR t=%e reason=timeout tx=%d tx_phase=%d rx=%d rx_phase=%d I.a=%e",$abstime,tx_index,tx_phase,rx_index,rx_phase,V(I_a));
+    end
+  end
+  V(I_t_0) <+ transition(SUPPLY*tx_valid*((tx_word >> 0) & 1),TD,EDGE,EDGE);
+  V(I_f_0) <+ transition(SUPPLY*tx_valid*(1-((tx_word >> 0) & 1)),TD,EDGE,EDGE);
+  V(I_t_1) <+ transition(SUPPLY*tx_valid*((tx_word >> 1) & 1),TD,EDGE,EDGE);
+  V(I_f_1) <+ transition(SUPPLY*tx_valid*(1-((tx_word >> 1) & 1)),TD,EDGE,EDGE);
+  V(I_t_2) <+ transition(SUPPLY*tx_valid*((tx_word >> 2) & 1),TD,EDGE,EDGE);
+  V(I_f_2) <+ transition(SUPPLY*tx_valid*(1-((tx_word >> 2) & 1)),TD,EDGE,EDGE);
+  V(I_t_3) <+ transition(SUPPLY*tx_valid*((tx_word >> 3) & 1),TD,EDGE,EDGE);
+  V(I_f_3) <+ transition(SUPPLY*tx_valid*(1-((tx_word >> 3) & 1)),TD,EDGE,EDGE);
+  V(O_a) <+ transition(SUPPLY*ack,TD,EDGE,EDGE);
+  V(done) <+ transition(SUPPLY*finished,0,EDGE,EDGE);
+  V(failed) <+ transition(SUPPLY*failure,0,EDGE,EDGE);
+end
+endmodule

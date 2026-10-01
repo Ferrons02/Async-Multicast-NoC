@@ -1,0 +1,144 @@
+import "QuadRouter/CounterDec.act";
+import "commons/Channels.act";
+
+export defproc ChildServer(
+    bool? reset;
+    ActiveDualRail4? I;
+    PassiveDualRail8? Cnt;
+    PassiveDualRail8? R;
+    ActiveDualRail4! Od;
+    ActiveDualRail4! Oc;
+    ActiveDualRail8! W;
+    Dataless? A
+)
+{
+    bool b[4], q[8], j, p0, p1, s;
+    bool _ar, _rr, _s, _j, _p0, _p1, _ia, _r, _oca, _oda, _wa;
+    bool _rt[8], _rf[8], _q[8], _it[4], _if[4], _b[4];
+    bool _wt[8], _wf[8];
+    bool x[8], _y[4], z[2], _u;
+    bool _h[4], l[2];
+    bool e[8], _f[4], g[2], _m;
+    bool _v[4], t[2];
+
+    CounterDec dec;
+    dec.reset = reset;
+    prs {
+        // Completion of the local counter capture.
+        (n:8:
+            (~_rt[n] & ~_q[n]) | (~_rf[n] & ~q[n]) -> x[n]+
+            _rt[n] & _rf[n] -> x[n]-
+        )
+        (n:4:
+            x[2*n+1] & x[2*n] -> _y[n]-
+            ~x[2*n+1] & ~x[2*n] -> _y[n]+
+        )
+        (n:2:
+            ~_y[2*n+1] & ~_y[2*n] -> z[n]+
+            _y[2*n+1] & _y[2*n] -> z[n]-
+        )
+        z[1] & z[0] -> _u-
+        ~z[1] & ~z[0] -> _u+
+        ~_rr & ~_u -> s+
+
+        // Completion of the input nibble capture.
+        (n:4:
+            (I.t[n] & b[n]) | (I.f[n] & _b[n]) -> _h[n]-
+            ~I.t[n] & ~I.f[n] -> _h[n]+
+        )
+        (n:2:
+            ~_h[2*n+1] & ~_h[2*n] -> l[n]+
+            _h[2*n+1] & _h[2*n] -> l[n]-
+        )
+        (p0 & l[1] & l[0]) | A.a | reset -> s-
+
+        // Local counter rails returning to spacer.
+        (n:8:
+            ~R.t[n] & ~R.f[n] -> e[n]+
+            R.t[n] | R.f[n] -> e[n]-
+        )
+        (n:4:
+            e[2*n+1] & e[2*n] -> _f[n]-
+            ~e[2*n+1] & ~e[2*n] -> _f[n]+
+        )
+        (n:2:
+            ~_f[2*n+1] & ~_f[2*n] -> g[n]+
+            _f[2*n+1] & _f[2*n] -> g[n]-
+        )
+        g[1] & g[0] -> _m-
+        ~g[1] & ~g[0] -> _m+
+        ~_s & ~A.a & ~_m -> j+
+
+        // Input nibble returning to spacer.
+        (n:4:
+            _it[n] & _if[n] -> _v[n]-
+            ~_it[n] | ~_if[n] -> _v[n]+
+        )
+        (n:2:
+            ~_v[2*n+1] & ~_v[2*n] -> t[n]+
+            _v[2*n+1] & _v[2*n] -> t[n]-
+        )
+        (_s & t[1] & t[0]) | A.a | reset -> j-
+
+        ~_ar & ~s & ~A.a & ~p0 & ~Oc.a & ~Od.a & ~W.a -> R.req+
+        s | reset -> R.req-
+        j & (|n:8: q[7-n]) -> _p0-
+        (~_oca & ~_oda & ~_wa) | ~_r -> _p0+
+        ~A.a & ~_j & (&n:8: ~q[7-n]) -> p1+
+        A.a | reset -> p1-
+        j & p0 & _s -> _ia-
+        ~j -> _ia+
+        ~_p1 -> Cnt.req+
+        _j & _s & _p1 -> Cnt.req-
+        ~_wa & ~_p1 -> A.a+
+        _wa & _ar -> A.a-
+        (n:8:
+            ~_rt[n] -> q[n]+
+            R.f[n] | reset -> q[n]-
+            (~_p0 & ~j & ~I.a) & ~_q[n] -> dec.I.t[n]+
+            _p0 -> dec.I.t[n]-
+            (~_p0 & ~j & ~I.a) & ~q[n] -> dec.I.f[n]+
+            _p0 -> dec.I.f[n]-
+        )
+        (n:4:
+            ~_p0 & ~_s & ~_it[n] -> b[n]+
+            (p0 & s & I.f[n]) | reset -> b[n]-
+            (~_p0 & ~j & ~I.a) & ~_b[n] -> Od.t[n]+
+            _p0 -> Od.t[n]-
+            (~_p0 & ~j & ~I.a) & ~b[n] -> Od.f[n]+
+            _p0 -> Od.f[n]-
+            (~_p0 & ~j & ~I.a) & ~_b[n] -> Oc.t[n]+
+            _p0 -> Oc.t[n]-
+            (~_p0 & ~j & ~I.a) & ~b[n] -> Oc.f[n]+
+            _p0 -> Oc.f[n]-
+        )
+        (n:8:
+            // Each supplied combinational OR is a CMOS NOR plus inverter.
+            ~(Cnt.t[n] | dec.O.t[n]) => _wt[n]+
+            ~(Cnt.f[n] | dec.O.f[n]) => _wf[n]+
+            ~_wt[n] => W.t[n]+
+            ~_wf[n] => W.f[n]+
+        )
+        ~A.req => _ar+
+        ~R.req => _rr+
+        ~s => _s+
+        ~j => _j+
+        ~p1 => _p1+
+        ~reset => _r+
+        ~Oc.a => _oca+
+        ~Od.a => _oda+
+        ~W.a => _wa+
+        (n:8:
+            ~R.t[n] => _rt[n]+
+            ~R.f[n] => _rf[n]+
+            ~q[n] => _q[n]+
+        )
+        (n:4:
+            ~I.t[n] => _it[n]+
+            ~I.f[n] => _if[n]+
+            ~b[n] => _b[n]+
+        )
+        ~_p0 => p0+
+        ~_ia => I.a+
+    }
+}

@@ -1,0 +1,34 @@
+template<pint BW>
+defproc MltcSel(
+    chan(int<BW>)? I;
+    chan(int<BW>)! O0,O1
+){
+
+    int<BW> buf;
+
+    chp{
+        *[I?buf; [
+            buf{1} = 1-> *[buf{0}=0 -> O0!buf; I?buf]; O0!buf
+            [] buf{1} = 0-> *[buf{0}=0 -> O1!buf; I?buf]; O1!buf
+        ]]
+    }
+
+}
+
+template<pint BW; pint SCAST_ADDR_LEN>
+defproc ParentRouter(
+  chan(int<BW>)? I;
+  chan(int<BW>)! C0,C1,C2,C3,P,M
+) {
+
+    chan(int<BW>) Scode,NoScode,Mltc,NoMltc; 
+
+    MltcSel<BW> MUS(I,Mltc,NoMltc);
+    
+    StopcodeSel<BW,SCAST_ADDR_LEN> SS(NoMltc,Scode,NoScode);
+
+    ChildSel<BW,SCAST_ADDR_LEN> CS(NoScode,C0,C1,C2,C3);
+
+    Merge2<BW> M2 (Mltc,Scode,M);
+
+}

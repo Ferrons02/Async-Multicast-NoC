@@ -1,0 +1,20 @@
+import "no_forks/commons/Channels.act";
+
+export defproc Split(bool? reset; PassiveDualRail4? I; PassiveDualRail4! O0; PassiveDualRail4! O1)
+{
+
+    // Original non-bubble PRS: RouterDecompositionBubbleReshuffling.pdf, pp. 65.
+    prs {
+        O0.req | O1.req => I.req+
+        (i:4:
+            O0.req & I.t[i] -> O0.t[i]+
+            ~I.t[i] -> O0.t[i]-
+            O0.req & I.f[i] -> O0.f[i]+
+            ~I.f[i] -> O0.f[i]-
+            O1.req & I.t[i] -> O1.t[i]+
+            ~I.t[i] -> O1.t[i]-
+            O1.req & I.f[i] -> O1.f[i]+
+            ~I.f[i] -> O1.f[i]-
+        )
+    }
+}

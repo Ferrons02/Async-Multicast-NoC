@@ -1,0 +1,206 @@
+Deserializer: recovery-oriented sizing follow-up (18 September 2026)
+========================================================================
+Current netlist and performance results correspond to this section.
+Baseline = the previously accepted fanout sizing, NOT the uniform-width original.
+Accepted variant: des_completion_strong; campaign: /tmp/ferroma_analog_campaign_hvz2YDl6
+PTM65 TT, 1.1 V, 27 C; identical stimuli, models, solver settings and loads.
+Only MOS W values changed; exact W-masked netlist identity verified.
+Every L, device, connection, keeper and keeper feedback inverter is unchanged.
+Additional changed MOS: 38 in definitions; 234/3301 instantiated (7.09%).
+Sum(W*L) change: +7.43% (gate-area proxy, not layout area).
+A fresh PRS netlist generation overwrites manual sizing.
+
+Why these sizes
+----------------
+Reg4 write acknowledgement returns through eight series PMOS. Its late
+return holds the QBuffer handshake and delays the next nibble request. The pull-up
+network is 6x and the pull-down network 3x the preceding accepted design; four PMOS
+in QBuffer.L_aa and InputAnalyzer.m pull-down are doubled to support that path.
+The milder 4x/2x Reg4 trial also passed but had a longer batch latency.
+
+Measured results for every matched report transaction
+-----------------------------------------------------
+Times use the standard extractor and subtract its observed external waits.
+Dynamic energy is whole-DUT energy in the named window, with idle leakage removed.
+Sample | Metric | Previous | Current | Change %
+seven nonzero nibbles I[5:12] -> O[1] | forward (ns) | 14.116143 | 11.119672 | -21.23
+seven nonzero nibbles I[5:12] -> O[1] | dynamic_energy (pJ) | 1.661768 | 1.780589 | +7.15
+Idle | leakage (uW) | 20.167518 | 20.290062 | +0.61
+
+Additional recovery observations
+---------------------------------
+Input return = input rails fully spacer -> input acknowledge low.
+This is a handshake component, not the conventional output-valid recovery.
+No own-input testbench wait lies inside these two measured boundaries.
+Concurrent port dependencies can still be present; it is not a fully de-embedded cycle.
+Input index | Data | Previous ns | Current ns | Change %
+I[0] | 0xf | 0.282881 | 0.207189 | -26.76
+I[1] | 0xf | 0.282817 | 0.204717 | -27.61
+I[2] | 0x0 | 0.145497 | 0.149790 | +2.95
+I[3] | 0x0 | 0.120402 | 0.122659 | +1.87
+I[4] | 0x0 | 0.115674 | 0.119974 | +3.72
+I[5] | 0xf | 0.282120 | 0.204796 | -27.41
+I[6] | 0xf | 0.282990 | 0.204812 | -27.63
+I[7] | 0xf | 0.283069 | 0.204831 | -27.64
+I[8] | 0xf | 0.282836 | 0.204974 | -27.53
+I[9] | 0xf | 0.282967 | 0.204771 | -27.63
+I[10] | 0xf | 0.285538 | 0.204875 | -28.25
+I[11] | 0xf | 0.283131 | 0.204861 | -27.64
+I[12] | 0xf | 0.282463 | 0.204853 | -27.48
+I[13] | 0xf | 0.282870 | 0.204852 | -27.58
+I[14] | 0xf | 0.282818 | 0.204854 | -27.57
+I[15] | 0x0 | 0.145060 | 0.149711 | +3.21
+
+Exact additional W changes (micrometres)
+----------------------------------------
+Subcircuit | Driver | Device | Type | Previous W | Current W | Factor
+Reg4 | __reg__pa | M0_ | pmos | 0.1625 | 0.975 | 6
+Reg4 | __reg__pa | M103_ | nmos | 0.0975 | 0.2925 | 3
+Reg4 | __reg__pa | M104_ | nmos | 0.0975 | 0.2925 | 3
+Reg4 | __reg__pa | M105_ | pmos | 0.1625 | 0.975 | 6
+Reg4 | __reg__pa | M108_ | nmos | 0.0975 | 0.2925 | 3
+Reg4 | __reg__pa | M109_ | nmos | 0.0975 | 0.2925 | 3
+Reg4 | __reg__pa | M110_ | nmos | 0.0975 | 0.2925 | 3
+Reg4 | __reg__pa | M111_ | nmos | 0.0975 | 0.2925 | 3
+Reg4 | __reg__pa | M112_ | nmos | 0.0975 | 0.2925 | 3
+Reg4 | __reg__pa | M113_ | nmos | 0.0975 | 0.2925 | 3
+Reg4 | __reg__pa | M114_ | nmos | 0.0975 | 0.2925 | 3
+Reg4 | __reg__pa | M115_ | nmos | 0.0975 | 0.2925 | 3
+Reg4 | __reg__pa | M116_ | nmos | 0.0975 | 0.2925 | 3
+Reg4 | __reg__pa | M117_ | nmos | 0.0975 | 0.2925 | 3
+Reg4 | __reg__pa | M118_ | nmos | 0.0975 | 0.2925 | 3
+Reg4 | __reg__pa | M119_ | nmos | 0.0975 | 0.2925 | 3
+Reg4 | __reg__pa | M128_ | pmos | 0.1625 | 0.975 | 6
+Reg4 | __reg__pa | M129_ | pmos | 0.1625 | 0.975 | 6
+Reg4 | __reg__pa | M130_ | pmos | 0.1625 | 0.975 | 6
+Reg4 | __reg__pa | M131_ | pmos | 0.1625 | 0.975 | 6
+Reg4 | __reg__pa | M132_ | pmos | 0.1625 | 0.975 | 6
+Reg4 | __reg__pa | M133_ | pmos | 0.1625 | 0.975 | 6
+Reg4 | __reg__pa | M49_ | nmos | 0.0975 | 0.2925 | 3
+Reg4 | __reg__pa | M50_ | nmos | 0.0975 | 0.2925 | 3
+QBuffer | L_aa | M66_ | pmos | 0.1625 | 0.325 | 2
+QBuffer | L_aa | M78_ | pmos | 0.1625 | 0.325 | 2
+QBuffer | L_aa | M79_ | pmos | 0.1625 | 0.325 | 2
+QBuffer | L_aa | M7_ | pmos | 0.1625 | 0.325 | 2
+InputAnalyzer | m | M163_ | nmos | 0.195 | 0.39 | 2
+InputAnalyzer | m | M166_ | nmos | 0.195 | 0.39 | 2
+InputAnalyzer | m | M173_ | nmos | 0.195 | 0.39 | 2
+InputAnalyzer | m | M174_ | nmos | 0.195 | 0.39 | 2
+InputAnalyzer | m | M175_ | nmos | 0.195 | 0.39 | 2
+InputAnalyzer | m | M176_ | nmos | 0.195 | 0.39 | 2
+InputAnalyzer | m | M177_ | nmos | 0.195 | 0.39 | 2
+InputAnalyzer | m | M178_ | nmos | 0.195 | 0.39 | 2
+InputAnalyzer | m | M80_ | nmos | 0.195 | 0.39 | 2
+InputAnalyzer | m | M81_ | nmos | 0.195 | 0.39 | 2
+
+Validation and provenance
+--------------------------
+Functional HSPICE test PASS; final idle leakage window stable.
+The retained deck adds non-loading .probe observations of internal nodes only.
+Reference runs with these probes reproduced the baseline external timings.
+perf_common.py excludes partial hierarchical probes from external-channel discovery.
+Production netlist, environment and testbench hashes equal the completed job hashes:
+{
+  "src_spice/block/Deserializer/Deserializer.sp": "3b8193148f5f4edb021b56560715b472af925f804efa303e4b3cd87801ed2647",
+  "tb/block/Deserializer/Deserializer_environment.va": "400e9acd404651bebfd4dc123f5a472bdd5052927018a4b20f110a1d9fe2b686",
+  "tb/block/Deserializer/Deserializer_tb.sp": "38fbb1a6054038313004535467ec3eb405348e1edd788321a6647542357c4448"
+}
+Report: tb/block/results/Deserializer/Deserializer_perf.txt
+Experimental inputs, rejected candidates and complete before-results: /home/cad/archives/analog_sim/20260918_recovery_sizing
+Subsystem/top embedded netlists are not updated by this block-only sizing.
+Results apply to the saved operating point and test cases, not all process corners.
+
+Historical first sizing round (superseded widths/results)
+==========================================================
+Deserializer: targeted fanout sizing (measured W-only sizing)
+==============================================================
+Only MOS W parameters were changed. L, devices, topology and ports are identical.
+Keeper devices and their feedback inverters retain their generated dimensions.
+Units: widths and lengths below are micrometres. Technology: PTM65 TT, 1.1 V, 27 C.
+The largest trial widths are NMOS 1.56 um and PMOS 2.6 um (16x).
+PRS source was not regenerated or changed. A future prs2net build would lose this manual sizing.
+Original generated node reff comments describe the unsized baseline, not the new resistances.
+
+Method
+------
+Gate loads counted after recursive instance/port expansion; repeated instances are included.
+invEq is sum(W*L) / (0.26*0.065), a gate-area load proxy in minimum-inverter units, not extracted capacitance.
+Targets: high-fanout control drivers and limited support for their existing upstream stages.
+Width factors 2/4/8/16 are bounded trial choices; stronger drivers also increase upstream loading.
+Logical-effort reference: https://pages.hmc.edu/harris/class/e158/10/lect6.pdf
+No automatic timing optimum, layout/parasitic signoff or measured gain is implied by the sizing alone.
+
+Changed MOS: 22 in definitions; 71/3301 after instance expansion (2.15%).
+
+Driver groups (maximum load across the block library)
+----------------------------------------------------
+Reg4.__qr: W x2; gate terminals=16; invEq=8.000; driver MOS=2
+QBuffer.I_areq: W x2; gate terminals=15; invEq=8.125; driver MOS=5
+InputAnalyzer.m: W x2; gate terminals=12; invEq=6.000; driver MOS=15
+
+Exact changed MOS
+-----------------
+Subcircuit Device Driver_node Old_W New_W L Factor
+Reg4 M13_ __qr 0.1625 0.325 0.065 2
+Reg4 M67_ __qr 0.0975 0.195 0.065 2
+QBuffer M35_ I_areq 0.0975 0.195 0.065 2
+QBuffer M36_ I_areq 0.0975 0.195 0.065 2
+QBuffer M6_ I_areq 0.1625 0.325 0.065 2
+QBuffer M74_ I_areq 0.1625 0.325 0.065 2
+QBuffer M75_ I_areq 0.0975 0.195 0.065 2
+InputAnalyzer M0_ m 0.1625 0.325 0.065 2
+InputAnalyzer M159_ m 0.1625 0.325 0.065 2
+InputAnalyzer M160_ m 0.1625 0.325 0.065 2
+InputAnalyzer M161_ m 0.1625 0.325 0.065 2
+InputAnalyzer M162_ m 0.1625 0.325 0.065 2
+InputAnalyzer M163_ m 0.0975 0.195 0.065 2
+InputAnalyzer M166_ m 0.0975 0.195 0.065 2
+InputAnalyzer M173_ m 0.0975 0.195 0.065 2
+InputAnalyzer M174_ m 0.0975 0.195 0.065 2
+InputAnalyzer M175_ m 0.0975 0.195 0.065 2
+InputAnalyzer M176_ m 0.0975 0.195 0.065 2
+InputAnalyzer M177_ m 0.0975 0.195 0.065 2
+InputAnalyzer M178_ m 0.0975 0.195 0.065 2
+InputAnalyzer M80_ m 0.0975 0.195 0.065 2
+InputAnalyzer M81_ m 0.0975 0.195 0.065 2
+
+
+
+
+
+Validation status
+-----------------
+PASS: replacing only W tokens reconstructs the baseline byte-for-byte.
+PASS: instantiated MOS count, every L, ports and element connectivity are unchanged.
+PASS: HSPICE functional test and stable final idle leakage window.
+Campaign: /tmp/ferroma_analog_campaign_fSf50v5Q
+Testbench: tb/block/Deserializer/Deserializer_tb.sp
+Report: tb/block/results/Deserializer/Deserializer_perf.txt
+
+Before / after measured results
+-------------------------------
+Same baseline-selected input source, index, data and output ports in both simulations.
+Timing follows the existing extractor: observed external waits are subtracted.
+Counter forward denotes an input/output cycle; Serializer/Deserializer forward denotes batch latency.
+Input_cycle below is forward+recovery where defined. Energy is whole-DUT dynamic window energy.
+Arb windows include concurrent traffic: energy cannot be assigned uniquely to one input.
+Differences are (sized/original - 1)*100. Negative timing means faster.
+Metric / sample | Before | After | Change %
+Idle leakage (uW) | 20.044670 | 20.167518 | +0.61
+Sample batch: seven nonzero nibbles I[5:12] -> O[1] -> measured seven nonzero nibbles I[5:12] -> O[1]
+batch forward (ns) | 14.697170 | 14.116143 | -3.95
+batch dynamic_energy (pJ) | 1.613146 | 1.661768 | +3.01
+
+Coverage of every matched transaction
+-------------------------------------
+Input/outputs | Forward before/after ns | Recovery before/after ns | Dynamic energy before/after pJ
+seven nonzero nibbles I[5:12] -> O[1] | 14.697170/14.116143 | N/A | 1.613146/1.661768
+
+Scope and provenance
+--------------------
+These results validate the saved testbench and operating point; they are not an exhaustive sizing optimum.
+Subsystem/top netlists were not resized or regenerated in this task.
+Original and experimental results: /home/cad/archives/analog_sim/20260917_block_fanout_sizing
+Baseline netlist SHA256: c7066f866d863b9b2e25c79a7eb55ddf432caa863e94612595283e01b56b10b0
+Sized netlist SHA256: 38065eb0ca6979a44a2cb0ce4efc7c48675b3d9c1d2dd5856ed3b99db9cf21b4
+

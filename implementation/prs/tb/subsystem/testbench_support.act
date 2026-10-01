@@ -1,0 +1,47 @@
+import "../../block/testbench_support.act";
+
+/* Same managers, global boundary nets and separate CHP processes as tb/block.
+ * Fixed channel IDs in logs: 0=C0, 1=C1, 2=C2, 3=C3, 4=M, 5=P.
+ * Counts are cumulative; issued counts complete sequences launched by driver.
+ * Each checker owns its bad flag and remains active throughout final drain.
+ */
+bool reset, stop, fail, done, ready;
+bool bad[6], initialized[6];
+int<32> rounds, issued, tx_count, tx_last, tx_next;
+int<32> rx_count[6], rx_last[6], rx_next[6];
+Initialize { actions { ready- } }
+
+template<pint N; pint GOLD[N]; pint ID>
+defproc SubsystemCheck(TbPush?<32> X)
+{
+    int<32> actual, expected, count, table[N], index;
+    chp {
+        bad[ID] := false; initialized[ID] := false;
+        count := 0; index := 0;
+        rx_count[ID] := 0; rx_last[ID] := 0;
+        (;i:N: table[i] := GOLD[i]);
+        rx_next[ID] := table[0];
+        initialized[ID] := true;
+        [ready & ~reset];
+        *[
+            expected := table[index]; rx_next[ID] := expected;
+            X?actual;
+            rx_last[ID] := actual;
+            [count >= issued * N ->
+                bad[ID] := true;
+                log("FAILED: unexpected output channel=", ID,
+                    " value=", actual, " checked=", count, " rounds=", rounds);
+                assert(false, "unexpected output"); [reset]
+            [] actual != expected ->
+                bad[ID] := true;
+                log("FAILED: golden mismatch channel=", ID, " index=", index,
+                    " expected=", expected, " got=", actual, " rounds=", rounds);
+                assert(actual = expected, "output golden mismatch"); [reset]
+            [] else -> skip];
+            count := count + 1; rx_count[ID] := count;
+            [rounds = 0 -> log("TB_RX channel=", ID, " count=", count,
+                              " value=", actual) [] else -> skip];
+            index := (index + 1) % N
+        ]
+    }
+}

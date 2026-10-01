@@ -1,0 +1,57 @@
+import "commons/Channels.act";
+
+export defproc InputAnalyzer(
+    bool? reset;
+    ActiveDualRail4? I;
+    PassiveDualRail4! O;
+    Dataless! R;
+    Dataless? L
+)
+{
+    bool route_seen, _route_seen;
+    bool m, v, k, _f, _s, _or, _m, _k, _v, _lr, _rr, _r;
+    bool _it[4], _if[4], _ot[4], _of[4];
+    prs {
+        // Preserve route occupancy across full words: their zero flush emits
+        // a separate 0x00000002 terminator. A route with no data stays silent.
+        // k- acknowledges clearing the latch before a subsequent route.
+        ~_m -> route_seen+
+        (I.a & k) | reset -> route_seen-
+        ~_or & (|j:4: ~_it[3-j]) -> m+
+        (I.a & (&j:4: (_ot[3-j] & _of[3-j]))) | reset -> m-
+        ~L.req & ~O.req & ~_m -> v+
+        L.req | reset -> v-
+        k & (v | route_seen) & _or -> _f-
+        (~_lr & ~I.a & ~k) | ~_r -> _f+
+        ~_or & (&j:4: ~_if[3-j]) -> k+
+        ((&j:4: _if[3-j]) & _route_seen) | reset -> k-
+        (~_f & ~_lr & ~_k) | (~_v & ~_m & ~_route_seen & ~O.req) | (~v & ~route_seen & ~_k) -> I.a+
+        _k & _m -> I.a-
+        L.req & _v & _f -> _s-
+        ~_rr | ~_r -> _s+
+        ~_s & ~_lr -> L.a+
+        _lr | reset -> L.a-
+        (~_s & ~L.a & ~L.req) | ~_r -> R.req+
+        R.a & _s -> R.req-
+        (j:4:
+            m & I.t[j] -> _ot[j]-
+            ~I.t[j] -> _ot[j]+
+            (m & I.f[j]) | (O.req & (v | route_seen) & k) -> _of[j]-
+            ~I.f[j] | (~_f & ~O.req) -> _of[j]+
+        )
+        ~route_seen => _route_seen+
+        ~O.req => _or+
+        ~m => _m+
+        ~k => _k+
+        ~v => _v+
+        ~L.req => _lr+
+        ~R.req => _rr+
+        ~reset => _r+
+        (j:4:
+            ~I.t[j] => _it[j]+
+            ~I.f[j] => _if[j]+
+            ~_ot[j] => O.t[j]+
+            ~_of[j] => O.f[j]+
+        )
+    }
+}

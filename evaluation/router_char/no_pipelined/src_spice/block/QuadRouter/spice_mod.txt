@@ -1,0 +1,461 @@
+QuadRouter: recovery-oriented sizing follow-up (18 September 2026)
+========================================================================
+Current netlist and performance results correspond to this section.
+Baseline = the previously accepted fanout sizing, NOT the uniform-width original.
+Accepted variant: quad_control_carry; campaign: /tmp/ferroma_analog_campaign_jvdOVQlm
+PTM65 TT, 1.1 V, 27 C; identical stimuli, models, solver settings and loads.
+Only MOS W values changed; exact W-masked netlist identity verified.
+Every L, device, connection, keeper and keeper feedback inverter is unchanged.
+Additional changed MOS: 67 in definitions; 637/10216 instantiated (6.24%).
+Sum(W*L) change: +4.75% (gate-area proxy, not layout area).
+A fresh PRS netlist generation overwrites manual sizing.
+
+Why these sizes
+----------------
+ChildServer read-request and zero-count control networks contain seven
+and ten series PMOS respectively. Targeted polarity-dependent widths and a few
+supporting existing inverters reduce these delays. The decrementer's carry reset
+also propagates serially through seven FullAdderP stages: their four-PMOS reset
+networks and existing carry inverters are strengthened, including HalfAdderP at
+the start. Repeated definitions affect all four children consistently.
+Reg8, Seq7 and all circuit connections remain unchanged in this follow-up.
+
+Measured results for every matched report transaction
+-----------------------------------------------------
+Times use the standard extractor and subtract its observed external waits.
+Dynamic energy is whole-DUT energy in the named window, with idle leakage removed.
+Sample | Metric | Previous | Current | Change %
+i[0] -> ch[0] | forward (ns) | 1.200312 | 1.222064 | +1.81
+i[0] -> ch[0] | recovery (ns) | 1.322712 | 1.282059 | -3.07
+i[0] -> ch[0] | dynamic_energy (pJ) | 1.073138 | 1.104864 | +2.96
+i[14] -> ch[1] | forward (ns) | 1.167628 | 1.183021 | +1.32
+i[14] -> ch[1] | recovery (ns) | 1.343503 | 1.295251 | -3.59
+i[14] -> ch[1] | dynamic_energy (pJ) | 1.104092 | 1.141421 | +3.38
+i[15] -> oc0[0] | forward (ns) | 1.836379 | 1.489577 | -18.89
+i[15] -> oc0[0] | dynamic_energy (pJ) | 0.886811 | 0.863493 | -2.63
+i[15] -> od0[3] | forward (ns) | 1.873603 | 1.527005 | -18.50
+i[15] -> od0[3] | dynamic_energy (pJ) | 0.896014 | 0.877315 | -2.09
+i[17] -> oc0[1] | forward (ns) | 8.297518 | 5.956567 | -28.21
+i[17] -> oc0[1] | dynamic_energy (pJ) | 1.831275 | 1.955994 | +6.81
+i[17] -> od0[4] | forward (ns) | 8.335935 | 5.995235 | -28.08
+i[17] -> od0[4] | dynamic_energy (pJ) | 1.840327 | 1.972243 | +7.17
+i[18] -> oc0[2] | forward (ns) | 4.301927 | 3.357039 | -21.96
+i[18] -> oc0[2] | dynamic_energy (pJ) | 1.306839 | 1.452156 | +11.12
+i[18] -> od0[5] | forward (ns) | 4.340187 | 3.395850 | -21.76
+i[18] -> od0[5] | dynamic_energy (pJ) | 1.316200 | 1.465741 | +11.36
+i[19] -> oc0[3] | forward (ns) | 4.387820 | 3.405340 | -22.39
+i[19] -> oc0[3] | dynamic_energy (pJ) | 1.293700 | 1.431076 | +10.62
+i[19] -> od0[6] | forward (ns) | 4.426818 | 3.444310 | -22.19
+i[19] -> od0[6] | dynamic_energy (pJ) | 1.301120 | 1.447778 | +11.27
+i[20] -> oc0[4] | forward (ns) | 4.386754 | 3.403140 | -22.42
+i[20] -> oc0[4] | dynamic_energy (pJ) | 1.297079 | 1.431270 | +10.35
+i[20] -> od0[7] | forward (ns) | 4.424993 | 3.441450 | -22.23
+i[20] -> od0[7] | dynamic_energy (pJ) | 1.306455 | 1.442165 | +10.39
+i[1] -> oc1[0] | forward (ns) | 5.065855 | 3.909936 | -22.82
+i[1] -> oc1[0] | dynamic_energy (pJ) | 1.235635 | 1.225900 | -0.79
+i[1] -> od1[0] | forward (ns) | 5.103118 | 3.947563 | -22.64
+i[1] -> od1[0] | dynamic_energy (pJ) | 1.245025 | 1.239529 | -0.44
+i[3] -> oc1[1] | forward (ns) | 14.690147 | 10.758610 | -26.76
+i[3] -> oc1[1] | dynamic_energy (pJ) | 2.605066 | 2.762592 | +6.05
+i[3] -> od1[1] | forward (ns) | 14.728825 | 10.796927 | -26.70
+i[3] -> od1[1] | dynamic_energy (pJ) | 2.614697 | 2.778678 | +6.27
+i[4] -> oc1[2] | forward (ns) | 4.315213 | 3.363563 | -22.05
+i[4] -> oc1[2] | dynamic_energy (pJ) | 1.217802 | 1.356242 | +11.37
+i[4] -> od1[2] | forward (ns) | 4.354037 | 3.402034 | -21.86
+i[4] -> od1[2] | dynamic_energy (pJ) | 1.227025 | 1.369751 | +11.63
+i[5] -> oc1[3] | forward (ns) | 4.400439 | 3.411733 | -22.47
+i[5] -> oc1[3] | dynamic_energy (pJ) | 1.200058 | 1.333172 | +11.09
+i[5] -> od1[3] | forward (ns) | 4.438590 | 3.450128 | -22.27
+i[5] -> od1[3] | dynamic_energy (pJ) | 1.208713 | 1.349924 | +11.68
+i[6] -> oc1[4] | forward (ns) | 4.387140 | 3.410839 | -22.25
+i[6] -> oc1[4] | dynamic_energy (pJ) | 1.203810 | 1.332696 | +10.71
+i[6] -> od1[4] | forward (ns) | 4.425434 | 3.449181 | -22.06
+i[6] -> od1[4] | dynamic_energy (pJ) | 1.212804 | 1.343524 | +10.78
+i[2] -> oc2[0] | forward (ns) | 7.485957 | 5.143964 | -31.29
+i[2] -> oc2[0] | dynamic_energy (pJ) | 1.677988 | 1.794983 | +6.97
+i[2] -> od2[0] | forward (ns) | 7.523624 | 5.181209 | -31.13
+i[2] -> od2[0] | dynamic_energy (pJ) | 1.687352 | 1.808459 | +7.18
+i[7] -> oc2[1] | forward (ns) | 7.261940 | 4.932857 | -32.07
+i[7] -> oc2[1] | dynamic_energy (pJ) | 1.653324 | 1.778382 | +7.56
+i[7] -> od2[1] | forward (ns) | 7.300429 | 4.971496 | -31.90
+i[7] -> od2[1] | dynamic_energy (pJ) | 1.662629 | 1.794680 | +7.94
+i[8] -> oc2[2] | forward (ns) | 4.331858 | 3.367097 | -22.27
+i[8] -> oc2[2] | dynamic_energy (pJ) | 1.221806 | 1.358023 | +11.15
+i[8] -> od2[2] | forward (ns) | 4.370694 | 3.405494 | -22.08
+i[8] -> od2[2] | dynamic_energy (pJ) | 1.230947 | 1.371493 | +11.42
+i[9] -> oc2[3] | forward (ns) | 4.416624 | 3.417554 | -22.62
+i[9] -> oc2[3] | dynamic_energy (pJ) | 1.204304 | 1.336570 | +10.98
+i[9] -> od2[3] | forward (ns) | 4.455542 | 3.456019 | -22.43
+i[9] -> od2[3] | dynamic_energy (pJ) | 1.213164 | 1.353665 | +11.58
+i[10] -> oc2[4] | forward (ns) | 4.405438 | 3.416163 | -22.46
+i[10] -> oc2[4] | dynamic_energy (pJ) | 1.191711 | 1.331215 | +11.71
+i[10] -> od2[4] | forward (ns) | 4.444315 | 3.454594 | -22.27
+i[10] -> od2[4] | dynamic_energy (pJ) | 1.200698 | 1.342274 | +11.79
+i[16] -> oc3[0] | forward (ns) | 13.909187 | 9.945653 | -28.50
+i[16] -> oc3[0] | dynamic_energy (pJ) | 2.644693 | 2.796780 | +5.75
+i[16] -> od3[3] | forward (ns) | 13.946492 | 9.982971 | -28.42
+i[16] -> od3[3] | dynamic_energy (pJ) | 2.654101 | 2.810681 | +5.90
+i[21] -> oc3[1] | forward (ns) | 13.692202 | 9.743679 | -28.84
+i[21] -> oc3[1] | dynamic_energy (pJ) | 2.624815 | 2.790228 | +6.30
+i[21] -> od3[4] | forward (ns) | 13.730603 | 9.782356 | -28.76
+i[21] -> od3[4] | dynamic_energy (pJ) | 2.634067 | 2.806700 | +6.55
+i[22] -> oc3[2] | forward (ns) | 4.356909 | 3.377447 | -22.48
+i[22] -> oc3[2] | dynamic_energy (pJ) | 1.329626 | 1.462590 | +10.00
+i[22] -> od3[5] | forward (ns) | 4.395298 | 3.415701 | -22.29
+i[22] -> od3[5] | dynamic_energy (pJ) | 1.338806 | 1.476225 | +10.26
+i[23] -> oc3[3] | forward (ns) | 4.442043 | 3.426497 | -22.86
+i[23] -> oc3[3] | dynamic_energy (pJ) | 1.313789 | 1.439166 | +9.54
+i[23] -> od3[6] | forward (ns) | 4.480491 | 3.464849 | -22.67
+i[23] -> od3[6] | dynamic_energy (pJ) | 1.322654 | 1.456331 | +10.11
+i[24] -> oc3[4] | forward (ns) | 4.431791 | 3.424946 | -22.72
+i[24] -> oc3[4] | dynamic_energy (pJ) | 1.245373 | 1.369945 | +10.00
+i[24] -> od3[7] | forward (ns) | 4.470145 | 3.463293 | -22.52
+i[24] -> od3[7] | dynamic_energy (pJ) | 1.254269 | 1.381422 | +10.14
+i[11] -> od0[0],od1[5],od2[5],od3[0] | forward (ns) | 9.214311 | 6.481151 | -29.66
+i[11] -> od0[0],od1[5],od2[5],od3[0] | recovery (ns) | 1.562649 | 1.544894 | -1.14
+i[11] -> od0[0],od1[5],od2[5],od3[0] | dynamic_energy (pJ) | 1.765965 | 1.866111 | +5.67
+i[12] -> od0[1],od1[6],od2[6],od3[1] | forward (ns) | 0.319672 | 0.328618 | +2.80
+i[12] -> od0[1],od1[6],od2[6],od3[1] | recovery (ns) | 1.289017 | 1.245206 | -3.40
+i[12] -> od0[1],od1[6],od2[6],od3[1] | dynamic_energy (pJ) | 0.400721 | 0.402819 | +0.52
+i[13] -> od0[2],od1[7],od2[7],od3[2] | forward (ns) | 0.347104 | 0.361409 | +4.12
+i[13] -> od0[2],od1[7],od2[7],od3[2] | recovery (ns) | 1.289857 | 1.249969 | -3.09
+i[13] -> od0[2],od1[7],od2[7],od3[2] | dynamic_energy (pJ) | 0.398183 | 0.398706 | +0.13
+i[25] -> od0[8],od1[8],od2[8],od3[8] | forward (ns) | 6.008003 | 4.068217 | -32.29
+i[25] -> od0[8],od1[8],od2[8],od3[8] | recovery (ns) | 1.565110 | 1.544481 | -1.32
+i[25] -> od0[8],od1[8],od2[8],od3[8] | dynamic_energy (pJ) | 1.287591 | 1.358646 | +5.52
+Idle | leakage (uW) | 79.403150 | 80.621627 | +1.53
+
+Additional recovery observations
+---------------------------------
+Input return = input rails fully spacer -> input acknowledge low.
+This is a handshake component, not the conventional output-valid recovery.
+No own-input testbench wait lies inside these two measured boundaries.
+Concurrent port dependencies can still be present; it is not a fully de-embedded cycle.
+Input index | Data | Previous ns | Current ns | Change %
+I[0] | 0x6 | 2.027332 | 1.984625 | -2.11
+I[1] | 0xf | 0.357780 | 0.316623 | -11.50
+I[2] | 0xf | 0.340903 | 0.302247 | -11.34
+I[3] | 0xf | 0.355494 | 0.313877 | -11.71
+I[4] | 0xf | 0.354791 | 0.312348 | -11.96
+I[5] | 0xf | 0.356388 | 0.312563 | -12.30
+I[6] | 0xf | 0.354536 | 0.312875 | -11.75
+I[7] | 0xf | 0.337937 | 0.299022 | -11.52
+I[8] | 0xf | 0.337391 | 0.297861 | -11.72
+I[9] | 0xf | 0.337003 | 0.299603 | -11.10
+I[10] | 0xf | 0.337292 | 0.298375 | -11.54
+I[11] | 0x0 | 1.417599 | 1.354725 | -4.44
+I[12] | 0x0 | 1.155179 | 1.051059 | -9.01
+I[13] | 0x0 | 1.144481 | 1.066083 | -6.85
+I[14] | 0x9 | 2.023534 | 1.978836 | -2.21
+I[15] | 0xf | 0.366642 | 0.325965 | -11.09
+I[16] | 0xf | 0.316574 | 0.285065 | -9.95
+I[17] | 0xf | 0.364523 | 0.321986 | -11.67
+I[18] | 0xf | 0.364140 | 0.320435 | -12.00
+I[19] | 0xf | 0.363669 | 0.320196 | -11.95
+I[20] | 0xf | 0.364225 | 0.321040 | -11.86
+I[21] | 0xf | 0.313645 | 0.281840 | -10.14
+I[22] | 0xf | 0.311892 | 0.280288 | -10.13
+I[23] | 0xf | 0.312526 | 0.280021 | -10.40
+I[24] | 0xf | 0.312043 | 0.280226 | -10.20
+I[25] | 0x0 | 1.419847 | 1.354605 | -4.60
+OC/OD conventional recovery remains N/A when input acknowledge returns low
+before the buffered output becomes valid. Internal carry-reset measurements
+are recorded separately in recovery_sizing_summary.txt.
+
+Exact additional W changes (micrometres)
+----------------------------------------
+Subcircuit | Driver | Device | Type | Previous W | Current W | Factor
+ChildServer | R_areq | M410_ | nmos | 0.0975 | 0.195 | 2
+ChildServer | R_areq | M411_ | nmos | 0.0975 | 0.195 | 2
+ChildServer | R_areq | M56_ | pmos | 0.1625 | 0.65 | 4
+ChildServer | R_areq | M924_ | pmos | 0.1625 | 0.65 | 4
+ChildServer | R_areq | M927_ | pmos | 0.1625 | 0.65 | 4
+ChildServer | R_areq | M928_ | pmos | 0.1625 | 0.65 | 4
+ChildServer | R_areq | M929_ | pmos | 0.1625 | 0.65 | 4
+ChildServer | R_areq | M930_ | pmos | 0.1625 | 0.65 | 4
+ChildServer | R_areq | M931_ | pmos | 0.1625 | 0.65 | 4
+ChildServer | __ar | M139_ | pmos | 0.1625 | 0.325 | 2
+ChildServer | __ar | M522_ | nmos | 0.0975 | 0.195 | 2
+ChildServer | s | M23_ | pmos | 0.1625 | 0.325 | 2
+ChildServer | s | M375_ | nmos | 0.0975 | 0.195 | 2
+ChildServer | s | M376_ | nmos | 0.0975 | 0.195 | 2
+ChildServer | s | M377_ | nmos | 0.0975 | 0.195 | 2
+ChildServer | s | M817_ | pmos | 0.1625 | 0.325 | 2
+ChildServer | s | M818_ | nmos | 0.0975 | 0.195 | 2
+ChildServer | s | M865_ | nmos | 0.0975 | 0.195 | 2
+ChildServer | __s | M141_ | pmos | 0.1625 | 0.325 | 2
+ChildServer | __s | M524_ | nmos | 0.0975 | 0.195 | 2
+ChildServer | p0 | M184_ | pmos | 0.1625 | 0.325 | 2
+ChildServer | p0 | M567_ | nmos | 0.0975 | 0.195 | 2
+ChildServer | A_aa | M417_ | nmos | 0.0975 | 0.195 | 2
+ChildServer | A_aa | M62_ | pmos | 0.1625 | 0.325 | 2
+ChildServer | A_aa | M866_ | pmos | 0.1625 | 0.325 | 2
+ChildServer | A_aa | M867_ | nmos | 0.0975 | 0.195 | 2
+ChildServer | p1 | M59_ | pmos | 0.1625 | 0.65 | 4
+ChildServer | p1 | M944_ | pmos | 0.1625 | 0.65 | 4
+ChildServer | p1 | M947_ | pmos | 0.1625 | 0.65 | 4
+ChildServer | p1 | M948_ | pmos | 0.1625 | 0.65 | 4
+ChildServer | p1 | M949_ | pmos | 0.1625 | 0.65 | 4
+ChildServer | p1 | M950_ | pmos | 0.1625 | 0.65 | 4
+ChildServer | p1 | M951_ | pmos | 0.1625 | 0.65 | 4
+ChildServer | p1 | M952_ | pmos | 0.1625 | 0.65 | 4
+ChildServer | p1 | M953_ | pmos | 0.1625 | 0.65 | 4
+ChildServer | p1 | M954_ | pmos | 0.1625 | 0.65 | 4
+QuadRouter | __ia | M0_ | pmos | 0.1625 | 0.4875 | 3
+QuadRouter | __ia | M10_ | pmos | 0.1625 | 0.4875 | 3
+QuadRouter | __ia | M11_ | pmos | 0.1625 | 0.4875 | 3
+QuadRouter | __ia | M8_ | pmos | 0.1625 | 0.4875 | 3
+QuadRouter | __ia | M9_ | pmos | 0.1625 | 0.4875 | 3
+FullAdderP | __dt | M0_ | pmos | 0.1625 | 0.65 | 4
+FullAdderP | __dt | M16_ | nmos | 0.0975 | 0.195 | 2
+FullAdderP | __dt | M17_ | nmos | 0.0975 | 0.195 | 2
+FullAdderP | __dt | M35_ | pmos | 0.1625 | 0.65 | 4
+FullAdderP | __dt | M38_ | pmos | 0.1625 | 0.65 | 4
+FullAdderP | __dt | M39_ | pmos | 0.1625 | 0.65 | 4
+FullAdderP | __df | M18_ | nmos | 0.0975 | 0.195 | 2
+FullAdderP | __df | M1_ | pmos | 0.1625 | 0.65 | 4
+FullAdderP | __df | M40_ | nmos | 0.0975 | 0.195 | 2
+FullAdderP | __df | M41_ | pmos | 0.1625 | 0.65 | 4
+FullAdderP | __df | M44_ | pmos | 0.1625 | 0.65 | 4
+FullAdderP | __df | M45_ | pmos | 0.1625 | 0.65 | 4
+FullAdderP | d_at | M23_ | nmos | 0.0975 | 0.2925 | 3
+FullAdderP | d_at | M4_ | pmos | 0.1625 | 0.325 | 2
+FullAdderP | d_af | M24_ | nmos | 0.0975 | 0.2925 | 3
+FullAdderP | d_af | M5_ | pmos | 0.1625 | 0.325 | 2
+HalfAdderP | __dt | M0_ | pmos | 0.1625 | 0.325 | 2
+HalfAdderP | __dt | M16_ | nmos | 0.0975 | 0.195 | 2
+HalfAdderP | __dt | M32_ | pmos | 0.1625 | 0.325 | 2
+HalfAdderP | __df | M17_ | nmos | 0.0975 | 0.195 | 2
+HalfAdderP | __df | M1_ | pmos | 0.1625 | 0.325 | 2
+HalfAdderP | __df | M35_ | pmos | 0.1625 | 0.325 | 2
+HalfAdderP | d_at | M20_ | nmos | 0.0975 | 0.2925 | 3
+HalfAdderP | d_at | M4_ | pmos | 0.1625 | 0.325 | 2
+HalfAdderP | d_af | M21_ | nmos | 0.0975 | 0.2925 | 3
+HalfAdderP | d_af | M5_ | pmos | 0.1625 | 0.325 | 2
+
+Validation and provenance
+--------------------------
+Functional HSPICE test PASS; final idle leakage window stable.
+The retained deck adds non-loading .probe observations of internal nodes only.
+Reference runs with these probes reproduced the baseline external timings.
+perf_common.py excludes partial hierarchical probes from external-channel discovery.
+Production netlist, environment and testbench hashes equal the completed job hashes:
+{
+  "src_spice/block/QuadRouter/QuadRouter.sp": "5fa784ec8e402bdab184cea884e524c910ece65858a8812f2470b50eb79588c9",
+  "tb/block/QuadRouter/QuadRouter_environment.va": "7efae9c16588102e20573c66ff05bcf7dc62a262267ac5c32729da4ea9db8a2f",
+  "tb/block/QuadRouter/QuadRouter_tb.sp": "7f3f63b62437c2bd73c5f3e7cf96c1c5422a7b7d2f06e5908f8ca7a33c1dd397"
+}
+Report: tb/block/results/QuadRouter/QuadRouter_perf.txt
+Experimental inputs, rejected candidates and complete before-results: /home/cad/archives/analog_sim/20260918_recovery_sizing
+Subsystem/top embedded netlists are not updated by this block-only sizing.
+Results apply to the saved operating point and test cases, not all process corners.
+
+Historical first sizing round (superseded widths/results)
+==========================================================
+QuadRouter: targeted fanout sizing (measured W-only sizing)
+==============================================================
+Only MOS W parameters were changed. L, devices, topology and ports are identical.
+Keeper devices and their feedback inverters retain their generated dimensions.
+Units: widths and lengths below are micrometres. Technology: PTM65 TT, 1.1 V, 27 C.
+The largest trial widths are NMOS 1.56 um and PMOS 2.6 um (16x).
+PRS source was not regenerated or changed. A future prs2net build would lose this manual sizing.
+Original generated node reff comments describe the unsized baseline, not the new resistances.
+
+Method
+------
+Gate loads counted after recursive instance/port expansion; repeated instances are included.
+invEq is sum(W*L) / (0.26*0.065), a gate-area load proxy in minimum-inverter units, not extracted capacitance.
+Targets: high-fanout control drivers and limited support for their existing upstream stages.
+Width factors 2/4/8/16 are bounded trial choices; stronger drivers also increase upstream loading.
+Logical-effort reference: https://pages.hmc.edu/harris/class/e158/10/lect6.pdf
+No automatic timing optimum, layout/parasitic signoff or measured gain is implied by the sizing alone.
+
+Changed MOS: 72 in definitions; 147/10216 after instance expansion (1.44%).
+
+Driver groups (maximum load across the block library)
+----------------------------------------------------
+ChildServer.__p0: W x4; gate terminals=72; invEq=37.500; driver MOS=13
+ChildServer.j: W x4; gate terminals=39; invEq=24.375; driver MOS=8
+ChildServer.I_aa: W x4; gate terminals=34; invEq=21.000; driver MOS=2
+Reg8.__qr: W x4; gate terminals=32; invEq=16.000; driver MOS=2
+SUpdate.__s: W x8; gate terminals=95; invEq=48.125; driver MOS=2
+SUpdate.s: W x2; gate terminals=9; invEq=5.125; driver MOS=12
+SUpdate.__ia: W x4; gate terminals=51; invEq=32.125; driver MOS=13
+SUpdate.I_aa: W x4; gate terminals=34; invEq=17.000; driver MOS=2
+SUpdate.k: W x4; gate terminals=47; invEq=29.875; driver MOS=3
+SUpdate.__p1: W x4; gate terminals=47; invEq=29.125; driver MOS=2
+SUpdate.p1: W x2; gate terminals=5; invEq=3.625; driver MOS=13
+
+Exact changed MOS
+-----------------
+Subcircuit Device Driver_node Old_W New_W L Factor
+ChildServer M412_ __p0 0.0975 0.39 0.065 4
+ChildServer M57_ __p0 0.1625 0.65 0.065 4
+ChildServer M58_ __p0 0.1625 0.65 0.065 4
+ChildServer M932_ __p0 0.0975 0.39 0.065 4
+ChildServer M933_ __p0 0.0975 0.39 0.065 4
+ChildServer M934_ __p0 0.0975 0.39 0.065 4
+ChildServer M935_ __p0 0.0975 0.39 0.065 4
+ChildServer M936_ __p0 0.0975 0.39 0.065 4
+ChildServer M937_ __p0 0.0975 0.39 0.065 4
+ChildServer M938_ __p0 0.0975 0.39 0.065 4
+ChildServer M939_ __p0 0.0975 0.39 0.065 4
+ChildServer M940_ __p0 0.1625 0.65 0.065 4
+ChildServer M943_ __p0 0.1625 0.65 0.065 4
+ChildServer M407_ j 0.0975 0.39 0.065 4
+ChildServer M408_ j 0.0975 0.39 0.065 4
+ChildServer M409_ j 0.0975 0.39 0.065 4
+ChildServer M45_ j 0.1625 0.65 0.065 4
+ChildServer M906_ j 0.1625 0.65 0.065 4
+ChildServer M907_ j 0.0975 0.39 0.065 4
+ChildServer M910_ j 0.1625 0.65 0.065 4
+ChildServer M923_ j 0.0975 0.39 0.065 4
+ChildServer M185_ I_aa 0.1625 0.65 0.065 4
+ChildServer M568_ I_aa 0.0975 0.39 0.065 4
+Reg8 M194_ __qr 0.0975 0.39 0.065 4
+Reg8 M41_ __qr 0.1625 0.65 0.065 4
+SUpdate M538_ __s 0.0975 0.78 0.065 8
+SUpdate M80_ __s 0.1625 1.3 0.065 8
+SUpdate M13_ s 0.1625 0.325 0.065 2
+SUpdate M14_ s 0.1625 0.325 0.065 2
+SUpdate M363_ s 0.0975 0.195 0.065 2
+SUpdate M898_ s 0.1625 0.325 0.065 2
+SUpdate M899_ s 0.0975 0.195 0.065 2
+SUpdate M902_ s 0.1625 0.325 0.065 2
+SUpdate M903_ s 0.1625 0.325 0.065 2
+SUpdate M904_ s 0.1625 0.325 0.065 2
+SUpdate M905_ s 0.1625 0.325 0.065 2
+SUpdate M906_ s 0.0975 0.195 0.065 2
+SUpdate M907_ s 0.0975 0.195 0.065 2
+SUpdate M908_ s 0.0975 0.195 0.065 2
+SUpdate M11_ __ia 0.1625 0.65 0.065 4
+SUpdate M12_ __ia 0.1625 0.65 0.065 4
+SUpdate M361_ __ia 0.0975 0.39 0.065 4
+SUpdate M362_ __ia 0.0975 0.39 0.065 4
+SUpdate M863_ __ia 0.0975 0.39 0.065 4
+SUpdate M864_ __ia 0.1625 0.65 0.065 4
+SUpdate M883_ __ia 0.0975 0.39 0.065 4
+SUpdate M884_ __ia 0.0975 0.39 0.065 4
+SUpdate M885_ __ia 0.1625 0.65 0.065 4
+SUpdate M886_ __ia 0.1625 0.65 0.065 4
+SUpdate M887_ __ia 0.1625 0.65 0.065 4
+SUpdate M888_ __ia 0.1625 0.65 0.065 4
+SUpdate M889_ __ia 0.1625 0.65 0.065 4
+SUpdate M103_ I_aa 0.1625 0.65 0.065 4
+SUpdate M561_ I_aa 0.0975 0.39 0.065 4
+SUpdate M357_ k 0.0975 0.39 0.065 4
+SUpdate M7_ k 0.1625 0.65 0.065 4
+SUpdate M852_ k 0.1625 0.65 0.065 4
+SUpdate M541_ __p1 0.0975 0.39 0.065 4
+SUpdate M83_ __p1 0.1625 0.65 0.065 4
+SUpdate M10_ p1 0.1625 0.325 0.065 2
+SUpdate M359_ p1 0.0975 0.195 0.065 2
+SUpdate M360_ p1 0.0975 0.195 0.065 2
+SUpdate M871_ p1 0.1625 0.325 0.065 2
+SUpdate M872_ p1 0.1625 0.325 0.065 2
+SUpdate M873_ p1 0.1625 0.325 0.065 2
+SUpdate M874_ p1 0.1625 0.325 0.065 2
+SUpdate M875_ p1 0.0975 0.195 0.065 2
+SUpdate M878_ p1 0.1625 0.325 0.065 2
+SUpdate M879_ p1 0.0975 0.195 0.065 2
+SUpdate M880_ p1 0.0975 0.195 0.065 2
+SUpdate M881_ p1 0.0975 0.195 0.065 2
+SUpdate M882_ p1 0.0975 0.195 0.065 2
+
+
+
+Validation status
+-----------------
+PASS: replacing only W tokens reconstructs the baseline byte-for-byte.
+PASS: instantiated MOS count, every L, ports and element connectivity are unchanged.
+PASS: HSPICE functional test and stable final idle leakage window.
+Campaign: /tmp/ferroma_analog_campaign_cw0iUDKs
+Testbench: tb/block/QuadRouter/QuadRouter_tb.sp
+Report: tb/block/results/QuadRouter/QuadRouter_perf.txt
+
+Before / after measured results
+-------------------------------
+Same baseline-selected input source, index, data and output ports in both simulations.
+Timing follows the existing extractor: observed external waits are subtracted.
+Counter forward denotes an input/output cycle; Serializer/Deserializer forward denotes batch latency.
+Input_cycle below is forward+recovery where defined. Energy is whole-DUT dynamic window energy.
+Arb windows include concurrent traffic: energy cannot be assigned uniquely to one input.
+Differences are (sized/original - 1)*100. Negative timing means faster.
+Metric / sample | Before | After | Change %
+Idle leakage (uW) | 78.860872 | 79.403150 | +0.69
+Sample initial:I->Ch: i[0] -> ch[0] -> measured i[0] -> ch[0]
+initial:I->Ch forward (ns) | 1.608420 | 1.200312 | -25.37
+initial:I->Ch recovery (ns) | 2.282420 | 1.322712 | -42.05
+initial:I->Ch dynamic_energy (pJ) | 1.183080 | 1.073138 | -9.29
+initial:I->Ch input_cycle (ns) | 3.890840 | 2.523024 | -35.15
+Sample initial:I->OC: i[1] -> oc1[0] -> measured i[1] -> oc1[0]
+initial:I->OC forward (ns) | 5.061512 | 5.065855 | +0.09
+initial:I->OC dynamic_energy (pJ) | 1.039916 | 1.235635 | +18.82
+Sample initial:I->OD: i[1] -> od1[0] -> measured i[1] -> od1[0]
+initial:I->OD forward (ns) | 5.099190 | 5.103118 | +0.08
+initial:I->OD dynamic_energy (pJ) | 1.056314 | 1.245025 | +17.87
+Sample payload:I->OC: i[5] -> oc1[3] -> measured i[5] -> oc1[3]
+payload:I->OC forward (ns) | 5.264883 | 4.400439 | -16.42
+payload:I->OC dynamic_energy (pJ) | 1.290626 | 1.200058 | -7.02
+Sample payload:I->OD: i[5] -> od1[3] -> measured i[5] -> od1[3]
+payload:I->OD forward (ns) | 5.303206 | 4.438590 | -16.30
+payload:I->OD dynamic_energy (pJ) | 1.309262 | 1.208713 | -7.68
+
+Coverage of every matched transaction
+-------------------------------------
+Input/outputs | Forward before/after ns | Recovery before/after ns | Dynamic energy before/after pJ
+i[0] -> ch[0] | 1.608420/1.200312 | 2.282420/1.322712 | 1.183080/1.073138
+i[14] -> ch[1] | 1.491471/1.167628 | 2.332557/1.343503 | 1.285658/1.104092
+i[15] -> oc0[0] | 1.621912/1.836379 | N/A | 0.704815/0.886811
+i[15] -> od0[3] | 1.659439/1.873603 | N/A | 0.724377/0.896014
+i[17] -> oc0[1] | 9.371690/8.297518 | N/A | 1.893278/1.831275
+i[17] -> od0[4] | 9.410412/8.335935 | N/A | 1.912548/1.840327
+i[18] -> oc0[2] | 5.162325/4.301927 | N/A | 1.401374/1.306839
+i[18] -> od0[5] | 5.200801/4.340187 | N/A | 1.420486/1.316200
+i[19] -> oc0[3] | 5.256324/4.387820 | N/A | 1.383610/1.293700
+i[19] -> od0[6] | 5.295178/4.426818 | N/A | 1.402206/1.301120
+i[20] -> oc0[4] | 5.247960/4.386754 | N/A | 1.380900/1.297079
+i[20] -> od0[7] | 5.286482/4.424993 | N/A | 1.400027/1.306455
+i[1] -> oc1[0] | 5.061512/5.065855 | N/A | 1.039916/1.235635
+i[1] -> od1[0] | 5.099190/5.103118 | N/A | 1.056314/1.245025
+i[3] -> oc1[1] | 16.113075/14.690147 | N/A | 2.617042/2.605066
+i[3] -> od1[1] | 16.151981/14.728825 | N/A | 2.635898/2.614697
+i[4] -> oc1[2] | 5.171306/4.315213 | N/A | 1.308323/1.217802
+i[4] -> od1[2] | 5.209607/4.354037 | N/A | 1.327670/1.227025
+i[5] -> oc1[3] | 5.264883/4.400439 | N/A | 1.290626/1.200058
+i[5] -> od1[3] | 5.303206/4.438590 | N/A | 1.309262/1.208713
+i[6] -> oc1[4] | 5.254892/4.387140 | N/A | 1.283256/1.203810
+i[6] -> od1[4] | 5.293313/4.425434 | N/A | 1.302500/1.212804
+i[2] -> oc2[0] | 8.600683/7.485957 | N/A | 1.740237/1.677988
+i[2] -> od2[0] | 8.638292/7.523624 | N/A | 1.756973/1.687352
+i[7] -> oc2[1] | 8.376049/7.261940 | N/A | 1.725056/1.653324
+i[7] -> od2[1] | 8.414989/7.300429 | N/A | 1.744547/1.662629
+i[8] -> oc2[2] | 5.189095/4.331858 | N/A | 1.315307/1.221806
+i[8] -> od2[2] | 5.227513/4.370694 | N/A | 1.334747/1.230947
+i[9] -> oc2[3] | 5.271647/4.416624 | N/A | 1.293626/1.204304
+i[9] -> od2[3] | 5.310631/4.455542 | N/A | 1.312133/1.213164
+i[10] -> oc2[4] | 5.272709/4.405438 | N/A | 1.287955/1.191711
+i[10] -> od2[4] | 5.311370/4.444315 | N/A | 1.306978/1.200698
+i[16] -> oc3[0] | 15.367146/13.909187 | N/A | 2.673376/2.644693
+i[16] -> od3[3] | 15.404996/13.946492 | N/A | 2.691795/2.654101
+i[21] -> oc3[1] | 15.146721/13.692202 | N/A | 2.653926/2.624815
+i[21] -> od3[4] | 15.185638/13.730603 | N/A | 2.672891/2.634067
+i[22] -> oc3[2] | 5.191962/4.356909 | N/A | 1.411080/1.329626
+i[22] -> od3[5] | 5.230428/4.395298 | N/A | 1.430186/1.338806
+i[23] -> oc3[3] | 5.286366/4.442043 | N/A | 1.402713/1.313789
+i[23] -> od3[6] | 5.325515/4.480491 | N/A | 1.421095/1.322654
+i[24] -> oc3[4] | 5.276743/4.431791 | N/A | 1.325314/1.245373
+i[24] -> od3[7] | 5.315359/4.470145 | N/A | 1.344382/1.254269
+i[11] -> od0[0],od1[5],od2[5],od3[0] | 9.981245/9.214311 | 2.269832/1.562649 | 1.773352/1.765965
+i[12] -> od0[1],od1[6],od2[6],od3[1] | 0.478662/0.319672 | 2.102004/1.289017 | 0.405521/0.400721
+i[13] -> od0[2],od1[7],od2[7],od3[2] | 0.501880/0.347104 | 2.100576/1.289857 | 0.398208/0.398183
+i[25] -> od0[8],od1[8],od2[8],od3[8] | 6.592829/6.008003 | 2.266883/1.565110 | 1.300782/1.287591
+
+Scope and provenance
+--------------------
+These results validate the saved testbench and operating point; they are not an exhaustive sizing optimum.
+Subsystem/top netlists were not resized or regenerated in this task.
+Original and experimental results: /home/cad/archives/analog_sim/20260917_block_fanout_sizing
+Baseline netlist SHA256: 038a1dd0c8c7e3df3fdb4d28ce9ff0087508aa6bcc6e538024f6c8775829d3dc
+Sized netlist SHA256: 970acb4e82854d92954a20d5c8db946d6e6663d77ec7b8160c4f2b1bf76f751a
+

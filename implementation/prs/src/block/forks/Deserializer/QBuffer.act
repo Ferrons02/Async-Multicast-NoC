@@ -1,0 +1,95 @@
+import "forks/commons/Channels.act";
+import "forks/commons/Reg4.act";
+
+/* Only QB7 delays L.req on its branch to L.a in the archived chain.
+ * Both acknowledgement rules share that copy; QB1..QB6 use L.req directly. */
+export template<pbool DELAY_CONTROL = false>
+defproc QBuffer(bool? reset; PassiveDualRail4? I; ActiveDualRail4! O; Dataless! R; Dataless? L)
+{
+    bool a, b, c, p_a, q_r;
+    bool hold_L_a;
+    bool fd_L_a__I_req;
+    bool fd_L_a__environment;
+    bool fd_L_req__L_a;
+    bool fd_O_a__L_a;
+    bool fd_R_a__b;
+    bool fd_R_a__c;
+    bool fd_a__I_req;
+    bool fd_a__L_a;
+    bool fd_b__I_req;
+    bool fd_b__R_req;
+    bool fd_c__L_a;
+    bool fd_c__R_req;
+    bool fd_c__q_r;
+    bool fd_p_a__R_req;
+    bool fd_p_a__a;
+    L.a = fd_L_a__environment;
+
+    Reg4 reg;
+    reg.reset = reset;
+    reg.W.t = I.t;
+    reg.W.f = I.f;
+    reg.W.a = p_a;
+    reg.R.req = q_r;
+    reg.R.t = O.t;
+    reg.R.f = O.f;
+
+
+    // Original non-bubble PRS, PDF pp. 58, 62–63.
+    // Reset is common; each guard pair uses one source view.
+    // Only the documented fork groups share views across targets.
+    prs {
+        fd_L_a__I_req -> a+
+        fd_p_a__a | reset -> a-
+        fd_p_a__R_req -> b+
+        fd_R_a__b | reset -> b-
+        fd_R_a__c -> c+
+        fd_O_a__L_a | reset -> c-
+        fd_a__I_req & ~fd_L_a__I_req -> I.req+
+        (~fd_a__I_req & fd_b__I_req) | reset -> I.req-
+        fd_L_req__L_a & ~fd_c__L_a & ~fd_O_a__L_a & ~reset -> hold_L_a+
+        (~fd_L_req__L_a & fd_a__L_a) | reset -> hold_L_a-
+        fd_b__R_req & ~fd_p_a__R_req -> R.req+
+        (fd_c__R_req & ~fd_b__R_req) | reset -> R.req-
+        fd_c__q_r & ~fd_R_a__c -> q_r+
+        ~fd_c__q_r -> q_r-
+
+        // Non-inverting wire delays.
+        hold_L_a -> fd_L_a__I_req+
+        ~hold_L_a -> fd_L_a__I_req-
+        hold_L_a -> fd_L_a__environment+
+        ~hold_L_a -> fd_L_a__environment-
+        O.a -> fd_O_a__L_a+
+        ~O.a -> fd_O_a__L_a-
+        R.a -> fd_R_a__b+
+        ~R.a -> fd_R_a__b-
+        R.a -> fd_R_a__c+
+        ~R.a -> fd_R_a__c-
+        a -> fd_a__I_req+
+        ~a -> fd_a__I_req-
+        a -> fd_a__L_a+
+        ~a -> fd_a__L_a-
+        b -> fd_b__I_req+
+        ~b -> fd_b__I_req-
+        b -> fd_b__R_req+
+        ~b -> fd_b__R_req-
+        c -> fd_c__L_a+
+        ~c -> fd_c__L_a-
+        c -> fd_c__R_req+
+        ~c -> fd_c__R_req-
+        c -> fd_c__q_r+
+        ~c -> fd_c__q_r-
+        p_a -> fd_p_a__R_req+
+        ~p_a -> fd_p_a__R_req-
+        p_a -> fd_p_a__a+
+        ~p_a -> fd_p_a__a-
+    }
+
+    // Preserve the existing direct/delayed transport option.
+    [ DELAY_CONTROL -> prs {
+        L.req -> fd_L_req__L_a+
+        ~L.req -> fd_L_req__L_a-
+    } [] else ->
+        fd_L_req__L_a = L.req;
+    ]
+}

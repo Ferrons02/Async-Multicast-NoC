@@ -1,0 +1,104 @@
+import "commons/Channels.act";
+
+// Supplied CounterLogic PRS with Sb-valid and Cnt-spacer completion trees.
+export defproc CounterLogic(
+    bool? reset;
+    ActiveDualRail4? I;
+    PassiveDualRail8! Cnt;
+    ActiveDualRail8! P;
+    PassiveDualRail8? Q;
+    DualRail4! Sa;
+    DualRail8! Sb;
+    DualRail8? So
+)
+{
+    bool k, v, w, _v, _cr, _k, _r, _pa, _ia, _qr;
+    bool _it[4], _if[4], _qt[8], _qf[8], _sbt[8], _sbf[8], _pt[8], _pf[8];
+    bool x[8], _y[4], z[2], _h;
+    bool d[8], _e[4], g[2], _m;
+    prs {
+        (v & Cnt.req) | (_ia & _sbt[7] & _sbf[7] & k) -> _qr-
+        (~_v & ~Cnt.req) | ~_h | ~_r -> _qr+
+        ~_v & ~Cnt.req & ~_m -> w+
+        _v -> w-
+
+        // All eight Sb bits are valid; hold intermediate completions
+        // until both child nodes have returned to spacer.
+        (j:8:
+            ~_sbt[j] | ~_sbf[j] -> x[j]+
+            _sbt[j] & _sbf[j] -> x[j]-
+        )
+        (j:4:
+            x[2*j+1] & x[2*j] -> _y[j]-
+            ~x[2*j+1] & ~x[2*j] -> _y[j]+
+        )
+        (j:2:
+            ~_y[2*j+1] & ~_y[2*j] -> z[j]+
+            _y[2*j+1] & _y[2*j] -> z[j]-
+        )
+        z[1] & z[0] -> _h-
+        ~z[1] & ~z[0] -> _h+
+
+        // All sixteen Cnt rails have returned to spacer.
+        (j:8:
+            ~Cnt.t[j] & ~Cnt.f[j] -> d[j]+
+            Cnt.t[j] | Cnt.f[j] -> d[j]-
+        )
+        (j:4:
+            d[2*j+1] & d[2*j] -> _e[j]-
+            ~d[2*j+1] & ~d[2*j] -> _e[j]+
+        )
+        (j:2:
+            ~_e[2*j+1] & ~_e[2*j] -> g[j]+
+            _e[2*j+1] & _e[2*j] -> g[j]-
+        )
+        g[1] & g[0] -> _m-
+        ~g[1] & ~g[0] -> _m+
+
+        (Sa.t[3] | Sa.f[3]) & P.a -> _ia-
+        ~k | ~_r -> _ia+
+        (I.t[3] | I.f[3]) & (_pa & _v) -> _k-
+        (~P.a & ~_ia) | ~_r -> _k+
+        ~_cr -> v+
+        P.a | reset -> v-
+        (j:4:
+            ~_it[j] & ~_k -> Sa.t[j]+
+            _it[j] -> Sa.t[j]-
+            ~_if[j] & ~_k -> Sa.f[j]+
+            _if[j] -> Sa.f[j]-
+        )
+        (j:8:
+            ~_qt[j] & ~_k -> Sb.t[j]+
+            (_qt[j] & I.a) | reset -> Sb.t[j]-
+            ~_qf[j] & ~_k -> Sb.f[j]+
+            (_qf[j] & I.a) | reset -> Sb.f[j]-
+            So.t[j] & _qr -> _pt[j]-
+            ~So.t[j] -> _pt[j]+
+            (So.f[j] & _qr) | w -> _pf[j]-
+            ~So.f[j] & ~w -> _pf[j]+
+            ~_cr & ~_qt[j] -> Cnt.t[j]+
+            _qt[j] -> Cnt.t[j]-
+            ~_cr & ~_qf[j] -> Cnt.f[j]+
+            _qf[j] -> Cnt.f[j]-
+        )
+        ~v => _v+
+        ~P.a => _pa+
+        ~Cnt.req => _cr+
+        ~reset => _r+
+        ~_k => k+
+        ~_ia => I.a+
+        ~_qr => Q.req+
+        (j:4:
+            ~I.t[j] => _it[j]+
+            ~I.f[j] => _if[j]+
+        )
+        (j:8:
+            ~Q.t[j] => _qt[j]+
+            ~Q.f[j] => _qf[j]+
+            ~Sb.t[j] => _sbt[j]+
+            ~Sb.f[j] => _sbf[j]+
+            ~_pt[j] => P.t[j]+
+            ~_pf[j] => P.f[j]+
+        )
+    }
+}

@@ -1,0 +1,62 @@
+import "no_forks/commons/Channels.act";
+
+/* O returns rails in response to O.req, using the existing PassiveDualRail4 convention. */
+export defproc InputAnalyzer(
+    bool? reset;
+    ActiveDualRail4? I;
+    PassiveDualRail4! O;
+    Dataless! R;
+    Dataless? L
+)
+{
+    bool f, k, m, s, v, route_seen;
+
+    // Original non-bubble PRS: RouterDecompositionBubbleReshuffling.pdf, pp. 63–64.
+    prs {
+        // v records occupancy of the current word. route_seen survives full
+        // words until their route flush, so a full final word still receives
+        // a separate all-zero-data terminator. Initially empty routes stay
+        // silent. The input acknowledgement confirms setting this latch;
+        // k's return-to-zero confirms clearing it before the next route.
+        m -> route_seen+
+        (I.a & k) | reset -> route_seen-
+        O.req & (|i:4: I.t[i]) -> m+
+        (I.a & (&i:4: (~O.t[i] & ~O.f[i]))) | reset -> m-
+        ~L.req & ~O.req & m -> v+
+        L.req | reset -> v-
+        k & (v | route_seen) & ~O.req -> f+
+        (L.req & ~I.a & ~k) | reset -> f-
+        O.req & (&i:4: I.f[i]) -> k+
+        ((&i:4: ~I.f[i]) & ~route_seen) | reset -> k-
+        (f & L.req & k) | (v & m & route_seen & ~O.req) | (~v & ~route_seen & k) -> I.a+
+        ~k & ~m -> I.a-
+        L.req & ~v & ~f -> s+
+        R.req | reset -> s-
+        s & L.req -> L.a+
+        ~L.req | reset -> L.a-
+        (s & ~L.a & ~L.req) | reset -> R.req+
+        R.a & ~s -> R.req-
+        (i:4:
+            m & I.t[i] -> O.t[i]+
+            ~I.t[i] -> O.t[i]-
+            (m & I.f[i]) | (O.req & (v | route_seen) & k) -> O.f[i]+
+            ~I.f[i] | (f & ~O.req) -> O.f[i]-
+        )
+    }
+
+    // Existing timing constraints translated to original PRS signal names.
+    spec {
+        timing O.req+ : O.req+ < m+
+        timing I.a- : I.a- < m+
+        timing I.a+ : I.a+ < k-
+        timing m- : m- < I.a-
+        timing O.req+ : O.req+ < k+
+        timing L.req- : L.req- < L.a-
+        timing L.req+ : L.req+ < s+
+        timing L.a+ : L.a+ < L.req-
+        timing I.f[0]+ : I.f[0]+ < k+
+        timing I.f[1]+ : I.f[1]+ < k+
+        timing I.f[2]+ : I.f[2]+ < k+
+        timing I.f[3]+ : I.f[3]+ < k+
+    }
+}

@@ -1,0 +1,325 @@
+// Exactly one reference round from Implementation/PRS/tb/block/no_forks/tb_Serializer.act.
+// Inputs FFFFFFF2, 76543212; outputs F,F,F,F,F,F,F,7,6,5,4,3,2,1.
+// All progression follows the four-phase handshake, with a 0.5*SUPPLY threshold.
+`include "disciplines.vams"
+module serializer_environment(
+    reset,
+    I_t_0,
+    I_t_1,
+    I_t_2,
+    I_t_3,
+    I_t_4,
+    I_t_5,
+    I_t_6,
+    I_t_7,
+    I_t_8,
+    I_t_9,
+    I_t_10,
+    I_t_11,
+    I_t_12,
+    I_t_13,
+    I_t_14,
+    I_t_15,
+    I_t_16,
+    I_t_17,
+    I_t_18,
+    I_t_19,
+    I_t_20,
+    I_t_21,
+    I_t_22,
+    I_t_23,
+    I_t_24,
+    I_t_25,
+    I_t_26,
+    I_t_27,
+    I_t_28,
+    I_t_29,
+    I_t_30,
+    I_t_31,
+    I_f_0,
+    I_f_1,
+    I_f_2,
+    I_f_3,
+    I_f_4,
+    I_f_5,
+    I_f_6,
+    I_f_7,
+    I_f_8,
+    I_f_9,
+    I_f_10,
+    I_f_11,
+    I_f_12,
+    I_f_13,
+    I_f_14,
+    I_f_15,
+    I_f_16,
+    I_f_17,
+    I_f_18,
+    I_f_19,
+    I_f_20,
+    I_f_21,
+    I_f_22,
+    I_f_23,
+    I_f_24,
+    I_f_25,
+    I_f_26,
+    I_f_27,
+    I_f_28,
+    I_f_29,
+    I_f_30,
+    I_f_31,
+    I_a,
+    O_t_0,
+    O_t_1,
+    O_t_2,
+    O_t_3,
+    O_f_0,
+    O_f_1,
+    O_f_2,
+    O_f_3,
+    O_a,
+    done,
+    failed);
+inout reset, I_t_0, I_t_1, I_t_2, I_t_3, I_t_4, I_t_5, I_t_6, I_t_7, I_t_8, I_t_9, I_t_10, I_t_11, I_t_12, I_t_13, I_t_14, I_t_15, I_t_16, I_t_17, I_t_18, I_t_19, I_t_20, I_t_21, I_t_22, I_t_23, I_t_24, I_t_25, I_t_26, I_t_27, I_t_28, I_t_29, I_t_30, I_t_31, I_f_0, I_f_1, I_f_2, I_f_3, I_f_4, I_f_5, I_f_6, I_f_7, I_f_8, I_f_9, I_f_10, I_f_11, I_f_12, I_f_13, I_f_14, I_f_15, I_f_16, I_f_17, I_f_18, I_f_19, I_f_20, I_f_21, I_f_22, I_f_23, I_f_24, I_f_25, I_f_26, I_f_27, I_f_28, I_f_29, I_f_30, I_f_31, I_a, O_t_0, O_t_1, O_t_2, O_t_3, O_f_0, O_f_1, O_f_2, O_f_3, O_a, done, failed;
+electrical reset, I_t_0, I_t_1, I_t_2, I_t_3, I_t_4, I_t_5, I_t_6, I_t_7, I_t_8, I_t_9, I_t_10, I_t_11, I_t_12, I_t_13, I_t_14, I_t_15, I_t_16, I_t_17, I_t_18, I_t_19, I_t_20, I_t_21, I_t_22, I_t_23, I_t_24, I_t_25, I_t_26, I_t_27, I_t_28, I_t_29, I_t_30, I_t_31, I_f_0, I_f_1, I_f_2, I_f_3, I_f_4, I_f_5, I_f_6, I_f_7, I_f_8, I_f_9, I_f_10, I_f_11, I_f_12, I_f_13, I_f_14, I_f_15, I_f_16, I_f_17, I_f_18, I_f_19, I_f_20, I_f_21, I_f_22, I_f_23, I_f_24, I_f_25, I_f_26, I_f_27, I_f_28, I_f_29, I_f_30, I_f_31, I_a, O_t_0, O_t_1, O_t_2, O_t_3, O_f_0, O_f_1, O_f_2, O_f_3, O_a, done, failed;
+parameter real SUPPLY=0.0;
+parameter real TICK=10p from (0:inf);
+parameter real TD=100p from (0:inf);
+parameter real EDGE=10p from (0:inf);
+parameter real STOP_TIME=2u from (0:inf);
+integer active, finished, failure, reported;
+integer tx_index, tx_phase, tx_valid, tx_hi, tx_lo;
+integer rx_index, rx_phase, ack, valid_word, spacer, illegal, word_value, expected;
+integer input_spacer;
+real threshold, stop_after;
+// Supply-current sampling continues after the functional round, with reset low.
+parameter real IDLE_SETTLE=20n from (0:inf);
+parameter real IDLE_WINDOW=20n from (0:inf);
+parameter real IDLE_MARGIN=1n from (0:inf);
+integer idle_started, idle_completed;
+real idle_start;
+analog begin
+  @(initial_step) begin
+    idle_start=-1; idle_started=0; idle_completed=0;
+    active=0; finished=0; failure=0; reported=0;
+    tx_index=0; tx_phase=0; tx_valid=0; tx_hi=0; tx_lo=0;
+    rx_index=0; rx_phase=0; ack=0; expected=0;
+    threshold=0.5*SUPPLY; stop_after=-1;
+    if (SUPPLY <= 0) begin failure=1; $display("SIM_ERROR reason=invalid_supply"); end
+  end
+  @(timer(TICK,TICK)) begin
+    valid_word=1; spacer=1; illegal=0; word_value=0; input_spacer=1;
+    if (V(I_t_0) >= threshold || V(I_f_0) >= threshold) input_spacer=0;
+    if (V(I_t_1) >= threshold || V(I_f_1) >= threshold) input_spacer=0;
+    if (V(I_t_2) >= threshold || V(I_f_2) >= threshold) input_spacer=0;
+    if (V(I_t_3) >= threshold || V(I_f_3) >= threshold) input_spacer=0;
+    if (V(I_t_4) >= threshold || V(I_f_4) >= threshold) input_spacer=0;
+    if (V(I_t_5) >= threshold || V(I_f_5) >= threshold) input_spacer=0;
+    if (V(I_t_6) >= threshold || V(I_f_6) >= threshold) input_spacer=0;
+    if (V(I_t_7) >= threshold || V(I_f_7) >= threshold) input_spacer=0;
+    if (V(I_t_8) >= threshold || V(I_f_8) >= threshold) input_spacer=0;
+    if (V(I_t_9) >= threshold || V(I_f_9) >= threshold) input_spacer=0;
+    if (V(I_t_10) >= threshold || V(I_f_10) >= threshold) input_spacer=0;
+    if (V(I_t_11) >= threshold || V(I_f_11) >= threshold) input_spacer=0;
+    if (V(I_t_12) >= threshold || V(I_f_12) >= threshold) input_spacer=0;
+    if (V(I_t_13) >= threshold || V(I_f_13) >= threshold) input_spacer=0;
+    if (V(I_t_14) >= threshold || V(I_f_14) >= threshold) input_spacer=0;
+    if (V(I_t_15) >= threshold || V(I_f_15) >= threshold) input_spacer=0;
+    if (V(I_t_16) >= threshold || V(I_f_16) >= threshold) input_spacer=0;
+    if (V(I_t_17) >= threshold || V(I_f_17) >= threshold) input_spacer=0;
+    if (V(I_t_18) >= threshold || V(I_f_18) >= threshold) input_spacer=0;
+    if (V(I_t_19) >= threshold || V(I_f_19) >= threshold) input_spacer=0;
+    if (V(I_t_20) >= threshold || V(I_f_20) >= threshold) input_spacer=0;
+    if (V(I_t_21) >= threshold || V(I_f_21) >= threshold) input_spacer=0;
+    if (V(I_t_22) >= threshold || V(I_f_22) >= threshold) input_spacer=0;
+    if (V(I_t_23) >= threshold || V(I_f_23) >= threshold) input_spacer=0;
+    if (V(I_t_24) >= threshold || V(I_f_24) >= threshold) input_spacer=0;
+    if (V(I_t_25) >= threshold || V(I_f_25) >= threshold) input_spacer=0;
+    if (V(I_t_26) >= threshold || V(I_f_26) >= threshold) input_spacer=0;
+    if (V(I_t_27) >= threshold || V(I_f_27) >= threshold) input_spacer=0;
+    if (V(I_t_28) >= threshold || V(I_f_28) >= threshold) input_spacer=0;
+    if (V(I_t_29) >= threshold || V(I_f_29) >= threshold) input_spacer=0;
+    if (V(I_t_30) >= threshold || V(I_f_30) >= threshold) input_spacer=0;
+    if (V(I_t_31) >= threshold || V(I_f_31) >= threshold) input_spacer=0;
+    if (V(O_t_0) < threshold && V(O_f_0) < threshold) valid_word=0;
+    if (V(O_t_0) >= threshold || V(O_f_0) >= threshold) spacer=0;
+    if (V(O_t_0) >= threshold && V(O_f_0) >= threshold) illegal=1;
+    if (V(O_t_0) >= threshold) word_value=word_value | (1 << 0);
+    if (V(O_t_1) < threshold && V(O_f_1) < threshold) valid_word=0;
+    if (V(O_t_1) >= threshold || V(O_f_1) >= threshold) spacer=0;
+    if (V(O_t_1) >= threshold && V(O_f_1) >= threshold) illegal=1;
+    if (V(O_t_1) >= threshold) word_value=word_value | (1 << 1);
+    if (V(O_t_2) < threshold && V(O_f_2) < threshold) valid_word=0;
+    if (V(O_t_2) >= threshold || V(O_f_2) >= threshold) spacer=0;
+    if (V(O_t_2) >= threshold && V(O_f_2) >= threshold) illegal=1;
+    if (V(O_t_2) >= threshold) word_value=word_value | (1 << 2);
+    if (V(O_t_3) < threshold && V(O_f_3) < threshold) valid_word=0;
+    if (V(O_t_3) >= threshold || V(O_f_3) >= threshold) spacer=0;
+    if (V(O_t_3) >= threshold && V(O_f_3) >= threshold) illegal=1;
+    if (V(O_t_3) >= threshold) word_value=word_value | (1 << 3);
+    if (!active && !finished && !failure && V(reset) < threshold) begin
+      if (!spacer || V(I_a) >= threshold) begin
+        failure=1; $display("SIM_ERROR t=%e reason=reset_spacer I.a=%e", $abstime,V(I_a));
+      end else begin active=1; $display("SIM_RESET t=%e",$abstime); end
+    end
+    if ((active || finished) && !failure && !reported) begin
+      if (illegal) begin
+        failure=1; $display("SIM_ERROR t=%e reason=illegal_dual_rail channel=O",$abstime);
+      end
+      if (!failure) begin
+        if (rx_phase == 0 && valid_word && !spacer) begin
+          if (rx_index >= 14) begin
+            failure=1; $display("SIM_ERROR t=%e reason=unexpected_output channel=O",$abstime);
+          end else begin
+            if (rx_index < 7) expected=15;
+            else expected=14-rx_index;
+            if (word_value != expected) begin
+              failure=1;
+              $display("SIM_RX t=%e channel=O index=%d expected=%h actual=%h FAIL",$abstime,rx_index,expected,word_value);
+              $display("SIM_ERROR t=%e reason=golden_mismatch channel=O",$abstime);
+            end else begin
+              $display("SIM_RX t=%e channel=O index=%d expected=%h actual=%h PASS",$abstime,rx_index,expected,word_value);
+              ack=1; rx_phase=1;
+            end
+          end
+        end else if (rx_phase == 1) begin
+          if (valid_word && word_value != expected) begin
+            failure=1; $display("SIM_ERROR t=%e reason=word_changed_without_spacer",$abstime);
+          end else if (!valid_word && V(O_a) < threshold) begin
+            failure=1; $display("SIM_ERROR t=%e reason=data_withdrawn_before_ack",$abstime);
+          end else if (spacer && V(O_a) >= threshold) begin
+            ack=0; rx_phase=2;
+            $display("SIM_SPACER t=%e channel=O index=%d",$abstime,rx_index);
+          end
+        end else if (rx_phase == 2) begin
+          if (!spacer) begin
+            failure=1; $display("SIM_ERROR t=%e reason=data_before_ack_low",$abstime);
+          end else if (V(O_a) < threshold) begin
+            $display("SIM_ACK_LOW t=%e channel=O index=%d",$abstime,rx_index);
+            rx_index=rx_index+1; rx_phase=0;
+          end
+        end
+      end
+      if (active && !failure) begin
+        if (tx_phase == 1 && V(I_a) >= threshold) begin
+          if (rx_index < 7*(tx_index+1)) begin
+            failure=1; $display("SIM_ERROR t=%e reason=early_input_ack tx=%d rx=%d",$abstime,tx_index,rx_index);
+          end else begin
+            tx_valid=0; tx_phase=2;
+            $display("SIM_IACK_HIGH t=%e index=%d",$abstime,tx_index);
+          end
+        end else if (tx_phase == 2 && V(I_a) < threshold && input_spacer) begin
+          $display("SIM_IACK_LOW t=%e index=%d",$abstime,tx_index);
+          tx_index=tx_index+1; tx_phase=0;
+        end
+        if (!failure && tx_index == 2 && rx_index == 14 && tx_phase == 0 && rx_phase == 0 &&
+            input_spacer && spacer && V(I_a) < threshold && V(O_a) < threshold) begin
+          finished=1; active=0;
+          $display("SIM_ROUND t=%e inputs=2 O=14",$abstime);
+        end
+        if (!failure && !finished && tx_phase == 0 && tx_index < 2 && V(I_a) < threshold && input_spacer) begin
+          case (tx_index)
+            0: begin tx_hi=65535; tx_lo=65522; end
+            1: begin tx_hi=30292; tx_lo=12818; end
+          endcase
+          tx_valid=1; tx_phase=1;
+          $display("SIM_TX t=%e index=%d word=%04h%04h",$abstime,tx_index,tx_hi,tx_lo);
+        end
+      end
+      if (finished && (!input_spacer || !spacer || V(I_a) >= threshold)) begin
+        failure=1; $display("SIM_ERROR t=%e reason=nonquiescent_completion",$abstime);
+      end
+    end
+    if (finished && !failure && idle_start < 0) idle_start=$abstime+IDLE_SETTLE;
+    if (finished && !failure && !idle_started && $abstime>=idle_start) begin
+      idle_started=1;
+      $display("SIM_IDLE_BEGIN t=%e reset=%e",$abstime,V(reset));
+    end
+    if (idle_started && !failure && !idle_completed && $abstime>=idle_start+IDLE_WINDOW) begin
+      idle_completed=1;
+      $display("SIM_IDLE_END t=%e reset=%e",$abstime,V(reset));
+    end
+    if (failure && (stop_after<0 || stop_after>$abstime+TD+2*EDGE)) stop_after=$abstime+TD+2*EDGE;
+    else if (finished && stop_after<0) stop_after=$abstime+IDLE_SETTLE+IDLE_WINDOW+IDLE_MARGIN;
+    if (!reported && stop_after > 0 && $abstime >= stop_after) begin
+      reported=1;
+      if (failure) $display("SIM_FAIL t=%e reason=see_SIM_ERROR",$abstime);
+      else $display("SIM_PASS t=%e rounds=1 inputs=2 O=14",$abstime);
+      $finish(0);
+    end
+  end
+  @(timer(STOP_TIME-4*TD-4*EDGE)) begin
+    if (!finished && !failure) begin
+      failure=1;
+      $display("SIM_ERROR t=%e reason=timeout tx=%d tx_phase=%d rx=%d rx_phase=%d I.a=%e",$abstime,tx_index,tx_phase,rx_index,rx_phase,V(I_a));
+    end
+  end
+  V(I_t_0) <+ transition(SUPPLY*tx_valid*((tx_lo >> 0) & 1),TD,EDGE,EDGE);
+  V(I_f_0) <+ transition(SUPPLY*tx_valid*(1-((tx_lo >> 0) & 1)),TD,EDGE,EDGE);
+  V(I_t_1) <+ transition(SUPPLY*tx_valid*((tx_lo >> 1) & 1),TD,EDGE,EDGE);
+  V(I_f_1) <+ transition(SUPPLY*tx_valid*(1-((tx_lo >> 1) & 1)),TD,EDGE,EDGE);
+  V(I_t_2) <+ transition(SUPPLY*tx_valid*((tx_lo >> 2) & 1),TD,EDGE,EDGE);
+  V(I_f_2) <+ transition(SUPPLY*tx_valid*(1-((tx_lo >> 2) & 1)),TD,EDGE,EDGE);
+  V(I_t_3) <+ transition(SUPPLY*tx_valid*((tx_lo >> 3) & 1),TD,EDGE,EDGE);
+  V(I_f_3) <+ transition(SUPPLY*tx_valid*(1-((tx_lo >> 3) & 1)),TD,EDGE,EDGE);
+  V(I_t_4) <+ transition(SUPPLY*tx_valid*((tx_lo >> 4) & 1),TD,EDGE,EDGE);
+  V(I_f_4) <+ transition(SUPPLY*tx_valid*(1-((tx_lo >> 4) & 1)),TD,EDGE,EDGE);
+  V(I_t_5) <+ transition(SUPPLY*tx_valid*((tx_lo >> 5) & 1),TD,EDGE,EDGE);
+  V(I_f_5) <+ transition(SUPPLY*tx_valid*(1-((tx_lo >> 5) & 1)),TD,EDGE,EDGE);
+  V(I_t_6) <+ transition(SUPPLY*tx_valid*((tx_lo >> 6) & 1),TD,EDGE,EDGE);
+  V(I_f_6) <+ transition(SUPPLY*tx_valid*(1-((tx_lo >> 6) & 1)),TD,EDGE,EDGE);
+  V(I_t_7) <+ transition(SUPPLY*tx_valid*((tx_lo >> 7) & 1),TD,EDGE,EDGE);
+  V(I_f_7) <+ transition(SUPPLY*tx_valid*(1-((tx_lo >> 7) & 1)),TD,EDGE,EDGE);
+  V(I_t_8) <+ transition(SUPPLY*tx_valid*((tx_lo >> 8) & 1),TD,EDGE,EDGE);
+  V(I_f_8) <+ transition(SUPPLY*tx_valid*(1-((tx_lo >> 8) & 1)),TD,EDGE,EDGE);
+  V(I_t_9) <+ transition(SUPPLY*tx_valid*((tx_lo >> 9) & 1),TD,EDGE,EDGE);
+  V(I_f_9) <+ transition(SUPPLY*tx_valid*(1-((tx_lo >> 9) & 1)),TD,EDGE,EDGE);
+  V(I_t_10) <+ transition(SUPPLY*tx_valid*((tx_lo >> 10) & 1),TD,EDGE,EDGE);
+  V(I_f_10) <+ transition(SUPPLY*tx_valid*(1-((tx_lo >> 10) & 1)),TD,EDGE,EDGE);
+  V(I_t_11) <+ transition(SUPPLY*tx_valid*((tx_lo >> 11) & 1),TD,EDGE,EDGE);
+  V(I_f_11) <+ transition(SUPPLY*tx_valid*(1-((tx_lo >> 11) & 1)),TD,EDGE,EDGE);
+  V(I_t_12) <+ transition(SUPPLY*tx_valid*((tx_lo >> 12) & 1),TD,EDGE,EDGE);
+  V(I_f_12) <+ transition(SUPPLY*tx_valid*(1-((tx_lo >> 12) & 1)),TD,EDGE,EDGE);
+  V(I_t_13) <+ transition(SUPPLY*tx_valid*((tx_lo >> 13) & 1),TD,EDGE,EDGE);
+  V(I_f_13) <+ transition(SUPPLY*tx_valid*(1-((tx_lo >> 13) & 1)),TD,EDGE,EDGE);
+  V(I_t_14) <+ transition(SUPPLY*tx_valid*((tx_lo >> 14) & 1),TD,EDGE,EDGE);
+  V(I_f_14) <+ transition(SUPPLY*tx_valid*(1-((tx_lo >> 14) & 1)),TD,EDGE,EDGE);
+  V(I_t_15) <+ transition(SUPPLY*tx_valid*((tx_lo >> 15) & 1),TD,EDGE,EDGE);
+  V(I_f_15) <+ transition(SUPPLY*tx_valid*(1-((tx_lo >> 15) & 1)),TD,EDGE,EDGE);
+  V(I_t_16) <+ transition(SUPPLY*tx_valid*((tx_hi >> 0) & 1),TD,EDGE,EDGE);
+  V(I_f_16) <+ transition(SUPPLY*tx_valid*(1-((tx_hi >> 0) & 1)),TD,EDGE,EDGE);
+  V(I_t_17) <+ transition(SUPPLY*tx_valid*((tx_hi >> 1) & 1),TD,EDGE,EDGE);
+  V(I_f_17) <+ transition(SUPPLY*tx_valid*(1-((tx_hi >> 1) & 1)),TD,EDGE,EDGE);
+  V(I_t_18) <+ transition(SUPPLY*tx_valid*((tx_hi >> 2) & 1),TD,EDGE,EDGE);
+  V(I_f_18) <+ transition(SUPPLY*tx_valid*(1-((tx_hi >> 2) & 1)),TD,EDGE,EDGE);
+  V(I_t_19) <+ transition(SUPPLY*tx_valid*((tx_hi >> 3) & 1),TD,EDGE,EDGE);
+  V(I_f_19) <+ transition(SUPPLY*tx_valid*(1-((tx_hi >> 3) & 1)),TD,EDGE,EDGE);
+  V(I_t_20) <+ transition(SUPPLY*tx_valid*((tx_hi >> 4) & 1),TD,EDGE,EDGE);
+  V(I_f_20) <+ transition(SUPPLY*tx_valid*(1-((tx_hi >> 4) & 1)),TD,EDGE,EDGE);
+  V(I_t_21) <+ transition(SUPPLY*tx_valid*((tx_hi >> 5) & 1),TD,EDGE,EDGE);
+  V(I_f_21) <+ transition(SUPPLY*tx_valid*(1-((tx_hi >> 5) & 1)),TD,EDGE,EDGE);
+  V(I_t_22) <+ transition(SUPPLY*tx_valid*((tx_hi >> 6) & 1),TD,EDGE,EDGE);
+  V(I_f_22) <+ transition(SUPPLY*tx_valid*(1-((tx_hi >> 6) & 1)),TD,EDGE,EDGE);
+  V(I_t_23) <+ transition(SUPPLY*tx_valid*((tx_hi >> 7) & 1),TD,EDGE,EDGE);
+  V(I_f_23) <+ transition(SUPPLY*tx_valid*(1-((tx_hi >> 7) & 1)),TD,EDGE,EDGE);
+  V(I_t_24) <+ transition(SUPPLY*tx_valid*((tx_hi >> 8) & 1),TD,EDGE,EDGE);
+  V(I_f_24) <+ transition(SUPPLY*tx_valid*(1-((tx_hi >> 8) & 1)),TD,EDGE,EDGE);
+  V(I_t_25) <+ transition(SUPPLY*tx_valid*((tx_hi >> 9) & 1),TD,EDGE,EDGE);
+  V(I_f_25) <+ transition(SUPPLY*tx_valid*(1-((tx_hi >> 9) & 1)),TD,EDGE,EDGE);
+  V(I_t_26) <+ transition(SUPPLY*tx_valid*((tx_hi >> 10) & 1),TD,EDGE,EDGE);
+  V(I_f_26) <+ transition(SUPPLY*tx_valid*(1-((tx_hi >> 10) & 1)),TD,EDGE,EDGE);
+  V(I_t_27) <+ transition(SUPPLY*tx_valid*((tx_hi >> 11) & 1),TD,EDGE,EDGE);
+  V(I_f_27) <+ transition(SUPPLY*tx_valid*(1-((tx_hi >> 11) & 1)),TD,EDGE,EDGE);
+  V(I_t_28) <+ transition(SUPPLY*tx_valid*((tx_hi >> 12) & 1),TD,EDGE,EDGE);
+  V(I_f_28) <+ transition(SUPPLY*tx_valid*(1-((tx_hi >> 12) & 1)),TD,EDGE,EDGE);
+  V(I_t_29) <+ transition(SUPPLY*tx_valid*((tx_hi >> 13) & 1),TD,EDGE,EDGE);
+  V(I_f_29) <+ transition(SUPPLY*tx_valid*(1-((tx_hi >> 13) & 1)),TD,EDGE,EDGE);
+  V(I_t_30) <+ transition(SUPPLY*tx_valid*((tx_hi >> 14) & 1),TD,EDGE,EDGE);
+  V(I_f_30) <+ transition(SUPPLY*tx_valid*(1-((tx_hi >> 14) & 1)),TD,EDGE,EDGE);
+  V(I_t_31) <+ transition(SUPPLY*tx_valid*((tx_hi >> 15) & 1),TD,EDGE,EDGE);
+  V(I_f_31) <+ transition(SUPPLY*tx_valid*(1-((tx_hi >> 15) & 1)),TD,EDGE,EDGE);
+  V(O_a) <+ transition(SUPPLY*ack,TD,EDGE,EDGE);
+  V(done) <+ transition(SUPPLY*finished,0,EDGE,EDGE);
+  V(failed) <+ transition(SUPPLY*failure,0,EDGE,EDGE);
+end
+endmodule

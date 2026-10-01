@@ -1,0 +1,132 @@
+import "no_forks/commons/Channels.act";
+
+export defproc SUpdate(
+    bool? reset;
+    ActiveDualRail4? I;
+    ActiveDualRail4! Od0;
+    ActiveDualRail4! Od1;
+    ActiveDualRail4! Od2;
+    ActiveDualRail4! Od3;
+    ActiveDualRail8! W0;
+    ActiveDualRail8! W1;
+    ActiveDualRail8! W2;
+    ActiveDualRail8! W3;
+    ActiveDualRail4! Ch;
+    Dataless? A
+)
+{
+    bool b0, b1, b2, b3, k, p0, p1, s;
+
+    // Original non-bubble PRS: RouterDecompositionBubbleReshuffling.pdf, pp. 46–48.
+    prs {
+        A.req & (&i:4: I.f[i]) & ~I.a -> p0+
+        (I.a & s & ~Od0.a & ~Od1.a & ~Od2.a & ~Od3.a) | reset -> p0-
+        A.req & s & (|i:4: I.t[i]) -> p1+
+        (~s & ~W0.a & ~W1.a & ~W2.a & ~W3.a & ~Ch.a) | reset -> p1-
+        p1 & (((I.t[3] & b3) | (I.f[3] & ~b3)) & ((I.t[2] & b2) | (I.f[2] & ~b2)) & ((I.t[1] & b1) | (I.f[1] & ~b1)) & ((I.t[0] & b0) | (I.f[0] & ~b0))) -> k+
+        (&i:4: (~I.t[i] & ~I.f[i])) -> k-
+        k | (Od0.a & Od1.a & Od2.a & Od3.a) -> I.a+
+        (~p0 & ~p1 & ~A.a & (&i:4: ~I.f[i])) | reset -> I.a-
+        (p0 & I.a & ~Od0.a & ~Od1.a & ~Od2.a & ~Od3.a) | reset -> s+
+        W0.a & W1.a & W2.a & W3.a & Ch.a -> s-
+        A.req & (p1 | (~s & (|i:4: I.t[i]))) -> A.a+
+        (~p1 & ~A.req) | reset -> A.a-
+        (i:4:
+            reset -> Od0.t[i]-
+            ~I.a & p0 -> Od0.f[i]+
+            I.a | reset -> Od0.f[i]-
+        )
+        (i:4:
+            reset -> Od1.t[i]-
+            ~I.a & p0 -> Od1.f[i]+
+            I.a | reset -> Od1.f[i]-
+        )
+        (i:4:
+            reset -> Od2.t[i]-
+            ~I.a & p0 -> Od2.f[i]+
+            I.a | reset -> Od2.f[i]-
+        )
+        (i:4:
+            reset -> Od3.t[i]-
+            ~I.a & p0 -> Od3.f[i]+
+            I.a | reset -> Od3.f[i]-
+        )
+        A.a & s & I.t[3] -> b3+
+        (A.a & s & I.f[3]) | reset -> b3-
+        A.a & s & I.t[2] -> b2+
+        (A.a & s & I.f[2]) | reset -> b2-
+        A.a & s & I.t[1] -> b1+
+        (A.a & s & I.f[1]) | reset -> b1-
+        A.a & s & I.t[0] -> b0+
+        (A.a & s & I.f[0]) | reset -> b0-
+        (i:1..7:
+            reset -> W0.t[i]-
+            s & ~k & I.a & p1 -> W0.f[i]+
+            (~s | reset) -> W0.f[i]-
+        )
+        s & ~k & I.a & p1 & b3 -> W0.t[0]+
+        (~s | reset) -> W0.t[0]-
+        s & ~k & I.a & p1 & ~b3 -> W0.f[0]+
+        (~s | reset) -> W0.f[0]-
+        (i:1..7:
+            reset -> W1.t[i]-
+            s & ~k & I.a & p1 -> W1.f[i]+
+            (~s | reset) -> W1.f[i]-
+        )
+        s & ~k & I.a & p1 & b2 -> W1.t[0]+
+        (~s | reset) -> W1.t[0]-
+        s & ~k & I.a & p1 & ~b2 -> W1.f[0]+
+        (~s | reset) -> W1.f[0]-
+        (i:1..7:
+            reset -> W2.t[i]-
+            s & ~k & I.a & p1 -> W2.f[i]+
+            (~s | reset) -> W2.f[i]-
+        )
+        s & ~k & I.a & p1 & b1 -> W2.t[0]+
+        (~s | reset) -> W2.t[0]-
+        s & ~k & I.a & p1 & ~b1 -> W2.f[0]+
+        (~s | reset) -> W2.f[0]-
+        (i:1..7:
+            reset -> W3.t[i]-
+            s & ~k & I.a & p1 -> W3.f[i]+
+            (~s | reset) -> W3.f[i]-
+        )
+        s & ~k & I.a & p1 & b0 -> W3.t[0]+
+        (~s | reset) -> W3.t[0]-
+        s & ~k & I.a & p1 & ~b0 -> W3.f[0]+
+        (~s | reset) -> W3.f[0]-
+        s & ~k & I.a & p1 & b3 -> Ch.t[3]+
+        (~s | reset) -> Ch.t[3]-
+        s & ~k & I.a & p1 & ~b3 -> Ch.f[3]+
+        (~s | reset) -> Ch.f[3]-
+        s & ~k & I.a & p1 & b2 -> Ch.t[2]+
+        (~s | reset) -> Ch.t[2]-
+        s & ~k & I.a & p1 & ~b2 -> Ch.f[2]+
+        (~s | reset) -> Ch.f[2]-
+        s & ~k & I.a & p1 & b1 -> Ch.t[1]+
+        (~s | reset) -> Ch.t[1]-
+        s & ~k & I.a & p1 & ~b1 -> Ch.f[1]+
+        (~s | reset) -> Ch.f[1]-
+        s & ~k & I.a & p1 & b0 -> Ch.t[0]+
+        (~s | reset) -> Ch.t[0]-
+        s & ~k & I.a & p1 & ~b0 -> Ch.f[0]+
+        (~s | reset) -> Ch.f[0]-
+    }
+
+    // Existing timing constraints translated to original PRS signal names.
+    spec {
+        timing Ch.a+ : Ch.a+ < s-
+        timing Od0.a+ : Od0.a+ < I.a+
+        timing Od1.a+ : Od1.a+ < I.a+
+        timing Od2.a+ : Od2.a+ < I.a+
+        timing Od3.a+ : Od3.a+ < I.a+
+        timing W0.a+ : W0.a+ < s-
+        timing W1.a+ : W1.a+ < s-
+        timing W2.a+ : W2.a+ < s-
+        timing W3.a+ : W3.a+ < s-
+        timing I.a- : I.a- < p1+
+        timing k+ : k+ < I.a+
+        timing p0- : p0- < I.a-
+        timing p1+ : p1+ < k+
+    }
+}

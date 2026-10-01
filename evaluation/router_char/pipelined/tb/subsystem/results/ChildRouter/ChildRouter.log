@@ -1,0 +1,93 @@
+SIM_RUN campaign=/tmp/ferroma_analog_campaign_b8taKtfx level=subsystem module=ChildRouter
+SIM_RESET t=1.000100e-07
+SIM_TX t=1.000100e-07 channel=I index=0 word=7fffff3e
+SIM_IACK_HIGH t=1.011300e-07 channel=I index=0
+SIM_RX t=1.013900e-07 channel=C3 index=0 expected=ffff1f3e actual=ffff1f3e PASS
+SIM_SPACER t=1.018200e-07 channel=C3 index=0
+SIM_ACK_LOW t=1.018301e-07 channel=C3 index=0
+SIM_IACK_LOW t=1.023300e-07 channel=I index=0
+SIM_TX t=1.023300e-07 channel=I index=1 word=ffffff3f
+SIM_IACK_HIGH t=1.035800e-07 channel=I index=1
+SIM_RX t=1.037400e-07 channel=C3 index=1 expected=ffffff3f actual=ffffff3f PASS
+SIM_SPACER t=1.041800e-07 channel=C3 index=1
+SIM_ACK_LOW t=1.041900e-07 channel=C3 index=1
+SIM_IACK_LOW t=1.050700e-07 channel=I index=1
+SIM_TX t=1.050700e-07 channel=I index=2 word=5fffff2e
+SIM_IACK_HIGH t=1.065500e-07 channel=I index=2
+SIM_RX t=1.067900e-07 channel=C2 index=0 expected=ffff1f2e actual=ffff1f2e PASS
+SIM_SPACER t=1.072300e-07 channel=C2 index=0
+SIM_ACK_LOW t=1.072400e-07 channel=C2 index=0
+SIM_IACK_LOW t=1.077500e-07 channel=I index=2
+SIM_TX t=1.077500e-07 channel=I index=3 word=ffffff2f
+SIM_IACK_HIGH t=1.089500e-07 channel=I index=3
+SIM_RX t=1.091300e-07 channel=C2 index=1 expected=ffffff2f actual=ffffff2f PASS
+SIM_SPACER t=1.095700e-07 channel=C2 index=1
+SIM_ACK_LOW t=1.095800e-07 channel=C2 index=1
+SIM_IACK_LOW t=1.104400e-07 channel=I index=3
+SIM_TX t=1.104400e-07 channel=I index=4 word=3fffff1e
+SIM_IACK_HIGH t=1.119000e-07 channel=I index=4
+SIM_RX t=1.121600e-07 channel=C1 index=0 expected=ffff1f1e actual=ffff1f1e PASS
+SIM_SPACER t=1.125900e-07 channel=C1 index=0
+SIM_ACK_LOW t=1.126000e-07 channel=C1 index=0
+SIM_IACK_LOW t=1.131000e-07 channel=I index=4
+SIM_TX t=1.131000e-07 channel=I index=5 word=ffffff1f
+SIM_IACK_HIGH t=1.143100e-07 channel=I index=5
+SIM_RX t=1.145100e-07 channel=C1 index=1 expected=ffffff1f actual=ffffff1f PASS
+SIM_SPACER t=1.149500e-07 channel=C1 index=1
+SIM_ACK_LOW t=1.149600e-07 channel=C1 index=1
+SIM_IACK_LOW t=1.158000e-07 channel=I index=5
+SIM_TX t=1.158000e-07 channel=I index=6 word=1fffff0e
+SIM_IACK_HIGH t=1.172900e-07 channel=I index=6
+SIM_RX t=1.175400e-07 channel=C0 index=0 expected=ffff1f0e actual=ffff1f0e PASS
+SIM_SPACER t=1.179700e-07 channel=C0 index=0
+SIM_ACK_LOW t=1.179800e-07 channel=C0 index=0
+SIM_IACK_LOW t=1.184900e-07 channel=I index=6
+SIM_TX t=1.184900e-07 channel=I index=7 word=ffffff0f
+SIM_IACK_HIGH t=1.196900e-07 channel=I index=7
+SIM_RX t=1.198800e-07 channel=C0 index=1 expected=ffffff0f actual=ffffff0f PASS
+SIM_SPACER t=1.203100e-07 channel=C0 index=1
+SIM_ACK_LOW t=1.203200e-07 channel=C0 index=1
+SIM_IACK_LOW t=1.211800e-07 channel=I index=7
+SIM_TX t=1.211800e-07 channel=I index=8 word=ffffff4e
+SIM_RX t=1.224100e-07 channel=P index=0 expected=ffffdf4e actual=ffffdf4e PASS
+SIM_IACK_HIGH t=1.226400e-07 channel=I index=8
+SIM_SPACER t=1.228400e-07 channel=P index=0
+SIM_ACK_LOW t=1.228500e-07 channel=P index=0
+SIM_IACK_LOW t=1.238400e-07 channel=I index=8
+SIM_TX t=1.238400e-07 channel=I index=9 word=ffffff4e
+SIM_RX t=1.247500e-07 channel=P index=1 expected=ffffff4e actual=ffffff4e PASS
+SIM_IACK_HIGH t=1.251100e-07 channel=I index=9
+SIM_SPACER t=1.251900e-07 channel=P index=1
+SIM_ACK_LOW t=1.252000e-07 channel=P index=1
+SIM_IACK_LOW t=1.263100e-07 channel=I index=9
+SIM_TX t=1.263100e-07 channel=I index=10 word=ffffff4f
+SIM_RX t=1.271800e-07 channel=P index=2 expected=ffffff4f actual=ffffff4f PASS
+SIM_IACK_HIGH t=1.275600e-07 channel=I index=10
+SIM_SPACER t=1.276200e-07 channel=P index=2
+SIM_ACK_LOW t=1.276300e-07 channel=P index=2
+SIM_IACK_LOW t=1.290400e-07 channel=I index=10
+SIM_TX t=1.290400e-07 channel=I index=11 word=80001f5e
+SIM_IACK_HIGH t=1.297700e-07 channel=I index=11
+SIM_IACK_LOW t=1.306100e-07 channel=I index=11
+SIM_TX t=1.306100e-07 channel=I index=12 word=ffffff5e
+SIM_RX t=1.308300e-07 channel=M index=0 expected=ffffff5e actual=ffffff5e PASS
+SIM_SPACER t=1.312800e-07 channel=M index=0
+SIM_ACK_LOW t=1.312900e-07 channel=M index=0
+SIM_IACK_HIGH t=1.314600e-07 channel=I index=12
+SIM_IACK_LOW t=1.326800e-07 channel=I index=12
+SIM_TX t=1.326800e-07 channel=I index=13 word=ffffff5f
+SIM_RX t=1.327900e-07 channel=M index=1 expected=ffffff5f actual=ffffff5f PASS
+SIM_SPACER t=1.332400e-07 channel=M index=1
+SIM_ACK_LOW t=1.332500e-07 channel=M index=1
+SIM_IACK_HIGH t=1.332900e-07 channel=I index=13
+SIM_IACK_LOW t=1.347500e-07 channel=I index=13
+SIM_ROUND t=1.347500e-07 inputs=14 outputs=13
+SIM_IDLE_BEGIN t=1.547500e-07 reset=-0.000000e+00
+SIM_IDLE_END t=1.747600e-07 reset=-0.000000e+00
+SIM_POWER boundary=VPOWER reset_excluded=1 active_duration_s=3.474000000e-08 energy_j=4.378593486e-11 mean_power_w=1.260389605e-03
+SIM_LEAKAGE state=post_round_reset_low criterion=mean_drift_and_std_le_1pct duration_s=2.001000000e-08 mean_current_a=1.603333744e-04 mean_power_w=1.763667118e-04 min_power_w=1.763091000e-04 max_power_w=1.764434100e-04 std_power_w=3.827900862e-08 half_drift_relative=3.719520784e-04 stable=1
+SIM_ENERGY inputs=14 output_transfers=13 per_input_transfer_j=3.127566776e-12 per_output_transfer_j=3.368148835e-12 dynamic_baseline_estimate_j=3.765895529e-11
+SIM_THROUGHPUT window=active_round input_transfers_per_s=4.029936672e+08 output_transfers_per_s=3.742084053e+08
+SIM_PASS t=1.757600e-07 rounds=1 inputs=14 outputs=13
+
+FINAL RESULT: PASS

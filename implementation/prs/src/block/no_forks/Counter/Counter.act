@@ -1,0 +1,20 @@
+import "no_forks/Counter/CounterLogic.act";
+import "no_forks/Counter/CounterInc.act";
+import "no_forks/commons/Reg8.act";
+
+export defproc Counter(bool? reset; ActiveDualRail4? I; PassiveDualRail8! Cnt)
+{
+    CounterLogic logic;
+    CounterInc inc;
+    Reg8 reg;
+    logic.reset = reset;
+    inc.reset = reset;
+    reg.reset = reset;
+    logic.I = I;
+    logic.Cnt = Cnt;
+    logic.P = reg.W;
+    logic.Q = reg.R;
+    logic.Sa = inc.Sa;
+    logic.Sb = inc.Sb;
+    logic.So = inc.So;
+}

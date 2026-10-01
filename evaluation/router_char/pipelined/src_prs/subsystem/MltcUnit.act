@@ -1,0 +1,170 @@
+import "InputRouter/InputRouter.act";
+import "Serializer/Serializer.act";
+import "QuadRouter/QuadRouter.act";
+import "Counter/Counter.act";
+import "Deserializer/Deserializer.act";
+import "PayloadDispatch/PayloadDispatch.act";
+import "commons/Merge.act";
+import "commons/PCFB32.act";
+
+/*
+ * The parsing path is unbuffered so QuadRouter observes Counter/Deserializer
+ * completion directly. Five PCFB32 remain on the payload path: IR.O1 -> PD,
+ * and PD.C0..C3 -> the payload inputs of the four output merges.
+ * Diagram QR.Oc/Od, QR.C_h and PD.O0..O3 use the actual ports
+ * QR.OC/OD, QR.Ch and PD.C0..C3, respectively.
+ * Merge<32,true> uses bit 31 for acknowledgement and releases it on ~O.a.
+ * Cnt is a pull channel: QR drives req; CT supplies the eight data bits.
+ *
+ * ACT_PATH must include src/block. Reset is shared directly, as in the blocks.
+ */
+export defproc MltcUnit(
+    bool? reset;
+    ActiveDualRail32? I;
+    ActiveDualRail32! C0, C1, C2, C3
+)
+{
+    PCFB32 BP, BO0, BO1, BO2, BO3;
+    InputRouter IR;
+    Serializer SE;
+    QuadRouter QR;
+    Counter CT0, CT1, CT2, CT3;
+    Deserializer DS0, DS1, DS2, DS3;
+    PayloadDispatch PD;
+    Merge<32,true> M0, M1, M2, M3;
+
+    BP.reset = reset;
+    BO0.reset = reset;
+    BO1.reset = reset;
+    BO2.reset = reset;
+    BO3.reset = reset;
+
+    IR.reset = reset;
+    SE.reset = reset;
+    QR.reset = reset;
+    PD.reset = reset;
+    CT0.reset = reset;
+    DS0.reset = reset;
+    CT1.reset = reset;
+    DS1.reset = reset;
+    CT2.reset = reset;
+    DS2.reset = reset;
+    CT3.reset = reset;
+    DS3.reset = reset;
+
+    // Input classification.
+    IR.I = I;
+
+    // Routing words to serializer.
+    SE.I = IR.O0;
+
+    // Serialized routing nibbles.
+    QR.I = SE.O;
+
+    // Payload words to dispatcher.
+    BP.L = IR.O1;
+    PD.I = BP.R;
+
+    // Child-selection mask.
+    PD.Ch = QR.Ch;
+
+    // Child 0: counter updates.
+    CT0.I = QR.OC0;
+
+    // Child 0: counter data to QR, request back to CT.
+    QR.Cnt0 = CT0.Cnt;
+
+    // Child 0: routing nibbles to deserializer.
+    DS0.I = QR.OD0;
+
+    // Child 0: reconstructed routing words.
+    M0.I0.t = DS0.O.t;
+    M0.I0.f = DS0.O.f;
+    M0.I0.a = DS0.O.a;
+
+    // Child 0: dispatched payload words.
+    BO0.L = PD.C0;
+    M0.I1.t = BO0.R.t;
+    M0.I1.f = BO0.R.f;
+    M0.I1.a = BO0.R.a;
+
+    // Child 0: merged output.
+    C0.t = M0.O.t;
+    C0.f = M0.O.f;
+    C0.a = M0.O.a;
+
+    // Child 1: counter updates.
+    CT1.I = QR.OC1;
+
+    // Child 1: counter data to QR, request back to CT.
+    QR.Cnt1 = CT1.Cnt;
+
+    // Child 1: routing nibbles to deserializer.
+    DS1.I = QR.OD1;
+
+    // Child 1: reconstructed routing words.
+    M1.I0.t = DS1.O.t;
+    M1.I0.f = DS1.O.f;
+    M1.I0.a = DS1.O.a;
+
+    // Child 1: dispatched payload words.
+    BO1.L = PD.C1;
+    M1.I1.t = BO1.R.t;
+    M1.I1.f = BO1.R.f;
+    M1.I1.a = BO1.R.a;
+
+    // Child 1: merged output.
+    C1.t = M1.O.t;
+    C1.f = M1.O.f;
+    C1.a = M1.O.a;
+
+    // Child 2: counter updates.
+    CT2.I = QR.OC2;
+
+    // Child 2: counter data to QR, request back to CT.
+    QR.Cnt2 = CT2.Cnt;
+
+    // Child 2: routing nibbles to deserializer.
+    DS2.I = QR.OD2;
+
+    // Child 2: reconstructed routing words.
+    M2.I0.t = DS2.O.t;
+    M2.I0.f = DS2.O.f;
+    M2.I0.a = DS2.O.a;
+
+    // Child 2: dispatched payload words.
+    BO2.L = PD.C2;
+    M2.I1.t = BO2.R.t;
+    M2.I1.f = BO2.R.f;
+    M2.I1.a = BO2.R.a;
+
+    // Child 2: merged output.
+    C2.t = M2.O.t;
+    C2.f = M2.O.f;
+    C2.a = M2.O.a;
+
+    // Child 3: counter updates.
+    CT3.I = QR.OC3;
+
+    // Child 3: counter data to QR, request back to CT.
+    QR.Cnt3 = CT3.Cnt;
+
+    // Child 3: routing nibbles to deserializer.
+    DS3.I = QR.OD3;
+
+    // Child 3: reconstructed routing words.
+    M3.I0.t = DS3.O.t;
+    M3.I0.f = DS3.O.f;
+    M3.I0.a = DS3.O.a;
+
+    // Child 3: dispatched payload words.
+    BO3.L = PD.C3;
+    M3.I1.t = BO3.R.t;
+    M3.I1.f = BO3.R.f;
+    M3.I1.a = BO3.R.a;
+
+    // Child 3: merged output.
+    C3.t = M3.O.t;
+    C3.f = M3.O.f;
+    C3.a = M3.O.a;
+}

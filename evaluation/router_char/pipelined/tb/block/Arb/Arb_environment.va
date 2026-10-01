@@ -1,0 +1,1493 @@
+// One complete Arb ACTSIM reference round: six concurrent producers.
+// First retain the six concurrent FFFFFFFE/FFFFFFFF packets.
+// Then serve one source at a time: tagged header, nonterminal payload, terminal payload.
+// Functional stress and uncontended performance are separate phases; the DUT is unchanged.
+// No winner order is imposed. All progress uses four-phase feedback.
+// Reference: Implementation/PRS/tb/block/no_forks/tb_Arb.act.
+`include "disciplines.vams"
+module arb_environment(
+    reset,
+    C0_t_0,
+    C0_t_1,
+    C0_t_2,
+    C0_t_3,
+    C0_t_4,
+    C0_t_5,
+    C0_t_6,
+    C0_t_7,
+    C0_t_8,
+    C0_t_9,
+    C0_t_10,
+    C0_t_11,
+    C0_t_12,
+    C0_t_13,
+    C0_t_14,
+    C0_t_15,
+    C0_t_16,
+    C0_t_17,
+    C0_t_18,
+    C0_t_19,
+    C0_t_20,
+    C0_t_21,
+    C0_t_22,
+    C0_t_23,
+    C0_t_24,
+    C0_t_25,
+    C0_t_26,
+    C0_t_27,
+    C0_t_28,
+    C0_t_29,
+    C0_t_30,
+    C0_t_31,
+    C0_f_0,
+    C0_f_1,
+    C0_f_2,
+    C0_f_3,
+    C0_f_4,
+    C0_f_5,
+    C0_f_6,
+    C0_f_7,
+    C0_f_8,
+    C0_f_9,
+    C0_f_10,
+    C0_f_11,
+    C0_f_12,
+    C0_f_13,
+    C0_f_14,
+    C0_f_15,
+    C0_f_16,
+    C0_f_17,
+    C0_f_18,
+    C0_f_19,
+    C0_f_20,
+    C0_f_21,
+    C0_f_22,
+    C0_f_23,
+    C0_f_24,
+    C0_f_25,
+    C0_f_26,
+    C0_f_27,
+    C0_f_28,
+    C0_f_29,
+    C0_f_30,
+    C0_f_31,
+    C0_a,
+    C1_t_0,
+    C1_t_1,
+    C1_t_2,
+    C1_t_3,
+    C1_t_4,
+    C1_t_5,
+    C1_t_6,
+    C1_t_7,
+    C1_t_8,
+    C1_t_9,
+    C1_t_10,
+    C1_t_11,
+    C1_t_12,
+    C1_t_13,
+    C1_t_14,
+    C1_t_15,
+    C1_t_16,
+    C1_t_17,
+    C1_t_18,
+    C1_t_19,
+    C1_t_20,
+    C1_t_21,
+    C1_t_22,
+    C1_t_23,
+    C1_t_24,
+    C1_t_25,
+    C1_t_26,
+    C1_t_27,
+    C1_t_28,
+    C1_t_29,
+    C1_t_30,
+    C1_t_31,
+    C1_f_0,
+    C1_f_1,
+    C1_f_2,
+    C1_f_3,
+    C1_f_4,
+    C1_f_5,
+    C1_f_6,
+    C1_f_7,
+    C1_f_8,
+    C1_f_9,
+    C1_f_10,
+    C1_f_11,
+    C1_f_12,
+    C1_f_13,
+    C1_f_14,
+    C1_f_15,
+    C1_f_16,
+    C1_f_17,
+    C1_f_18,
+    C1_f_19,
+    C1_f_20,
+    C1_f_21,
+    C1_f_22,
+    C1_f_23,
+    C1_f_24,
+    C1_f_25,
+    C1_f_26,
+    C1_f_27,
+    C1_f_28,
+    C1_f_29,
+    C1_f_30,
+    C1_f_31,
+    C1_a,
+    C2_t_0,
+    C2_t_1,
+    C2_t_2,
+    C2_t_3,
+    C2_t_4,
+    C2_t_5,
+    C2_t_6,
+    C2_t_7,
+    C2_t_8,
+    C2_t_9,
+    C2_t_10,
+    C2_t_11,
+    C2_t_12,
+    C2_t_13,
+    C2_t_14,
+    C2_t_15,
+    C2_t_16,
+    C2_t_17,
+    C2_t_18,
+    C2_t_19,
+    C2_t_20,
+    C2_t_21,
+    C2_t_22,
+    C2_t_23,
+    C2_t_24,
+    C2_t_25,
+    C2_t_26,
+    C2_t_27,
+    C2_t_28,
+    C2_t_29,
+    C2_t_30,
+    C2_t_31,
+    C2_f_0,
+    C2_f_1,
+    C2_f_2,
+    C2_f_3,
+    C2_f_4,
+    C2_f_5,
+    C2_f_6,
+    C2_f_7,
+    C2_f_8,
+    C2_f_9,
+    C2_f_10,
+    C2_f_11,
+    C2_f_12,
+    C2_f_13,
+    C2_f_14,
+    C2_f_15,
+    C2_f_16,
+    C2_f_17,
+    C2_f_18,
+    C2_f_19,
+    C2_f_20,
+    C2_f_21,
+    C2_f_22,
+    C2_f_23,
+    C2_f_24,
+    C2_f_25,
+    C2_f_26,
+    C2_f_27,
+    C2_f_28,
+    C2_f_29,
+    C2_f_30,
+    C2_f_31,
+    C2_a,
+    C3_t_0,
+    C3_t_1,
+    C3_t_2,
+    C3_t_3,
+    C3_t_4,
+    C3_t_5,
+    C3_t_6,
+    C3_t_7,
+    C3_t_8,
+    C3_t_9,
+    C3_t_10,
+    C3_t_11,
+    C3_t_12,
+    C3_t_13,
+    C3_t_14,
+    C3_t_15,
+    C3_t_16,
+    C3_t_17,
+    C3_t_18,
+    C3_t_19,
+    C3_t_20,
+    C3_t_21,
+    C3_t_22,
+    C3_t_23,
+    C3_t_24,
+    C3_t_25,
+    C3_t_26,
+    C3_t_27,
+    C3_t_28,
+    C3_t_29,
+    C3_t_30,
+    C3_t_31,
+    C3_f_0,
+    C3_f_1,
+    C3_f_2,
+    C3_f_3,
+    C3_f_4,
+    C3_f_5,
+    C3_f_6,
+    C3_f_7,
+    C3_f_8,
+    C3_f_9,
+    C3_f_10,
+    C3_f_11,
+    C3_f_12,
+    C3_f_13,
+    C3_f_14,
+    C3_f_15,
+    C3_f_16,
+    C3_f_17,
+    C3_f_18,
+    C3_f_19,
+    C3_f_20,
+    C3_f_21,
+    C3_f_22,
+    C3_f_23,
+    C3_f_24,
+    C3_f_25,
+    C3_f_26,
+    C3_f_27,
+    C3_f_28,
+    C3_f_29,
+    C3_f_30,
+    C3_f_31,
+    C3_a,
+    P_t_0,
+    P_t_1,
+    P_t_2,
+    P_t_3,
+    P_t_4,
+    P_t_5,
+    P_t_6,
+    P_t_7,
+    P_t_8,
+    P_t_9,
+    P_t_10,
+    P_t_11,
+    P_t_12,
+    P_t_13,
+    P_t_14,
+    P_t_15,
+    P_t_16,
+    P_t_17,
+    P_t_18,
+    P_t_19,
+    P_t_20,
+    P_t_21,
+    P_t_22,
+    P_t_23,
+    P_t_24,
+    P_t_25,
+    P_t_26,
+    P_t_27,
+    P_t_28,
+    P_t_29,
+    P_t_30,
+    P_t_31,
+    P_f_0,
+    P_f_1,
+    P_f_2,
+    P_f_3,
+    P_f_4,
+    P_f_5,
+    P_f_6,
+    P_f_7,
+    P_f_8,
+    P_f_9,
+    P_f_10,
+    P_f_11,
+    P_f_12,
+    P_f_13,
+    P_f_14,
+    P_f_15,
+    P_f_16,
+    P_f_17,
+    P_f_18,
+    P_f_19,
+    P_f_20,
+    P_f_21,
+    P_f_22,
+    P_f_23,
+    P_f_24,
+    P_f_25,
+    P_f_26,
+    P_f_27,
+    P_f_28,
+    P_f_29,
+    P_f_30,
+    P_f_31,
+    P_a,
+    M_t_0,
+    M_t_1,
+    M_t_2,
+    M_t_3,
+    M_t_4,
+    M_t_5,
+    M_t_6,
+    M_t_7,
+    M_t_8,
+    M_t_9,
+    M_t_10,
+    M_t_11,
+    M_t_12,
+    M_t_13,
+    M_t_14,
+    M_t_15,
+    M_t_16,
+    M_t_17,
+    M_t_18,
+    M_t_19,
+    M_t_20,
+    M_t_21,
+    M_t_22,
+    M_t_23,
+    M_t_24,
+    M_t_25,
+    M_t_26,
+    M_t_27,
+    M_t_28,
+    M_t_29,
+    M_t_30,
+    M_t_31,
+    M_f_0,
+    M_f_1,
+    M_f_2,
+    M_f_3,
+    M_f_4,
+    M_f_5,
+    M_f_6,
+    M_f_7,
+    M_f_8,
+    M_f_9,
+    M_f_10,
+    M_f_11,
+    M_f_12,
+    M_f_13,
+    M_f_14,
+    M_f_15,
+    M_f_16,
+    M_f_17,
+    M_f_18,
+    M_f_19,
+    M_f_20,
+    M_f_21,
+    M_f_22,
+    M_f_23,
+    M_f_24,
+    M_f_25,
+    M_f_26,
+    M_f_27,
+    M_f_28,
+    M_f_29,
+    M_f_30,
+    M_f_31,
+    M_a,
+    O_t_0,
+    O_t_1,
+    O_t_2,
+    O_t_3,
+    O_t_4,
+    O_t_5,
+    O_t_6,
+    O_t_7,
+    O_t_8,
+    O_t_9,
+    O_t_10,
+    O_t_11,
+    O_t_12,
+    O_t_13,
+    O_t_14,
+    O_t_15,
+    O_t_16,
+    O_t_17,
+    O_t_18,
+    O_t_19,
+    O_t_20,
+    O_t_21,
+    O_t_22,
+    O_t_23,
+    O_t_24,
+    O_t_25,
+    O_t_26,
+    O_t_27,
+    O_t_28,
+    O_t_29,
+    O_t_30,
+    O_t_31,
+    O_f_0,
+    O_f_1,
+    O_f_2,
+    O_f_3,
+    O_f_4,
+    O_f_5,
+    O_f_6,
+    O_f_7,
+    O_f_8,
+    O_f_9,
+    O_f_10,
+    O_f_11,
+    O_f_12,
+    O_f_13,
+    O_f_14,
+    O_f_15,
+    O_f_16,
+    O_f_17,
+    O_f_18,
+    O_f_19,
+    O_f_20,
+    O_f_21,
+    O_f_22,
+    O_f_23,
+    O_f_24,
+    O_f_25,
+    O_f_26,
+    O_f_27,
+    O_f_28,
+    O_f_29,
+    O_f_30,
+    O_f_31,
+    O_a,
+    done,
+    failed);
+inout reset, C0_t_0, C0_t_1, C0_t_2, C0_t_3, C0_t_4, C0_t_5, C0_t_6, C0_t_7, C0_t_8, C0_t_9, C0_t_10, C0_t_11,
+C0_t_12, C0_t_13, C0_t_14, C0_t_15, C0_t_16, C0_t_17, C0_t_18, C0_t_19, C0_t_20, C0_t_21, C0_t_22, C0_t_23,
+C0_t_24, C0_t_25, C0_t_26, C0_t_27, C0_t_28, C0_t_29, C0_t_30, C0_t_31, C0_f_0, C0_f_1, C0_f_2, C0_f_3,
+C0_f_4, C0_f_5, C0_f_6, C0_f_7, C0_f_8, C0_f_9, C0_f_10, C0_f_11, C0_f_12, C0_f_13, C0_f_14, C0_f_15, C0_f_16,
+C0_f_17, C0_f_18, C0_f_19, C0_f_20, C0_f_21, C0_f_22, C0_f_23, C0_f_24, C0_f_25, C0_f_26, C0_f_27, C0_f_28,
+C0_f_29, C0_f_30, C0_f_31, C0_a, C1_t_0, C1_t_1, C1_t_2, C1_t_3, C1_t_4, C1_t_5, C1_t_6, C1_t_7, C1_t_8,
+C1_t_9, C1_t_10, C1_t_11, C1_t_12, C1_t_13, C1_t_14, C1_t_15, C1_t_16, C1_t_17, C1_t_18, C1_t_19, C1_t_20,
+C1_t_21, C1_t_22, C1_t_23, C1_t_24, C1_t_25, C1_t_26, C1_t_27, C1_t_28, C1_t_29, C1_t_30, C1_t_31, C1_f_0,
+C1_f_1, C1_f_2, C1_f_3, C1_f_4, C1_f_5, C1_f_6, C1_f_7, C1_f_8, C1_f_9, C1_f_10, C1_f_11, C1_f_12, C1_f_13,
+C1_f_14, C1_f_15, C1_f_16, C1_f_17, C1_f_18, C1_f_19, C1_f_20, C1_f_21, C1_f_22, C1_f_23, C1_f_24, C1_f_25,
+C1_f_26, C1_f_27, C1_f_28, C1_f_29, C1_f_30, C1_f_31, C1_a, C2_t_0, C2_t_1, C2_t_2, C2_t_3, C2_t_4, C2_t_5,
+C2_t_6, C2_t_7, C2_t_8, C2_t_9, C2_t_10, C2_t_11, C2_t_12, C2_t_13, C2_t_14, C2_t_15, C2_t_16, C2_t_17,
+C2_t_18, C2_t_19, C2_t_20, C2_t_21, C2_t_22, C2_t_23, C2_t_24, C2_t_25, C2_t_26, C2_t_27, C2_t_28, C2_t_29,
+C2_t_30, C2_t_31, C2_f_0, C2_f_1, C2_f_2, C2_f_3, C2_f_4, C2_f_5, C2_f_6, C2_f_7, C2_f_8, C2_f_9, C2_f_10,
+C2_f_11, C2_f_12, C2_f_13, C2_f_14, C2_f_15, C2_f_16, C2_f_17, C2_f_18, C2_f_19, C2_f_20, C2_f_21, C2_f_22,
+C2_f_23, C2_f_24, C2_f_25, C2_f_26, C2_f_27, C2_f_28, C2_f_29, C2_f_30, C2_f_31, C2_a, C3_t_0, C3_t_1, C3_t_2,
+C3_t_3, C3_t_4, C3_t_5, C3_t_6, C3_t_7, C3_t_8, C3_t_9, C3_t_10, C3_t_11, C3_t_12, C3_t_13, C3_t_14, C3_t_15,
+C3_t_16, C3_t_17, C3_t_18, C3_t_19, C3_t_20, C3_t_21, C3_t_22, C3_t_23, C3_t_24, C3_t_25, C3_t_26, C3_t_27,
+C3_t_28, C3_t_29, C3_t_30, C3_t_31, C3_f_0, C3_f_1, C3_f_2, C3_f_3, C3_f_4, C3_f_5, C3_f_6, C3_f_7, C3_f_8,
+C3_f_9, C3_f_10, C3_f_11, C3_f_12, C3_f_13, C3_f_14, C3_f_15, C3_f_16, C3_f_17, C3_f_18, C3_f_19, C3_f_20,
+C3_f_21, C3_f_22, C3_f_23, C3_f_24, C3_f_25, C3_f_26, C3_f_27, C3_f_28, C3_f_29, C3_f_30, C3_f_31, C3_a,
+P_t_0, P_t_1, P_t_2, P_t_3, P_t_4, P_t_5, P_t_6, P_t_7, P_t_8, P_t_9, P_t_10, P_t_11, P_t_12, P_t_13, P_t_14,
+P_t_15, P_t_16, P_t_17, P_t_18, P_t_19, P_t_20, P_t_21, P_t_22, P_t_23, P_t_24, P_t_25, P_t_26, P_t_27,
+P_t_28, P_t_29, P_t_30, P_t_31, P_f_0, P_f_1, P_f_2, P_f_3, P_f_4, P_f_5, P_f_6, P_f_7, P_f_8, P_f_9, P_f_10,
+P_f_11, P_f_12, P_f_13, P_f_14, P_f_15, P_f_16, P_f_17, P_f_18, P_f_19, P_f_20, P_f_21, P_f_22, P_f_23,
+P_f_24, P_f_25, P_f_26, P_f_27, P_f_28, P_f_29, P_f_30, P_f_31, P_a, M_t_0, M_t_1, M_t_2, M_t_3, M_t_4, M_t_5,
+M_t_6, M_t_7, M_t_8, M_t_9, M_t_10, M_t_11, M_t_12, M_t_13, M_t_14, M_t_15, M_t_16, M_t_17, M_t_18, M_t_19,
+M_t_20, M_t_21, M_t_22, M_t_23, M_t_24, M_t_25, M_t_26, M_t_27, M_t_28, M_t_29, M_t_30, M_t_31, M_f_0, M_f_1,
+M_f_2, M_f_3, M_f_4, M_f_5, M_f_6, M_f_7, M_f_8, M_f_9, M_f_10, M_f_11, M_f_12, M_f_13, M_f_14, M_f_15,
+M_f_16, M_f_17, M_f_18, M_f_19, M_f_20, M_f_21, M_f_22, M_f_23, M_f_24, M_f_25, M_f_26, M_f_27, M_f_28,
+M_f_29, M_f_30, M_f_31, M_a, O_t_0, O_t_1, O_t_2, O_t_3, O_t_4, O_t_5, O_t_6, O_t_7, O_t_8, O_t_9, O_t_10,
+O_t_11, O_t_12, O_t_13, O_t_14, O_t_15, O_t_16, O_t_17, O_t_18, O_t_19, O_t_20, O_t_21, O_t_22, O_t_23,
+O_t_24, O_t_25, O_t_26, O_t_27, O_t_28, O_t_29, O_t_30, O_t_31, O_f_0, O_f_1, O_f_2, O_f_3, O_f_4, O_f_5,
+O_f_6, O_f_7, O_f_8, O_f_9, O_f_10, O_f_11, O_f_12, O_f_13, O_f_14, O_f_15, O_f_16, O_f_17, O_f_18, O_f_19,
+O_f_20, O_f_21, O_f_22, O_f_23, O_f_24, O_f_25, O_f_26, O_f_27, O_f_28, O_f_29, O_f_30, O_f_31, O_a, done,
+failed;
+electrical reset, C0_t_0, C0_t_1, C0_t_2, C0_t_3, C0_t_4, C0_t_5, C0_t_6, C0_t_7, C0_t_8, C0_t_9, C0_t_10,
+C0_t_11, C0_t_12, C0_t_13, C0_t_14, C0_t_15, C0_t_16, C0_t_17, C0_t_18, C0_t_19, C0_t_20, C0_t_21, C0_t_22,
+C0_t_23, C0_t_24, C0_t_25, C0_t_26, C0_t_27, C0_t_28, C0_t_29, C0_t_30, C0_t_31, C0_f_0, C0_f_1, C0_f_2,
+C0_f_3, C0_f_4, C0_f_5, C0_f_6, C0_f_7, C0_f_8, C0_f_9, C0_f_10, C0_f_11, C0_f_12, C0_f_13, C0_f_14, C0_f_15,
+C0_f_16, C0_f_17, C0_f_18, C0_f_19, C0_f_20, C0_f_21, C0_f_22, C0_f_23, C0_f_24, C0_f_25, C0_f_26, C0_f_27,
+C0_f_28, C0_f_29, C0_f_30, C0_f_31, C0_a, C1_t_0, C1_t_1, C1_t_2, C1_t_3, C1_t_4, C1_t_5, C1_t_6, C1_t_7,
+C1_t_8, C1_t_9, C1_t_10, C1_t_11, C1_t_12, C1_t_13, C1_t_14, C1_t_15, C1_t_16, C1_t_17, C1_t_18, C1_t_19,
+C1_t_20, C1_t_21, C1_t_22, C1_t_23, C1_t_24, C1_t_25, C1_t_26, C1_t_27, C1_t_28, C1_t_29, C1_t_30, C1_t_31,
+C1_f_0, C1_f_1, C1_f_2, C1_f_3, C1_f_4, C1_f_5, C1_f_6, C1_f_7, C1_f_8, C1_f_9, C1_f_10, C1_f_11, C1_f_12,
+C1_f_13, C1_f_14, C1_f_15, C1_f_16, C1_f_17, C1_f_18, C1_f_19, C1_f_20, C1_f_21, C1_f_22, C1_f_23, C1_f_24,
+C1_f_25, C1_f_26, C1_f_27, C1_f_28, C1_f_29, C1_f_30, C1_f_31, C1_a, C2_t_0, C2_t_1, C2_t_2, C2_t_3, C2_t_4,
+C2_t_5, C2_t_6, C2_t_7, C2_t_8, C2_t_9, C2_t_10, C2_t_11, C2_t_12, C2_t_13, C2_t_14, C2_t_15, C2_t_16,
+C2_t_17, C2_t_18, C2_t_19, C2_t_20, C2_t_21, C2_t_22, C2_t_23, C2_t_24, C2_t_25, C2_t_26, C2_t_27, C2_t_28,
+C2_t_29, C2_t_30, C2_t_31, C2_f_0, C2_f_1, C2_f_2, C2_f_3, C2_f_4, C2_f_5, C2_f_6, C2_f_7, C2_f_8, C2_f_9,
+C2_f_10, C2_f_11, C2_f_12, C2_f_13, C2_f_14, C2_f_15, C2_f_16, C2_f_17, C2_f_18, C2_f_19, C2_f_20, C2_f_21,
+C2_f_22, C2_f_23, C2_f_24, C2_f_25, C2_f_26, C2_f_27, C2_f_28, C2_f_29, C2_f_30, C2_f_31, C2_a, C3_t_0,
+C3_t_1, C3_t_2, C3_t_3, C3_t_4, C3_t_5, C3_t_6, C3_t_7, C3_t_8, C3_t_9, C3_t_10, C3_t_11, C3_t_12, C3_t_13,
+C3_t_14, C3_t_15, C3_t_16, C3_t_17, C3_t_18, C3_t_19, C3_t_20, C3_t_21, C3_t_22, C3_t_23, C3_t_24, C3_t_25,
+C3_t_26, C3_t_27, C3_t_28, C3_t_29, C3_t_30, C3_t_31, C3_f_0, C3_f_1, C3_f_2, C3_f_3, C3_f_4, C3_f_5, C3_f_6,
+C3_f_7, C3_f_8, C3_f_9, C3_f_10, C3_f_11, C3_f_12, C3_f_13, C3_f_14, C3_f_15, C3_f_16, C3_f_17, C3_f_18,
+C3_f_19, C3_f_20, C3_f_21, C3_f_22, C3_f_23, C3_f_24, C3_f_25, C3_f_26, C3_f_27, C3_f_28, C3_f_29, C3_f_30,
+C3_f_31, C3_a, P_t_0, P_t_1, P_t_2, P_t_3, P_t_4, P_t_5, P_t_6, P_t_7, P_t_8, P_t_9, P_t_10, P_t_11, P_t_12,
+P_t_13, P_t_14, P_t_15, P_t_16, P_t_17, P_t_18, P_t_19, P_t_20, P_t_21, P_t_22, P_t_23, P_t_24, P_t_25,
+P_t_26, P_t_27, P_t_28, P_t_29, P_t_30, P_t_31, P_f_0, P_f_1, P_f_2, P_f_3, P_f_4, P_f_5, P_f_6, P_f_7, P_f_8,
+P_f_9, P_f_10, P_f_11, P_f_12, P_f_13, P_f_14, P_f_15, P_f_16, P_f_17, P_f_18, P_f_19, P_f_20, P_f_21, P_f_22,
+P_f_23, P_f_24, P_f_25, P_f_26, P_f_27, P_f_28, P_f_29, P_f_30, P_f_31, P_a, M_t_0, M_t_1, M_t_2, M_t_3,
+M_t_4, M_t_5, M_t_6, M_t_7, M_t_8, M_t_9, M_t_10, M_t_11, M_t_12, M_t_13, M_t_14, M_t_15, M_t_16, M_t_17,
+M_t_18, M_t_19, M_t_20, M_t_21, M_t_22, M_t_23, M_t_24, M_t_25, M_t_26, M_t_27, M_t_28, M_t_29, M_t_30,
+M_t_31, M_f_0, M_f_1, M_f_2, M_f_3, M_f_4, M_f_5, M_f_6, M_f_7, M_f_8, M_f_9, M_f_10, M_f_11, M_f_12, M_f_13,
+M_f_14, M_f_15, M_f_16, M_f_17, M_f_18, M_f_19, M_f_20, M_f_21, M_f_22, M_f_23, M_f_24, M_f_25, M_f_26,
+M_f_27, M_f_28, M_f_29, M_f_30, M_f_31, M_a, O_t_0, O_t_1, O_t_2, O_t_3, O_t_4, O_t_5, O_t_6, O_t_7, O_t_8,
+O_t_9, O_t_10, O_t_11, O_t_12, O_t_13, O_t_14, O_t_15, O_t_16, O_t_17, O_t_18, O_t_19, O_t_20, O_t_21, O_t_22,
+O_t_23, O_t_24, O_t_25, O_t_26, O_t_27, O_t_28, O_t_29, O_t_30, O_t_31, O_f_0, O_f_1, O_f_2, O_f_3, O_f_4,
+O_f_5, O_f_6, O_f_7, O_f_8, O_f_9, O_f_10, O_f_11, O_f_12, O_f_13, O_f_14, O_f_15, O_f_16, O_f_17, O_f_18,
+O_f_19, O_f_20, O_f_21, O_f_22, O_f_23, O_f_24, O_f_25, O_f_26, O_f_27, O_f_28, O_f_29, O_f_30, O_f_31, O_a,
+done, failed;
+parameter real SUPPLY=0.0;
+parameter real TICK=100p from (0:inf);
+parameter real TD=100p from (0:inf);
+parameter real EDGE=10p from (0:inf);
+parameter real STOP_TIME=5u from (0:inf);
+integer active, finished, failure, reported;
+integer perf_source;
+real source_ready;
+parameter real PERF_GAP=2n from (0:inf);
+integer rx_index, rx_phase, ack, valid, spacer, illegal;
+integer actual_hi, actual_lo, expected_hi, expected_lo;
+real threshold, stop_after;
+integer tx_index_C0, tx_phase_C0, tx_valid_C0, input_spacer_C0;
+integer tx_index_C1, tx_phase_C1, tx_valid_C1, input_spacer_C1;
+integer tx_index_C2, tx_phase_C2, tx_valid_C2, input_spacer_C2;
+integer tx_index_C3, tx_phase_C3, tx_valid_C3, input_spacer_C3;
+integer tx_index_P, tx_phase_P, tx_valid_P, input_spacer_P;
+integer tx_index_M, tx_phase_M, tx_valid_M, input_spacer_M;
+// Supply-current sampling continues after the functional round, with reset low.
+parameter real IDLE_SETTLE=20n from (0:inf);
+parameter real IDLE_WINDOW=20n from (0:inf);
+parameter real IDLE_MARGIN=1n from (0:inf);
+integer idle_started, idle_completed;
+real idle_start;
+analog function integer stimulus_hi;
+  input port, index;
+  integer port, index;
+  begin
+    if (index < 2) stimulus_hi=65535;
+    else stimulus_hi=4096+32*port+index;
+  end
+endfunction
+analog function integer stimulus_lo;
+  input port, index;
+  integer port, index;
+  begin
+    case (index)
+      0: stimulus_lo=65534;
+      1: stimulus_lo=65535;
+      2: stimulus_lo=21930; // 55AA: header, bit 0 low
+      3: stimulus_lo=43604; // AA54: nonterminal payload, bit 0 low
+      4: stimulus_lo=21931; // 55AB: terminal payload, bit 0 high
+      default: stimulus_lo=0;
+    endcase
+  end
+endfunction
+analog begin
+  @(initial_step) begin
+    idle_start=-1; idle_started=0; idle_completed=0;
+    active=0; finished=0; failure=0; reported=0; stop_after=-1;
+    rx_index=0; rx_phase=0; ack=0; perf_source=-1; source_ready=0;
+    threshold=0.5*SUPPLY;
+    tx_index_C0=0; tx_phase_C0=0; tx_valid_C0=0;
+    tx_index_C1=0; tx_phase_C1=0; tx_valid_C1=0;
+    tx_index_C2=0; tx_phase_C2=0; tx_valid_C2=0;
+    tx_index_C3=0; tx_phase_C3=0; tx_valid_C3=0;
+    tx_index_P=0; tx_phase_P=0; tx_valid_P=0;
+    tx_index_M=0; tx_phase_M=0; tx_valid_M=0;
+    if (SUPPLY <= 0) begin
+      failure=1; $display("SIM_ERROR reason=invalid_supply");
+    end
+  end
+  @(timer(TICK,TICK)) begin
+    valid=1; spacer=1; illegal=0; actual_hi=0; actual_lo=0;
+    input_spacer_C0=1;
+    if (V(C0_t_0) >= threshold || V(C0_f_0) >= threshold) input_spacer_C0=0;
+    if (V(C0_t_1) >= threshold || V(C0_f_1) >= threshold) input_spacer_C0=0;
+    if (V(C0_t_2) >= threshold || V(C0_f_2) >= threshold) input_spacer_C0=0;
+    if (V(C0_t_3) >= threshold || V(C0_f_3) >= threshold) input_spacer_C0=0;
+    if (V(C0_t_4) >= threshold || V(C0_f_4) >= threshold) input_spacer_C0=0;
+    if (V(C0_t_5) >= threshold || V(C0_f_5) >= threshold) input_spacer_C0=0;
+    if (V(C0_t_6) >= threshold || V(C0_f_6) >= threshold) input_spacer_C0=0;
+    if (V(C0_t_7) >= threshold || V(C0_f_7) >= threshold) input_spacer_C0=0;
+    if (V(C0_t_8) >= threshold || V(C0_f_8) >= threshold) input_spacer_C0=0;
+    if (V(C0_t_9) >= threshold || V(C0_f_9) >= threshold) input_spacer_C0=0;
+    if (V(C0_t_10) >= threshold || V(C0_f_10) >= threshold) input_spacer_C0=0;
+    if (V(C0_t_11) >= threshold || V(C0_f_11) >= threshold) input_spacer_C0=0;
+    if (V(C0_t_12) >= threshold || V(C0_f_12) >= threshold) input_spacer_C0=0;
+    if (V(C0_t_13) >= threshold || V(C0_f_13) >= threshold) input_spacer_C0=0;
+    if (V(C0_t_14) >= threshold || V(C0_f_14) >= threshold) input_spacer_C0=0;
+    if (V(C0_t_15) >= threshold || V(C0_f_15) >= threshold) input_spacer_C0=0;
+    if (V(C0_t_16) >= threshold || V(C0_f_16) >= threshold) input_spacer_C0=0;
+    if (V(C0_t_17) >= threshold || V(C0_f_17) >= threshold) input_spacer_C0=0;
+    if (V(C0_t_18) >= threshold || V(C0_f_18) >= threshold) input_spacer_C0=0;
+    if (V(C0_t_19) >= threshold || V(C0_f_19) >= threshold) input_spacer_C0=0;
+    if (V(C0_t_20) >= threshold || V(C0_f_20) >= threshold) input_spacer_C0=0;
+    if (V(C0_t_21) >= threshold || V(C0_f_21) >= threshold) input_spacer_C0=0;
+    if (V(C0_t_22) >= threshold || V(C0_f_22) >= threshold) input_spacer_C0=0;
+    if (V(C0_t_23) >= threshold || V(C0_f_23) >= threshold) input_spacer_C0=0;
+    if (V(C0_t_24) >= threshold || V(C0_f_24) >= threshold) input_spacer_C0=0;
+    if (V(C0_t_25) >= threshold || V(C0_f_25) >= threshold) input_spacer_C0=0;
+    if (V(C0_t_26) >= threshold || V(C0_f_26) >= threshold) input_spacer_C0=0;
+    if (V(C0_t_27) >= threshold || V(C0_f_27) >= threshold) input_spacer_C0=0;
+    if (V(C0_t_28) >= threshold || V(C0_f_28) >= threshold) input_spacer_C0=0;
+    if (V(C0_t_29) >= threshold || V(C0_f_29) >= threshold) input_spacer_C0=0;
+    if (V(C0_t_30) >= threshold || V(C0_f_30) >= threshold) input_spacer_C0=0;
+    if (V(C0_t_31) >= threshold || V(C0_f_31) >= threshold) input_spacer_C0=0;
+    input_spacer_C1=1;
+    if (V(C1_t_0) >= threshold || V(C1_f_0) >= threshold) input_spacer_C1=0;
+    if (V(C1_t_1) >= threshold || V(C1_f_1) >= threshold) input_spacer_C1=0;
+    if (V(C1_t_2) >= threshold || V(C1_f_2) >= threshold) input_spacer_C1=0;
+    if (V(C1_t_3) >= threshold || V(C1_f_3) >= threshold) input_spacer_C1=0;
+    if (V(C1_t_4) >= threshold || V(C1_f_4) >= threshold) input_spacer_C1=0;
+    if (V(C1_t_5) >= threshold || V(C1_f_5) >= threshold) input_spacer_C1=0;
+    if (V(C1_t_6) >= threshold || V(C1_f_6) >= threshold) input_spacer_C1=0;
+    if (V(C1_t_7) >= threshold || V(C1_f_7) >= threshold) input_spacer_C1=0;
+    if (V(C1_t_8) >= threshold || V(C1_f_8) >= threshold) input_spacer_C1=0;
+    if (V(C1_t_9) >= threshold || V(C1_f_9) >= threshold) input_spacer_C1=0;
+    if (V(C1_t_10) >= threshold || V(C1_f_10) >= threshold) input_spacer_C1=0;
+    if (V(C1_t_11) >= threshold || V(C1_f_11) >= threshold) input_spacer_C1=0;
+    if (V(C1_t_12) >= threshold || V(C1_f_12) >= threshold) input_spacer_C1=0;
+    if (V(C1_t_13) >= threshold || V(C1_f_13) >= threshold) input_spacer_C1=0;
+    if (V(C1_t_14) >= threshold || V(C1_f_14) >= threshold) input_spacer_C1=0;
+    if (V(C1_t_15) >= threshold || V(C1_f_15) >= threshold) input_spacer_C1=0;
+    if (V(C1_t_16) >= threshold || V(C1_f_16) >= threshold) input_spacer_C1=0;
+    if (V(C1_t_17) >= threshold || V(C1_f_17) >= threshold) input_spacer_C1=0;
+    if (V(C1_t_18) >= threshold || V(C1_f_18) >= threshold) input_spacer_C1=0;
+    if (V(C1_t_19) >= threshold || V(C1_f_19) >= threshold) input_spacer_C1=0;
+    if (V(C1_t_20) >= threshold || V(C1_f_20) >= threshold) input_spacer_C1=0;
+    if (V(C1_t_21) >= threshold || V(C1_f_21) >= threshold) input_spacer_C1=0;
+    if (V(C1_t_22) >= threshold || V(C1_f_22) >= threshold) input_spacer_C1=0;
+    if (V(C1_t_23) >= threshold || V(C1_f_23) >= threshold) input_spacer_C1=0;
+    if (V(C1_t_24) >= threshold || V(C1_f_24) >= threshold) input_spacer_C1=0;
+    if (V(C1_t_25) >= threshold || V(C1_f_25) >= threshold) input_spacer_C1=0;
+    if (V(C1_t_26) >= threshold || V(C1_f_26) >= threshold) input_spacer_C1=0;
+    if (V(C1_t_27) >= threshold || V(C1_f_27) >= threshold) input_spacer_C1=0;
+    if (V(C1_t_28) >= threshold || V(C1_f_28) >= threshold) input_spacer_C1=0;
+    if (V(C1_t_29) >= threshold || V(C1_f_29) >= threshold) input_spacer_C1=0;
+    if (V(C1_t_30) >= threshold || V(C1_f_30) >= threshold) input_spacer_C1=0;
+    if (V(C1_t_31) >= threshold || V(C1_f_31) >= threshold) input_spacer_C1=0;
+    input_spacer_C2=1;
+    if (V(C2_t_0) >= threshold || V(C2_f_0) >= threshold) input_spacer_C2=0;
+    if (V(C2_t_1) >= threshold || V(C2_f_1) >= threshold) input_spacer_C2=0;
+    if (V(C2_t_2) >= threshold || V(C2_f_2) >= threshold) input_spacer_C2=0;
+    if (V(C2_t_3) >= threshold || V(C2_f_3) >= threshold) input_spacer_C2=0;
+    if (V(C2_t_4) >= threshold || V(C2_f_4) >= threshold) input_spacer_C2=0;
+    if (V(C2_t_5) >= threshold || V(C2_f_5) >= threshold) input_spacer_C2=0;
+    if (V(C2_t_6) >= threshold || V(C2_f_6) >= threshold) input_spacer_C2=0;
+    if (V(C2_t_7) >= threshold || V(C2_f_7) >= threshold) input_spacer_C2=0;
+    if (V(C2_t_8) >= threshold || V(C2_f_8) >= threshold) input_spacer_C2=0;
+    if (V(C2_t_9) >= threshold || V(C2_f_9) >= threshold) input_spacer_C2=0;
+    if (V(C2_t_10) >= threshold || V(C2_f_10) >= threshold) input_spacer_C2=0;
+    if (V(C2_t_11) >= threshold || V(C2_f_11) >= threshold) input_spacer_C2=0;
+    if (V(C2_t_12) >= threshold || V(C2_f_12) >= threshold) input_spacer_C2=0;
+    if (V(C2_t_13) >= threshold || V(C2_f_13) >= threshold) input_spacer_C2=0;
+    if (V(C2_t_14) >= threshold || V(C2_f_14) >= threshold) input_spacer_C2=0;
+    if (V(C2_t_15) >= threshold || V(C2_f_15) >= threshold) input_spacer_C2=0;
+    if (V(C2_t_16) >= threshold || V(C2_f_16) >= threshold) input_spacer_C2=0;
+    if (V(C2_t_17) >= threshold || V(C2_f_17) >= threshold) input_spacer_C2=0;
+    if (V(C2_t_18) >= threshold || V(C2_f_18) >= threshold) input_spacer_C2=0;
+    if (V(C2_t_19) >= threshold || V(C2_f_19) >= threshold) input_spacer_C2=0;
+    if (V(C2_t_20) >= threshold || V(C2_f_20) >= threshold) input_spacer_C2=0;
+    if (V(C2_t_21) >= threshold || V(C2_f_21) >= threshold) input_spacer_C2=0;
+    if (V(C2_t_22) >= threshold || V(C2_f_22) >= threshold) input_spacer_C2=0;
+    if (V(C2_t_23) >= threshold || V(C2_f_23) >= threshold) input_spacer_C2=0;
+    if (V(C2_t_24) >= threshold || V(C2_f_24) >= threshold) input_spacer_C2=0;
+    if (V(C2_t_25) >= threshold || V(C2_f_25) >= threshold) input_spacer_C2=0;
+    if (V(C2_t_26) >= threshold || V(C2_f_26) >= threshold) input_spacer_C2=0;
+    if (V(C2_t_27) >= threshold || V(C2_f_27) >= threshold) input_spacer_C2=0;
+    if (V(C2_t_28) >= threshold || V(C2_f_28) >= threshold) input_spacer_C2=0;
+    if (V(C2_t_29) >= threshold || V(C2_f_29) >= threshold) input_spacer_C2=0;
+    if (V(C2_t_30) >= threshold || V(C2_f_30) >= threshold) input_spacer_C2=0;
+    if (V(C2_t_31) >= threshold || V(C2_f_31) >= threshold) input_spacer_C2=0;
+    input_spacer_C3=1;
+    if (V(C3_t_0) >= threshold || V(C3_f_0) >= threshold) input_spacer_C3=0;
+    if (V(C3_t_1) >= threshold || V(C3_f_1) >= threshold) input_spacer_C3=0;
+    if (V(C3_t_2) >= threshold || V(C3_f_2) >= threshold) input_spacer_C3=0;
+    if (V(C3_t_3) >= threshold || V(C3_f_3) >= threshold) input_spacer_C3=0;
+    if (V(C3_t_4) >= threshold || V(C3_f_4) >= threshold) input_spacer_C3=0;
+    if (V(C3_t_5) >= threshold || V(C3_f_5) >= threshold) input_spacer_C3=0;
+    if (V(C3_t_6) >= threshold || V(C3_f_6) >= threshold) input_spacer_C3=0;
+    if (V(C3_t_7) >= threshold || V(C3_f_7) >= threshold) input_spacer_C3=0;
+    if (V(C3_t_8) >= threshold || V(C3_f_8) >= threshold) input_spacer_C3=0;
+    if (V(C3_t_9) >= threshold || V(C3_f_9) >= threshold) input_spacer_C3=0;
+    if (V(C3_t_10) >= threshold || V(C3_f_10) >= threshold) input_spacer_C3=0;
+    if (V(C3_t_11) >= threshold || V(C3_f_11) >= threshold) input_spacer_C3=0;
+    if (V(C3_t_12) >= threshold || V(C3_f_12) >= threshold) input_spacer_C3=0;
+    if (V(C3_t_13) >= threshold || V(C3_f_13) >= threshold) input_spacer_C3=0;
+    if (V(C3_t_14) >= threshold || V(C3_f_14) >= threshold) input_spacer_C3=0;
+    if (V(C3_t_15) >= threshold || V(C3_f_15) >= threshold) input_spacer_C3=0;
+    if (V(C3_t_16) >= threshold || V(C3_f_16) >= threshold) input_spacer_C3=0;
+    if (V(C3_t_17) >= threshold || V(C3_f_17) >= threshold) input_spacer_C3=0;
+    if (V(C3_t_18) >= threshold || V(C3_f_18) >= threshold) input_spacer_C3=0;
+    if (V(C3_t_19) >= threshold || V(C3_f_19) >= threshold) input_spacer_C3=0;
+    if (V(C3_t_20) >= threshold || V(C3_f_20) >= threshold) input_spacer_C3=0;
+    if (V(C3_t_21) >= threshold || V(C3_f_21) >= threshold) input_spacer_C3=0;
+    if (V(C3_t_22) >= threshold || V(C3_f_22) >= threshold) input_spacer_C3=0;
+    if (V(C3_t_23) >= threshold || V(C3_f_23) >= threshold) input_spacer_C3=0;
+    if (V(C3_t_24) >= threshold || V(C3_f_24) >= threshold) input_spacer_C3=0;
+    if (V(C3_t_25) >= threshold || V(C3_f_25) >= threshold) input_spacer_C3=0;
+    if (V(C3_t_26) >= threshold || V(C3_f_26) >= threshold) input_spacer_C3=0;
+    if (V(C3_t_27) >= threshold || V(C3_f_27) >= threshold) input_spacer_C3=0;
+    if (V(C3_t_28) >= threshold || V(C3_f_28) >= threshold) input_spacer_C3=0;
+    if (V(C3_t_29) >= threshold || V(C3_f_29) >= threshold) input_spacer_C3=0;
+    if (V(C3_t_30) >= threshold || V(C3_f_30) >= threshold) input_spacer_C3=0;
+    if (V(C3_t_31) >= threshold || V(C3_f_31) >= threshold) input_spacer_C3=0;
+    input_spacer_P=1;
+    if (V(P_t_0) >= threshold || V(P_f_0) >= threshold) input_spacer_P=0;
+    if (V(P_t_1) >= threshold || V(P_f_1) >= threshold) input_spacer_P=0;
+    if (V(P_t_2) >= threshold || V(P_f_2) >= threshold) input_spacer_P=0;
+    if (V(P_t_3) >= threshold || V(P_f_3) >= threshold) input_spacer_P=0;
+    if (V(P_t_4) >= threshold || V(P_f_4) >= threshold) input_spacer_P=0;
+    if (V(P_t_5) >= threshold || V(P_f_5) >= threshold) input_spacer_P=0;
+    if (V(P_t_6) >= threshold || V(P_f_6) >= threshold) input_spacer_P=0;
+    if (V(P_t_7) >= threshold || V(P_f_7) >= threshold) input_spacer_P=0;
+    if (V(P_t_8) >= threshold || V(P_f_8) >= threshold) input_spacer_P=0;
+    if (V(P_t_9) >= threshold || V(P_f_9) >= threshold) input_spacer_P=0;
+    if (V(P_t_10) >= threshold || V(P_f_10) >= threshold) input_spacer_P=0;
+    if (V(P_t_11) >= threshold || V(P_f_11) >= threshold) input_spacer_P=0;
+    if (V(P_t_12) >= threshold || V(P_f_12) >= threshold) input_spacer_P=0;
+    if (V(P_t_13) >= threshold || V(P_f_13) >= threshold) input_spacer_P=0;
+    if (V(P_t_14) >= threshold || V(P_f_14) >= threshold) input_spacer_P=0;
+    if (V(P_t_15) >= threshold || V(P_f_15) >= threshold) input_spacer_P=0;
+    if (V(P_t_16) >= threshold || V(P_f_16) >= threshold) input_spacer_P=0;
+    if (V(P_t_17) >= threshold || V(P_f_17) >= threshold) input_spacer_P=0;
+    if (V(P_t_18) >= threshold || V(P_f_18) >= threshold) input_spacer_P=0;
+    if (V(P_t_19) >= threshold || V(P_f_19) >= threshold) input_spacer_P=0;
+    if (V(P_t_20) >= threshold || V(P_f_20) >= threshold) input_spacer_P=0;
+    if (V(P_t_21) >= threshold || V(P_f_21) >= threshold) input_spacer_P=0;
+    if (V(P_t_22) >= threshold || V(P_f_22) >= threshold) input_spacer_P=0;
+    if (V(P_t_23) >= threshold || V(P_f_23) >= threshold) input_spacer_P=0;
+    if (V(P_t_24) >= threshold || V(P_f_24) >= threshold) input_spacer_P=0;
+    if (V(P_t_25) >= threshold || V(P_f_25) >= threshold) input_spacer_P=0;
+    if (V(P_t_26) >= threshold || V(P_f_26) >= threshold) input_spacer_P=0;
+    if (V(P_t_27) >= threshold || V(P_f_27) >= threshold) input_spacer_P=0;
+    if (V(P_t_28) >= threshold || V(P_f_28) >= threshold) input_spacer_P=0;
+    if (V(P_t_29) >= threshold || V(P_f_29) >= threshold) input_spacer_P=0;
+    if (V(P_t_30) >= threshold || V(P_f_30) >= threshold) input_spacer_P=0;
+    if (V(P_t_31) >= threshold || V(P_f_31) >= threshold) input_spacer_P=0;
+    input_spacer_M=1;
+    if (V(M_t_0) >= threshold || V(M_f_0) >= threshold) input_spacer_M=0;
+    if (V(M_t_1) >= threshold || V(M_f_1) >= threshold) input_spacer_M=0;
+    if (V(M_t_2) >= threshold || V(M_f_2) >= threshold) input_spacer_M=0;
+    if (V(M_t_3) >= threshold || V(M_f_3) >= threshold) input_spacer_M=0;
+    if (V(M_t_4) >= threshold || V(M_f_4) >= threshold) input_spacer_M=0;
+    if (V(M_t_5) >= threshold || V(M_f_5) >= threshold) input_spacer_M=0;
+    if (V(M_t_6) >= threshold || V(M_f_6) >= threshold) input_spacer_M=0;
+    if (V(M_t_7) >= threshold || V(M_f_7) >= threshold) input_spacer_M=0;
+    if (V(M_t_8) >= threshold || V(M_f_8) >= threshold) input_spacer_M=0;
+    if (V(M_t_9) >= threshold || V(M_f_9) >= threshold) input_spacer_M=0;
+    if (V(M_t_10) >= threshold || V(M_f_10) >= threshold) input_spacer_M=0;
+    if (V(M_t_11) >= threshold || V(M_f_11) >= threshold) input_spacer_M=0;
+    if (V(M_t_12) >= threshold || V(M_f_12) >= threshold) input_spacer_M=0;
+    if (V(M_t_13) >= threshold || V(M_f_13) >= threshold) input_spacer_M=0;
+    if (V(M_t_14) >= threshold || V(M_f_14) >= threshold) input_spacer_M=0;
+    if (V(M_t_15) >= threshold || V(M_f_15) >= threshold) input_spacer_M=0;
+    if (V(M_t_16) >= threshold || V(M_f_16) >= threshold) input_spacer_M=0;
+    if (V(M_t_17) >= threshold || V(M_f_17) >= threshold) input_spacer_M=0;
+    if (V(M_t_18) >= threshold || V(M_f_18) >= threshold) input_spacer_M=0;
+    if (V(M_t_19) >= threshold || V(M_f_19) >= threshold) input_spacer_M=0;
+    if (V(M_t_20) >= threshold || V(M_f_20) >= threshold) input_spacer_M=0;
+    if (V(M_t_21) >= threshold || V(M_f_21) >= threshold) input_spacer_M=0;
+    if (V(M_t_22) >= threshold || V(M_f_22) >= threshold) input_spacer_M=0;
+    if (V(M_t_23) >= threshold || V(M_f_23) >= threshold) input_spacer_M=0;
+    if (V(M_t_24) >= threshold || V(M_f_24) >= threshold) input_spacer_M=0;
+    if (V(M_t_25) >= threshold || V(M_f_25) >= threshold) input_spacer_M=0;
+    if (V(M_t_26) >= threshold || V(M_f_26) >= threshold) input_spacer_M=0;
+    if (V(M_t_27) >= threshold || V(M_f_27) >= threshold) input_spacer_M=0;
+    if (V(M_t_28) >= threshold || V(M_f_28) >= threshold) input_spacer_M=0;
+    if (V(M_t_29) >= threshold || V(M_f_29) >= threshold) input_spacer_M=0;
+    if (V(M_t_30) >= threshold || V(M_f_30) >= threshold) input_spacer_M=0;
+    if (V(M_t_31) >= threshold || V(M_f_31) >= threshold) input_spacer_M=0;
+    if (V(O_t_0) < threshold && V(O_f_0) < threshold) valid=0;
+    if (V(O_t_0) >= threshold || V(O_f_0) >= threshold) spacer=0;
+    if (V(O_t_0) >= threshold && V(O_f_0) >= threshold) illegal=1;
+    if (V(O_t_0) >= threshold) actual_lo=actual_lo | (1 << 0);
+    if (V(O_t_1) < threshold && V(O_f_1) < threshold) valid=0;
+    if (V(O_t_1) >= threshold || V(O_f_1) >= threshold) spacer=0;
+    if (V(O_t_1) >= threshold && V(O_f_1) >= threshold) illegal=1;
+    if (V(O_t_1) >= threshold) actual_lo=actual_lo | (1 << 1);
+    if (V(O_t_2) < threshold && V(O_f_2) < threshold) valid=0;
+    if (V(O_t_2) >= threshold || V(O_f_2) >= threshold) spacer=0;
+    if (V(O_t_2) >= threshold && V(O_f_2) >= threshold) illegal=1;
+    if (V(O_t_2) >= threshold) actual_lo=actual_lo | (1 << 2);
+    if (V(O_t_3) < threshold && V(O_f_3) < threshold) valid=0;
+    if (V(O_t_3) >= threshold || V(O_f_3) >= threshold) spacer=0;
+    if (V(O_t_3) >= threshold && V(O_f_3) >= threshold) illegal=1;
+    if (V(O_t_3) >= threshold) actual_lo=actual_lo | (1 << 3);
+    if (V(O_t_4) < threshold && V(O_f_4) < threshold) valid=0;
+    if (V(O_t_4) >= threshold || V(O_f_4) >= threshold) spacer=0;
+    if (V(O_t_4) >= threshold && V(O_f_4) >= threshold) illegal=1;
+    if (V(O_t_4) >= threshold) actual_lo=actual_lo | (1 << 4);
+    if (V(O_t_5) < threshold && V(O_f_5) < threshold) valid=0;
+    if (V(O_t_5) >= threshold || V(O_f_5) >= threshold) spacer=0;
+    if (V(O_t_5) >= threshold && V(O_f_5) >= threshold) illegal=1;
+    if (V(O_t_5) >= threshold) actual_lo=actual_lo | (1 << 5);
+    if (V(O_t_6) < threshold && V(O_f_6) < threshold) valid=0;
+    if (V(O_t_6) >= threshold || V(O_f_6) >= threshold) spacer=0;
+    if (V(O_t_6) >= threshold && V(O_f_6) >= threshold) illegal=1;
+    if (V(O_t_6) >= threshold) actual_lo=actual_lo | (1 << 6);
+    if (V(O_t_7) < threshold && V(O_f_7) < threshold) valid=0;
+    if (V(O_t_7) >= threshold || V(O_f_7) >= threshold) spacer=0;
+    if (V(O_t_7) >= threshold && V(O_f_7) >= threshold) illegal=1;
+    if (V(O_t_7) >= threshold) actual_lo=actual_lo | (1 << 7);
+    if (V(O_t_8) < threshold && V(O_f_8) < threshold) valid=0;
+    if (V(O_t_8) >= threshold || V(O_f_8) >= threshold) spacer=0;
+    if (V(O_t_8) >= threshold && V(O_f_8) >= threshold) illegal=1;
+    if (V(O_t_8) >= threshold) actual_lo=actual_lo | (1 << 8);
+    if (V(O_t_9) < threshold && V(O_f_9) < threshold) valid=0;
+    if (V(O_t_9) >= threshold || V(O_f_9) >= threshold) spacer=0;
+    if (V(O_t_9) >= threshold && V(O_f_9) >= threshold) illegal=1;
+    if (V(O_t_9) >= threshold) actual_lo=actual_lo | (1 << 9);
+    if (V(O_t_10) < threshold && V(O_f_10) < threshold) valid=0;
+    if (V(O_t_10) >= threshold || V(O_f_10) >= threshold) spacer=0;
+    if (V(O_t_10) >= threshold && V(O_f_10) >= threshold) illegal=1;
+    if (V(O_t_10) >= threshold) actual_lo=actual_lo | (1 << 10);
+    if (V(O_t_11) < threshold && V(O_f_11) < threshold) valid=0;
+    if (V(O_t_11) >= threshold || V(O_f_11) >= threshold) spacer=0;
+    if (V(O_t_11) >= threshold && V(O_f_11) >= threshold) illegal=1;
+    if (V(O_t_11) >= threshold) actual_lo=actual_lo | (1 << 11);
+    if (V(O_t_12) < threshold && V(O_f_12) < threshold) valid=0;
+    if (V(O_t_12) >= threshold || V(O_f_12) >= threshold) spacer=0;
+    if (V(O_t_12) >= threshold && V(O_f_12) >= threshold) illegal=1;
+    if (V(O_t_12) >= threshold) actual_lo=actual_lo | (1 << 12);
+    if (V(O_t_13) < threshold && V(O_f_13) < threshold) valid=0;
+    if (V(O_t_13) >= threshold || V(O_f_13) >= threshold) spacer=0;
+    if (V(O_t_13) >= threshold && V(O_f_13) >= threshold) illegal=1;
+    if (V(O_t_13) >= threshold) actual_lo=actual_lo | (1 << 13);
+    if (V(O_t_14) < threshold && V(O_f_14) < threshold) valid=0;
+    if (V(O_t_14) >= threshold || V(O_f_14) >= threshold) spacer=0;
+    if (V(O_t_14) >= threshold && V(O_f_14) >= threshold) illegal=1;
+    if (V(O_t_14) >= threshold) actual_lo=actual_lo | (1 << 14);
+    if (V(O_t_15) < threshold && V(O_f_15) < threshold) valid=0;
+    if (V(O_t_15) >= threshold || V(O_f_15) >= threshold) spacer=0;
+    if (V(O_t_15) >= threshold && V(O_f_15) >= threshold) illegal=1;
+    if (V(O_t_15) >= threshold) actual_lo=actual_lo | (1 << 15);
+    if (V(O_t_16) < threshold && V(O_f_16) < threshold) valid=0;
+    if (V(O_t_16) >= threshold || V(O_f_16) >= threshold) spacer=0;
+    if (V(O_t_16) >= threshold && V(O_f_16) >= threshold) illegal=1;
+    if (V(O_t_16) >= threshold) actual_hi=actual_hi | (1 << 0);
+    if (V(O_t_17) < threshold && V(O_f_17) < threshold) valid=0;
+    if (V(O_t_17) >= threshold || V(O_f_17) >= threshold) spacer=0;
+    if (V(O_t_17) >= threshold && V(O_f_17) >= threshold) illegal=1;
+    if (V(O_t_17) >= threshold) actual_hi=actual_hi | (1 << 1);
+    if (V(O_t_18) < threshold && V(O_f_18) < threshold) valid=0;
+    if (V(O_t_18) >= threshold || V(O_f_18) >= threshold) spacer=0;
+    if (V(O_t_18) >= threshold && V(O_f_18) >= threshold) illegal=1;
+    if (V(O_t_18) >= threshold) actual_hi=actual_hi | (1 << 2);
+    if (V(O_t_19) < threshold && V(O_f_19) < threshold) valid=0;
+    if (V(O_t_19) >= threshold || V(O_f_19) >= threshold) spacer=0;
+    if (V(O_t_19) >= threshold && V(O_f_19) >= threshold) illegal=1;
+    if (V(O_t_19) >= threshold) actual_hi=actual_hi | (1 << 3);
+    if (V(O_t_20) < threshold && V(O_f_20) < threshold) valid=0;
+    if (V(O_t_20) >= threshold || V(O_f_20) >= threshold) spacer=0;
+    if (V(O_t_20) >= threshold && V(O_f_20) >= threshold) illegal=1;
+    if (V(O_t_20) >= threshold) actual_hi=actual_hi | (1 << 4);
+    if (V(O_t_21) < threshold && V(O_f_21) < threshold) valid=0;
+    if (V(O_t_21) >= threshold || V(O_f_21) >= threshold) spacer=0;
+    if (V(O_t_21) >= threshold && V(O_f_21) >= threshold) illegal=1;
+    if (V(O_t_21) >= threshold) actual_hi=actual_hi | (1 << 5);
+    if (V(O_t_22) < threshold && V(O_f_22) < threshold) valid=0;
+    if (V(O_t_22) >= threshold || V(O_f_22) >= threshold) spacer=0;
+    if (V(O_t_22) >= threshold && V(O_f_22) >= threshold) illegal=1;
+    if (V(O_t_22) >= threshold) actual_hi=actual_hi | (1 << 6);
+    if (V(O_t_23) < threshold && V(O_f_23) < threshold) valid=0;
+    if (V(O_t_23) >= threshold || V(O_f_23) >= threshold) spacer=0;
+    if (V(O_t_23) >= threshold && V(O_f_23) >= threshold) illegal=1;
+    if (V(O_t_23) >= threshold) actual_hi=actual_hi | (1 << 7);
+    if (V(O_t_24) < threshold && V(O_f_24) < threshold) valid=0;
+    if (V(O_t_24) >= threshold || V(O_f_24) >= threshold) spacer=0;
+    if (V(O_t_24) >= threshold && V(O_f_24) >= threshold) illegal=1;
+    if (V(O_t_24) >= threshold) actual_hi=actual_hi | (1 << 8);
+    if (V(O_t_25) < threshold && V(O_f_25) < threshold) valid=0;
+    if (V(O_t_25) >= threshold || V(O_f_25) >= threshold) spacer=0;
+    if (V(O_t_25) >= threshold && V(O_f_25) >= threshold) illegal=1;
+    if (V(O_t_25) >= threshold) actual_hi=actual_hi | (1 << 9);
+    if (V(O_t_26) < threshold && V(O_f_26) < threshold) valid=0;
+    if (V(O_t_26) >= threshold || V(O_f_26) >= threshold) spacer=0;
+    if (V(O_t_26) >= threshold && V(O_f_26) >= threshold) illegal=1;
+    if (V(O_t_26) >= threshold) actual_hi=actual_hi | (1 << 10);
+    if (V(O_t_27) < threshold && V(O_f_27) < threshold) valid=0;
+    if (V(O_t_27) >= threshold || V(O_f_27) >= threshold) spacer=0;
+    if (V(O_t_27) >= threshold && V(O_f_27) >= threshold) illegal=1;
+    if (V(O_t_27) >= threshold) actual_hi=actual_hi | (1 << 11);
+    if (V(O_t_28) < threshold && V(O_f_28) < threshold) valid=0;
+    if (V(O_t_28) >= threshold || V(O_f_28) >= threshold) spacer=0;
+    if (V(O_t_28) >= threshold && V(O_f_28) >= threshold) illegal=1;
+    if (V(O_t_28) >= threshold) actual_hi=actual_hi | (1 << 12);
+    if (V(O_t_29) < threshold && V(O_f_29) < threshold) valid=0;
+    if (V(O_t_29) >= threshold || V(O_f_29) >= threshold) spacer=0;
+    if (V(O_t_29) >= threshold && V(O_f_29) >= threshold) illegal=1;
+    if (V(O_t_29) >= threshold) actual_hi=actual_hi | (1 << 13);
+    if (V(O_t_30) < threshold && V(O_f_30) < threshold) valid=0;
+    if (V(O_t_30) >= threshold || V(O_f_30) >= threshold) spacer=0;
+    if (V(O_t_30) >= threshold && V(O_f_30) >= threshold) illegal=1;
+    if (V(O_t_30) >= threshold) actual_hi=actual_hi | (1 << 14);
+    if (V(O_t_31) < threshold && V(O_f_31) < threshold) valid=0;
+    if (V(O_t_31) >= threshold || V(O_f_31) >= threshold) spacer=0;
+    if (V(O_t_31) >= threshold && V(O_f_31) >= threshold) illegal=1;
+    if (V(O_t_31) >= threshold) actual_hi=actual_hi | (1 << 15);
+    if (!active && !finished && !failure && V(reset) < threshold) begin
+      if (!spacer || (V(C0_a) >= threshold || V(C1_a) >= threshold || V(C2_a) >= threshold || V(C3_a) >= threshold || V(P_a) >= threshold || V(M_a) >= threshold)) begin
+        failure=1; $display("SIM_ERROR t=%e reason=reset_spacer",$abstime);
+      end else begin active=1; $display("SIM_RESET t=%e",$abstime); end
+    end
+    if ((active || finished) && !failure && !reported) begin
+      if (illegal) begin
+        failure=1; $display("SIM_ERROR t=%e reason=illegal_dual_rail channel=O",$abstime);
+      end
+      if (!failure) begin
+        if (rx_phase == 0 && valid && !spacer) begin
+          if (rx_index >= 30) begin
+            failure=1; $display("SIM_ERROR t=%e reason=unexpected_output channel=O",$abstime);
+          end else begin
+            if (rx_index < 12) begin
+              expected_hi=65535;
+              if ((rx_index % 2) == 0) expected_lo=65534;
+              else expected_lo=65535;
+            end else begin
+              expected_hi=stimulus_hi((rx_index-12)/3, 2+(rx_index-12)%3);
+              expected_lo=stimulus_lo((rx_index-12)/3, 2+(rx_index-12)%3);
+            end
+            if (actual_hi != expected_hi || actual_lo != expected_lo) begin
+              failure=1;
+              $display("SIM_RX t=%e channel=O index=%d expected=%04h%04h actual=%04h%04h FAIL",$abstime,rx_index,expected_hi,expected_lo,actual_hi,actual_lo);
+              $display("SIM_ERROR t=%e reason=golden_mismatch channel=O",$abstime);
+            end else begin
+              $display("SIM_RX t=%e channel=O index=%d expected=%04h%04h actual=%04h%04h PASS",$abstime,rx_index,expected_hi,expected_lo,actual_hi,actual_lo);
+              ack=1; rx_phase=1;
+            end
+          end
+        end else if (rx_phase == 1) begin
+          if (valid && (actual_hi != expected_hi || actual_lo != expected_lo)) begin
+            failure=1; $display("SIM_ERROR t=%e reason=word_changed_without_spacer channel=O",$abstime);
+          end else if (!valid && V(O_a) < threshold) begin
+            failure=1; $display("SIM_ERROR t=%e reason=data_withdrawn_before_ack channel=O",$abstime);
+          end else if (spacer && V(O_a) >= threshold) begin
+            ack=0; rx_phase=2;
+            $display("SIM_SPACER t=%e channel=O index=%d",$abstime,rx_index);
+          end
+        end else if (rx_phase == 2) begin
+          if (!spacer) begin
+            failure=1; $display("SIM_ERROR t=%e reason=data_before_ack_low channel=O",$abstime);
+          end else if (V(O_a) < threshold) begin
+            $display("SIM_ACK_LOW t=%e channel=O index=%d",$abstime,rx_index);
+            rx_index=rx_index+1; rx_phase=0;
+          end
+        end
+      end
+      if (active && !failure) begin
+        if (tx_phase_C0 == 1 && V(C0_a) >= threshold) begin
+          tx_valid_C0=0; tx_phase_C0=2;
+          $display("SIM_IACK_HIGH t=%e channel=C0 index=%d",$abstime,tx_index_C0);
+        end else if (tx_phase_C0 == 2 && V(C0_a) < threshold && input_spacer_C0) begin
+          $display("SIM_IACK_LOW t=%e channel=C0 index=%d",$abstime,tx_index_C0);
+          tx_index_C0=tx_index_C0+1; tx_phase_C0=0;
+        end
+        if (tx_phase_C0 == 0 && V(C0_a) >= threshold) begin
+          failure=1; $display("SIM_ERROR t=%e reason=unexpected_input_ack channel=C0",$abstime);
+        end
+        if (tx_phase_C1 == 1 && V(C1_a) >= threshold) begin
+          tx_valid_C1=0; tx_phase_C1=2;
+          $display("SIM_IACK_HIGH t=%e channel=C1 index=%d",$abstime,tx_index_C1);
+        end else if (tx_phase_C1 == 2 && V(C1_a) < threshold && input_spacer_C1) begin
+          $display("SIM_IACK_LOW t=%e channel=C1 index=%d",$abstime,tx_index_C1);
+          tx_index_C1=tx_index_C1+1; tx_phase_C1=0;
+        end
+        if (tx_phase_C1 == 0 && V(C1_a) >= threshold) begin
+          failure=1; $display("SIM_ERROR t=%e reason=unexpected_input_ack channel=C1",$abstime);
+        end
+        if (tx_phase_C2 == 1 && V(C2_a) >= threshold) begin
+          tx_valid_C2=0; tx_phase_C2=2;
+          $display("SIM_IACK_HIGH t=%e channel=C2 index=%d",$abstime,tx_index_C2);
+        end else if (tx_phase_C2 == 2 && V(C2_a) < threshold && input_spacer_C2) begin
+          $display("SIM_IACK_LOW t=%e channel=C2 index=%d",$abstime,tx_index_C2);
+          tx_index_C2=tx_index_C2+1; tx_phase_C2=0;
+        end
+        if (tx_phase_C2 == 0 && V(C2_a) >= threshold) begin
+          failure=1; $display("SIM_ERROR t=%e reason=unexpected_input_ack channel=C2",$abstime);
+        end
+        if (tx_phase_C3 == 1 && V(C3_a) >= threshold) begin
+          tx_valid_C3=0; tx_phase_C3=2;
+          $display("SIM_IACK_HIGH t=%e channel=C3 index=%d",$abstime,tx_index_C3);
+        end else if (tx_phase_C3 == 2 && V(C3_a) < threshold && input_spacer_C3) begin
+          $display("SIM_IACK_LOW t=%e channel=C3 index=%d",$abstime,tx_index_C3);
+          tx_index_C3=tx_index_C3+1; tx_phase_C3=0;
+        end
+        if (tx_phase_C3 == 0 && V(C3_a) >= threshold) begin
+          failure=1; $display("SIM_ERROR t=%e reason=unexpected_input_ack channel=C3",$abstime);
+        end
+        if (tx_phase_P == 1 && V(P_a) >= threshold) begin
+          tx_valid_P=0; tx_phase_P=2;
+          $display("SIM_IACK_HIGH t=%e channel=P index=%d",$abstime,tx_index_P);
+        end else if (tx_phase_P == 2 && V(P_a) < threshold && input_spacer_P) begin
+          $display("SIM_IACK_LOW t=%e channel=P index=%d",$abstime,tx_index_P);
+          tx_index_P=tx_index_P+1; tx_phase_P=0;
+        end
+        if (tx_phase_P == 0 && V(P_a) >= threshold) begin
+          failure=1; $display("SIM_ERROR t=%e reason=unexpected_input_ack channel=P",$abstime);
+        end
+        if (tx_phase_M == 1 && V(M_a) >= threshold) begin
+          tx_valid_M=0; tx_phase_M=2;
+          $display("SIM_IACK_HIGH t=%e channel=M index=%d",$abstime,tx_index_M);
+        end else if (tx_phase_M == 2 && V(M_a) < threshold && input_spacer_M) begin
+          $display("SIM_IACK_LOW t=%e channel=M index=%d",$abstime,tx_index_M);
+          tx_index_M=tx_index_M+1; tx_phase_M=0;
+        end
+        if (tx_phase_M == 0 && V(M_a) >= threshold) begin
+          failure=1; $display("SIM_ERROR t=%e reason=unexpected_input_ack channel=M",$abstime);
+        end
+        if (!failure && rx_phase == 0 && spacer && V(O_a) < threshold && tx_phase_C0 == 0 && input_spacer_C0 && V(C0_a) < threshold && tx_phase_C1 == 0 && input_spacer_C1 && V(C1_a) < threshold && tx_phase_C2 == 0 && input_spacer_C2 && V(C2_a) < threshold && tx_phase_C3 == 0 && input_spacer_C3 && V(C3_a) < threshold && tx_phase_P == 0 && input_spacer_P && V(P_a) < threshold && tx_phase_M == 0 && input_spacer_M && V(M_a) < threshold) begin
+          if (perf_source == -1 && rx_index == 12 && tx_index_C0 == 2 && tx_index_C1 == 2 && tx_index_C2 == 2 && tx_index_C3 == 2 && tx_index_P == 2 && tx_index_M == 2) begin
+            $display("SIM_CONTENTION_END t=%e inputs=12 outputs=12",$abstime);
+            perf_source=0; source_ready=$abstime+PERF_GAP;
+          end else if (((perf_source == 0 && tx_index_C0 == 5) || (perf_source == 1 && tx_index_C1 == 5) || (perf_source == 2 && tx_index_C2 == 5) || (perf_source == 3 && tx_index_C3 == 5) || (perf_source == 4 && tx_index_P == 5) || (perf_source == 5 && tx_index_M == 5)) && rx_index == 12+3*(perf_source+1)) begin
+            $display("SIM_ISOLATED_PACKET_END t=%e source_id=%d",$abstime,perf_source);
+            perf_source=perf_source+1; source_ready=$abstime+PERF_GAP;
+            if (perf_source == 6) begin
+              finished=1; active=0;
+              $display("SIM_ROUND t=%e inputs=30 O=30",$abstime);
+            end
+          end
+        end
+        if (!failure && !finished && tx_phase_C0 == 0 && ((perf_source == -1 && tx_index_C0 < 2) || (perf_source == 0 && tx_index_C0 >= 2 && tx_index_C0 < 5 && $abstime >= source_ready && rx_phase == 0 && spacer && V(O_a) < threshold)) && V(C0_a) < threshold && input_spacer_C0) begin
+          tx_valid_C0=1; tx_phase_C0=1;
+          $display("SIM_TX t=%e channel=C0 index=%d word=%04h%04h",$abstime,tx_index_C0,stimulus_hi(0,tx_index_C0),stimulus_lo(0,tx_index_C0));
+        end
+        if (!failure && !finished && tx_phase_C1 == 0 && ((perf_source == -1 && tx_index_C1 < 2) || (perf_source == 1 && tx_index_C1 >= 2 && tx_index_C1 < 5 && $abstime >= source_ready && rx_phase == 0 && spacer && V(O_a) < threshold)) && V(C1_a) < threshold && input_spacer_C1) begin
+          tx_valid_C1=1; tx_phase_C1=1;
+          $display("SIM_TX t=%e channel=C1 index=%d word=%04h%04h",$abstime,tx_index_C1,stimulus_hi(1,tx_index_C1),stimulus_lo(1,tx_index_C1));
+        end
+        if (!failure && !finished && tx_phase_C2 == 0 && ((perf_source == -1 && tx_index_C2 < 2) || (perf_source == 2 && tx_index_C2 >= 2 && tx_index_C2 < 5 && $abstime >= source_ready && rx_phase == 0 && spacer && V(O_a) < threshold)) && V(C2_a) < threshold && input_spacer_C2) begin
+          tx_valid_C2=1; tx_phase_C2=1;
+          $display("SIM_TX t=%e channel=C2 index=%d word=%04h%04h",$abstime,tx_index_C2,stimulus_hi(2,tx_index_C2),stimulus_lo(2,tx_index_C2));
+        end
+        if (!failure && !finished && tx_phase_C3 == 0 && ((perf_source == -1 && tx_index_C3 < 2) || (perf_source == 3 && tx_index_C3 >= 2 && tx_index_C3 < 5 && $abstime >= source_ready && rx_phase == 0 && spacer && V(O_a) < threshold)) && V(C3_a) < threshold && input_spacer_C3) begin
+          tx_valid_C3=1; tx_phase_C3=1;
+          $display("SIM_TX t=%e channel=C3 index=%d word=%04h%04h",$abstime,tx_index_C3,stimulus_hi(3,tx_index_C3),stimulus_lo(3,tx_index_C3));
+        end
+        if (!failure && !finished && tx_phase_P == 0 && ((perf_source == -1 && tx_index_P < 2) || (perf_source == 4 && tx_index_P >= 2 && tx_index_P < 5 && $abstime >= source_ready && rx_phase == 0 && spacer && V(O_a) < threshold)) && V(P_a) < threshold && input_spacer_P) begin
+          tx_valid_P=1; tx_phase_P=1;
+          $display("SIM_TX t=%e channel=P index=%d word=%04h%04h",$abstime,tx_index_P,stimulus_hi(4,tx_index_P),stimulus_lo(4,tx_index_P));
+        end
+        if (!failure && !finished && tx_phase_M == 0 && ((perf_source == -1 && tx_index_M < 2) || (perf_source == 5 && tx_index_M >= 2 && tx_index_M < 5 && $abstime >= source_ready && rx_phase == 0 && spacer && V(O_a) < threshold)) && V(M_a) < threshold && input_spacer_M) begin
+          tx_valid_M=1; tx_phase_M=1;
+          $display("SIM_TX t=%e channel=M index=%d word=%04h%04h",$abstime,tx_index_M,stimulus_hi(5,tx_index_M),stimulus_lo(5,tx_index_M));
+        end
+      end
+      if (finished && (!(input_spacer_C0 && input_spacer_C1 && input_spacer_C2 && input_spacer_C3 && input_spacer_P && input_spacer_M) || !spacer || (V(C0_a) >= threshold || V(C1_a) >= threshold || V(C2_a) >= threshold || V(C3_a) >= threshold || V(P_a) >= threshold || V(M_a) >= threshold) || V(O_a) >= threshold)) begin
+        failure=1; $display("SIM_ERROR t=%e reason=nonquiescent_completion",$abstime);
+      end
+    end
+    if (finished && !failure && idle_start < 0) idle_start=$abstime+IDLE_SETTLE;
+    if (finished && !failure && !idle_started && $abstime>=idle_start) begin
+      idle_started=1;
+      $display("SIM_IDLE_BEGIN t=%e reset=%e",$abstime,V(reset));
+    end
+    if (idle_started && !failure && !idle_completed && $abstime>=idle_start+IDLE_WINDOW) begin
+      idle_completed=1;
+      $display("SIM_IDLE_END t=%e reset=%e",$abstime,V(reset));
+    end
+    if (failure && (stop_after<0 || stop_after>$abstime+TD+2*EDGE)) stop_after=$abstime+TD+2*EDGE;
+    else if (finished && stop_after<0) stop_after=$abstime+IDLE_SETTLE+IDLE_WINDOW+IDLE_MARGIN;
+    if (!reported && stop_after > 0 && $abstime >= stop_after) begin
+      reported=1;
+      if (failure) $display("SIM_FAIL t=%e reason=see_SIM_ERROR",$abstime);
+      else $display("SIM_PASS t=%e rounds=1 inputs=30 O=30",$abstime);
+      $finish(0);
+    end
+  end
+  @(timer(STOP_TIME-4*TD-4*EDGE)) begin
+    if (!finished && !failure) begin
+      failure=1;
+      $display("SIM_ERROR t=%e reason=timeout rx=%d rx_phase=%d C0=%d C1=%d C2=%d C3=%d P=%d M=%d",$abstime,rx_index,rx_phase,tx_index_C0,tx_index_C1,tx_index_C2,tx_index_C3,tx_index_P,tx_index_M);
+    end
+  end
+  V(C0_t_0) <+ transition(SUPPLY*tx_valid_C0*((stimulus_lo(0,tx_index_C0) >> 0) & 1),TD,EDGE,EDGE);
+  V(C0_f_0) <+ transition(SUPPLY*tx_valid_C0*(1-((stimulus_lo(0,tx_index_C0) >> 0) & 1)),TD,EDGE,EDGE);
+  V(C0_t_1) <+ transition(SUPPLY*tx_valid_C0*((stimulus_lo(0,tx_index_C0) >> 1) & 1),TD,EDGE,EDGE);
+  V(C0_f_1) <+ transition(SUPPLY*tx_valid_C0*(1-((stimulus_lo(0,tx_index_C0) >> 1) & 1)),TD,EDGE,EDGE);
+  V(C0_t_2) <+ transition(SUPPLY*tx_valid_C0*((stimulus_lo(0,tx_index_C0) >> 2) & 1),TD,EDGE,EDGE);
+  V(C0_f_2) <+ transition(SUPPLY*tx_valid_C0*(1-((stimulus_lo(0,tx_index_C0) >> 2) & 1)),TD,EDGE,EDGE);
+  V(C0_t_3) <+ transition(SUPPLY*tx_valid_C0*((stimulus_lo(0,tx_index_C0) >> 3) & 1),TD,EDGE,EDGE);
+  V(C0_f_3) <+ transition(SUPPLY*tx_valid_C0*(1-((stimulus_lo(0,tx_index_C0) >> 3) & 1)),TD,EDGE,EDGE);
+  V(C0_t_4) <+ transition(SUPPLY*tx_valid_C0*((stimulus_lo(0,tx_index_C0) >> 4) & 1),TD,EDGE,EDGE);
+  V(C0_f_4) <+ transition(SUPPLY*tx_valid_C0*(1-((stimulus_lo(0,tx_index_C0) >> 4) & 1)),TD,EDGE,EDGE);
+  V(C0_t_5) <+ transition(SUPPLY*tx_valid_C0*((stimulus_lo(0,tx_index_C0) >> 5) & 1),TD,EDGE,EDGE);
+  V(C0_f_5) <+ transition(SUPPLY*tx_valid_C0*(1-((stimulus_lo(0,tx_index_C0) >> 5) & 1)),TD,EDGE,EDGE);
+  V(C0_t_6) <+ transition(SUPPLY*tx_valid_C0*((stimulus_lo(0,tx_index_C0) >> 6) & 1),TD,EDGE,EDGE);
+  V(C0_f_6) <+ transition(SUPPLY*tx_valid_C0*(1-((stimulus_lo(0,tx_index_C0) >> 6) & 1)),TD,EDGE,EDGE);
+  V(C0_t_7) <+ transition(SUPPLY*tx_valid_C0*((stimulus_lo(0,tx_index_C0) >> 7) & 1),TD,EDGE,EDGE);
+  V(C0_f_7) <+ transition(SUPPLY*tx_valid_C0*(1-((stimulus_lo(0,tx_index_C0) >> 7) & 1)),TD,EDGE,EDGE);
+  V(C0_t_8) <+ transition(SUPPLY*tx_valid_C0*((stimulus_lo(0,tx_index_C0) >> 8) & 1),TD,EDGE,EDGE);
+  V(C0_f_8) <+ transition(SUPPLY*tx_valid_C0*(1-((stimulus_lo(0,tx_index_C0) >> 8) & 1)),TD,EDGE,EDGE);
+  V(C0_t_9) <+ transition(SUPPLY*tx_valid_C0*((stimulus_lo(0,tx_index_C0) >> 9) & 1),TD,EDGE,EDGE);
+  V(C0_f_9) <+ transition(SUPPLY*tx_valid_C0*(1-((stimulus_lo(0,tx_index_C0) >> 9) & 1)),TD,EDGE,EDGE);
+  V(C0_t_10) <+ transition(SUPPLY*tx_valid_C0*((stimulus_lo(0,tx_index_C0) >> 10) & 1),TD,EDGE,EDGE);
+  V(C0_f_10) <+ transition(SUPPLY*tx_valid_C0*(1-((stimulus_lo(0,tx_index_C0) >> 10) & 1)),TD,EDGE,EDGE);
+  V(C0_t_11) <+ transition(SUPPLY*tx_valid_C0*((stimulus_lo(0,tx_index_C0) >> 11) & 1),TD,EDGE,EDGE);
+  V(C0_f_11) <+ transition(SUPPLY*tx_valid_C0*(1-((stimulus_lo(0,tx_index_C0) >> 11) & 1)),TD,EDGE,EDGE);
+  V(C0_t_12) <+ transition(SUPPLY*tx_valid_C0*((stimulus_lo(0,tx_index_C0) >> 12) & 1),TD,EDGE,EDGE);
+  V(C0_f_12) <+ transition(SUPPLY*tx_valid_C0*(1-((stimulus_lo(0,tx_index_C0) >> 12) & 1)),TD,EDGE,EDGE);
+  V(C0_t_13) <+ transition(SUPPLY*tx_valid_C0*((stimulus_lo(0,tx_index_C0) >> 13) & 1),TD,EDGE,EDGE);
+  V(C0_f_13) <+ transition(SUPPLY*tx_valid_C0*(1-((stimulus_lo(0,tx_index_C0) >> 13) & 1)),TD,EDGE,EDGE);
+  V(C0_t_14) <+ transition(SUPPLY*tx_valid_C0*((stimulus_lo(0,tx_index_C0) >> 14) & 1),TD,EDGE,EDGE);
+  V(C0_f_14) <+ transition(SUPPLY*tx_valid_C0*(1-((stimulus_lo(0,tx_index_C0) >> 14) & 1)),TD,EDGE,EDGE);
+  V(C0_t_15) <+ transition(SUPPLY*tx_valid_C0*((stimulus_lo(0,tx_index_C0) >> 15) & 1),TD,EDGE,EDGE);
+  V(C0_f_15) <+ transition(SUPPLY*tx_valid_C0*(1-((stimulus_lo(0,tx_index_C0) >> 15) & 1)),TD,EDGE,EDGE);
+  V(C0_t_16) <+ transition(SUPPLY*tx_valid_C0*((stimulus_hi(0,tx_index_C0) >> 0) & 1),TD,EDGE,EDGE);
+  V(C0_f_16) <+ transition(SUPPLY*tx_valid_C0*(1-((stimulus_hi(0,tx_index_C0) >> 0) & 1)),TD,EDGE,EDGE);
+  V(C0_t_17) <+ transition(SUPPLY*tx_valid_C0*((stimulus_hi(0,tx_index_C0) >> 1) & 1),TD,EDGE,EDGE);
+  V(C0_f_17) <+ transition(SUPPLY*tx_valid_C0*(1-((stimulus_hi(0,tx_index_C0) >> 1) & 1)),TD,EDGE,EDGE);
+  V(C0_t_18) <+ transition(SUPPLY*tx_valid_C0*((stimulus_hi(0,tx_index_C0) >> 2) & 1),TD,EDGE,EDGE);
+  V(C0_f_18) <+ transition(SUPPLY*tx_valid_C0*(1-((stimulus_hi(0,tx_index_C0) >> 2) & 1)),TD,EDGE,EDGE);
+  V(C0_t_19) <+ transition(SUPPLY*tx_valid_C0*((stimulus_hi(0,tx_index_C0) >> 3) & 1),TD,EDGE,EDGE);
+  V(C0_f_19) <+ transition(SUPPLY*tx_valid_C0*(1-((stimulus_hi(0,tx_index_C0) >> 3) & 1)),TD,EDGE,EDGE);
+  V(C0_t_20) <+ transition(SUPPLY*tx_valid_C0*((stimulus_hi(0,tx_index_C0) >> 4) & 1),TD,EDGE,EDGE);
+  V(C0_f_20) <+ transition(SUPPLY*tx_valid_C0*(1-((stimulus_hi(0,tx_index_C0) >> 4) & 1)),TD,EDGE,EDGE);
+  V(C0_t_21) <+ transition(SUPPLY*tx_valid_C0*((stimulus_hi(0,tx_index_C0) >> 5) & 1),TD,EDGE,EDGE);
+  V(C0_f_21) <+ transition(SUPPLY*tx_valid_C0*(1-((stimulus_hi(0,tx_index_C0) >> 5) & 1)),TD,EDGE,EDGE);
+  V(C0_t_22) <+ transition(SUPPLY*tx_valid_C0*((stimulus_hi(0,tx_index_C0) >> 6) & 1),TD,EDGE,EDGE);
+  V(C0_f_22) <+ transition(SUPPLY*tx_valid_C0*(1-((stimulus_hi(0,tx_index_C0) >> 6) & 1)),TD,EDGE,EDGE);
+  V(C0_t_23) <+ transition(SUPPLY*tx_valid_C0*((stimulus_hi(0,tx_index_C0) >> 7) & 1),TD,EDGE,EDGE);
+  V(C0_f_23) <+ transition(SUPPLY*tx_valid_C0*(1-((stimulus_hi(0,tx_index_C0) >> 7) & 1)),TD,EDGE,EDGE);
+  V(C0_t_24) <+ transition(SUPPLY*tx_valid_C0*((stimulus_hi(0,tx_index_C0) >> 8) & 1),TD,EDGE,EDGE);
+  V(C0_f_24) <+ transition(SUPPLY*tx_valid_C0*(1-((stimulus_hi(0,tx_index_C0) >> 8) & 1)),TD,EDGE,EDGE);
+  V(C0_t_25) <+ transition(SUPPLY*tx_valid_C0*((stimulus_hi(0,tx_index_C0) >> 9) & 1),TD,EDGE,EDGE);
+  V(C0_f_25) <+ transition(SUPPLY*tx_valid_C0*(1-((stimulus_hi(0,tx_index_C0) >> 9) & 1)),TD,EDGE,EDGE);
+  V(C0_t_26) <+ transition(SUPPLY*tx_valid_C0*((stimulus_hi(0,tx_index_C0) >> 10) & 1),TD,EDGE,EDGE);
+  V(C0_f_26) <+ transition(SUPPLY*tx_valid_C0*(1-((stimulus_hi(0,tx_index_C0) >> 10) & 1)),TD,EDGE,EDGE);
+  V(C0_t_27) <+ transition(SUPPLY*tx_valid_C0*((stimulus_hi(0,tx_index_C0) >> 11) & 1),TD,EDGE,EDGE);
+  V(C0_f_27) <+ transition(SUPPLY*tx_valid_C0*(1-((stimulus_hi(0,tx_index_C0) >> 11) & 1)),TD,EDGE,EDGE);
+  V(C0_t_28) <+ transition(SUPPLY*tx_valid_C0*((stimulus_hi(0,tx_index_C0) >> 12) & 1),TD,EDGE,EDGE);
+  V(C0_f_28) <+ transition(SUPPLY*tx_valid_C0*(1-((stimulus_hi(0,tx_index_C0) >> 12) & 1)),TD,EDGE,EDGE);
+  V(C0_t_29) <+ transition(SUPPLY*tx_valid_C0*((stimulus_hi(0,tx_index_C0) >> 13) & 1),TD,EDGE,EDGE);
+  V(C0_f_29) <+ transition(SUPPLY*tx_valid_C0*(1-((stimulus_hi(0,tx_index_C0) >> 13) & 1)),TD,EDGE,EDGE);
+  V(C0_t_30) <+ transition(SUPPLY*tx_valid_C0*((stimulus_hi(0,tx_index_C0) >> 14) & 1),TD,EDGE,EDGE);
+  V(C0_f_30) <+ transition(SUPPLY*tx_valid_C0*(1-((stimulus_hi(0,tx_index_C0) >> 14) & 1)),TD,EDGE,EDGE);
+  V(C0_t_31) <+ transition(SUPPLY*tx_valid_C0*((stimulus_hi(0,tx_index_C0) >> 15) & 1),TD,EDGE,EDGE);
+  V(C0_f_31) <+ transition(SUPPLY*tx_valid_C0*(1-((stimulus_hi(0,tx_index_C0) >> 15) & 1)),TD,EDGE,EDGE);
+  V(C1_t_0) <+ transition(SUPPLY*tx_valid_C1*((stimulus_lo(1,tx_index_C1) >> 0) & 1),TD,EDGE,EDGE);
+  V(C1_f_0) <+ transition(SUPPLY*tx_valid_C1*(1-((stimulus_lo(1,tx_index_C1) >> 0) & 1)),TD,EDGE,EDGE);
+  V(C1_t_1) <+ transition(SUPPLY*tx_valid_C1*((stimulus_lo(1,tx_index_C1) >> 1) & 1),TD,EDGE,EDGE);
+  V(C1_f_1) <+ transition(SUPPLY*tx_valid_C1*(1-((stimulus_lo(1,tx_index_C1) >> 1) & 1)),TD,EDGE,EDGE);
+  V(C1_t_2) <+ transition(SUPPLY*tx_valid_C1*((stimulus_lo(1,tx_index_C1) >> 2) & 1),TD,EDGE,EDGE);
+  V(C1_f_2) <+ transition(SUPPLY*tx_valid_C1*(1-((stimulus_lo(1,tx_index_C1) >> 2) & 1)),TD,EDGE,EDGE);
+  V(C1_t_3) <+ transition(SUPPLY*tx_valid_C1*((stimulus_lo(1,tx_index_C1) >> 3) & 1),TD,EDGE,EDGE);
+  V(C1_f_3) <+ transition(SUPPLY*tx_valid_C1*(1-((stimulus_lo(1,tx_index_C1) >> 3) & 1)),TD,EDGE,EDGE);
+  V(C1_t_4) <+ transition(SUPPLY*tx_valid_C1*((stimulus_lo(1,tx_index_C1) >> 4) & 1),TD,EDGE,EDGE);
+  V(C1_f_4) <+ transition(SUPPLY*tx_valid_C1*(1-((stimulus_lo(1,tx_index_C1) >> 4) & 1)),TD,EDGE,EDGE);
+  V(C1_t_5) <+ transition(SUPPLY*tx_valid_C1*((stimulus_lo(1,tx_index_C1) >> 5) & 1),TD,EDGE,EDGE);
+  V(C1_f_5) <+ transition(SUPPLY*tx_valid_C1*(1-((stimulus_lo(1,tx_index_C1) >> 5) & 1)),TD,EDGE,EDGE);
+  V(C1_t_6) <+ transition(SUPPLY*tx_valid_C1*((stimulus_lo(1,tx_index_C1) >> 6) & 1),TD,EDGE,EDGE);
+  V(C1_f_6) <+ transition(SUPPLY*tx_valid_C1*(1-((stimulus_lo(1,tx_index_C1) >> 6) & 1)),TD,EDGE,EDGE);
+  V(C1_t_7) <+ transition(SUPPLY*tx_valid_C1*((stimulus_lo(1,tx_index_C1) >> 7) & 1),TD,EDGE,EDGE);
+  V(C1_f_7) <+ transition(SUPPLY*tx_valid_C1*(1-((stimulus_lo(1,tx_index_C1) >> 7) & 1)),TD,EDGE,EDGE);
+  V(C1_t_8) <+ transition(SUPPLY*tx_valid_C1*((stimulus_lo(1,tx_index_C1) >> 8) & 1),TD,EDGE,EDGE);
+  V(C1_f_8) <+ transition(SUPPLY*tx_valid_C1*(1-((stimulus_lo(1,tx_index_C1) >> 8) & 1)),TD,EDGE,EDGE);
+  V(C1_t_9) <+ transition(SUPPLY*tx_valid_C1*((stimulus_lo(1,tx_index_C1) >> 9) & 1),TD,EDGE,EDGE);
+  V(C1_f_9) <+ transition(SUPPLY*tx_valid_C1*(1-((stimulus_lo(1,tx_index_C1) >> 9) & 1)),TD,EDGE,EDGE);
+  V(C1_t_10) <+ transition(SUPPLY*tx_valid_C1*((stimulus_lo(1,tx_index_C1) >> 10) & 1),TD,EDGE,EDGE);
+  V(C1_f_10) <+ transition(SUPPLY*tx_valid_C1*(1-((stimulus_lo(1,tx_index_C1) >> 10) & 1)),TD,EDGE,EDGE);
+  V(C1_t_11) <+ transition(SUPPLY*tx_valid_C1*((stimulus_lo(1,tx_index_C1) >> 11) & 1),TD,EDGE,EDGE);
+  V(C1_f_11) <+ transition(SUPPLY*tx_valid_C1*(1-((stimulus_lo(1,tx_index_C1) >> 11) & 1)),TD,EDGE,EDGE);
+  V(C1_t_12) <+ transition(SUPPLY*tx_valid_C1*((stimulus_lo(1,tx_index_C1) >> 12) & 1),TD,EDGE,EDGE);
+  V(C1_f_12) <+ transition(SUPPLY*tx_valid_C1*(1-((stimulus_lo(1,tx_index_C1) >> 12) & 1)),TD,EDGE,EDGE);
+  V(C1_t_13) <+ transition(SUPPLY*tx_valid_C1*((stimulus_lo(1,tx_index_C1) >> 13) & 1),TD,EDGE,EDGE);
+  V(C1_f_13) <+ transition(SUPPLY*tx_valid_C1*(1-((stimulus_lo(1,tx_index_C1) >> 13) & 1)),TD,EDGE,EDGE);
+  V(C1_t_14) <+ transition(SUPPLY*tx_valid_C1*((stimulus_lo(1,tx_index_C1) >> 14) & 1),TD,EDGE,EDGE);
+  V(C1_f_14) <+ transition(SUPPLY*tx_valid_C1*(1-((stimulus_lo(1,tx_index_C1) >> 14) & 1)),TD,EDGE,EDGE);
+  V(C1_t_15) <+ transition(SUPPLY*tx_valid_C1*((stimulus_lo(1,tx_index_C1) >> 15) & 1),TD,EDGE,EDGE);
+  V(C1_f_15) <+ transition(SUPPLY*tx_valid_C1*(1-((stimulus_lo(1,tx_index_C1) >> 15) & 1)),TD,EDGE,EDGE);
+  V(C1_t_16) <+ transition(SUPPLY*tx_valid_C1*((stimulus_hi(1,tx_index_C1) >> 0) & 1),TD,EDGE,EDGE);
+  V(C1_f_16) <+ transition(SUPPLY*tx_valid_C1*(1-((stimulus_hi(1,tx_index_C1) >> 0) & 1)),TD,EDGE,EDGE);
+  V(C1_t_17) <+ transition(SUPPLY*tx_valid_C1*((stimulus_hi(1,tx_index_C1) >> 1) & 1),TD,EDGE,EDGE);
+  V(C1_f_17) <+ transition(SUPPLY*tx_valid_C1*(1-((stimulus_hi(1,tx_index_C1) >> 1) & 1)),TD,EDGE,EDGE);
+  V(C1_t_18) <+ transition(SUPPLY*tx_valid_C1*((stimulus_hi(1,tx_index_C1) >> 2) & 1),TD,EDGE,EDGE);
+  V(C1_f_18) <+ transition(SUPPLY*tx_valid_C1*(1-((stimulus_hi(1,tx_index_C1) >> 2) & 1)),TD,EDGE,EDGE);
+  V(C1_t_19) <+ transition(SUPPLY*tx_valid_C1*((stimulus_hi(1,tx_index_C1) >> 3) & 1),TD,EDGE,EDGE);
+  V(C1_f_19) <+ transition(SUPPLY*tx_valid_C1*(1-((stimulus_hi(1,tx_index_C1) >> 3) & 1)),TD,EDGE,EDGE);
+  V(C1_t_20) <+ transition(SUPPLY*tx_valid_C1*((stimulus_hi(1,tx_index_C1) >> 4) & 1),TD,EDGE,EDGE);
+  V(C1_f_20) <+ transition(SUPPLY*tx_valid_C1*(1-((stimulus_hi(1,tx_index_C1) >> 4) & 1)),TD,EDGE,EDGE);
+  V(C1_t_21) <+ transition(SUPPLY*tx_valid_C1*((stimulus_hi(1,tx_index_C1) >> 5) & 1),TD,EDGE,EDGE);
+  V(C1_f_21) <+ transition(SUPPLY*tx_valid_C1*(1-((stimulus_hi(1,tx_index_C1) >> 5) & 1)),TD,EDGE,EDGE);
+  V(C1_t_22) <+ transition(SUPPLY*tx_valid_C1*((stimulus_hi(1,tx_index_C1) >> 6) & 1),TD,EDGE,EDGE);
+  V(C1_f_22) <+ transition(SUPPLY*tx_valid_C1*(1-((stimulus_hi(1,tx_index_C1) >> 6) & 1)),TD,EDGE,EDGE);
+  V(C1_t_23) <+ transition(SUPPLY*tx_valid_C1*((stimulus_hi(1,tx_index_C1) >> 7) & 1),TD,EDGE,EDGE);
+  V(C1_f_23) <+ transition(SUPPLY*tx_valid_C1*(1-((stimulus_hi(1,tx_index_C1) >> 7) & 1)),TD,EDGE,EDGE);
+  V(C1_t_24) <+ transition(SUPPLY*tx_valid_C1*((stimulus_hi(1,tx_index_C1) >> 8) & 1),TD,EDGE,EDGE);
+  V(C1_f_24) <+ transition(SUPPLY*tx_valid_C1*(1-((stimulus_hi(1,tx_index_C1) >> 8) & 1)),TD,EDGE,EDGE);
+  V(C1_t_25) <+ transition(SUPPLY*tx_valid_C1*((stimulus_hi(1,tx_index_C1) >> 9) & 1),TD,EDGE,EDGE);
+  V(C1_f_25) <+ transition(SUPPLY*tx_valid_C1*(1-((stimulus_hi(1,tx_index_C1) >> 9) & 1)),TD,EDGE,EDGE);
+  V(C1_t_26) <+ transition(SUPPLY*tx_valid_C1*((stimulus_hi(1,tx_index_C1) >> 10) & 1),TD,EDGE,EDGE);
+  V(C1_f_26) <+ transition(SUPPLY*tx_valid_C1*(1-((stimulus_hi(1,tx_index_C1) >> 10) & 1)),TD,EDGE,EDGE);
+  V(C1_t_27) <+ transition(SUPPLY*tx_valid_C1*((stimulus_hi(1,tx_index_C1) >> 11) & 1),TD,EDGE,EDGE);
+  V(C1_f_27) <+ transition(SUPPLY*tx_valid_C1*(1-((stimulus_hi(1,tx_index_C1) >> 11) & 1)),TD,EDGE,EDGE);
+  V(C1_t_28) <+ transition(SUPPLY*tx_valid_C1*((stimulus_hi(1,tx_index_C1) >> 12) & 1),TD,EDGE,EDGE);
+  V(C1_f_28) <+ transition(SUPPLY*tx_valid_C1*(1-((stimulus_hi(1,tx_index_C1) >> 12) & 1)),TD,EDGE,EDGE);
+  V(C1_t_29) <+ transition(SUPPLY*tx_valid_C1*((stimulus_hi(1,tx_index_C1) >> 13) & 1),TD,EDGE,EDGE);
+  V(C1_f_29) <+ transition(SUPPLY*tx_valid_C1*(1-((stimulus_hi(1,tx_index_C1) >> 13) & 1)),TD,EDGE,EDGE);
+  V(C1_t_30) <+ transition(SUPPLY*tx_valid_C1*((stimulus_hi(1,tx_index_C1) >> 14) & 1),TD,EDGE,EDGE);
+  V(C1_f_30) <+ transition(SUPPLY*tx_valid_C1*(1-((stimulus_hi(1,tx_index_C1) >> 14) & 1)),TD,EDGE,EDGE);
+  V(C1_t_31) <+ transition(SUPPLY*tx_valid_C1*((stimulus_hi(1,tx_index_C1) >> 15) & 1),TD,EDGE,EDGE);
+  V(C1_f_31) <+ transition(SUPPLY*tx_valid_C1*(1-((stimulus_hi(1,tx_index_C1) >> 15) & 1)),TD,EDGE,EDGE);
+  V(C2_t_0) <+ transition(SUPPLY*tx_valid_C2*((stimulus_lo(2,tx_index_C2) >> 0) & 1),TD,EDGE,EDGE);
+  V(C2_f_0) <+ transition(SUPPLY*tx_valid_C2*(1-((stimulus_lo(2,tx_index_C2) >> 0) & 1)),TD,EDGE,EDGE);
+  V(C2_t_1) <+ transition(SUPPLY*tx_valid_C2*((stimulus_lo(2,tx_index_C2) >> 1) & 1),TD,EDGE,EDGE);
+  V(C2_f_1) <+ transition(SUPPLY*tx_valid_C2*(1-((stimulus_lo(2,tx_index_C2) >> 1) & 1)),TD,EDGE,EDGE);
+  V(C2_t_2) <+ transition(SUPPLY*tx_valid_C2*((stimulus_lo(2,tx_index_C2) >> 2) & 1),TD,EDGE,EDGE);
+  V(C2_f_2) <+ transition(SUPPLY*tx_valid_C2*(1-((stimulus_lo(2,tx_index_C2) >> 2) & 1)),TD,EDGE,EDGE);
+  V(C2_t_3) <+ transition(SUPPLY*tx_valid_C2*((stimulus_lo(2,tx_index_C2) >> 3) & 1),TD,EDGE,EDGE);
+  V(C2_f_3) <+ transition(SUPPLY*tx_valid_C2*(1-((stimulus_lo(2,tx_index_C2) >> 3) & 1)),TD,EDGE,EDGE);
+  V(C2_t_4) <+ transition(SUPPLY*tx_valid_C2*((stimulus_lo(2,tx_index_C2) >> 4) & 1),TD,EDGE,EDGE);
+  V(C2_f_4) <+ transition(SUPPLY*tx_valid_C2*(1-((stimulus_lo(2,tx_index_C2) >> 4) & 1)),TD,EDGE,EDGE);
+  V(C2_t_5) <+ transition(SUPPLY*tx_valid_C2*((stimulus_lo(2,tx_index_C2) >> 5) & 1),TD,EDGE,EDGE);
+  V(C2_f_5) <+ transition(SUPPLY*tx_valid_C2*(1-((stimulus_lo(2,tx_index_C2) >> 5) & 1)),TD,EDGE,EDGE);
+  V(C2_t_6) <+ transition(SUPPLY*tx_valid_C2*((stimulus_lo(2,tx_index_C2) >> 6) & 1),TD,EDGE,EDGE);
+  V(C2_f_6) <+ transition(SUPPLY*tx_valid_C2*(1-((stimulus_lo(2,tx_index_C2) >> 6) & 1)),TD,EDGE,EDGE);
+  V(C2_t_7) <+ transition(SUPPLY*tx_valid_C2*((stimulus_lo(2,tx_index_C2) >> 7) & 1),TD,EDGE,EDGE);
+  V(C2_f_7) <+ transition(SUPPLY*tx_valid_C2*(1-((stimulus_lo(2,tx_index_C2) >> 7) & 1)),TD,EDGE,EDGE);
+  V(C2_t_8) <+ transition(SUPPLY*tx_valid_C2*((stimulus_lo(2,tx_index_C2) >> 8) & 1),TD,EDGE,EDGE);
+  V(C2_f_8) <+ transition(SUPPLY*tx_valid_C2*(1-((stimulus_lo(2,tx_index_C2) >> 8) & 1)),TD,EDGE,EDGE);
+  V(C2_t_9) <+ transition(SUPPLY*tx_valid_C2*((stimulus_lo(2,tx_index_C2) >> 9) & 1),TD,EDGE,EDGE);
+  V(C2_f_9) <+ transition(SUPPLY*tx_valid_C2*(1-((stimulus_lo(2,tx_index_C2) >> 9) & 1)),TD,EDGE,EDGE);
+  V(C2_t_10) <+ transition(SUPPLY*tx_valid_C2*((stimulus_lo(2,tx_index_C2) >> 10) & 1),TD,EDGE,EDGE);
+  V(C2_f_10) <+ transition(SUPPLY*tx_valid_C2*(1-((stimulus_lo(2,tx_index_C2) >> 10) & 1)),TD,EDGE,EDGE);
+  V(C2_t_11) <+ transition(SUPPLY*tx_valid_C2*((stimulus_lo(2,tx_index_C2) >> 11) & 1),TD,EDGE,EDGE);
+  V(C2_f_11) <+ transition(SUPPLY*tx_valid_C2*(1-((stimulus_lo(2,tx_index_C2) >> 11) & 1)),TD,EDGE,EDGE);
+  V(C2_t_12) <+ transition(SUPPLY*tx_valid_C2*((stimulus_lo(2,tx_index_C2) >> 12) & 1),TD,EDGE,EDGE);
+  V(C2_f_12) <+ transition(SUPPLY*tx_valid_C2*(1-((stimulus_lo(2,tx_index_C2) >> 12) & 1)),TD,EDGE,EDGE);
+  V(C2_t_13) <+ transition(SUPPLY*tx_valid_C2*((stimulus_lo(2,tx_index_C2) >> 13) & 1),TD,EDGE,EDGE);
+  V(C2_f_13) <+ transition(SUPPLY*tx_valid_C2*(1-((stimulus_lo(2,tx_index_C2) >> 13) & 1)),TD,EDGE,EDGE);
+  V(C2_t_14) <+ transition(SUPPLY*tx_valid_C2*((stimulus_lo(2,tx_index_C2) >> 14) & 1),TD,EDGE,EDGE);
+  V(C2_f_14) <+ transition(SUPPLY*tx_valid_C2*(1-((stimulus_lo(2,tx_index_C2) >> 14) & 1)),TD,EDGE,EDGE);
+  V(C2_t_15) <+ transition(SUPPLY*tx_valid_C2*((stimulus_lo(2,tx_index_C2) >> 15) & 1),TD,EDGE,EDGE);
+  V(C2_f_15) <+ transition(SUPPLY*tx_valid_C2*(1-((stimulus_lo(2,tx_index_C2) >> 15) & 1)),TD,EDGE,EDGE);
+  V(C2_t_16) <+ transition(SUPPLY*tx_valid_C2*((stimulus_hi(2,tx_index_C2) >> 0) & 1),TD,EDGE,EDGE);
+  V(C2_f_16) <+ transition(SUPPLY*tx_valid_C2*(1-((stimulus_hi(2,tx_index_C2) >> 0) & 1)),TD,EDGE,EDGE);
+  V(C2_t_17) <+ transition(SUPPLY*tx_valid_C2*((stimulus_hi(2,tx_index_C2) >> 1) & 1),TD,EDGE,EDGE);
+  V(C2_f_17) <+ transition(SUPPLY*tx_valid_C2*(1-((stimulus_hi(2,tx_index_C2) >> 1) & 1)),TD,EDGE,EDGE);
+  V(C2_t_18) <+ transition(SUPPLY*tx_valid_C2*((stimulus_hi(2,tx_index_C2) >> 2) & 1),TD,EDGE,EDGE);
+  V(C2_f_18) <+ transition(SUPPLY*tx_valid_C2*(1-((stimulus_hi(2,tx_index_C2) >> 2) & 1)),TD,EDGE,EDGE);
+  V(C2_t_19) <+ transition(SUPPLY*tx_valid_C2*((stimulus_hi(2,tx_index_C2) >> 3) & 1),TD,EDGE,EDGE);
+  V(C2_f_19) <+ transition(SUPPLY*tx_valid_C2*(1-((stimulus_hi(2,tx_index_C2) >> 3) & 1)),TD,EDGE,EDGE);
+  V(C2_t_20) <+ transition(SUPPLY*tx_valid_C2*((stimulus_hi(2,tx_index_C2) >> 4) & 1),TD,EDGE,EDGE);
+  V(C2_f_20) <+ transition(SUPPLY*tx_valid_C2*(1-((stimulus_hi(2,tx_index_C2) >> 4) & 1)),TD,EDGE,EDGE);
+  V(C2_t_21) <+ transition(SUPPLY*tx_valid_C2*((stimulus_hi(2,tx_index_C2) >> 5) & 1),TD,EDGE,EDGE);
+  V(C2_f_21) <+ transition(SUPPLY*tx_valid_C2*(1-((stimulus_hi(2,tx_index_C2) >> 5) & 1)),TD,EDGE,EDGE);
+  V(C2_t_22) <+ transition(SUPPLY*tx_valid_C2*((stimulus_hi(2,tx_index_C2) >> 6) & 1),TD,EDGE,EDGE);
+  V(C2_f_22) <+ transition(SUPPLY*tx_valid_C2*(1-((stimulus_hi(2,tx_index_C2) >> 6) & 1)),TD,EDGE,EDGE);
+  V(C2_t_23) <+ transition(SUPPLY*tx_valid_C2*((stimulus_hi(2,tx_index_C2) >> 7) & 1),TD,EDGE,EDGE);
+  V(C2_f_23) <+ transition(SUPPLY*tx_valid_C2*(1-((stimulus_hi(2,tx_index_C2) >> 7) & 1)),TD,EDGE,EDGE);
+  V(C2_t_24) <+ transition(SUPPLY*tx_valid_C2*((stimulus_hi(2,tx_index_C2) >> 8) & 1),TD,EDGE,EDGE);
+  V(C2_f_24) <+ transition(SUPPLY*tx_valid_C2*(1-((stimulus_hi(2,tx_index_C2) >> 8) & 1)),TD,EDGE,EDGE);
+  V(C2_t_25) <+ transition(SUPPLY*tx_valid_C2*((stimulus_hi(2,tx_index_C2) >> 9) & 1),TD,EDGE,EDGE);
+  V(C2_f_25) <+ transition(SUPPLY*tx_valid_C2*(1-((stimulus_hi(2,tx_index_C2) >> 9) & 1)),TD,EDGE,EDGE);
+  V(C2_t_26) <+ transition(SUPPLY*tx_valid_C2*((stimulus_hi(2,tx_index_C2) >> 10) & 1),TD,EDGE,EDGE);
+  V(C2_f_26) <+ transition(SUPPLY*tx_valid_C2*(1-((stimulus_hi(2,tx_index_C2) >> 10) & 1)),TD,EDGE,EDGE);
+  V(C2_t_27) <+ transition(SUPPLY*tx_valid_C2*((stimulus_hi(2,tx_index_C2) >> 11) & 1),TD,EDGE,EDGE);
+  V(C2_f_27) <+ transition(SUPPLY*tx_valid_C2*(1-((stimulus_hi(2,tx_index_C2) >> 11) & 1)),TD,EDGE,EDGE);
+  V(C2_t_28) <+ transition(SUPPLY*tx_valid_C2*((stimulus_hi(2,tx_index_C2) >> 12) & 1),TD,EDGE,EDGE);
+  V(C2_f_28) <+ transition(SUPPLY*tx_valid_C2*(1-((stimulus_hi(2,tx_index_C2) >> 12) & 1)),TD,EDGE,EDGE);
+  V(C2_t_29) <+ transition(SUPPLY*tx_valid_C2*((stimulus_hi(2,tx_index_C2) >> 13) & 1),TD,EDGE,EDGE);
+  V(C2_f_29) <+ transition(SUPPLY*tx_valid_C2*(1-((stimulus_hi(2,tx_index_C2) >> 13) & 1)),TD,EDGE,EDGE);
+  V(C2_t_30) <+ transition(SUPPLY*tx_valid_C2*((stimulus_hi(2,tx_index_C2) >> 14) & 1),TD,EDGE,EDGE);
+  V(C2_f_30) <+ transition(SUPPLY*tx_valid_C2*(1-((stimulus_hi(2,tx_index_C2) >> 14) & 1)),TD,EDGE,EDGE);
+  V(C2_t_31) <+ transition(SUPPLY*tx_valid_C2*((stimulus_hi(2,tx_index_C2) >> 15) & 1),TD,EDGE,EDGE);
+  V(C2_f_31) <+ transition(SUPPLY*tx_valid_C2*(1-((stimulus_hi(2,tx_index_C2) >> 15) & 1)),TD,EDGE,EDGE);
+  V(C3_t_0) <+ transition(SUPPLY*tx_valid_C3*((stimulus_lo(3,tx_index_C3) >> 0) & 1),TD,EDGE,EDGE);
+  V(C3_f_0) <+ transition(SUPPLY*tx_valid_C3*(1-((stimulus_lo(3,tx_index_C3) >> 0) & 1)),TD,EDGE,EDGE);
+  V(C3_t_1) <+ transition(SUPPLY*tx_valid_C3*((stimulus_lo(3,tx_index_C3) >> 1) & 1),TD,EDGE,EDGE);
+  V(C3_f_1) <+ transition(SUPPLY*tx_valid_C3*(1-((stimulus_lo(3,tx_index_C3) >> 1) & 1)),TD,EDGE,EDGE);
+  V(C3_t_2) <+ transition(SUPPLY*tx_valid_C3*((stimulus_lo(3,tx_index_C3) >> 2) & 1),TD,EDGE,EDGE);
+  V(C3_f_2) <+ transition(SUPPLY*tx_valid_C3*(1-((stimulus_lo(3,tx_index_C3) >> 2) & 1)),TD,EDGE,EDGE);
+  V(C3_t_3) <+ transition(SUPPLY*tx_valid_C3*((stimulus_lo(3,tx_index_C3) >> 3) & 1),TD,EDGE,EDGE);
+  V(C3_f_3) <+ transition(SUPPLY*tx_valid_C3*(1-((stimulus_lo(3,tx_index_C3) >> 3) & 1)),TD,EDGE,EDGE);
+  V(C3_t_4) <+ transition(SUPPLY*tx_valid_C3*((stimulus_lo(3,tx_index_C3) >> 4) & 1),TD,EDGE,EDGE);
+  V(C3_f_4) <+ transition(SUPPLY*tx_valid_C3*(1-((stimulus_lo(3,tx_index_C3) >> 4) & 1)),TD,EDGE,EDGE);
+  V(C3_t_5) <+ transition(SUPPLY*tx_valid_C3*((stimulus_lo(3,tx_index_C3) >> 5) & 1),TD,EDGE,EDGE);
+  V(C3_f_5) <+ transition(SUPPLY*tx_valid_C3*(1-((stimulus_lo(3,tx_index_C3) >> 5) & 1)),TD,EDGE,EDGE);
+  V(C3_t_6) <+ transition(SUPPLY*tx_valid_C3*((stimulus_lo(3,tx_index_C3) >> 6) & 1),TD,EDGE,EDGE);
+  V(C3_f_6) <+ transition(SUPPLY*tx_valid_C3*(1-((stimulus_lo(3,tx_index_C3) >> 6) & 1)),TD,EDGE,EDGE);
+  V(C3_t_7) <+ transition(SUPPLY*tx_valid_C3*((stimulus_lo(3,tx_index_C3) >> 7) & 1),TD,EDGE,EDGE);
+  V(C3_f_7) <+ transition(SUPPLY*tx_valid_C3*(1-((stimulus_lo(3,tx_index_C3) >> 7) & 1)),TD,EDGE,EDGE);
+  V(C3_t_8) <+ transition(SUPPLY*tx_valid_C3*((stimulus_lo(3,tx_index_C3) >> 8) & 1),TD,EDGE,EDGE);
+  V(C3_f_8) <+ transition(SUPPLY*tx_valid_C3*(1-((stimulus_lo(3,tx_index_C3) >> 8) & 1)),TD,EDGE,EDGE);
+  V(C3_t_9) <+ transition(SUPPLY*tx_valid_C3*((stimulus_lo(3,tx_index_C3) >> 9) & 1),TD,EDGE,EDGE);
+  V(C3_f_9) <+ transition(SUPPLY*tx_valid_C3*(1-((stimulus_lo(3,tx_index_C3) >> 9) & 1)),TD,EDGE,EDGE);
+  V(C3_t_10) <+ transition(SUPPLY*tx_valid_C3*((stimulus_lo(3,tx_index_C3) >> 10) & 1),TD,EDGE,EDGE);
+  V(C3_f_10) <+ transition(SUPPLY*tx_valid_C3*(1-((stimulus_lo(3,tx_index_C3) >> 10) & 1)),TD,EDGE,EDGE);
+  V(C3_t_11) <+ transition(SUPPLY*tx_valid_C3*((stimulus_lo(3,tx_index_C3) >> 11) & 1),TD,EDGE,EDGE);
+  V(C3_f_11) <+ transition(SUPPLY*tx_valid_C3*(1-((stimulus_lo(3,tx_index_C3) >> 11) & 1)),TD,EDGE,EDGE);
+  V(C3_t_12) <+ transition(SUPPLY*tx_valid_C3*((stimulus_lo(3,tx_index_C3) >> 12) & 1),TD,EDGE,EDGE);
+  V(C3_f_12) <+ transition(SUPPLY*tx_valid_C3*(1-((stimulus_lo(3,tx_index_C3) >> 12) & 1)),TD,EDGE,EDGE);
+  V(C3_t_13) <+ transition(SUPPLY*tx_valid_C3*((stimulus_lo(3,tx_index_C3) >> 13) & 1),TD,EDGE,EDGE);
+  V(C3_f_13) <+ transition(SUPPLY*tx_valid_C3*(1-((stimulus_lo(3,tx_index_C3) >> 13) & 1)),TD,EDGE,EDGE);
+  V(C3_t_14) <+ transition(SUPPLY*tx_valid_C3*((stimulus_lo(3,tx_index_C3) >> 14) & 1),TD,EDGE,EDGE);
+  V(C3_f_14) <+ transition(SUPPLY*tx_valid_C3*(1-((stimulus_lo(3,tx_index_C3) >> 14) & 1)),TD,EDGE,EDGE);
+  V(C3_t_15) <+ transition(SUPPLY*tx_valid_C3*((stimulus_lo(3,tx_index_C3) >> 15) & 1),TD,EDGE,EDGE);
+  V(C3_f_15) <+ transition(SUPPLY*tx_valid_C3*(1-((stimulus_lo(3,tx_index_C3) >> 15) & 1)),TD,EDGE,EDGE);
+  V(C3_t_16) <+ transition(SUPPLY*tx_valid_C3*((stimulus_hi(3,tx_index_C3) >> 0) & 1),TD,EDGE,EDGE);
+  V(C3_f_16) <+ transition(SUPPLY*tx_valid_C3*(1-((stimulus_hi(3,tx_index_C3) >> 0) & 1)),TD,EDGE,EDGE);
+  V(C3_t_17) <+ transition(SUPPLY*tx_valid_C3*((stimulus_hi(3,tx_index_C3) >> 1) & 1),TD,EDGE,EDGE);
+  V(C3_f_17) <+ transition(SUPPLY*tx_valid_C3*(1-((stimulus_hi(3,tx_index_C3) >> 1) & 1)),TD,EDGE,EDGE);
+  V(C3_t_18) <+ transition(SUPPLY*tx_valid_C3*((stimulus_hi(3,tx_index_C3) >> 2) & 1),TD,EDGE,EDGE);
+  V(C3_f_18) <+ transition(SUPPLY*tx_valid_C3*(1-((stimulus_hi(3,tx_index_C3) >> 2) & 1)),TD,EDGE,EDGE);
+  V(C3_t_19) <+ transition(SUPPLY*tx_valid_C3*((stimulus_hi(3,tx_index_C3) >> 3) & 1),TD,EDGE,EDGE);
+  V(C3_f_19) <+ transition(SUPPLY*tx_valid_C3*(1-((stimulus_hi(3,tx_index_C3) >> 3) & 1)),TD,EDGE,EDGE);
+  V(C3_t_20) <+ transition(SUPPLY*tx_valid_C3*((stimulus_hi(3,tx_index_C3) >> 4) & 1),TD,EDGE,EDGE);
+  V(C3_f_20) <+ transition(SUPPLY*tx_valid_C3*(1-((stimulus_hi(3,tx_index_C3) >> 4) & 1)),TD,EDGE,EDGE);
+  V(C3_t_21) <+ transition(SUPPLY*tx_valid_C3*((stimulus_hi(3,tx_index_C3) >> 5) & 1),TD,EDGE,EDGE);
+  V(C3_f_21) <+ transition(SUPPLY*tx_valid_C3*(1-((stimulus_hi(3,tx_index_C3) >> 5) & 1)),TD,EDGE,EDGE);
+  V(C3_t_22) <+ transition(SUPPLY*tx_valid_C3*((stimulus_hi(3,tx_index_C3) >> 6) & 1),TD,EDGE,EDGE);
+  V(C3_f_22) <+ transition(SUPPLY*tx_valid_C3*(1-((stimulus_hi(3,tx_index_C3) >> 6) & 1)),TD,EDGE,EDGE);
+  V(C3_t_23) <+ transition(SUPPLY*tx_valid_C3*((stimulus_hi(3,tx_index_C3) >> 7) & 1),TD,EDGE,EDGE);
+  V(C3_f_23) <+ transition(SUPPLY*tx_valid_C3*(1-((stimulus_hi(3,tx_index_C3) >> 7) & 1)),TD,EDGE,EDGE);
+  V(C3_t_24) <+ transition(SUPPLY*tx_valid_C3*((stimulus_hi(3,tx_index_C3) >> 8) & 1),TD,EDGE,EDGE);
+  V(C3_f_24) <+ transition(SUPPLY*tx_valid_C3*(1-((stimulus_hi(3,tx_index_C3) >> 8) & 1)),TD,EDGE,EDGE);
+  V(C3_t_25) <+ transition(SUPPLY*tx_valid_C3*((stimulus_hi(3,tx_index_C3) >> 9) & 1),TD,EDGE,EDGE);
+  V(C3_f_25) <+ transition(SUPPLY*tx_valid_C3*(1-((stimulus_hi(3,tx_index_C3) >> 9) & 1)),TD,EDGE,EDGE);
+  V(C3_t_26) <+ transition(SUPPLY*tx_valid_C3*((stimulus_hi(3,tx_index_C3) >> 10) & 1),TD,EDGE,EDGE);
+  V(C3_f_26) <+ transition(SUPPLY*tx_valid_C3*(1-((stimulus_hi(3,tx_index_C3) >> 10) & 1)),TD,EDGE,EDGE);
+  V(C3_t_27) <+ transition(SUPPLY*tx_valid_C3*((stimulus_hi(3,tx_index_C3) >> 11) & 1),TD,EDGE,EDGE);
+  V(C3_f_27) <+ transition(SUPPLY*tx_valid_C3*(1-((stimulus_hi(3,tx_index_C3) >> 11) & 1)),TD,EDGE,EDGE);
+  V(C3_t_28) <+ transition(SUPPLY*tx_valid_C3*((stimulus_hi(3,tx_index_C3) >> 12) & 1),TD,EDGE,EDGE);
+  V(C3_f_28) <+ transition(SUPPLY*tx_valid_C3*(1-((stimulus_hi(3,tx_index_C3) >> 12) & 1)),TD,EDGE,EDGE);
+  V(C3_t_29) <+ transition(SUPPLY*tx_valid_C3*((stimulus_hi(3,tx_index_C3) >> 13) & 1),TD,EDGE,EDGE);
+  V(C3_f_29) <+ transition(SUPPLY*tx_valid_C3*(1-((stimulus_hi(3,tx_index_C3) >> 13) & 1)),TD,EDGE,EDGE);
+  V(C3_t_30) <+ transition(SUPPLY*tx_valid_C3*((stimulus_hi(3,tx_index_C3) >> 14) & 1),TD,EDGE,EDGE);
+  V(C3_f_30) <+ transition(SUPPLY*tx_valid_C3*(1-((stimulus_hi(3,tx_index_C3) >> 14) & 1)),TD,EDGE,EDGE);
+  V(C3_t_31) <+ transition(SUPPLY*tx_valid_C3*((stimulus_hi(3,tx_index_C3) >> 15) & 1),TD,EDGE,EDGE);
+  V(C3_f_31) <+ transition(SUPPLY*tx_valid_C3*(1-((stimulus_hi(3,tx_index_C3) >> 15) & 1)),TD,EDGE,EDGE);
+  V(P_t_0) <+ transition(SUPPLY*tx_valid_P*((stimulus_lo(4,tx_index_P) >> 0) & 1),TD,EDGE,EDGE);
+  V(P_f_0) <+ transition(SUPPLY*tx_valid_P*(1-((stimulus_lo(4,tx_index_P) >> 0) & 1)),TD,EDGE,EDGE);
+  V(P_t_1) <+ transition(SUPPLY*tx_valid_P*((stimulus_lo(4,tx_index_P) >> 1) & 1),TD,EDGE,EDGE);
+  V(P_f_1) <+ transition(SUPPLY*tx_valid_P*(1-((stimulus_lo(4,tx_index_P) >> 1) & 1)),TD,EDGE,EDGE);
+  V(P_t_2) <+ transition(SUPPLY*tx_valid_P*((stimulus_lo(4,tx_index_P) >> 2) & 1),TD,EDGE,EDGE);
+  V(P_f_2) <+ transition(SUPPLY*tx_valid_P*(1-((stimulus_lo(4,tx_index_P) >> 2) & 1)),TD,EDGE,EDGE);
+  V(P_t_3) <+ transition(SUPPLY*tx_valid_P*((stimulus_lo(4,tx_index_P) >> 3) & 1),TD,EDGE,EDGE);
+  V(P_f_3) <+ transition(SUPPLY*tx_valid_P*(1-((stimulus_lo(4,tx_index_P) >> 3) & 1)),TD,EDGE,EDGE);
+  V(P_t_4) <+ transition(SUPPLY*tx_valid_P*((stimulus_lo(4,tx_index_P) >> 4) & 1),TD,EDGE,EDGE);
+  V(P_f_4) <+ transition(SUPPLY*tx_valid_P*(1-((stimulus_lo(4,tx_index_P) >> 4) & 1)),TD,EDGE,EDGE);
+  V(P_t_5) <+ transition(SUPPLY*tx_valid_P*((stimulus_lo(4,tx_index_P) >> 5) & 1),TD,EDGE,EDGE);
+  V(P_f_5) <+ transition(SUPPLY*tx_valid_P*(1-((stimulus_lo(4,tx_index_P) >> 5) & 1)),TD,EDGE,EDGE);
+  V(P_t_6) <+ transition(SUPPLY*tx_valid_P*((stimulus_lo(4,tx_index_P) >> 6) & 1),TD,EDGE,EDGE);
+  V(P_f_6) <+ transition(SUPPLY*tx_valid_P*(1-((stimulus_lo(4,tx_index_P) >> 6) & 1)),TD,EDGE,EDGE);
+  V(P_t_7) <+ transition(SUPPLY*tx_valid_P*((stimulus_lo(4,tx_index_P) >> 7) & 1),TD,EDGE,EDGE);
+  V(P_f_7) <+ transition(SUPPLY*tx_valid_P*(1-((stimulus_lo(4,tx_index_P) >> 7) & 1)),TD,EDGE,EDGE);
+  V(P_t_8) <+ transition(SUPPLY*tx_valid_P*((stimulus_lo(4,tx_index_P) >> 8) & 1),TD,EDGE,EDGE);
+  V(P_f_8) <+ transition(SUPPLY*tx_valid_P*(1-((stimulus_lo(4,tx_index_P) >> 8) & 1)),TD,EDGE,EDGE);
+  V(P_t_9) <+ transition(SUPPLY*tx_valid_P*((stimulus_lo(4,tx_index_P) >> 9) & 1),TD,EDGE,EDGE);
+  V(P_f_9) <+ transition(SUPPLY*tx_valid_P*(1-((stimulus_lo(4,tx_index_P) >> 9) & 1)),TD,EDGE,EDGE);
+  V(P_t_10) <+ transition(SUPPLY*tx_valid_P*((stimulus_lo(4,tx_index_P) >> 10) & 1),TD,EDGE,EDGE);
+  V(P_f_10) <+ transition(SUPPLY*tx_valid_P*(1-((stimulus_lo(4,tx_index_P) >> 10) & 1)),TD,EDGE,EDGE);
+  V(P_t_11) <+ transition(SUPPLY*tx_valid_P*((stimulus_lo(4,tx_index_P) >> 11) & 1),TD,EDGE,EDGE);
+  V(P_f_11) <+ transition(SUPPLY*tx_valid_P*(1-((stimulus_lo(4,tx_index_P) >> 11) & 1)),TD,EDGE,EDGE);
+  V(P_t_12) <+ transition(SUPPLY*tx_valid_P*((stimulus_lo(4,tx_index_P) >> 12) & 1),TD,EDGE,EDGE);
+  V(P_f_12) <+ transition(SUPPLY*tx_valid_P*(1-((stimulus_lo(4,tx_index_P) >> 12) & 1)),TD,EDGE,EDGE);
+  V(P_t_13) <+ transition(SUPPLY*tx_valid_P*((stimulus_lo(4,tx_index_P) >> 13) & 1),TD,EDGE,EDGE);
+  V(P_f_13) <+ transition(SUPPLY*tx_valid_P*(1-((stimulus_lo(4,tx_index_P) >> 13) & 1)),TD,EDGE,EDGE);
+  V(P_t_14) <+ transition(SUPPLY*tx_valid_P*((stimulus_lo(4,tx_index_P) >> 14) & 1),TD,EDGE,EDGE);
+  V(P_f_14) <+ transition(SUPPLY*tx_valid_P*(1-((stimulus_lo(4,tx_index_P) >> 14) & 1)),TD,EDGE,EDGE);
+  V(P_t_15) <+ transition(SUPPLY*tx_valid_P*((stimulus_lo(4,tx_index_P) >> 15) & 1),TD,EDGE,EDGE);
+  V(P_f_15) <+ transition(SUPPLY*tx_valid_P*(1-((stimulus_lo(4,tx_index_P) >> 15) & 1)),TD,EDGE,EDGE);
+  V(P_t_16) <+ transition(SUPPLY*tx_valid_P*((stimulus_hi(4,tx_index_P) >> 0) & 1),TD,EDGE,EDGE);
+  V(P_f_16) <+ transition(SUPPLY*tx_valid_P*(1-((stimulus_hi(4,tx_index_P) >> 0) & 1)),TD,EDGE,EDGE);
+  V(P_t_17) <+ transition(SUPPLY*tx_valid_P*((stimulus_hi(4,tx_index_P) >> 1) & 1),TD,EDGE,EDGE);
+  V(P_f_17) <+ transition(SUPPLY*tx_valid_P*(1-((stimulus_hi(4,tx_index_P) >> 1) & 1)),TD,EDGE,EDGE);
+  V(P_t_18) <+ transition(SUPPLY*tx_valid_P*((stimulus_hi(4,tx_index_P) >> 2) & 1),TD,EDGE,EDGE);
+  V(P_f_18) <+ transition(SUPPLY*tx_valid_P*(1-((stimulus_hi(4,tx_index_P) >> 2) & 1)),TD,EDGE,EDGE);
+  V(P_t_19) <+ transition(SUPPLY*tx_valid_P*((stimulus_hi(4,tx_index_P) >> 3) & 1),TD,EDGE,EDGE);
+  V(P_f_19) <+ transition(SUPPLY*tx_valid_P*(1-((stimulus_hi(4,tx_index_P) >> 3) & 1)),TD,EDGE,EDGE);
+  V(P_t_20) <+ transition(SUPPLY*tx_valid_P*((stimulus_hi(4,tx_index_P) >> 4) & 1),TD,EDGE,EDGE);
+  V(P_f_20) <+ transition(SUPPLY*tx_valid_P*(1-((stimulus_hi(4,tx_index_P) >> 4) & 1)),TD,EDGE,EDGE);
+  V(P_t_21) <+ transition(SUPPLY*tx_valid_P*((stimulus_hi(4,tx_index_P) >> 5) & 1),TD,EDGE,EDGE);
+  V(P_f_21) <+ transition(SUPPLY*tx_valid_P*(1-((stimulus_hi(4,tx_index_P) >> 5) & 1)),TD,EDGE,EDGE);
+  V(P_t_22) <+ transition(SUPPLY*tx_valid_P*((stimulus_hi(4,tx_index_P) >> 6) & 1),TD,EDGE,EDGE);
+  V(P_f_22) <+ transition(SUPPLY*tx_valid_P*(1-((stimulus_hi(4,tx_index_P) >> 6) & 1)),TD,EDGE,EDGE);
+  V(P_t_23) <+ transition(SUPPLY*tx_valid_P*((stimulus_hi(4,tx_index_P) >> 7) & 1),TD,EDGE,EDGE);
+  V(P_f_23) <+ transition(SUPPLY*tx_valid_P*(1-((stimulus_hi(4,tx_index_P) >> 7) & 1)),TD,EDGE,EDGE);
+  V(P_t_24) <+ transition(SUPPLY*tx_valid_P*((stimulus_hi(4,tx_index_P) >> 8) & 1),TD,EDGE,EDGE);
+  V(P_f_24) <+ transition(SUPPLY*tx_valid_P*(1-((stimulus_hi(4,tx_index_P) >> 8) & 1)),TD,EDGE,EDGE);
+  V(P_t_25) <+ transition(SUPPLY*tx_valid_P*((stimulus_hi(4,tx_index_P) >> 9) & 1),TD,EDGE,EDGE);
+  V(P_f_25) <+ transition(SUPPLY*tx_valid_P*(1-((stimulus_hi(4,tx_index_P) >> 9) & 1)),TD,EDGE,EDGE);
+  V(P_t_26) <+ transition(SUPPLY*tx_valid_P*((stimulus_hi(4,tx_index_P) >> 10) & 1),TD,EDGE,EDGE);
+  V(P_f_26) <+ transition(SUPPLY*tx_valid_P*(1-((stimulus_hi(4,tx_index_P) >> 10) & 1)),TD,EDGE,EDGE);
+  V(P_t_27) <+ transition(SUPPLY*tx_valid_P*((stimulus_hi(4,tx_index_P) >> 11) & 1),TD,EDGE,EDGE);
+  V(P_f_27) <+ transition(SUPPLY*tx_valid_P*(1-((stimulus_hi(4,tx_index_P) >> 11) & 1)),TD,EDGE,EDGE);
+  V(P_t_28) <+ transition(SUPPLY*tx_valid_P*((stimulus_hi(4,tx_index_P) >> 12) & 1),TD,EDGE,EDGE);
+  V(P_f_28) <+ transition(SUPPLY*tx_valid_P*(1-((stimulus_hi(4,tx_index_P) >> 12) & 1)),TD,EDGE,EDGE);
+  V(P_t_29) <+ transition(SUPPLY*tx_valid_P*((stimulus_hi(4,tx_index_P) >> 13) & 1),TD,EDGE,EDGE);
+  V(P_f_29) <+ transition(SUPPLY*tx_valid_P*(1-((stimulus_hi(4,tx_index_P) >> 13) & 1)),TD,EDGE,EDGE);
+  V(P_t_30) <+ transition(SUPPLY*tx_valid_P*((stimulus_hi(4,tx_index_P) >> 14) & 1),TD,EDGE,EDGE);
+  V(P_f_30) <+ transition(SUPPLY*tx_valid_P*(1-((stimulus_hi(4,tx_index_P) >> 14) & 1)),TD,EDGE,EDGE);
+  V(P_t_31) <+ transition(SUPPLY*tx_valid_P*((stimulus_hi(4,tx_index_P) >> 15) & 1),TD,EDGE,EDGE);
+  V(P_f_31) <+ transition(SUPPLY*tx_valid_P*(1-((stimulus_hi(4,tx_index_P) >> 15) & 1)),TD,EDGE,EDGE);
+  V(M_t_0) <+ transition(SUPPLY*tx_valid_M*((stimulus_lo(5,tx_index_M) >> 0) & 1),TD,EDGE,EDGE);
+  V(M_f_0) <+ transition(SUPPLY*tx_valid_M*(1-((stimulus_lo(5,tx_index_M) >> 0) & 1)),TD,EDGE,EDGE);
+  V(M_t_1) <+ transition(SUPPLY*tx_valid_M*((stimulus_lo(5,tx_index_M) >> 1) & 1),TD,EDGE,EDGE);
+  V(M_f_1) <+ transition(SUPPLY*tx_valid_M*(1-((stimulus_lo(5,tx_index_M) >> 1) & 1)),TD,EDGE,EDGE);
+  V(M_t_2) <+ transition(SUPPLY*tx_valid_M*((stimulus_lo(5,tx_index_M) >> 2) & 1),TD,EDGE,EDGE);
+  V(M_f_2) <+ transition(SUPPLY*tx_valid_M*(1-((stimulus_lo(5,tx_index_M) >> 2) & 1)),TD,EDGE,EDGE);
+  V(M_t_3) <+ transition(SUPPLY*tx_valid_M*((stimulus_lo(5,tx_index_M) >> 3) & 1),TD,EDGE,EDGE);
+  V(M_f_3) <+ transition(SUPPLY*tx_valid_M*(1-((stimulus_lo(5,tx_index_M) >> 3) & 1)),TD,EDGE,EDGE);
+  V(M_t_4) <+ transition(SUPPLY*tx_valid_M*((stimulus_lo(5,tx_index_M) >> 4) & 1),TD,EDGE,EDGE);
+  V(M_f_4) <+ transition(SUPPLY*tx_valid_M*(1-((stimulus_lo(5,tx_index_M) >> 4) & 1)),TD,EDGE,EDGE);
+  V(M_t_5) <+ transition(SUPPLY*tx_valid_M*((stimulus_lo(5,tx_index_M) >> 5) & 1),TD,EDGE,EDGE);
+  V(M_f_5) <+ transition(SUPPLY*tx_valid_M*(1-((stimulus_lo(5,tx_index_M) >> 5) & 1)),TD,EDGE,EDGE);
+  V(M_t_6) <+ transition(SUPPLY*tx_valid_M*((stimulus_lo(5,tx_index_M) >> 6) & 1),TD,EDGE,EDGE);
+  V(M_f_6) <+ transition(SUPPLY*tx_valid_M*(1-((stimulus_lo(5,tx_index_M) >> 6) & 1)),TD,EDGE,EDGE);
+  V(M_t_7) <+ transition(SUPPLY*tx_valid_M*((stimulus_lo(5,tx_index_M) >> 7) & 1),TD,EDGE,EDGE);
+  V(M_f_7) <+ transition(SUPPLY*tx_valid_M*(1-((stimulus_lo(5,tx_index_M) >> 7) & 1)),TD,EDGE,EDGE);
+  V(M_t_8) <+ transition(SUPPLY*tx_valid_M*((stimulus_lo(5,tx_index_M) >> 8) & 1),TD,EDGE,EDGE);
+  V(M_f_8) <+ transition(SUPPLY*tx_valid_M*(1-((stimulus_lo(5,tx_index_M) >> 8) & 1)),TD,EDGE,EDGE);
+  V(M_t_9) <+ transition(SUPPLY*tx_valid_M*((stimulus_lo(5,tx_index_M) >> 9) & 1),TD,EDGE,EDGE);
+  V(M_f_9) <+ transition(SUPPLY*tx_valid_M*(1-((stimulus_lo(5,tx_index_M) >> 9) & 1)),TD,EDGE,EDGE);
+  V(M_t_10) <+ transition(SUPPLY*tx_valid_M*((stimulus_lo(5,tx_index_M) >> 10) & 1),TD,EDGE,EDGE);
+  V(M_f_10) <+ transition(SUPPLY*tx_valid_M*(1-((stimulus_lo(5,tx_index_M) >> 10) & 1)),TD,EDGE,EDGE);
+  V(M_t_11) <+ transition(SUPPLY*tx_valid_M*((stimulus_lo(5,tx_index_M) >> 11) & 1),TD,EDGE,EDGE);
+  V(M_f_11) <+ transition(SUPPLY*tx_valid_M*(1-((stimulus_lo(5,tx_index_M) >> 11) & 1)),TD,EDGE,EDGE);
+  V(M_t_12) <+ transition(SUPPLY*tx_valid_M*((stimulus_lo(5,tx_index_M) >> 12) & 1),TD,EDGE,EDGE);
+  V(M_f_12) <+ transition(SUPPLY*tx_valid_M*(1-((stimulus_lo(5,tx_index_M) >> 12) & 1)),TD,EDGE,EDGE);
+  V(M_t_13) <+ transition(SUPPLY*tx_valid_M*((stimulus_lo(5,tx_index_M) >> 13) & 1),TD,EDGE,EDGE);
+  V(M_f_13) <+ transition(SUPPLY*tx_valid_M*(1-((stimulus_lo(5,tx_index_M) >> 13) & 1)),TD,EDGE,EDGE);
+  V(M_t_14) <+ transition(SUPPLY*tx_valid_M*((stimulus_lo(5,tx_index_M) >> 14) & 1),TD,EDGE,EDGE);
+  V(M_f_14) <+ transition(SUPPLY*tx_valid_M*(1-((stimulus_lo(5,tx_index_M) >> 14) & 1)),TD,EDGE,EDGE);
+  V(M_t_15) <+ transition(SUPPLY*tx_valid_M*((stimulus_lo(5,tx_index_M) >> 15) & 1),TD,EDGE,EDGE);
+  V(M_f_15) <+ transition(SUPPLY*tx_valid_M*(1-((stimulus_lo(5,tx_index_M) >> 15) & 1)),TD,EDGE,EDGE);
+  V(M_t_16) <+ transition(SUPPLY*tx_valid_M*((stimulus_hi(5,tx_index_M) >> 0) & 1),TD,EDGE,EDGE);
+  V(M_f_16) <+ transition(SUPPLY*tx_valid_M*(1-((stimulus_hi(5,tx_index_M) >> 0) & 1)),TD,EDGE,EDGE);
+  V(M_t_17) <+ transition(SUPPLY*tx_valid_M*((stimulus_hi(5,tx_index_M) >> 1) & 1),TD,EDGE,EDGE);
+  V(M_f_17) <+ transition(SUPPLY*tx_valid_M*(1-((stimulus_hi(5,tx_index_M) >> 1) & 1)),TD,EDGE,EDGE);
+  V(M_t_18) <+ transition(SUPPLY*tx_valid_M*((stimulus_hi(5,tx_index_M) >> 2) & 1),TD,EDGE,EDGE);
+  V(M_f_18) <+ transition(SUPPLY*tx_valid_M*(1-((stimulus_hi(5,tx_index_M) >> 2) & 1)),TD,EDGE,EDGE);
+  V(M_t_19) <+ transition(SUPPLY*tx_valid_M*((stimulus_hi(5,tx_index_M) >> 3) & 1),TD,EDGE,EDGE);
+  V(M_f_19) <+ transition(SUPPLY*tx_valid_M*(1-((stimulus_hi(5,tx_index_M) >> 3) & 1)),TD,EDGE,EDGE);
+  V(M_t_20) <+ transition(SUPPLY*tx_valid_M*((stimulus_hi(5,tx_index_M) >> 4) & 1),TD,EDGE,EDGE);
+  V(M_f_20) <+ transition(SUPPLY*tx_valid_M*(1-((stimulus_hi(5,tx_index_M) >> 4) & 1)),TD,EDGE,EDGE);
+  V(M_t_21) <+ transition(SUPPLY*tx_valid_M*((stimulus_hi(5,tx_index_M) >> 5) & 1),TD,EDGE,EDGE);
+  V(M_f_21) <+ transition(SUPPLY*tx_valid_M*(1-((stimulus_hi(5,tx_index_M) >> 5) & 1)),TD,EDGE,EDGE);
+  V(M_t_22) <+ transition(SUPPLY*tx_valid_M*((stimulus_hi(5,tx_index_M) >> 6) & 1),TD,EDGE,EDGE);
+  V(M_f_22) <+ transition(SUPPLY*tx_valid_M*(1-((stimulus_hi(5,tx_index_M) >> 6) & 1)),TD,EDGE,EDGE);
+  V(M_t_23) <+ transition(SUPPLY*tx_valid_M*((stimulus_hi(5,tx_index_M) >> 7) & 1),TD,EDGE,EDGE);
+  V(M_f_23) <+ transition(SUPPLY*tx_valid_M*(1-((stimulus_hi(5,tx_index_M) >> 7) & 1)),TD,EDGE,EDGE);
+  V(M_t_24) <+ transition(SUPPLY*tx_valid_M*((stimulus_hi(5,tx_index_M) >> 8) & 1),TD,EDGE,EDGE);
+  V(M_f_24) <+ transition(SUPPLY*tx_valid_M*(1-((stimulus_hi(5,tx_index_M) >> 8) & 1)),TD,EDGE,EDGE);
+  V(M_t_25) <+ transition(SUPPLY*tx_valid_M*((stimulus_hi(5,tx_index_M) >> 9) & 1),TD,EDGE,EDGE);
+  V(M_f_25) <+ transition(SUPPLY*tx_valid_M*(1-((stimulus_hi(5,tx_index_M) >> 9) & 1)),TD,EDGE,EDGE);
+  V(M_t_26) <+ transition(SUPPLY*tx_valid_M*((stimulus_hi(5,tx_index_M) >> 10) & 1),TD,EDGE,EDGE);
+  V(M_f_26) <+ transition(SUPPLY*tx_valid_M*(1-((stimulus_hi(5,tx_index_M) >> 10) & 1)),TD,EDGE,EDGE);
+  V(M_t_27) <+ transition(SUPPLY*tx_valid_M*((stimulus_hi(5,tx_index_M) >> 11) & 1),TD,EDGE,EDGE);
+  V(M_f_27) <+ transition(SUPPLY*tx_valid_M*(1-((stimulus_hi(5,tx_index_M) >> 11) & 1)),TD,EDGE,EDGE);
+  V(M_t_28) <+ transition(SUPPLY*tx_valid_M*((stimulus_hi(5,tx_index_M) >> 12) & 1),TD,EDGE,EDGE);
+  V(M_f_28) <+ transition(SUPPLY*tx_valid_M*(1-((stimulus_hi(5,tx_index_M) >> 12) & 1)),TD,EDGE,EDGE);
+  V(M_t_29) <+ transition(SUPPLY*tx_valid_M*((stimulus_hi(5,tx_index_M) >> 13) & 1),TD,EDGE,EDGE);
+  V(M_f_29) <+ transition(SUPPLY*tx_valid_M*(1-((stimulus_hi(5,tx_index_M) >> 13) & 1)),TD,EDGE,EDGE);
+  V(M_t_30) <+ transition(SUPPLY*tx_valid_M*((stimulus_hi(5,tx_index_M) >> 14) & 1),TD,EDGE,EDGE);
+  V(M_f_30) <+ transition(SUPPLY*tx_valid_M*(1-((stimulus_hi(5,tx_index_M) >> 14) & 1)),TD,EDGE,EDGE);
+  V(M_t_31) <+ transition(SUPPLY*tx_valid_M*((stimulus_hi(5,tx_index_M) >> 15) & 1),TD,EDGE,EDGE);
+  V(M_f_31) <+ transition(SUPPLY*tx_valid_M*(1-((stimulus_hi(5,tx_index_M) >> 15) & 1)),TD,EDGE,EDGE);
+  V(O_a) <+ transition(SUPPLY*ack,TD,EDGE,EDGE);
+  V(done) <+ transition(SUPPLY*(finished && !failure),TD,EDGE,EDGE);
+  V(failed) <+ transition(SUPPLY*failure,TD,EDGE,EDGE);
+end
+endmodule

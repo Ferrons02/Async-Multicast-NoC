@@ -1,0 +1,33 @@
+SIM_RUN campaign=/tmp/ferroma_analog_campaign_TKIXa1Z1 level=block module=StopcodeSel
+SIM_RESET t=1.000100e-07
+SIM_TX t=1.000100e-07 index=0 word=80001ffe
+SIM_IACK_HIGH t=1.007300e-07 index=0
+SIM_IACK_LOW t=1.016700e-07 index=0
+SIM_TX t=1.016700e-07 index=1 word=ffffffff
+SIM_RX t=1.018400e-07 channel=O0 index=0 expected=ffffffff actual=ffffffff PASS
+SIM_IACK_HIGH t=1.022500e-07 index=1
+SIM_SPACER t=1.023900e-07 channel=O0 index=0
+SIM_ACK_LOW t=1.025000e-07 channel=O0 index=0
+SIM_IACK_LOW t=1.032600e-07 index=1
+SIM_TX t=1.032600e-07 index=2 word=fffffffe
+SIM_RX t=1.037500e-07 channel=O1 index=0 expected=fffffffe actual=fffffffe PASS
+SIM_IACK_HIGH t=1.040900e-07 index=2
+SIM_SPACER t=1.042300e-07 channel=O1 index=0
+SIM_ACK_LOW t=1.043400e-07 channel=O1 index=0
+SIM_IACK_LOW t=1.048200e-07 index=2
+SIM_TX t=1.048200e-07 index=3 word=ffffffff
+SIM_RX t=1.050200e-07 channel=O1 index=1 expected=ffffffff actual=ffffffff PASS
+SIM_IACK_HIGH t=1.052900e-07 index=3
+SIM_SPACER t=1.054300e-07 channel=O1 index=1
+SIM_ACK_LOW t=1.055400e-07 channel=O1 index=1
+SIM_IACK_LOW t=1.062900e-07 index=3
+SIM_ROUND t=1.062900e-07 inputs=4 O0=1 O1=2
+SIM_IDLE_BEGIN t=1.262900e-07 reset=0.000000e+00
+SIM_IDLE_END t=1.462900e-07 reset=0.000000e+00
+SIM_POWER boundary=VPOWER reset_excluded=1 active_duration_s=6.280000000e-09 energy_j=1.561734955e-12 mean_power_w=2.486839100e-04
+SIM_LEAKAGE state=post_round_reset_low criterion=mean_drift_and_std_le_1pct duration_s=2.000000000e-08 mean_current_a=1.499007930e-05 mean_power_w=1.648908723e-05 min_power_w=1.623987200e-05 max_power_w=1.680112500e-05 std_power_w=4.398056797e-08 half_drift_relative=1.746007308e-03 stable=1
+SIM_ENERGY inputs=4 output_transfers=3 per_input_transfer_j=3.904337388e-13 per_output_transfer_j=5.205783183e-13 dynamic_baseline_estimate_j=1.458183487e-12
+SIM_THROUGHPUT window=active_round input_transfers_per_s=6.369426752e+08 output_transfers_per_s=4.777070064e+08
+SIM_PASS t=1.472900e-07 rounds=1 inputs=4 O0=1 O1=2
+
+FINAL RESULT: PASS

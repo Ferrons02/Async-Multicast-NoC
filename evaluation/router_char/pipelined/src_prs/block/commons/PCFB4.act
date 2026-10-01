@@ -1,0 +1,41 @@
+import "commons/Channels.act";
+
+/* Four-bit version of PCFB32, with the same handshake and reset rules.
+ * Each completion detector has one four-bit leaf, so the three combining
+ * levels needed by PCFB32 collapse to the polarity inverter for g or n.
+ */
+export defproc PCFB4(bool? reset; ActiveDualRail4? L; ActiveDualRail4! R)
+{
+    bool n_c, g, n_h, n;
+    bool e, n_L_a, inv_R_a, inv_reset, n_R_t[4], n_R_f[4];
+
+    prs {
+        (&b:4: (R.t[b] | R.f[b])) -> n_c-
+        (&b:4: (~R.t[b] & ~R.f[b])) -> n_c+
+        ~n_c => g+
+
+        (&b:4: (L.t[b] | L.f[b])) -> n_h-
+        (&b:4: (~L.t[b] & ~L.f[b])) -> n_h+
+        ~n_h => n+
+
+        e & g -> n_L_a-
+        ~n -> n_L_a+
+        ~L.a & ~g & ~reset -> e+
+        L.a | reset -> e-
+
+        (k:4:
+            inv_R_a & e & L.t[k] -> n_R_t[k]-
+            // Retain R until capture has also been acknowledged upstream.
+            (~inv_R_a & ~e) | ~inv_reset -> n_R_t[k]+
+            inv_R_a & e & L.f[k] -> n_R_f[k]-
+            (~inv_R_a & ~e) | ~inv_reset -> n_R_f[k]+
+        )
+        ~R.a => inv_R_a+
+        ~reset => inv_reset+
+        ~n_L_a => L.a+
+        (k:4:
+            ~n_R_t[k] => R.t[k]+
+            ~n_R_f[k] => R.f[k]+
+        )
+    }
+}

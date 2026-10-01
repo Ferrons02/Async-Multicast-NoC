@@ -1,0 +1,40 @@
+# case 0: C0i unicast C3
+0x7FFFF03E
+0xFFFFF03F
+# case 1: C0i unicast C2
+0x5FFFF02E
+0xFFFFF02F
+# case 2: C0i unicast C1
+0x3FFFF01E
+0xFFFFF01F
+# case 3: C0i unicast C0
+0x1FFFF00E
+0xFFFFF00F
+# case 4: C0 unicast P
+0xFFFFF04E
+0xFFFFF04E
+0xFFFFF04F
+# case 5: C0i multicast child case 1
+0x8000105E
+0x348D6002
+0xBADBAD03
+# case 6: C0i multicast child case 2
+0x8000105E
+0x34828112
+0x00000002
+0xBADBAD03
+# case 7: C0i multicast child case 3
+0x8000105E
+0x348D6312
+0x84100002
+0xBADBAD03
+# case 8: C0i multicast child case 4
+0x8000105E
+0x348C6312
+0x84121482
+0x44212002
+0xBADBAD03
+# case 9: C0i multicast child case 5
+0x8000105E
+0xF1248002
+0xBADBAD03

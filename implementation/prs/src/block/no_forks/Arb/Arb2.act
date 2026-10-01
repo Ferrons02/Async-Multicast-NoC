@@ -1,0 +1,43 @@
+import "no_forks/commons/Channels.act";
+import "no_forks/Arb/ArbMutex.act";
+
+export defproc Arb2(bool? reset; ActiveDualRail32? I0; ActiveDualRail32? I1; ActiveDualRail32! O)
+{
+    // Literal functional PRS supplied on 2026-09-14: p selects I0 when high.
+    bool p, w0i, f, w0, w1, s, u, v;
+
+    // Existing filtered arbitration abstraction. See ArbMutex.act for the
+    // ACTsim PRS/mk_exclhi limitation; only the MUTEX is modeled in HSE.
+    ArbMutex mutex(I0.t[31], I0.f[31], I1.t[31], I1.f[31], u, v, reset);
+
+    prs {
+        ((~I0.a & ~I1.a & u & s) | reset) -> p+
+        (~I0.a & ~I1.a & v & s) -> p-
+
+        (s & ((u & p) | (v & ~p))) -> w0i+
+        ((~s & O.a) | reset) -> w0i-
+
+        (~O.a & (I0.a | I1.a) & (w0 | w1) & ((~u & p) | (~v & ~p))) -> f+
+        ((~w0 & ~w1) | reset) -> f-
+
+        (~s & ((I0.f[0] & p) | (I1.f[0] & ~p))) -> w0+
+        ((~s & f) | reset) -> w0-
+        (~s & ((I0.t[0] & p) | (I1.t[0] & ~p))) -> w1+
+        ((s & f) | reset) -> w1-
+
+        ((w1 & f) | reset) -> s+
+        w0i -> s-
+
+        (p & O.a & (w1 | w0) & ~w0i) -> I0.a+
+        (~f & ~w0 & ~w1) -> I0.a-
+        (~p & O.a & (w1 | w0) & ~w0i) -> I1.a+
+        (~f & ~w0 & ~w1) -> I1.a-
+
+        (i:32:
+            (~s & ((p & I0.t[i]) | (~p & I1.t[i]))) -> O.t[i]+
+            ((p & ~I0.t[i]) | (~p & ~I1.t[i])) -> O.t[i]-
+            (~s & ((p & I0.f[i]) | (~p & I1.f[i]))) -> O.f[i]+
+            ((p & ~I0.f[i]) | (~p & ~I1.f[i])) -> O.f[i]-
+        )
+    }
+}

@@ -1,0 +1,18 @@
+import "no_forks/commons/Channels.act";
+
+/* Specialized half adder with the second operand fixed to one. */
+export defproc HalfAdderP(bool? reset; DualRailBit? a; DualRailBit! d; DualRailBit! s)
+{
+
+    // Original non-bubble PRS: RouterDecompositionBubbleReshuffling.pdf, pp. 52.
+    prs {
+        a.t -> d.t+
+        ~a.t & ~a.f -> d.t-
+        a.f -> d.f+
+        ~a.t & ~a.f -> d.f-
+        a.f -> s.t+
+        ~a.t & ~a.f -> s.t-
+        a.t -> s.f+
+        ~a.t & ~a.f -> s.f-
+    }
+}

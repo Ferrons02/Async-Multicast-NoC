@@ -1,0 +1,106 @@
+InputRouter: targeted fanout sizing (measured W-only sizing)
+==============================================================
+Only MOS W parameters were changed. L, devices, topology and ports are identical.
+Keeper devices and their feedback inverters retain their generated dimensions.
+Units: widths and lengths below are micrometres. Technology: PTM65 TT, 1.1 V, 27 C.
+The largest trial widths are NMOS 1.56 um and PMOS 2.6 um (16x).
+PRS source was not regenerated or changed. A future prs2net build would lose this manual sizing.
+Original generated node reff comments describe the unsized baseline, not the new resistances.
+
+Method
+------
+Gate loads counted after recursive instance/port expansion; repeated instances are included.
+invEq is sum(W*L) / (0.26*0.065), a gate-area load proxy in minimum-inverter units, not extracted capacitance.
+Targets: high-fanout control drivers and limited support for their existing upstream stages.
+Width factors 2/4/8/16 are bounded trial choices; stronger drivers also increase upstream loading.
+Logical-effort reference: https://pages.hmc.edu/harris/class/e158/10/lect6.pdf
+No automatic timing optimum, layout/parasitic signoff or measured gain is implied by the sizing alone.
+
+Changed MOS: 16 in definitions; 16/1491 after instance expansion (1.07%).
+
+Driver groups (maximum load across the block library)
+----------------------------------------------------
+InputRouter.p: W x4; gate terminals=135; invEq=68.375; driver MOS=5
+InputRouter.a: W x2; gate terminals=5; invEq=3.375; driver MOS=7
+InputRouter.__a: W x2; gate terminals=4; invEq=2.250; driver MOS=2
+InputRouter.w1: W x2; gate terminals=1; invEq=0.375; driver MOS=2
+
+Exact changed MOS
+-----------------
+Subcircuit Device Driver_node Old_W New_W L Factor
+InputRouter M1082_ p 0.1625 0.65 0.065 4
+InputRouter M1083_ p 0.0975 0.39 0.065 4
+InputRouter M546_ p 0.0975 0.39 0.065 4
+InputRouter M5_ p 0.1625 0.65 0.065 4
+InputRouter M6_ p 0.1625 0.65 0.065 4
+InputRouter M1094_ a 0.1625 0.325 0.065 2
+InputRouter M1095_ a 0.1625 0.325 0.065 2
+InputRouter M1096_ a 0.0975 0.195 0.065 2
+InputRouter M1099_ a 0.1625 0.325 0.065 2
+InputRouter M1100_ a 0.1625 0.325 0.065 2
+InputRouter M4_ a 0.1625 0.325 0.065 2
+InputRouter M545_ a 0.0975 0.195 0.065 2
+InputRouter M138_ __a 0.1625 0.325 0.065 2
+InputRouter M677_ __a 0.0975 0.195 0.065 2
+InputRouter M141_ w1 0.1625 0.325 0.065 2
+InputRouter M680_ w1 0.0975 0.195 0.065 2
+
+
+
+
+
+Validation status
+-----------------
+PASS: replacing only W tokens reconstructs the baseline byte-for-byte.
+PASS: instantiated MOS count, every L, ports and element connectivity are unchanged.
+PASS: HSPICE functional test and stable final idle leakage window.
+Campaign: /tmp/ferroma_analog_campaign_XQRtrlCf
+Testbench: tb/block/InputRouter/InputRouter_tb.sp
+Report: tb/block/results/InputRouter/InputRouter_perf.txt
+
+Before / after measured results
+-------------------------------
+Same baseline-selected input source, index, data and output ports in both simulations.
+Timing follows the existing extractor: observed external waits are subtracted.
+Counter forward denotes an input/output cycle; Serializer/Deserializer forward denotes batch latency.
+Input_cycle below is forward+recovery where defined. Energy is whole-DUT dynamic window energy.
+Arb windows include concurrent traffic: energy cannot be assigned uniquely to one input.
+Differences are (sized/original - 1)*100. Negative timing means faster.
+Metric / sample | Before | After | Change %
+Idle leakage (uW) | 9.192392 | 9.206354 | +0.15
+Sample initial:I->C: i[0] -> o0[0] -> measured i[0] -> o0[0]
+initial:I->C forward (ns) | 0.030860 | 0.030749 | -0.36
+initial:I->C recovery (ns) | 0.458605 | 0.405757 | -11.52
+initial:I->C dynamic_energy (pJ) | 0.223013 | 0.230066 | +3.16
+initial:I->C input_cycle (ns) | 0.489465 | 0.436506 | -10.82
+Sample payload:I->C: i[4] -> o1[1] -> measured i[4] -> o1[1]
+payload:I->C forward (ns) | 0.054663 | 0.051963 | -4.94
+payload:I->C recovery (ns) | 0.416817 | 0.367306 | -11.88
+payload:I->C dynamic_energy (pJ) | 0.194925 | 0.200241 | +2.73
+payload:I->C input_cycle (ns) | 0.471481 | 0.419269 | -11.07
+
+Coverage of every matched transaction
+-------------------------------------
+Input/outputs | Forward before/after ns | Recovery before/after ns | Dynamic energy before/after pJ
+i[0] -> o0[0] | 0.030860/0.030749 | 0.458605/0.405757 | 0.223013/0.230066
+i[1] -> o0[1] | 0.030971/0.030630 | 0.449433/0.397732 | 0.221499/0.230882
+i[2] -> o0[2] | 0.030468/0.030567 | 0.787683/0.504335 | 0.248055/0.257976
+i[3] -> o1[0] | 0.067281/0.053088 | 0.425732/0.367490 | 0.216183/0.209576
+i[4] -> o1[1] | 0.054663/0.051963 | 0.416817/0.367306 | 0.194925/0.200241
+i[5] -> o1[2] | 0.052428/0.052024 | 0.962717/0.533639 | 0.207873/0.215487
+
+Sizing refinement
+-----------------
+Candidate v1 scaled only the large control root by 8x and passed functionally,
+but increased handshake recovery. It is archived, not retained as the active netlist.
+The retained candidate reduces that root to 4x and scales a few existing preceding drivers by 2x.
+These support stages originally have modest fanout; their added gate load comes from the resized root.
+No stage, wire or device was inserted or removed. See candidate_v1/ in the archive for the rejected measurements.
+
+Scope and provenance
+--------------------
+These results validate the saved testbench and operating point; they are not an exhaustive sizing optimum.
+Subsystem/top netlists were not resized or regenerated in this task.
+Original and experimental results: /home/cad/archives/analog_sim/20260917_block_fanout_sizing
+Baseline netlist SHA256: 60e6f1503bdb8ae65af5aeff2d0af8195ba6bf19a77490e3fc4e65111aa2825b
+Sized netlist SHA256: 9b503bec1f16c0846bfa01f8b9e66a344acf2b2b6baab3e9f6f241dd6ca2e0fb

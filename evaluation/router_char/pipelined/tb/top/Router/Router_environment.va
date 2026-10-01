@@ -1,0 +1,3978 @@
+// Generated LUT-only Router campaign; identities are in lut_manifest.json.
+`include "disciplines.vams"
+module router_environment(
+    reset,
+    dut_ready,
+    C0i_t_0,
+    C0i_t_1,
+    C0i_t_2,
+    C0i_t_3,
+    C0i_t_4,
+    C0i_t_5,
+    C0i_t_6,
+    C0i_t_7,
+    C0i_t_8,
+    C0i_t_9,
+    C0i_t_10,
+    C0i_t_11,
+    C0i_t_12,
+    C0i_t_13,
+    C0i_t_14,
+    C0i_t_15,
+    C0i_t_16,
+    C0i_t_17,
+    C0i_t_18,
+    C0i_t_19,
+    C0i_t_20,
+    C0i_t_21,
+    C0i_t_22,
+    C0i_t_23,
+    C0i_t_24,
+    C0i_t_25,
+    C0i_t_26,
+    C0i_t_27,
+    C0i_t_28,
+    C0i_t_29,
+    C0i_t_30,
+    C0i_t_31,
+    C0i_f_0,
+    C0i_f_1,
+    C0i_f_2,
+    C0i_f_3,
+    C0i_f_4,
+    C0i_f_5,
+    C0i_f_6,
+    C0i_f_7,
+    C0i_f_8,
+    C0i_f_9,
+    C0i_f_10,
+    C0i_f_11,
+    C0i_f_12,
+    C0i_f_13,
+    C0i_f_14,
+    C0i_f_15,
+    C0i_f_16,
+    C0i_f_17,
+    C0i_f_18,
+    C0i_f_19,
+    C0i_f_20,
+    C0i_f_21,
+    C0i_f_22,
+    C0i_f_23,
+    C0i_f_24,
+    C0i_f_25,
+    C0i_f_26,
+    C0i_f_27,
+    C0i_f_28,
+    C0i_f_29,
+    C0i_f_30,
+    C0i_f_31,
+    C0i_a,
+    C1i_t_0,
+    C1i_t_1,
+    C1i_t_2,
+    C1i_t_3,
+    C1i_t_4,
+    C1i_t_5,
+    C1i_t_6,
+    C1i_t_7,
+    C1i_t_8,
+    C1i_t_9,
+    C1i_t_10,
+    C1i_t_11,
+    C1i_t_12,
+    C1i_t_13,
+    C1i_t_14,
+    C1i_t_15,
+    C1i_t_16,
+    C1i_t_17,
+    C1i_t_18,
+    C1i_t_19,
+    C1i_t_20,
+    C1i_t_21,
+    C1i_t_22,
+    C1i_t_23,
+    C1i_t_24,
+    C1i_t_25,
+    C1i_t_26,
+    C1i_t_27,
+    C1i_t_28,
+    C1i_t_29,
+    C1i_t_30,
+    C1i_t_31,
+    C1i_f_0,
+    C1i_f_1,
+    C1i_f_2,
+    C1i_f_3,
+    C1i_f_4,
+    C1i_f_5,
+    C1i_f_6,
+    C1i_f_7,
+    C1i_f_8,
+    C1i_f_9,
+    C1i_f_10,
+    C1i_f_11,
+    C1i_f_12,
+    C1i_f_13,
+    C1i_f_14,
+    C1i_f_15,
+    C1i_f_16,
+    C1i_f_17,
+    C1i_f_18,
+    C1i_f_19,
+    C1i_f_20,
+    C1i_f_21,
+    C1i_f_22,
+    C1i_f_23,
+    C1i_f_24,
+    C1i_f_25,
+    C1i_f_26,
+    C1i_f_27,
+    C1i_f_28,
+    C1i_f_29,
+    C1i_f_30,
+    C1i_f_31,
+    C1i_a,
+    C2i_t_0,
+    C2i_t_1,
+    C2i_t_2,
+    C2i_t_3,
+    C2i_t_4,
+    C2i_t_5,
+    C2i_t_6,
+    C2i_t_7,
+    C2i_t_8,
+    C2i_t_9,
+    C2i_t_10,
+    C2i_t_11,
+    C2i_t_12,
+    C2i_t_13,
+    C2i_t_14,
+    C2i_t_15,
+    C2i_t_16,
+    C2i_t_17,
+    C2i_t_18,
+    C2i_t_19,
+    C2i_t_20,
+    C2i_t_21,
+    C2i_t_22,
+    C2i_t_23,
+    C2i_t_24,
+    C2i_t_25,
+    C2i_t_26,
+    C2i_t_27,
+    C2i_t_28,
+    C2i_t_29,
+    C2i_t_30,
+    C2i_t_31,
+    C2i_f_0,
+    C2i_f_1,
+    C2i_f_2,
+    C2i_f_3,
+    C2i_f_4,
+    C2i_f_5,
+    C2i_f_6,
+    C2i_f_7,
+    C2i_f_8,
+    C2i_f_9,
+    C2i_f_10,
+    C2i_f_11,
+    C2i_f_12,
+    C2i_f_13,
+    C2i_f_14,
+    C2i_f_15,
+    C2i_f_16,
+    C2i_f_17,
+    C2i_f_18,
+    C2i_f_19,
+    C2i_f_20,
+    C2i_f_21,
+    C2i_f_22,
+    C2i_f_23,
+    C2i_f_24,
+    C2i_f_25,
+    C2i_f_26,
+    C2i_f_27,
+    C2i_f_28,
+    C2i_f_29,
+    C2i_f_30,
+    C2i_f_31,
+    C2i_a,
+    C3i_t_0,
+    C3i_t_1,
+    C3i_t_2,
+    C3i_t_3,
+    C3i_t_4,
+    C3i_t_5,
+    C3i_t_6,
+    C3i_t_7,
+    C3i_t_8,
+    C3i_t_9,
+    C3i_t_10,
+    C3i_t_11,
+    C3i_t_12,
+    C3i_t_13,
+    C3i_t_14,
+    C3i_t_15,
+    C3i_t_16,
+    C3i_t_17,
+    C3i_t_18,
+    C3i_t_19,
+    C3i_t_20,
+    C3i_t_21,
+    C3i_t_22,
+    C3i_t_23,
+    C3i_t_24,
+    C3i_t_25,
+    C3i_t_26,
+    C3i_t_27,
+    C3i_t_28,
+    C3i_t_29,
+    C3i_t_30,
+    C3i_t_31,
+    C3i_f_0,
+    C3i_f_1,
+    C3i_f_2,
+    C3i_f_3,
+    C3i_f_4,
+    C3i_f_5,
+    C3i_f_6,
+    C3i_f_7,
+    C3i_f_8,
+    C3i_f_9,
+    C3i_f_10,
+    C3i_f_11,
+    C3i_f_12,
+    C3i_f_13,
+    C3i_f_14,
+    C3i_f_15,
+    C3i_f_16,
+    C3i_f_17,
+    C3i_f_18,
+    C3i_f_19,
+    C3i_f_20,
+    C3i_f_21,
+    C3i_f_22,
+    C3i_f_23,
+    C3i_f_24,
+    C3i_f_25,
+    C3i_f_26,
+    C3i_f_27,
+    C3i_f_28,
+    C3i_f_29,
+    C3i_f_30,
+    C3i_f_31,
+    C3i_a,
+    Pi_t_0,
+    Pi_t_1,
+    Pi_t_2,
+    Pi_t_3,
+    Pi_t_4,
+    Pi_t_5,
+    Pi_t_6,
+    Pi_t_7,
+    Pi_t_8,
+    Pi_t_9,
+    Pi_t_10,
+    Pi_t_11,
+    Pi_t_12,
+    Pi_t_13,
+    Pi_t_14,
+    Pi_t_15,
+    Pi_t_16,
+    Pi_t_17,
+    Pi_t_18,
+    Pi_t_19,
+    Pi_t_20,
+    Pi_t_21,
+    Pi_t_22,
+    Pi_t_23,
+    Pi_t_24,
+    Pi_t_25,
+    Pi_t_26,
+    Pi_t_27,
+    Pi_t_28,
+    Pi_t_29,
+    Pi_t_30,
+    Pi_t_31,
+    Pi_f_0,
+    Pi_f_1,
+    Pi_f_2,
+    Pi_f_3,
+    Pi_f_4,
+    Pi_f_5,
+    Pi_f_6,
+    Pi_f_7,
+    Pi_f_8,
+    Pi_f_9,
+    Pi_f_10,
+    Pi_f_11,
+    Pi_f_12,
+    Pi_f_13,
+    Pi_f_14,
+    Pi_f_15,
+    Pi_f_16,
+    Pi_f_17,
+    Pi_f_18,
+    Pi_f_19,
+    Pi_f_20,
+    Pi_f_21,
+    Pi_f_22,
+    Pi_f_23,
+    Pi_f_24,
+    Pi_f_25,
+    Pi_f_26,
+    Pi_f_27,
+    Pi_f_28,
+    Pi_f_29,
+    Pi_f_30,
+    Pi_f_31,
+    Pi_a,
+    C0o_t_0,
+    C0o_t_1,
+    C0o_t_2,
+    C0o_t_3,
+    C0o_t_4,
+    C0o_t_5,
+    C0o_t_6,
+    C0o_t_7,
+    C0o_t_8,
+    C0o_t_9,
+    C0o_t_10,
+    C0o_t_11,
+    C0o_t_12,
+    C0o_t_13,
+    C0o_t_14,
+    C0o_t_15,
+    C0o_t_16,
+    C0o_t_17,
+    C0o_t_18,
+    C0o_t_19,
+    C0o_t_20,
+    C0o_t_21,
+    C0o_t_22,
+    C0o_t_23,
+    C0o_t_24,
+    C0o_t_25,
+    C0o_t_26,
+    C0o_t_27,
+    C0o_t_28,
+    C0o_t_29,
+    C0o_t_30,
+    C0o_t_31,
+    C0o_f_0,
+    C0o_f_1,
+    C0o_f_2,
+    C0o_f_3,
+    C0o_f_4,
+    C0o_f_5,
+    C0o_f_6,
+    C0o_f_7,
+    C0o_f_8,
+    C0o_f_9,
+    C0o_f_10,
+    C0o_f_11,
+    C0o_f_12,
+    C0o_f_13,
+    C0o_f_14,
+    C0o_f_15,
+    C0o_f_16,
+    C0o_f_17,
+    C0o_f_18,
+    C0o_f_19,
+    C0o_f_20,
+    C0o_f_21,
+    C0o_f_22,
+    C0o_f_23,
+    C0o_f_24,
+    C0o_f_25,
+    C0o_f_26,
+    C0o_f_27,
+    C0o_f_28,
+    C0o_f_29,
+    C0o_f_30,
+    C0o_f_31,
+    C0o_a,
+    C1o_t_0,
+    C1o_t_1,
+    C1o_t_2,
+    C1o_t_3,
+    C1o_t_4,
+    C1o_t_5,
+    C1o_t_6,
+    C1o_t_7,
+    C1o_t_8,
+    C1o_t_9,
+    C1o_t_10,
+    C1o_t_11,
+    C1o_t_12,
+    C1o_t_13,
+    C1o_t_14,
+    C1o_t_15,
+    C1o_t_16,
+    C1o_t_17,
+    C1o_t_18,
+    C1o_t_19,
+    C1o_t_20,
+    C1o_t_21,
+    C1o_t_22,
+    C1o_t_23,
+    C1o_t_24,
+    C1o_t_25,
+    C1o_t_26,
+    C1o_t_27,
+    C1o_t_28,
+    C1o_t_29,
+    C1o_t_30,
+    C1o_t_31,
+    C1o_f_0,
+    C1o_f_1,
+    C1o_f_2,
+    C1o_f_3,
+    C1o_f_4,
+    C1o_f_5,
+    C1o_f_6,
+    C1o_f_7,
+    C1o_f_8,
+    C1o_f_9,
+    C1o_f_10,
+    C1o_f_11,
+    C1o_f_12,
+    C1o_f_13,
+    C1o_f_14,
+    C1o_f_15,
+    C1o_f_16,
+    C1o_f_17,
+    C1o_f_18,
+    C1o_f_19,
+    C1o_f_20,
+    C1o_f_21,
+    C1o_f_22,
+    C1o_f_23,
+    C1o_f_24,
+    C1o_f_25,
+    C1o_f_26,
+    C1o_f_27,
+    C1o_f_28,
+    C1o_f_29,
+    C1o_f_30,
+    C1o_f_31,
+    C1o_a,
+    C2o_t_0,
+    C2o_t_1,
+    C2o_t_2,
+    C2o_t_3,
+    C2o_t_4,
+    C2o_t_5,
+    C2o_t_6,
+    C2o_t_7,
+    C2o_t_8,
+    C2o_t_9,
+    C2o_t_10,
+    C2o_t_11,
+    C2o_t_12,
+    C2o_t_13,
+    C2o_t_14,
+    C2o_t_15,
+    C2o_t_16,
+    C2o_t_17,
+    C2o_t_18,
+    C2o_t_19,
+    C2o_t_20,
+    C2o_t_21,
+    C2o_t_22,
+    C2o_t_23,
+    C2o_t_24,
+    C2o_t_25,
+    C2o_t_26,
+    C2o_t_27,
+    C2o_t_28,
+    C2o_t_29,
+    C2o_t_30,
+    C2o_t_31,
+    C2o_f_0,
+    C2o_f_1,
+    C2o_f_2,
+    C2o_f_3,
+    C2o_f_4,
+    C2o_f_5,
+    C2o_f_6,
+    C2o_f_7,
+    C2o_f_8,
+    C2o_f_9,
+    C2o_f_10,
+    C2o_f_11,
+    C2o_f_12,
+    C2o_f_13,
+    C2o_f_14,
+    C2o_f_15,
+    C2o_f_16,
+    C2o_f_17,
+    C2o_f_18,
+    C2o_f_19,
+    C2o_f_20,
+    C2o_f_21,
+    C2o_f_22,
+    C2o_f_23,
+    C2o_f_24,
+    C2o_f_25,
+    C2o_f_26,
+    C2o_f_27,
+    C2o_f_28,
+    C2o_f_29,
+    C2o_f_30,
+    C2o_f_31,
+    C2o_a,
+    C3o_t_0,
+    C3o_t_1,
+    C3o_t_2,
+    C3o_t_3,
+    C3o_t_4,
+    C3o_t_5,
+    C3o_t_6,
+    C3o_t_7,
+    C3o_t_8,
+    C3o_t_9,
+    C3o_t_10,
+    C3o_t_11,
+    C3o_t_12,
+    C3o_t_13,
+    C3o_t_14,
+    C3o_t_15,
+    C3o_t_16,
+    C3o_t_17,
+    C3o_t_18,
+    C3o_t_19,
+    C3o_t_20,
+    C3o_t_21,
+    C3o_t_22,
+    C3o_t_23,
+    C3o_t_24,
+    C3o_t_25,
+    C3o_t_26,
+    C3o_t_27,
+    C3o_t_28,
+    C3o_t_29,
+    C3o_t_30,
+    C3o_t_31,
+    C3o_f_0,
+    C3o_f_1,
+    C3o_f_2,
+    C3o_f_3,
+    C3o_f_4,
+    C3o_f_5,
+    C3o_f_6,
+    C3o_f_7,
+    C3o_f_8,
+    C3o_f_9,
+    C3o_f_10,
+    C3o_f_11,
+    C3o_f_12,
+    C3o_f_13,
+    C3o_f_14,
+    C3o_f_15,
+    C3o_f_16,
+    C3o_f_17,
+    C3o_f_18,
+    C3o_f_19,
+    C3o_f_20,
+    C3o_f_21,
+    C3o_f_22,
+    C3o_f_23,
+    C3o_f_24,
+    C3o_f_25,
+    C3o_f_26,
+    C3o_f_27,
+    C3o_f_28,
+    C3o_f_29,
+    C3o_f_30,
+    C3o_f_31,
+    C3o_a,
+    Po_t_0,
+    Po_t_1,
+    Po_t_2,
+    Po_t_3,
+    Po_t_4,
+    Po_t_5,
+    Po_t_6,
+    Po_t_7,
+    Po_t_8,
+    Po_t_9,
+    Po_t_10,
+    Po_t_11,
+    Po_t_12,
+    Po_t_13,
+    Po_t_14,
+    Po_t_15,
+    Po_t_16,
+    Po_t_17,
+    Po_t_18,
+    Po_t_19,
+    Po_t_20,
+    Po_t_21,
+    Po_t_22,
+    Po_t_23,
+    Po_t_24,
+    Po_t_25,
+    Po_t_26,
+    Po_t_27,
+    Po_t_28,
+    Po_t_29,
+    Po_t_30,
+    Po_t_31,
+    Po_f_0,
+    Po_f_1,
+    Po_f_2,
+    Po_f_3,
+    Po_f_4,
+    Po_f_5,
+    Po_f_6,
+    Po_f_7,
+    Po_f_8,
+    Po_f_9,
+    Po_f_10,
+    Po_f_11,
+    Po_f_12,
+    Po_f_13,
+    Po_f_14,
+    Po_f_15,
+    Po_f_16,
+    Po_f_17,
+    Po_f_18,
+    Po_f_19,
+    Po_f_20,
+    Po_f_21,
+    Po_f_22,
+    Po_f_23,
+    Po_f_24,
+    Po_f_25,
+    Po_f_26,
+    Po_f_27,
+    Po_f_28,
+    Po_f_29,
+    Po_f_30,
+    Po_f_31,
+    Po_a,
+    done,
+    failed);
+inout reset, C0i_t_0, C0i_t_1, C0i_t_2, C0i_t_3, C0i_t_4, C0i_t_5, C0i_t_6, C0i_t_7, C0i_t_8, C0i_t_9, C0i_t_10, C0i_t_11, C0i_t_12, C0i_t_13, C0i_t_14, C0i_t_15, C0i_t_16, C0i_t_17, C0i_t_18, C0i_t_19, C0i_t_20, C0i_t_21, C0i_t_22, C0i_t_23, C0i_t_24, C0i_t_25, C0i_t_26, C0i_t_27, C0i_t_28, C0i_t_29, C0i_t_30, C0i_t_31, C0i_f_0, C0i_f_1, C0i_f_2, C0i_f_3, C0i_f_4, C0i_f_5, C0i_f_6, C0i_f_7, C0i_f_8, C0i_f_9, C0i_f_10, C0i_f_11, C0i_f_12, C0i_f_13, C0i_f_14, C0i_f_15, C0i_f_16, C0i_f_17, C0i_f_18, C0i_f_19, C0i_f_20, C0i_f_21, C0i_f_22, C0i_f_23, C0i_f_24, C0i_f_25, C0i_f_26, C0i_f_27, C0i_f_28, C0i_f_29, C0i_f_30, C0i_f_31, C0i_a, C1i_t_0, C1i_t_1, C1i_t_2, C1i_t_3, C1i_t_4, C1i_t_5, C1i_t_6, C1i_t_7, C1i_t_8, C1i_t_9, C1i_t_10, C1i_t_11, C1i_t_12, C1i_t_13, C1i_t_14, C1i_t_15, C1i_t_16, C1i_t_17, C1i_t_18, C1i_t_19, C1i_t_20, C1i_t_21, C1i_t_22, C1i_t_23, C1i_t_24, C1i_t_25, C1i_t_26, C1i_t_27, C1i_t_28, C1i_t_29, C1i_t_30, C1i_t_31, C1i_f_0, C1i_f_1, C1i_f_2, C1i_f_3, C1i_f_4, C1i_f_5, C1i_f_6, C1i_f_7, C1i_f_8, C1i_f_9, C1i_f_10, C1i_f_11, C1i_f_12, C1i_f_13, C1i_f_14, C1i_f_15, C1i_f_16, C1i_f_17, C1i_f_18, C1i_f_19, C1i_f_20, C1i_f_21, C1i_f_22, C1i_f_23, C1i_f_24, C1i_f_25, C1i_f_26, C1i_f_27, C1i_f_28, C1i_f_29, C1i_f_30, C1i_f_31, C1i_a, C2i_t_0, C2i_t_1, C2i_t_2, C2i_t_3, C2i_t_4, C2i_t_5, C2i_t_6, C2i_t_7, C2i_t_8, C2i_t_9, C2i_t_10, C2i_t_11, C2i_t_12, C2i_t_13, C2i_t_14, C2i_t_15, C2i_t_16, C2i_t_17, C2i_t_18, C2i_t_19, C2i_t_20, C2i_t_21, C2i_t_22, C2i_t_23, C2i_t_24, C2i_t_25, C2i_t_26, C2i_t_27, C2i_t_28, C2i_t_29, C2i_t_30, C2i_t_31, C2i_f_0, C2i_f_1, C2i_f_2, C2i_f_3, C2i_f_4, C2i_f_5, C2i_f_6, C2i_f_7, C2i_f_8, C2i_f_9, C2i_f_10, C2i_f_11, C2i_f_12, C2i_f_13, C2i_f_14, C2i_f_15, C2i_f_16, C2i_f_17, C2i_f_18, C2i_f_19, C2i_f_20, C2i_f_21, C2i_f_22, C2i_f_23, C2i_f_24, C2i_f_25, C2i_f_26, C2i_f_27, C2i_f_28, C2i_f_29, C2i_f_30, C2i_f_31, C2i_a, C3i_t_0, C3i_t_1, C3i_t_2, C3i_t_3, C3i_t_4, C3i_t_5, C3i_t_6, C3i_t_7, C3i_t_8, C3i_t_9, C3i_t_10, C3i_t_11, C3i_t_12, C3i_t_13, C3i_t_14, C3i_t_15, C3i_t_16, C3i_t_17, C3i_t_18, C3i_t_19, C3i_t_20, C3i_t_21, C3i_t_22, C3i_t_23, C3i_t_24, C3i_t_25, C3i_t_26, C3i_t_27, C3i_t_28, C3i_t_29, C3i_t_30, C3i_t_31, C3i_f_0, C3i_f_1, C3i_f_2, C3i_f_3, C3i_f_4, C3i_f_5, C3i_f_6, C3i_f_7, C3i_f_8, C3i_f_9, C3i_f_10, C3i_f_11, C3i_f_12, C3i_f_13, C3i_f_14, C3i_f_15, C3i_f_16, C3i_f_17, C3i_f_18, C3i_f_19, C3i_f_20, C3i_f_21, C3i_f_22, C3i_f_23, C3i_f_24, C3i_f_25, C3i_f_26, C3i_f_27, C3i_f_28, C3i_f_29, C3i_f_30, C3i_f_31, C3i_a, Pi_t_0, Pi_t_1, Pi_t_2, Pi_t_3, Pi_t_4, Pi_t_5, Pi_t_6, Pi_t_7, Pi_t_8, Pi_t_9, Pi_t_10, Pi_t_11, Pi_t_12, Pi_t_13, Pi_t_14, Pi_t_15, Pi_t_16, Pi_t_17, Pi_t_18, Pi_t_19, Pi_t_20, Pi_t_21, Pi_t_22, Pi_t_23, Pi_t_24, Pi_t_25, Pi_t_26, Pi_t_27, Pi_t_28, Pi_t_29, Pi_t_30, Pi_t_31, Pi_f_0, Pi_f_1, Pi_f_2, Pi_f_3, Pi_f_4, Pi_f_5, Pi_f_6, Pi_f_7, Pi_f_8, Pi_f_9, Pi_f_10, Pi_f_11, Pi_f_12, Pi_f_13, Pi_f_14, Pi_f_15, Pi_f_16, Pi_f_17, Pi_f_18, Pi_f_19, Pi_f_20, Pi_f_21, Pi_f_22, Pi_f_23, Pi_f_24, Pi_f_25, Pi_f_26, Pi_f_27, Pi_f_28, Pi_f_29, Pi_f_30, Pi_f_31, Pi_a, C0o_t_0, C0o_t_1, C0o_t_2, C0o_t_3, C0o_t_4, C0o_t_5, C0o_t_6, C0o_t_7, C0o_t_8, C0o_t_9, C0o_t_10, C0o_t_11, C0o_t_12, C0o_t_13, C0o_t_14, C0o_t_15, C0o_t_16, C0o_t_17, C0o_t_18, C0o_t_19, C0o_t_20, C0o_t_21, C0o_t_22, C0o_t_23, C0o_t_24, C0o_t_25, C0o_t_26, C0o_t_27, C0o_t_28, C0o_t_29, C0o_t_30, C0o_t_31, C0o_f_0, C0o_f_1, C0o_f_2, C0o_f_3, C0o_f_4, C0o_f_5, C0o_f_6, C0o_f_7, C0o_f_8, C0o_f_9, C0o_f_10, C0o_f_11, C0o_f_12, C0o_f_13, C0o_f_14, C0o_f_15, C0o_f_16, C0o_f_17, C0o_f_18, C0o_f_19, C0o_f_20, C0o_f_21, C0o_f_22, C0o_f_23, C0o_f_24, C0o_f_25, C0o_f_26, C0o_f_27, C0o_f_28, C0o_f_29, C0o_f_30, C0o_f_31, C0o_a, C1o_t_0, C1o_t_1, C1o_t_2, C1o_t_3, C1o_t_4, C1o_t_5, C1o_t_6, C1o_t_7, C1o_t_8, C1o_t_9, C1o_t_10, C1o_t_11, C1o_t_12, C1o_t_13, C1o_t_14, C1o_t_15, C1o_t_16, C1o_t_17, C1o_t_18, C1o_t_19, C1o_t_20, C1o_t_21, C1o_t_22, C1o_t_23, C1o_t_24, C1o_t_25, C1o_t_26, C1o_t_27, C1o_t_28, C1o_t_29, C1o_t_30, C1o_t_31, C1o_f_0, C1o_f_1, C1o_f_2, C1o_f_3, C1o_f_4, C1o_f_5, C1o_f_6, C1o_f_7, C1o_f_8, C1o_f_9, C1o_f_10, C1o_f_11, C1o_f_12, C1o_f_13, C1o_f_14, C1o_f_15, C1o_f_16, C1o_f_17, C1o_f_18, C1o_f_19, C1o_f_20, C1o_f_21, C1o_f_22, C1o_f_23, C1o_f_24, C1o_f_25, C1o_f_26, C1o_f_27, C1o_f_28, C1o_f_29, C1o_f_30, C1o_f_31, C1o_a, C2o_t_0, C2o_t_1, C2o_t_2, C2o_t_3, C2o_t_4, C2o_t_5, C2o_t_6, C2o_t_7, C2o_t_8, C2o_t_9, C2o_t_10, C2o_t_11, C2o_t_12, C2o_t_13, C2o_t_14, C2o_t_15, C2o_t_16, C2o_t_17, C2o_t_18, C2o_t_19, C2o_t_20, C2o_t_21, C2o_t_22, C2o_t_23, C2o_t_24, C2o_t_25, C2o_t_26, C2o_t_27, C2o_t_28, C2o_t_29, C2o_t_30, C2o_t_31, C2o_f_0, C2o_f_1, C2o_f_2, C2o_f_3, C2o_f_4, C2o_f_5, C2o_f_6, C2o_f_7, C2o_f_8, C2o_f_9, C2o_f_10, C2o_f_11, C2o_f_12, C2o_f_13, C2o_f_14, C2o_f_15, C2o_f_16, C2o_f_17, C2o_f_18, C2o_f_19, C2o_f_20, C2o_f_21, C2o_f_22, C2o_f_23, C2o_f_24, C2o_f_25, C2o_f_26, C2o_f_27, C2o_f_28, C2o_f_29, C2o_f_30, C2o_f_31, C2o_a, C3o_t_0, C3o_t_1, C3o_t_2, C3o_t_3, C3o_t_4, C3o_t_5, C3o_t_6, C3o_t_7, C3o_t_8, C3o_t_9, C3o_t_10, C3o_t_11, C3o_t_12, C3o_t_13, C3o_t_14, C3o_t_15, C3o_t_16, C3o_t_17, C3o_t_18, C3o_t_19, C3o_t_20, C3o_t_21, C3o_t_22, C3o_t_23, C3o_t_24, C3o_t_25, C3o_t_26, C3o_t_27, C3o_t_28, C3o_t_29, C3o_t_30, C3o_t_31, C3o_f_0, C3o_f_1, C3o_f_2, C3o_f_3, C3o_f_4, C3o_f_5, C3o_f_6, C3o_f_7, C3o_f_8, C3o_f_9, C3o_f_10, C3o_f_11, C3o_f_12, C3o_f_13, C3o_f_14, C3o_f_15, C3o_f_16, C3o_f_17, C3o_f_18, C3o_f_19, C3o_f_20, C3o_f_21, C3o_f_22, C3o_f_23, C3o_f_24, C3o_f_25, C3o_f_26, C3o_f_27, C3o_f_28, C3o_f_29, C3o_f_30, C3o_f_31, C3o_a, Po_t_0, Po_t_1, Po_t_2, Po_t_3, Po_t_4, Po_t_5, Po_t_6, Po_t_7, Po_t_8, Po_t_9, Po_t_10, Po_t_11, Po_t_12, Po_t_13, Po_t_14, Po_t_15, Po_t_16, Po_t_17, Po_t_18, Po_t_19, Po_t_20, Po_t_21, Po_t_22, Po_t_23, Po_t_24, Po_t_25, Po_t_26, Po_t_27, Po_t_28, Po_t_29, Po_t_30, Po_t_31, Po_f_0, Po_f_1, Po_f_2, Po_f_3, Po_f_4, Po_f_5, Po_f_6, Po_f_7, Po_f_8, Po_f_9, Po_f_10, Po_f_11, Po_f_12, Po_f_13, Po_f_14, Po_f_15, Po_f_16, Po_f_17, Po_f_18, Po_f_19, Po_f_20, Po_f_21, Po_f_22, Po_f_23, Po_f_24, Po_f_25, Po_f_26, Po_f_27, Po_f_28, Po_f_29, Po_f_30, Po_f_31, Po_a, done, failed;
+electrical reset, C0i_t_0, C0i_t_1, C0i_t_2, C0i_t_3, C0i_t_4, C0i_t_5, C0i_t_6, C0i_t_7, C0i_t_8, C0i_t_9, C0i_t_10, C0i_t_11, C0i_t_12, C0i_t_13, C0i_t_14, C0i_t_15, C0i_t_16, C0i_t_17, C0i_t_18, C0i_t_19, C0i_t_20, C0i_t_21, C0i_t_22, C0i_t_23, C0i_t_24, C0i_t_25, C0i_t_26, C0i_t_27, C0i_t_28, C0i_t_29, C0i_t_30, C0i_t_31, C0i_f_0, C0i_f_1, C0i_f_2, C0i_f_3, C0i_f_4, C0i_f_5, C0i_f_6, C0i_f_7, C0i_f_8, C0i_f_9, C0i_f_10, C0i_f_11, C0i_f_12, C0i_f_13, C0i_f_14, C0i_f_15, C0i_f_16, C0i_f_17, C0i_f_18, C0i_f_19, C0i_f_20, C0i_f_21, C0i_f_22, C0i_f_23, C0i_f_24, C0i_f_25, C0i_f_26, C0i_f_27, C0i_f_28, C0i_f_29, C0i_f_30, C0i_f_31, C0i_a, C1i_t_0, C1i_t_1, C1i_t_2, C1i_t_3, C1i_t_4, C1i_t_5, C1i_t_6, C1i_t_7, C1i_t_8, C1i_t_9, C1i_t_10, C1i_t_11, C1i_t_12, C1i_t_13, C1i_t_14, C1i_t_15, C1i_t_16, C1i_t_17, C1i_t_18, C1i_t_19, C1i_t_20, C1i_t_21, C1i_t_22, C1i_t_23, C1i_t_24, C1i_t_25, C1i_t_26, C1i_t_27, C1i_t_28, C1i_t_29, C1i_t_30, C1i_t_31, C1i_f_0, C1i_f_1, C1i_f_2, C1i_f_3, C1i_f_4, C1i_f_5, C1i_f_6, C1i_f_7, C1i_f_8, C1i_f_9, C1i_f_10, C1i_f_11, C1i_f_12, C1i_f_13, C1i_f_14, C1i_f_15, C1i_f_16, C1i_f_17, C1i_f_18, C1i_f_19, C1i_f_20, C1i_f_21, C1i_f_22, C1i_f_23, C1i_f_24, C1i_f_25, C1i_f_26, C1i_f_27, C1i_f_28, C1i_f_29, C1i_f_30, C1i_f_31, C1i_a, C2i_t_0, C2i_t_1, C2i_t_2, C2i_t_3, C2i_t_4, C2i_t_5, C2i_t_6, C2i_t_7, C2i_t_8, C2i_t_9, C2i_t_10, C2i_t_11, C2i_t_12, C2i_t_13, C2i_t_14, C2i_t_15, C2i_t_16, C2i_t_17, C2i_t_18, C2i_t_19, C2i_t_20, C2i_t_21, C2i_t_22, C2i_t_23, C2i_t_24, C2i_t_25, C2i_t_26, C2i_t_27, C2i_t_28, C2i_t_29, C2i_t_30, C2i_t_31, C2i_f_0, C2i_f_1, C2i_f_2, C2i_f_3, C2i_f_4, C2i_f_5, C2i_f_6, C2i_f_7, C2i_f_8, C2i_f_9, C2i_f_10, C2i_f_11, C2i_f_12, C2i_f_13, C2i_f_14, C2i_f_15, C2i_f_16, C2i_f_17, C2i_f_18, C2i_f_19, C2i_f_20, C2i_f_21, C2i_f_22, C2i_f_23, C2i_f_24, C2i_f_25, C2i_f_26, C2i_f_27, C2i_f_28, C2i_f_29, C2i_f_30, C2i_f_31, C2i_a, C3i_t_0, C3i_t_1, C3i_t_2, C3i_t_3, C3i_t_4, C3i_t_5, C3i_t_6, C3i_t_7, C3i_t_8, C3i_t_9, C3i_t_10, C3i_t_11, C3i_t_12, C3i_t_13, C3i_t_14, C3i_t_15, C3i_t_16, C3i_t_17, C3i_t_18, C3i_t_19, C3i_t_20, C3i_t_21, C3i_t_22, C3i_t_23, C3i_t_24, C3i_t_25, C3i_t_26, C3i_t_27, C3i_t_28, C3i_t_29, C3i_t_30, C3i_t_31, C3i_f_0, C3i_f_1, C3i_f_2, C3i_f_3, C3i_f_4, C3i_f_5, C3i_f_6, C3i_f_7, C3i_f_8, C3i_f_9, C3i_f_10, C3i_f_11, C3i_f_12, C3i_f_13, C3i_f_14, C3i_f_15, C3i_f_16, C3i_f_17, C3i_f_18, C3i_f_19, C3i_f_20, C3i_f_21, C3i_f_22, C3i_f_23, C3i_f_24, C3i_f_25, C3i_f_26, C3i_f_27, C3i_f_28, C3i_f_29, C3i_f_30, C3i_f_31, C3i_a, Pi_t_0, Pi_t_1, Pi_t_2, Pi_t_3, Pi_t_4, Pi_t_5, Pi_t_6, Pi_t_7, Pi_t_8, Pi_t_9, Pi_t_10, Pi_t_11, Pi_t_12, Pi_t_13, Pi_t_14, Pi_t_15, Pi_t_16, Pi_t_17, Pi_t_18, Pi_t_19, Pi_t_20, Pi_t_21, Pi_t_22, Pi_t_23, Pi_t_24, Pi_t_25, Pi_t_26, Pi_t_27, Pi_t_28, Pi_t_29, Pi_t_30, Pi_t_31, Pi_f_0, Pi_f_1, Pi_f_2, Pi_f_3, Pi_f_4, Pi_f_5, Pi_f_6, Pi_f_7, Pi_f_8, Pi_f_9, Pi_f_10, Pi_f_11, Pi_f_12, Pi_f_13, Pi_f_14, Pi_f_15, Pi_f_16, Pi_f_17, Pi_f_18, Pi_f_19, Pi_f_20, Pi_f_21, Pi_f_22, Pi_f_23, Pi_f_24, Pi_f_25, Pi_f_26, Pi_f_27, Pi_f_28, Pi_f_29, Pi_f_30, Pi_f_31, Pi_a, C0o_t_0, C0o_t_1, C0o_t_2, C0o_t_3, C0o_t_4, C0o_t_5, C0o_t_6, C0o_t_7, C0o_t_8, C0o_t_9, C0o_t_10, C0o_t_11, C0o_t_12, C0o_t_13, C0o_t_14, C0o_t_15, C0o_t_16, C0o_t_17, C0o_t_18, C0o_t_19, C0o_t_20, C0o_t_21, C0o_t_22, C0o_t_23, C0o_t_24, C0o_t_25, C0o_t_26, C0o_t_27, C0o_t_28, C0o_t_29, C0o_t_30, C0o_t_31, C0o_f_0, C0o_f_1, C0o_f_2, C0o_f_3, C0o_f_4, C0o_f_5, C0o_f_6, C0o_f_7, C0o_f_8, C0o_f_9, C0o_f_10, C0o_f_11, C0o_f_12, C0o_f_13, C0o_f_14, C0o_f_15, C0o_f_16, C0o_f_17, C0o_f_18, C0o_f_19, C0o_f_20, C0o_f_21, C0o_f_22, C0o_f_23, C0o_f_24, C0o_f_25, C0o_f_26, C0o_f_27, C0o_f_28, C0o_f_29, C0o_f_30, C0o_f_31, C0o_a, C1o_t_0, C1o_t_1, C1o_t_2, C1o_t_3, C1o_t_4, C1o_t_5, C1o_t_6, C1o_t_7, C1o_t_8, C1o_t_9, C1o_t_10, C1o_t_11, C1o_t_12, C1o_t_13, C1o_t_14, C1o_t_15, C1o_t_16, C1o_t_17, C1o_t_18, C1o_t_19, C1o_t_20, C1o_t_21, C1o_t_22, C1o_t_23, C1o_t_24, C1o_t_25, C1o_t_26, C1o_t_27, C1o_t_28, C1o_t_29, C1o_t_30, C1o_t_31, C1o_f_0, C1o_f_1, C1o_f_2, C1o_f_3, C1o_f_4, C1o_f_5, C1o_f_6, C1o_f_7, C1o_f_8, C1o_f_9, C1o_f_10, C1o_f_11, C1o_f_12, C1o_f_13, C1o_f_14, C1o_f_15, C1o_f_16, C1o_f_17, C1o_f_18, C1o_f_19, C1o_f_20, C1o_f_21, C1o_f_22, C1o_f_23, C1o_f_24, C1o_f_25, C1o_f_26, C1o_f_27, C1o_f_28, C1o_f_29, C1o_f_30, C1o_f_31, C1o_a, C2o_t_0, C2o_t_1, C2o_t_2, C2o_t_3, C2o_t_4, C2o_t_5, C2o_t_6, C2o_t_7, C2o_t_8, C2o_t_9, C2o_t_10, C2o_t_11, C2o_t_12, C2o_t_13, C2o_t_14, C2o_t_15, C2o_t_16, C2o_t_17, C2o_t_18, C2o_t_19, C2o_t_20, C2o_t_21, C2o_t_22, C2o_t_23, C2o_t_24, C2o_t_25, C2o_t_26, C2o_t_27, C2o_t_28, C2o_t_29, C2o_t_30, C2o_t_31, C2o_f_0, C2o_f_1, C2o_f_2, C2o_f_3, C2o_f_4, C2o_f_5, C2o_f_6, C2o_f_7, C2o_f_8, C2o_f_9, C2o_f_10, C2o_f_11, C2o_f_12, C2o_f_13, C2o_f_14, C2o_f_15, C2o_f_16, C2o_f_17, C2o_f_18, C2o_f_19, C2o_f_20, C2o_f_21, C2o_f_22, C2o_f_23, C2o_f_24, C2o_f_25, C2o_f_26, C2o_f_27, C2o_f_28, C2o_f_29, C2o_f_30, C2o_f_31, C2o_a, C3o_t_0, C3o_t_1, C3o_t_2, C3o_t_3, C3o_t_4, C3o_t_5, C3o_t_6, C3o_t_7, C3o_t_8, C3o_t_9, C3o_t_10, C3o_t_11, C3o_t_12, C3o_t_13, C3o_t_14, C3o_t_15, C3o_t_16, C3o_t_17, C3o_t_18, C3o_t_19, C3o_t_20, C3o_t_21, C3o_t_22, C3o_t_23, C3o_t_24, C3o_t_25, C3o_t_26, C3o_t_27, C3o_t_28, C3o_t_29, C3o_t_30, C3o_t_31, C3o_f_0, C3o_f_1, C3o_f_2, C3o_f_3, C3o_f_4, C3o_f_5, C3o_f_6, C3o_f_7, C3o_f_8, C3o_f_9, C3o_f_10, C3o_f_11, C3o_f_12, C3o_f_13, C3o_f_14, C3o_f_15, C3o_f_16, C3o_f_17, C3o_f_18, C3o_f_19, C3o_f_20, C3o_f_21, C3o_f_22, C3o_f_23, C3o_f_24, C3o_f_25, C3o_f_26, C3o_f_27, C3o_f_28, C3o_f_29, C3o_f_30, C3o_f_31, C3o_a, Po_t_0, Po_t_1, Po_t_2, Po_t_3, Po_t_4, Po_t_5, Po_t_6, Po_t_7, Po_t_8, Po_t_9, Po_t_10, Po_t_11, Po_t_12, Po_t_13, Po_t_14, Po_t_15, Po_t_16, Po_t_17, Po_t_18, Po_t_19, Po_t_20, Po_t_21, Po_t_22, Po_t_23, Po_t_24, Po_t_25, Po_t_26, Po_t_27, Po_t_28, Po_t_29, Po_t_30, Po_t_31, Po_f_0, Po_f_1, Po_f_2, Po_f_3, Po_f_4, Po_f_5, Po_f_6, Po_f_7, Po_f_8, Po_f_9, Po_f_10, Po_f_11, Po_f_12, Po_f_13, Po_f_14, Po_f_15, Po_f_16, Po_f_17, Po_f_18, Po_f_19, Po_f_20, Po_f_21, Po_f_22, Po_f_23, Po_f_24, Po_f_25, Po_f_26, Po_f_27, Po_f_28, Po_f_29, Po_f_30, Po_f_31, Po_a, done, failed;
+
+
+
+
+inout dut_ready; electrical dut_ready;
+parameter real SUPPLY=0.0;
+parameter real TICK=10p, TD=0p, EDGE=10p, STOP_TIME=20u;
+parameter real CHECK_START=100.01n, IDLE_SETTLE=5n, IDLE_WINDOW=20n, IDLE_MARGIN=1n;
+// A queued tail can wait for up to five route words to finish parsing.
+// This is a liveness watchdog, not an imposed delay on any handshake.
+parameter real PROGRESS_TIMEOUT=1u;
+integer active, finished, failure, tx, phase, p, j, k, drained, quiet, all_done;
+integer tx_valid[0:4], tx_word[0:4], ack[0:4], rx_phase[0:4], rx_index[0:4];
+integer valid_word[0:4], spacer[0:4], word[0:4], held[0:4], illegal[0:4];
+integer source_checked, input_hi, input_lo, input_valid, input_illegal;
+real threshold, ready, idle_start, round_time, issued, failure_stop;
+integer idle_started, idle_completed;
+analog function integer stimulus;
+input index; integer index;
+begin case(index)
+0: stimulus=-2004318078;
+1: stimulus=-2004318078;
+2: stimulus=-2004318078;
+3: stimulus=-2004318078;
+4: stimulus=-2147483646;
+5: stimulus=324478057;
+6: stimulus=-2004318078;
+7: stimulus=-2004318078;
+8: stimulus=-2004318078;
+9: stimulus=-2004318078;
+10: stimulus=-2147483646;
+11: stimulus=324478057;
+12: stimulus=-125269886;
+13: stimulus=-2004318078;
+14: stimulus=-2004318078;
+15: stimulus=-2004318078;
+16: stimulus=-2147483646;
+17: stimulus=324478057;
+18: stimulus=-125269886;
+19: stimulus=-2004318078;
+20: stimulus=-2004318078;
+21: stimulus=-2004318078;
+22: stimulus=-2147483646;
+23: stimulus=324478057;
+24: stimulus=1145307138;
+25: stimulus=324478057;
+26: stimulus=1145307138;
+27: stimulus=324478057;
+28: stimulus=-196852670;
+29: stimulus=1145324546;
+30: stimulus=324478057;
+31: stimulus=-196852670;
+32: stimulus=1145324546;
+33: stimulus=324478057;
+34: stimulus=948471938;
+35: stimulus=2;
+36: stimulus=324478057;
+37: stimulus=948471938;
+38: stimulus=2;
+39: stimulus=324478057;
+default: stimulus=0;
+endcase end endfunction
+analog function integer stimulus_hi;
+input index; integer index;
+begin case(index)
+0: stimulus_hi=34952;
+1: stimulus_hi=34952;
+2: stimulus_hi=34952;
+3: stimulus_hi=34952;
+4: stimulus_hi=32768;
+5: stimulus_hi=4951;
+6: stimulus_hi=34952;
+7: stimulus_hi=34952;
+8: stimulus_hi=34952;
+9: stimulus_hi=34952;
+10: stimulus_hi=32768;
+11: stimulus_hi=4951;
+12: stimulus_hi=63624;
+13: stimulus_hi=34952;
+14: stimulus_hi=34952;
+15: stimulus_hi=34952;
+16: stimulus_hi=32768;
+17: stimulus_hi=4951;
+18: stimulus_hi=63624;
+19: stimulus_hi=34952;
+20: stimulus_hi=34952;
+21: stimulus_hi=34952;
+22: stimulus_hi=32768;
+23: stimulus_hi=4951;
+24: stimulus_hi=17476;
+25: stimulus_hi=4951;
+26: stimulus_hi=17476;
+27: stimulus_hi=4951;
+28: stimulus_hi=62532;
+29: stimulus_hi=17476;
+30: stimulus_hi=4951;
+31: stimulus_hi=62532;
+32: stimulus_hi=17476;
+33: stimulus_hi=4951;
+34: stimulus_hi=14472;
+35: stimulus_hi=0;
+36: stimulus_hi=4951;
+37: stimulus_hi=14472;
+38: stimulus_hi=0;
+39: stimulus_hi=4951;
+default: stimulus_hi=0;
+endcase end endfunction
+analog function integer stimulus_lo;
+input index; integer index;
+begin case(index)
+0: stimulus_lo=34946;
+1: stimulus_lo=34946;
+2: stimulus_lo=34946;
+3: stimulus_lo=34946;
+4: stimulus_lo=2;
+5: stimulus_lo=9321;
+6: stimulus_lo=34946;
+7: stimulus_lo=34946;
+8: stimulus_lo=34946;
+9: stimulus_lo=34946;
+10: stimulus_lo=2;
+11: stimulus_lo=9321;
+12: stimulus_lo=34946;
+13: stimulus_lo=34946;
+14: stimulus_lo=34946;
+15: stimulus_lo=34946;
+16: stimulus_lo=2;
+17: stimulus_lo=9321;
+18: stimulus_lo=34946;
+19: stimulus_lo=34946;
+20: stimulus_lo=34946;
+21: stimulus_lo=34946;
+22: stimulus_lo=2;
+23: stimulus_lo=9321;
+24: stimulus_lo=2;
+25: stimulus_lo=9321;
+26: stimulus_lo=2;
+27: stimulus_lo=9321;
+28: stimulus_lo=17474;
+29: stimulus_lo=17410;
+30: stimulus_lo=9321;
+31: stimulus_lo=17474;
+32: stimulus_lo=17410;
+33: stimulus_lo=9321;
+34: stimulus_lo=34946;
+35: stimulus_lo=2;
+36: stimulus_lo=9321;
+37: stimulus_lo=34946;
+38: stimulus_lo=2;
+39: stimulus_lo=9321;
+default: stimulus_lo=0;
+endcase end endfunction
+analog function integer source;
+input index; integer index;
+begin case(index)
+0: source=4;
+1: source=4;
+2: source=4;
+3: source=4;
+4: source=4;
+5: source=4;
+6: source=4;
+7: source=4;
+8: source=4;
+9: source=4;
+10: source=4;
+11: source=4;
+12: source=4;
+13: source=4;
+14: source=4;
+15: source=4;
+16: source=4;
+17: source=4;
+18: source=4;
+19: source=4;
+20: source=4;
+21: source=4;
+22: source=4;
+23: source=4;
+24: source=4;
+25: source=4;
+26: source=4;
+27: source=4;
+28: source=4;
+29: source=4;
+30: source=4;
+31: source=4;
+32: source=4;
+33: source=4;
+34: source=4;
+35: source=4;
+36: source=4;
+37: source=4;
+38: source=4;
+39: source=4;
+default: source=0;
+endcase end endfunction
+analog function integer source_hi;
+input index; integer index;
+begin case(index)
+0: source_hi=0;
+1: source_hi=0;
+2: source_hi=0;
+3: source_hi=0;
+4: source_hi=0;
+5: source_hi=0;
+6: source_hi=0;
+7: source_hi=0;
+8: source_hi=0;
+9: source_hi=0;
+10: source_hi=0;
+11: source_hi=0;
+12: source_hi=0;
+13: source_hi=0;
+14: source_hi=0;
+15: source_hi=0;
+16: source_hi=0;
+17: source_hi=0;
+18: source_hi=0;
+19: source_hi=0;
+20: source_hi=0;
+21: source_hi=0;
+22: source_hi=0;
+23: source_hi=0;
+24: source_hi=0;
+25: source_hi=0;
+26: source_hi=0;
+27: source_hi=0;
+28: source_hi=0;
+29: source_hi=0;
+30: source_hi=0;
+31: source_hi=0;
+32: source_hi=0;
+33: source_hi=0;
+34: source_hi=0;
+35: source_hi=0;
+36: source_hi=0;
+37: source_hi=0;
+38: source_hi=0;
+39: source_hi=0;
+default: source_hi=0;
+endcase end endfunction
+analog function integer source_lo;
+input index; integer index;
+begin case(index)
+0: source_lo=4;
+1: source_lo=4;
+2: source_lo=4;
+3: source_lo=4;
+4: source_lo=4;
+5: source_lo=4;
+6: source_lo=4;
+7: source_lo=4;
+8: source_lo=4;
+9: source_lo=4;
+10: source_lo=4;
+11: source_lo=4;
+12: source_lo=4;
+13: source_lo=4;
+14: source_lo=4;
+15: source_lo=4;
+16: source_lo=4;
+17: source_lo=4;
+18: source_lo=4;
+19: source_lo=4;
+20: source_lo=4;
+21: source_lo=4;
+22: source_lo=4;
+23: source_lo=4;
+24: source_lo=4;
+25: source_lo=4;
+26: source_lo=4;
+27: source_lo=4;
+28: source_lo=4;
+29: source_lo=4;
+30: source_lo=4;
+31: source_lo=4;
+32: source_lo=4;
+33: source_lo=4;
+34: source_lo=4;
+35: source_lo=4;
+36: source_lo=4;
+37: source_lo=4;
+38: source_lo=4;
+39: source_lo=4;
+default: source_lo=0;
+endcase end endfunction
+analog function integer case_id;
+input index; integer index;
+begin case(index)
+0: case_id=0;
+1: case_id=0;
+2: case_id=0;
+3: case_id=0;
+4: case_id=0;
+5: case_id=0;
+6: case_id=1;
+7: case_id=1;
+8: case_id=1;
+9: case_id=1;
+10: case_id=1;
+11: case_id=1;
+12: case_id=2;
+13: case_id=2;
+14: case_id=2;
+15: case_id=2;
+16: case_id=2;
+17: case_id=2;
+18: case_id=3;
+19: case_id=3;
+20: case_id=3;
+21: case_id=3;
+22: case_id=3;
+23: case_id=3;
+24: case_id=4;
+25: case_id=4;
+26: case_id=5;
+27: case_id=5;
+28: case_id=6;
+29: case_id=6;
+30: case_id=6;
+31: case_id=7;
+32: case_id=7;
+33: case_id=7;
+34: case_id=8;
+35: case_id=8;
+36: case_id=8;
+37: case_id=9;
+38: case_id=9;
+39: case_id=9;
+default: case_id=0;
+endcase end endfunction
+analog function integer case_id_hi;
+input index; integer index;
+begin case(index)
+0: case_id_hi=0;
+1: case_id_hi=0;
+2: case_id_hi=0;
+3: case_id_hi=0;
+4: case_id_hi=0;
+5: case_id_hi=0;
+6: case_id_hi=0;
+7: case_id_hi=0;
+8: case_id_hi=0;
+9: case_id_hi=0;
+10: case_id_hi=0;
+11: case_id_hi=0;
+12: case_id_hi=0;
+13: case_id_hi=0;
+14: case_id_hi=0;
+15: case_id_hi=0;
+16: case_id_hi=0;
+17: case_id_hi=0;
+18: case_id_hi=0;
+19: case_id_hi=0;
+20: case_id_hi=0;
+21: case_id_hi=0;
+22: case_id_hi=0;
+23: case_id_hi=0;
+24: case_id_hi=0;
+25: case_id_hi=0;
+26: case_id_hi=0;
+27: case_id_hi=0;
+28: case_id_hi=0;
+29: case_id_hi=0;
+30: case_id_hi=0;
+31: case_id_hi=0;
+32: case_id_hi=0;
+33: case_id_hi=0;
+34: case_id_hi=0;
+35: case_id_hi=0;
+36: case_id_hi=0;
+37: case_id_hi=0;
+38: case_id_hi=0;
+39: case_id_hi=0;
+default: case_id_hi=0;
+endcase end endfunction
+analog function integer case_id_lo;
+input index; integer index;
+begin case(index)
+0: case_id_lo=0;
+1: case_id_lo=0;
+2: case_id_lo=0;
+3: case_id_lo=0;
+4: case_id_lo=0;
+5: case_id_lo=0;
+6: case_id_lo=1;
+7: case_id_lo=1;
+8: case_id_lo=1;
+9: case_id_lo=1;
+10: case_id_lo=1;
+11: case_id_lo=1;
+12: case_id_lo=2;
+13: case_id_lo=2;
+14: case_id_lo=2;
+15: case_id_lo=2;
+16: case_id_lo=2;
+17: case_id_lo=2;
+18: case_id_lo=3;
+19: case_id_lo=3;
+20: case_id_lo=3;
+21: case_id_lo=3;
+22: case_id_lo=3;
+23: case_id_lo=3;
+24: case_id_lo=4;
+25: case_id_lo=4;
+26: case_id_lo=5;
+27: case_id_lo=5;
+28: case_id_lo=6;
+29: case_id_lo=6;
+30: case_id_lo=6;
+31: case_id_lo=7;
+32: case_id_lo=7;
+33: case_id_lo=7;
+34: case_id_lo=8;
+35: case_id_lo=8;
+36: case_id_lo=8;
+37: case_id_lo=9;
+38: case_id_lo=9;
+39: case_id_lo=9;
+default: case_id_lo=0;
+endcase end endfunction
+analog function integer local_id;
+input index; integer index;
+begin case(index)
+0: local_id=0;
+1: local_id=1;
+2: local_id=2;
+3: local_id=3;
+4: local_id=4;
+5: local_id=5;
+6: local_id=0;
+7: local_id=1;
+8: local_id=2;
+9: local_id=3;
+10: local_id=4;
+11: local_id=5;
+12: local_id=0;
+13: local_id=1;
+14: local_id=2;
+15: local_id=3;
+16: local_id=4;
+17: local_id=5;
+18: local_id=0;
+19: local_id=1;
+20: local_id=2;
+21: local_id=3;
+22: local_id=4;
+23: local_id=5;
+24: local_id=0;
+25: local_id=1;
+26: local_id=0;
+27: local_id=1;
+28: local_id=0;
+29: local_id=1;
+30: local_id=2;
+31: local_id=0;
+32: local_id=1;
+33: local_id=2;
+34: local_id=0;
+35: local_id=1;
+36: local_id=2;
+37: local_id=0;
+38: local_id=1;
+39: local_id=2;
+default: local_id=0;
+endcase end endfunction
+analog function integer local_id_hi;
+input index; integer index;
+begin case(index)
+0: local_id_hi=0;
+1: local_id_hi=0;
+2: local_id_hi=0;
+3: local_id_hi=0;
+4: local_id_hi=0;
+5: local_id_hi=0;
+6: local_id_hi=0;
+7: local_id_hi=0;
+8: local_id_hi=0;
+9: local_id_hi=0;
+10: local_id_hi=0;
+11: local_id_hi=0;
+12: local_id_hi=0;
+13: local_id_hi=0;
+14: local_id_hi=0;
+15: local_id_hi=0;
+16: local_id_hi=0;
+17: local_id_hi=0;
+18: local_id_hi=0;
+19: local_id_hi=0;
+20: local_id_hi=0;
+21: local_id_hi=0;
+22: local_id_hi=0;
+23: local_id_hi=0;
+24: local_id_hi=0;
+25: local_id_hi=0;
+26: local_id_hi=0;
+27: local_id_hi=0;
+28: local_id_hi=0;
+29: local_id_hi=0;
+30: local_id_hi=0;
+31: local_id_hi=0;
+32: local_id_hi=0;
+33: local_id_hi=0;
+34: local_id_hi=0;
+35: local_id_hi=0;
+36: local_id_hi=0;
+37: local_id_hi=0;
+38: local_id_hi=0;
+39: local_id_hi=0;
+default: local_id_hi=0;
+endcase end endfunction
+analog function integer local_id_lo;
+input index; integer index;
+begin case(index)
+0: local_id_lo=0;
+1: local_id_lo=1;
+2: local_id_lo=2;
+3: local_id_lo=3;
+4: local_id_lo=4;
+5: local_id_lo=5;
+6: local_id_lo=0;
+7: local_id_lo=1;
+8: local_id_lo=2;
+9: local_id_lo=3;
+10: local_id_lo=4;
+11: local_id_lo=5;
+12: local_id_lo=0;
+13: local_id_lo=1;
+14: local_id_lo=2;
+15: local_id_lo=3;
+16: local_id_lo=4;
+17: local_id_lo=5;
+18: local_id_lo=0;
+19: local_id_lo=1;
+20: local_id_lo=2;
+21: local_id_lo=3;
+22: local_id_lo=4;
+23: local_id_lo=5;
+24: local_id_lo=0;
+25: local_id_lo=1;
+26: local_id_lo=0;
+27: local_id_lo=1;
+28: local_id_lo=0;
+29: local_id_lo=1;
+30: local_id_lo=2;
+31: local_id_lo=0;
+32: local_id_lo=1;
+33: local_id_lo=2;
+34: local_id_lo=0;
+35: local_id_lo=1;
+36: local_id_lo=2;
+37: local_id_lo=0;
+38: local_id_lo=1;
+39: local_id_lo=2;
+default: local_id_lo=0;
+endcase end endfunction
+analog function integer input_index;
+input index; integer index;
+begin case(index)
+0: input_index=0;
+1: input_index=1;
+2: input_index=2;
+3: input_index=3;
+4: input_index=4;
+5: input_index=5;
+6: input_index=6;
+7: input_index=7;
+8: input_index=8;
+9: input_index=9;
+10: input_index=10;
+11: input_index=11;
+12: input_index=12;
+13: input_index=13;
+14: input_index=14;
+15: input_index=15;
+16: input_index=16;
+17: input_index=17;
+18: input_index=18;
+19: input_index=19;
+20: input_index=20;
+21: input_index=21;
+22: input_index=22;
+23: input_index=23;
+24: input_index=24;
+25: input_index=25;
+26: input_index=26;
+27: input_index=27;
+28: input_index=28;
+29: input_index=29;
+30: input_index=30;
+31: input_index=31;
+32: input_index=32;
+33: input_index=33;
+34: input_index=34;
+35: input_index=35;
+36: input_index=36;
+37: input_index=37;
+38: input_index=38;
+39: input_index=39;
+default: input_index=0;
+endcase end endfunction
+analog function integer input_index_hi;
+input index; integer index;
+begin case(index)
+0: input_index_hi=0;
+1: input_index_hi=0;
+2: input_index_hi=0;
+3: input_index_hi=0;
+4: input_index_hi=0;
+5: input_index_hi=0;
+6: input_index_hi=0;
+7: input_index_hi=0;
+8: input_index_hi=0;
+9: input_index_hi=0;
+10: input_index_hi=0;
+11: input_index_hi=0;
+12: input_index_hi=0;
+13: input_index_hi=0;
+14: input_index_hi=0;
+15: input_index_hi=0;
+16: input_index_hi=0;
+17: input_index_hi=0;
+18: input_index_hi=0;
+19: input_index_hi=0;
+20: input_index_hi=0;
+21: input_index_hi=0;
+22: input_index_hi=0;
+23: input_index_hi=0;
+24: input_index_hi=0;
+25: input_index_hi=0;
+26: input_index_hi=0;
+27: input_index_hi=0;
+28: input_index_hi=0;
+29: input_index_hi=0;
+30: input_index_hi=0;
+31: input_index_hi=0;
+32: input_index_hi=0;
+33: input_index_hi=0;
+34: input_index_hi=0;
+35: input_index_hi=0;
+36: input_index_hi=0;
+37: input_index_hi=0;
+38: input_index_hi=0;
+39: input_index_hi=0;
+default: input_index_hi=0;
+endcase end endfunction
+analog function integer input_index_lo;
+input index; integer index;
+begin case(index)
+0: input_index_lo=0;
+1: input_index_lo=1;
+2: input_index_lo=2;
+3: input_index_lo=3;
+4: input_index_lo=4;
+5: input_index_lo=5;
+6: input_index_lo=6;
+7: input_index_lo=7;
+8: input_index_lo=8;
+9: input_index_lo=9;
+10: input_index_lo=10;
+11: input_index_lo=11;
+12: input_index_lo=12;
+13: input_index_lo=13;
+14: input_index_lo=14;
+15: input_index_lo=15;
+16: input_index_lo=16;
+17: input_index_lo=17;
+18: input_index_lo=18;
+19: input_index_lo=19;
+20: input_index_lo=20;
+21: input_index_lo=21;
+22: input_index_lo=22;
+23: input_index_lo=23;
+24: input_index_lo=24;
+25: input_index_lo=25;
+26: input_index_lo=26;
+27: input_index_lo=27;
+28: input_index_lo=28;
+29: input_index_lo=29;
+30: input_index_lo=30;
+31: input_index_lo=31;
+32: input_index_lo=32;
+33: input_index_lo=33;
+34: input_index_lo=34;
+35: input_index_lo=35;
+36: input_index_lo=36;
+37: input_index_lo=37;
+38: input_index_lo=38;
+39: input_index_lo=39;
+default: input_index_lo=0;
+endcase end endfunction
+analog function integer isolated;
+input index; integer index;
+begin case(index)
+0: isolated=1;
+1: isolated=1;
+2: isolated=1;
+3: isolated=1;
+4: isolated=1;
+5: isolated=1;
+6: isolated=0;
+7: isolated=0;
+8: isolated=0;
+9: isolated=0;
+10: isolated=0;
+11: isolated=0;
+12: isolated=1;
+13: isolated=1;
+14: isolated=1;
+15: isolated=1;
+16: isolated=1;
+17: isolated=1;
+18: isolated=0;
+19: isolated=0;
+20: isolated=0;
+21: isolated=0;
+22: isolated=0;
+23: isolated=0;
+24: isolated=1;
+25: isolated=1;
+26: isolated=0;
+27: isolated=0;
+28: isolated=1;
+29: isolated=1;
+30: isolated=1;
+31: isolated=0;
+32: isolated=0;
+33: isolated=0;
+34: isolated=1;
+35: isolated=1;
+36: isolated=1;
+37: isolated=0;
+38: isolated=0;
+39: isolated=0;
+default: isolated=0;
+endcase end endfunction
+analog function integer route_continues;
+input index; integer index;
+begin case(index)
+0: route_continues=1;
+1: route_continues=1;
+2: route_continues=1;
+3: route_continues=1;
+4: route_continues=0;
+5: route_continues=0;
+6: route_continues=1;
+7: route_continues=1;
+8: route_continues=1;
+9: route_continues=1;
+10: route_continues=0;
+11: route_continues=0;
+12: route_continues=1;
+13: route_continues=1;
+14: route_continues=1;
+15: route_continues=1;
+16: route_continues=0;
+17: route_continues=0;
+18: route_continues=1;
+19: route_continues=1;
+20: route_continues=1;
+21: route_continues=1;
+22: route_continues=0;
+23: route_continues=0;
+24: route_continues=0;
+25: route_continues=0;
+26: route_continues=0;
+27: route_continues=0;
+28: route_continues=1;
+29: route_continues=0;
+30: route_continues=0;
+31: route_continues=1;
+32: route_continues=0;
+33: route_continues=0;
+34: route_continues=1;
+35: route_continues=0;
+36: route_continues=0;
+37: route_continues=1;
+38: route_continues=0;
+39: route_continues=0;
+default: route_continues=0;
+endcase end endfunction
+analog function integer drain;
+input index; integer index;
+begin case(index)
+0: drain=0;
+1: drain=0;
+2: drain=0;
+3: drain=0;
+4: drain=0;
+5: drain=1;
+6: drain=0;
+7: drain=0;
+8: drain=0;
+9: drain=0;
+10: drain=0;
+11: drain=1;
+12: drain=0;
+13: drain=0;
+14: drain=0;
+15: drain=0;
+16: drain=0;
+17: drain=1;
+18: drain=0;
+19: drain=0;
+20: drain=0;
+21: drain=0;
+22: drain=0;
+23: drain=1;
+24: drain=0;
+25: drain=1;
+26: drain=0;
+27: drain=1;
+28: drain=0;
+29: drain=0;
+30: drain=1;
+31: drain=0;
+32: drain=0;
+33: drain=1;
+34: drain=0;
+35: drain=0;
+36: drain=1;
+37: drain=0;
+38: drain=0;
+39: drain=1;
+default: drain=0;
+endcase end endfunction
+analog function integer gold0;
+input index; integer index;
+begin case(index)
+0: gold0=-2004318078;
+1: gold0=-2004318078;
+2: gold0=-2004318078;
+3: gold0=-2004318078;
+4: gold0=324478057;
+5: gold0=-2004318078;
+6: gold0=-2004318078;
+7: gold0=-2004318078;
+8: gold0=-2004318078;
+9: gold0=324478057;
+10: gold0=-2004318078;
+11: gold0=324478057;
+12: gold0=-2004318078;
+13: gold0=324478057;
+14: gold0=1145044994;
+15: gold0=324478057;
+16: gold0=1145044994;
+17: gold0=324478057;
+default: gold0=0;
+endcase end endfunction
+analog function integer gold0_hi;
+input index; integer index;
+begin case(index)
+0: gold0_hi=34952;
+1: gold0_hi=34952;
+2: gold0_hi=34952;
+3: gold0_hi=34952;
+4: gold0_hi=4951;
+5: gold0_hi=34952;
+6: gold0_hi=34952;
+7: gold0_hi=34952;
+8: gold0_hi=34952;
+9: gold0_hi=4951;
+10: gold0_hi=34952;
+11: gold0_hi=4951;
+12: gold0_hi=34952;
+13: gold0_hi=4951;
+14: gold0_hi=17472;
+15: gold0_hi=4951;
+16: gold0_hi=17472;
+17: gold0_hi=4951;
+default: gold0_hi=0;
+endcase end endfunction
+analog function integer gold0_lo;
+input index; integer index;
+begin case(index)
+0: gold0_lo=34946;
+1: gold0_lo=34946;
+2: gold0_lo=34946;
+3: gold0_lo=34946;
+4: gold0_lo=9321;
+5: gold0_lo=34946;
+6: gold0_lo=34946;
+7: gold0_lo=34946;
+8: gold0_lo=34946;
+9: gold0_lo=9321;
+10: gold0_lo=34946;
+11: gold0_lo=9321;
+12: gold0_lo=34946;
+13: gold0_lo=9321;
+14: gold0_lo=2;
+15: gold0_lo=9321;
+16: gold0_lo=2;
+17: gold0_lo=9321;
+default: gold0_lo=0;
+endcase end endfunction
+analog function integer target0;
+input index; integer index;
+begin case(index)
+0: target0=0;
+1: target0=0;
+2: target0=0;
+3: target0=0;
+4: target0=0;
+5: target0=5;
+6: target0=0;
+7: target0=0;
+8: target0=0;
+9: target0=0;
+10: target0=0;
+11: target0=10;
+12: target0=0;
+13: target0=0;
+14: target0=0;
+15: target0=0;
+16: target0=0;
+17: target0=12;
+18: target0=0;
+19: target0=0;
+20: target0=0;
+21: target0=0;
+22: target0=0;
+23: target0=14;
+24: target0=0;
+25: target0=14;
+26: target0=0;
+27: target0=14;
+28: target0=0;
+29: target0=0;
+30: target0=16;
+31: target0=0;
+32: target0=0;
+33: target0=18;
+34: target0=0;
+35: target0=0;
+36: target0=18;
+37: target0=0;
+38: target0=0;
+39: target0=18;
+default: target0=0;
+endcase end endfunction
+analog function integer gold1;
+input index; integer index;
+begin case(index)
+0: gold1=-2004318078;
+1: gold1=324478057;
+2: gold1=-2004318078;
+3: gold1=324478057;
+4: gold1=1145044994;
+5: gold1=324478057;
+6: gold1=1145044994;
+7: gold1=324478057;
+8: gold1=1145044994;
+9: gold1=324478057;
+10: gold1=1145044994;
+11: gold1=324478057;
+default: gold1=0;
+endcase end endfunction
+analog function integer gold1_hi;
+input index; integer index;
+begin case(index)
+0: gold1_hi=34952;
+1: gold1_hi=4951;
+2: gold1_hi=34952;
+3: gold1_hi=4951;
+4: gold1_hi=17472;
+5: gold1_hi=4951;
+6: gold1_hi=17472;
+7: gold1_hi=4951;
+8: gold1_hi=17472;
+9: gold1_hi=4951;
+10: gold1_hi=17472;
+11: gold1_hi=4951;
+default: gold1_hi=0;
+endcase end endfunction
+analog function integer gold1_lo;
+input index; integer index;
+begin case(index)
+0: gold1_lo=34946;
+1: gold1_lo=9321;
+2: gold1_lo=34946;
+3: gold1_lo=9321;
+4: gold1_lo=2;
+5: gold1_lo=9321;
+6: gold1_lo=2;
+7: gold1_lo=9321;
+8: gold1_lo=2;
+9: gold1_lo=9321;
+10: gold1_lo=2;
+11: gold1_lo=9321;
+default: gold1_lo=0;
+endcase end endfunction
+analog function integer target1;
+input index; integer index;
+begin case(index)
+0: target1=0;
+1: target1=0;
+2: target1=0;
+3: target1=0;
+4: target1=0;
+5: target1=0;
+6: target1=0;
+7: target1=0;
+8: target1=0;
+9: target1=0;
+10: target1=0;
+11: target1=0;
+12: target1=0;
+13: target1=0;
+14: target1=0;
+15: target1=0;
+16: target1=0;
+17: target1=2;
+18: target1=0;
+19: target1=0;
+20: target1=0;
+21: target1=0;
+22: target1=0;
+23: target1=4;
+24: target1=0;
+25: target1=6;
+26: target1=0;
+27: target1=8;
+28: target1=0;
+29: target1=0;
+30: target1=10;
+31: target1=0;
+32: target1=0;
+33: target1=12;
+34: target1=0;
+35: target1=0;
+36: target1=12;
+37: target1=0;
+38: target1=0;
+39: target1=12;
+default: target1=0;
+endcase end endfunction
+analog function integer gold2;
+input index; integer index;
+begin case(index)
+0: gold2=-2004318078;
+1: gold2=324478057;
+2: gold2=-2004318078;
+3: gold2=324478057;
+4: gold2=1145044994;
+5: gold2=324478057;
+6: gold2=1145044994;
+7: gold2=324478057;
+8: gold2=-2004877310;
+9: gold2=324478057;
+10: gold2=-2004877310;
+11: gold2=324478057;
+default: gold2=0;
+endcase end endfunction
+analog function integer gold2_hi;
+input index; integer index;
+begin case(index)
+0: gold2_hi=34952;
+1: gold2_hi=4951;
+2: gold2_hi=34952;
+3: gold2_hi=4951;
+4: gold2_hi=17472;
+5: gold2_hi=4951;
+6: gold2_hi=17472;
+7: gold2_hi=4951;
+8: gold2_hi=34944;
+9: gold2_hi=4951;
+10: gold2_hi=34944;
+11: gold2_hi=4951;
+default: gold2_hi=0;
+endcase end endfunction
+analog function integer gold2_lo;
+input index; integer index;
+begin case(index)
+0: gold2_lo=34946;
+1: gold2_lo=9321;
+2: gold2_lo=34946;
+3: gold2_lo=9321;
+4: gold2_lo=2;
+5: gold2_lo=9321;
+6: gold2_lo=2;
+7: gold2_lo=9321;
+8: gold2_lo=2;
+9: gold2_lo=9321;
+10: gold2_lo=2;
+11: gold2_lo=9321;
+default: gold2_lo=0;
+endcase end endfunction
+analog function integer target2;
+input index; integer index;
+begin case(index)
+0: target2=0;
+1: target2=0;
+2: target2=0;
+3: target2=0;
+4: target2=0;
+5: target2=0;
+6: target2=0;
+7: target2=0;
+8: target2=0;
+9: target2=0;
+10: target2=0;
+11: target2=0;
+12: target2=0;
+13: target2=0;
+14: target2=0;
+15: target2=0;
+16: target2=0;
+17: target2=2;
+18: target2=0;
+19: target2=0;
+20: target2=0;
+21: target2=0;
+22: target2=0;
+23: target2=4;
+24: target2=0;
+25: target2=4;
+26: target2=0;
+27: target2=4;
+28: target2=0;
+29: target2=0;
+30: target2=6;
+31: target2=0;
+32: target2=0;
+33: target2=8;
+34: target2=0;
+35: target2=0;
+36: target2=10;
+37: target2=0;
+38: target2=0;
+39: target2=12;
+default: target2=0;
+endcase end endfunction
+analog function integer gold3;
+input index; integer index;
+begin case(index)
+0: gold3=-2004318078;
+1: gold3=324478057;
+2: gold3=-2004318078;
+3: gold3=324478057;
+4: gold3=1145044994;
+5: gold3=324478057;
+6: gold3=1145044994;
+7: gold3=324478057;
+8: gold3=-2004877310;
+9: gold3=324478057;
+10: gold3=-2004877310;
+11: gold3=324478057;
+default: gold3=0;
+endcase end endfunction
+analog function integer gold3_hi;
+input index; integer index;
+begin case(index)
+0: gold3_hi=34952;
+1: gold3_hi=4951;
+2: gold3_hi=34952;
+3: gold3_hi=4951;
+4: gold3_hi=17472;
+5: gold3_hi=4951;
+6: gold3_hi=17472;
+7: gold3_hi=4951;
+8: gold3_hi=34944;
+9: gold3_hi=4951;
+10: gold3_hi=34944;
+11: gold3_hi=4951;
+default: gold3_hi=0;
+endcase end endfunction
+analog function integer gold3_lo;
+input index; integer index;
+begin case(index)
+0: gold3_lo=34946;
+1: gold3_lo=9321;
+2: gold3_lo=34946;
+3: gold3_lo=9321;
+4: gold3_lo=2;
+5: gold3_lo=9321;
+6: gold3_lo=2;
+7: gold3_lo=9321;
+8: gold3_lo=2;
+9: gold3_lo=9321;
+10: gold3_lo=2;
+11: gold3_lo=9321;
+default: gold3_lo=0;
+endcase end endfunction
+analog function integer target3;
+input index; integer index;
+begin case(index)
+0: target3=0;
+1: target3=0;
+2: target3=0;
+3: target3=0;
+4: target3=0;
+5: target3=0;
+6: target3=0;
+7: target3=0;
+8: target3=0;
+9: target3=0;
+10: target3=0;
+11: target3=0;
+12: target3=0;
+13: target3=0;
+14: target3=0;
+15: target3=0;
+16: target3=0;
+17: target3=2;
+18: target3=0;
+19: target3=0;
+20: target3=0;
+21: target3=0;
+22: target3=0;
+23: target3=4;
+24: target3=0;
+25: target3=4;
+26: target3=0;
+27: target3=4;
+28: target3=0;
+29: target3=0;
+30: target3=6;
+31: target3=0;
+32: target3=0;
+33: target3=8;
+34: target3=0;
+35: target3=0;
+36: target3=10;
+37: target3=0;
+38: target3=0;
+39: target3=12;
+default: target3=0;
+endcase end endfunction
+analog function integer gold4;
+input index; integer index;
+begin case(index)
+default: gold4=0;
+endcase end endfunction
+analog function integer gold4_hi;
+input index; integer index;
+begin case(index)
+default: gold4_hi=0;
+endcase end endfunction
+analog function integer gold4_lo;
+input index; integer index;
+begin case(index)
+default: gold4_lo=0;
+endcase end endfunction
+analog function integer target4;
+input index; integer index;
+begin case(index)
+0: target4=0;
+1: target4=0;
+2: target4=0;
+3: target4=0;
+4: target4=0;
+5: target4=0;
+6: target4=0;
+7: target4=0;
+8: target4=0;
+9: target4=0;
+10: target4=0;
+11: target4=0;
+12: target4=0;
+13: target4=0;
+14: target4=0;
+15: target4=0;
+16: target4=0;
+17: target4=0;
+18: target4=0;
+19: target4=0;
+20: target4=0;
+21: target4=0;
+22: target4=0;
+23: target4=0;
+24: target4=0;
+25: target4=0;
+26: target4=0;
+27: target4=0;
+28: target4=0;
+29: target4=0;
+30: target4=0;
+31: target4=0;
+32: target4=0;
+33: target4=0;
+34: target4=0;
+35: target4=0;
+36: target4=0;
+37: target4=0;
+38: target4=0;
+39: target4=0;
+default: target4=0;
+endcase end endfunction
+analog begin
+  @(initial_step) begin
+    active=0; finished=0; failure=0; tx=0; phase=0; ready=0;
+    idle_started=0; idle_completed=0; idle_start=-1; round_time=-1; issued=0; source_checked=0; failure_stop=-1;
+    threshold=SUPPLY/2;
+    for (j=0;j<5;j=j+1) begin tx_valid[j]=0; tx_word[j]=0; ack[j]=0; rx_phase[j]=0; rx_index[j]=0; end
+    for (k=0;k<40;k=k+1) begin
+      if (((stimulus(k) >> 16) & 65535)!=stimulus_hi(k) || (stimulus(k) & 65535)!=stimulus_lo(k)) begin
+        failure=1; $display("SIM_ERROR t=%e reason=constant_encoding table=stimulus index=%d",$abstime,k);
+      end
+    end
+    for (k=0;k<40;k=k+1) begin
+      if (((source(k) >> 16) & 65535)!=source_hi(k) || (source(k) & 65535)!=source_lo(k)) begin
+        failure=1; $display("SIM_ERROR t=%e reason=constant_encoding table=source index=%d",$abstime,k);
+      end
+    end
+    for (k=0;k<40;k=k+1) begin
+      if (((case_id(k) >> 16) & 65535)!=case_id_hi(k) || (case_id(k) & 65535)!=case_id_lo(k)) begin
+        failure=1; $display("SIM_ERROR t=%e reason=constant_encoding table=case_id index=%d",$abstime,k);
+      end
+    end
+    for (k=0;k<40;k=k+1) begin
+      if (((local_id(k) >> 16) & 65535)!=local_id_hi(k) || (local_id(k) & 65535)!=local_id_lo(k)) begin
+        failure=1; $display("SIM_ERROR t=%e reason=constant_encoding table=local_id index=%d",$abstime,k);
+      end
+    end
+    for (k=0;k<40;k=k+1) begin
+      if (((input_index(k) >> 16) & 65535)!=input_index_hi(k) || (input_index(k) & 65535)!=input_index_lo(k)) begin
+        failure=1; $display("SIM_ERROR t=%e reason=constant_encoding table=input_index index=%d",$abstime,k);
+      end
+    end
+    for (k=0;k<18;k=k+1) begin
+      if (((gold0(k) >> 16) & 65535)!=gold0_hi(k) || (gold0(k) & 65535)!=gold0_lo(k)) begin
+        failure=1; $display("SIM_ERROR t=%e reason=constant_encoding table=gold0 index=%d",$abstime,k);
+      end
+    end
+    for (k=0;k<12;k=k+1) begin
+      if (((gold1(k) >> 16) & 65535)!=gold1_hi(k) || (gold1(k) & 65535)!=gold1_lo(k)) begin
+        failure=1; $display("SIM_ERROR t=%e reason=constant_encoding table=gold1 index=%d",$abstime,k);
+      end
+    end
+    for (k=0;k<12;k=k+1) begin
+      if (((gold2(k) >> 16) & 65535)!=gold2_hi(k) || (gold2(k) & 65535)!=gold2_lo(k)) begin
+        failure=1; $display("SIM_ERROR t=%e reason=constant_encoding table=gold2 index=%d",$abstime,k);
+      end
+    end
+    for (k=0;k<12;k=k+1) begin
+      if (((gold3(k) >> 16) & 65535)!=gold3_hi(k) || (gold3(k) & 65535)!=gold3_lo(k)) begin
+        failure=1; $display("SIM_ERROR t=%e reason=constant_encoding table=gold3 index=%d",$abstime,k);
+      end
+    end
+    for (k=0;k<0;k=k+1) begin
+      if (((gold4(k) >> 16) & 65535)!=gold4_hi(k) || (gold4(k) & 65535)!=gold4_lo(k)) begin
+        failure=1; $display("SIM_ERROR t=%e reason=constant_encoding table=gold4 index=%d",$abstime,k);
+      end
+    end
+    if (!failure) $display("SIM_CONSTANTS_PASS t=%e",$abstime);
+    else begin $display("SIM_FAIL t=%e",$abstime); $finish(0); end
+  end
+  @(timer(CHECK_START,TICK)) begin
+    if (!active && !finished && V(reset)<threshold) begin
+      active=1; ready=$abstime+IDLE_SETTLE;
+      $display("SIM_RESET t=%e",$abstime);
+    end
+    valid_word[0]=1; spacer[0]=1; illegal[0]=0; word[0]=0;
+    if (V(C0o_t_0)<threshold && V(C0o_f_0)<threshold) valid_word[0]=0;
+    if (V(C0o_t_0)>=threshold || V(C0o_f_0)>=threshold) spacer[0]=0;
+    if (V(C0o_t_0)>=threshold && V(C0o_f_0)>=threshold) illegal[0]=1;
+    if (V(C0o_t_0)>=threshold) word[0]=word[0] | (1 << 0);
+    if (V(C0o_t_1)<threshold && V(C0o_f_1)<threshold) valid_word[0]=0;
+    if (V(C0o_t_1)>=threshold || V(C0o_f_1)>=threshold) spacer[0]=0;
+    if (V(C0o_t_1)>=threshold && V(C0o_f_1)>=threshold) illegal[0]=1;
+    if (V(C0o_t_1)>=threshold) word[0]=word[0] | (1 << 1);
+    if (V(C0o_t_2)<threshold && V(C0o_f_2)<threshold) valid_word[0]=0;
+    if (V(C0o_t_2)>=threshold || V(C0o_f_2)>=threshold) spacer[0]=0;
+    if (V(C0o_t_2)>=threshold && V(C0o_f_2)>=threshold) illegal[0]=1;
+    if (V(C0o_t_2)>=threshold) word[0]=word[0] | (1 << 2);
+    if (V(C0o_t_3)<threshold && V(C0o_f_3)<threshold) valid_word[0]=0;
+    if (V(C0o_t_3)>=threshold || V(C0o_f_3)>=threshold) spacer[0]=0;
+    if (V(C0o_t_3)>=threshold && V(C0o_f_3)>=threshold) illegal[0]=1;
+    if (V(C0o_t_3)>=threshold) word[0]=word[0] | (1 << 3);
+    if (V(C0o_t_4)<threshold && V(C0o_f_4)<threshold) valid_word[0]=0;
+    if (V(C0o_t_4)>=threshold || V(C0o_f_4)>=threshold) spacer[0]=0;
+    if (V(C0o_t_4)>=threshold && V(C0o_f_4)>=threshold) illegal[0]=1;
+    if (V(C0o_t_4)>=threshold) word[0]=word[0] | (1 << 4);
+    if (V(C0o_t_5)<threshold && V(C0o_f_5)<threshold) valid_word[0]=0;
+    if (V(C0o_t_5)>=threshold || V(C0o_f_5)>=threshold) spacer[0]=0;
+    if (V(C0o_t_5)>=threshold && V(C0o_f_5)>=threshold) illegal[0]=1;
+    if (V(C0o_t_5)>=threshold) word[0]=word[0] | (1 << 5);
+    if (V(C0o_t_6)<threshold && V(C0o_f_6)<threshold) valid_word[0]=0;
+    if (V(C0o_t_6)>=threshold || V(C0o_f_6)>=threshold) spacer[0]=0;
+    if (V(C0o_t_6)>=threshold && V(C0o_f_6)>=threshold) illegal[0]=1;
+    if (V(C0o_t_6)>=threshold) word[0]=word[0] | (1 << 6);
+    if (V(C0o_t_7)<threshold && V(C0o_f_7)<threshold) valid_word[0]=0;
+    if (V(C0o_t_7)>=threshold || V(C0o_f_7)>=threshold) spacer[0]=0;
+    if (V(C0o_t_7)>=threshold && V(C0o_f_7)>=threshold) illegal[0]=1;
+    if (V(C0o_t_7)>=threshold) word[0]=word[0] | (1 << 7);
+    if (V(C0o_t_8)<threshold && V(C0o_f_8)<threshold) valid_word[0]=0;
+    if (V(C0o_t_8)>=threshold || V(C0o_f_8)>=threshold) spacer[0]=0;
+    if (V(C0o_t_8)>=threshold && V(C0o_f_8)>=threshold) illegal[0]=1;
+    if (V(C0o_t_8)>=threshold) word[0]=word[0] | (1 << 8);
+    if (V(C0o_t_9)<threshold && V(C0o_f_9)<threshold) valid_word[0]=0;
+    if (V(C0o_t_9)>=threshold || V(C0o_f_9)>=threshold) spacer[0]=0;
+    if (V(C0o_t_9)>=threshold && V(C0o_f_9)>=threshold) illegal[0]=1;
+    if (V(C0o_t_9)>=threshold) word[0]=word[0] | (1 << 9);
+    if (V(C0o_t_10)<threshold && V(C0o_f_10)<threshold) valid_word[0]=0;
+    if (V(C0o_t_10)>=threshold || V(C0o_f_10)>=threshold) spacer[0]=0;
+    if (V(C0o_t_10)>=threshold && V(C0o_f_10)>=threshold) illegal[0]=1;
+    if (V(C0o_t_10)>=threshold) word[0]=word[0] | (1 << 10);
+    if (V(C0o_t_11)<threshold && V(C0o_f_11)<threshold) valid_word[0]=0;
+    if (V(C0o_t_11)>=threshold || V(C0o_f_11)>=threshold) spacer[0]=0;
+    if (V(C0o_t_11)>=threshold && V(C0o_f_11)>=threshold) illegal[0]=1;
+    if (V(C0o_t_11)>=threshold) word[0]=word[0] | (1 << 11);
+    if (V(C0o_t_12)<threshold && V(C0o_f_12)<threshold) valid_word[0]=0;
+    if (V(C0o_t_12)>=threshold || V(C0o_f_12)>=threshold) spacer[0]=0;
+    if (V(C0o_t_12)>=threshold && V(C0o_f_12)>=threshold) illegal[0]=1;
+    if (V(C0o_t_12)>=threshold) word[0]=word[0] | (1 << 12);
+    if (V(C0o_t_13)<threshold && V(C0o_f_13)<threshold) valid_word[0]=0;
+    if (V(C0o_t_13)>=threshold || V(C0o_f_13)>=threshold) spacer[0]=0;
+    if (V(C0o_t_13)>=threshold && V(C0o_f_13)>=threshold) illegal[0]=1;
+    if (V(C0o_t_13)>=threshold) word[0]=word[0] | (1 << 13);
+    if (V(C0o_t_14)<threshold && V(C0o_f_14)<threshold) valid_word[0]=0;
+    if (V(C0o_t_14)>=threshold || V(C0o_f_14)>=threshold) spacer[0]=0;
+    if (V(C0o_t_14)>=threshold && V(C0o_f_14)>=threshold) illegal[0]=1;
+    if (V(C0o_t_14)>=threshold) word[0]=word[0] | (1 << 14);
+    if (V(C0o_t_15)<threshold && V(C0o_f_15)<threshold) valid_word[0]=0;
+    if (V(C0o_t_15)>=threshold || V(C0o_f_15)>=threshold) spacer[0]=0;
+    if (V(C0o_t_15)>=threshold && V(C0o_f_15)>=threshold) illegal[0]=1;
+    if (V(C0o_t_15)>=threshold) word[0]=word[0] | (1 << 15);
+    if (V(C0o_t_16)<threshold && V(C0o_f_16)<threshold) valid_word[0]=0;
+    if (V(C0o_t_16)>=threshold || V(C0o_f_16)>=threshold) spacer[0]=0;
+    if (V(C0o_t_16)>=threshold && V(C0o_f_16)>=threshold) illegal[0]=1;
+    if (V(C0o_t_16)>=threshold) word[0]=word[0] | (1 << 16);
+    if (V(C0o_t_17)<threshold && V(C0o_f_17)<threshold) valid_word[0]=0;
+    if (V(C0o_t_17)>=threshold || V(C0o_f_17)>=threshold) spacer[0]=0;
+    if (V(C0o_t_17)>=threshold && V(C0o_f_17)>=threshold) illegal[0]=1;
+    if (V(C0o_t_17)>=threshold) word[0]=word[0] | (1 << 17);
+    if (V(C0o_t_18)<threshold && V(C0o_f_18)<threshold) valid_word[0]=0;
+    if (V(C0o_t_18)>=threshold || V(C0o_f_18)>=threshold) spacer[0]=0;
+    if (V(C0o_t_18)>=threshold && V(C0o_f_18)>=threshold) illegal[0]=1;
+    if (V(C0o_t_18)>=threshold) word[0]=word[0] | (1 << 18);
+    if (V(C0o_t_19)<threshold && V(C0o_f_19)<threshold) valid_word[0]=0;
+    if (V(C0o_t_19)>=threshold || V(C0o_f_19)>=threshold) spacer[0]=0;
+    if (V(C0o_t_19)>=threshold && V(C0o_f_19)>=threshold) illegal[0]=1;
+    if (V(C0o_t_19)>=threshold) word[0]=word[0] | (1 << 19);
+    if (V(C0o_t_20)<threshold && V(C0o_f_20)<threshold) valid_word[0]=0;
+    if (V(C0o_t_20)>=threshold || V(C0o_f_20)>=threshold) spacer[0]=0;
+    if (V(C0o_t_20)>=threshold && V(C0o_f_20)>=threshold) illegal[0]=1;
+    if (V(C0o_t_20)>=threshold) word[0]=word[0] | (1 << 20);
+    if (V(C0o_t_21)<threshold && V(C0o_f_21)<threshold) valid_word[0]=0;
+    if (V(C0o_t_21)>=threshold || V(C0o_f_21)>=threshold) spacer[0]=0;
+    if (V(C0o_t_21)>=threshold && V(C0o_f_21)>=threshold) illegal[0]=1;
+    if (V(C0o_t_21)>=threshold) word[0]=word[0] | (1 << 21);
+    if (V(C0o_t_22)<threshold && V(C0o_f_22)<threshold) valid_word[0]=0;
+    if (V(C0o_t_22)>=threshold || V(C0o_f_22)>=threshold) spacer[0]=0;
+    if (V(C0o_t_22)>=threshold && V(C0o_f_22)>=threshold) illegal[0]=1;
+    if (V(C0o_t_22)>=threshold) word[0]=word[0] | (1 << 22);
+    if (V(C0o_t_23)<threshold && V(C0o_f_23)<threshold) valid_word[0]=0;
+    if (V(C0o_t_23)>=threshold || V(C0o_f_23)>=threshold) spacer[0]=0;
+    if (V(C0o_t_23)>=threshold && V(C0o_f_23)>=threshold) illegal[0]=1;
+    if (V(C0o_t_23)>=threshold) word[0]=word[0] | (1 << 23);
+    if (V(C0o_t_24)<threshold && V(C0o_f_24)<threshold) valid_word[0]=0;
+    if (V(C0o_t_24)>=threshold || V(C0o_f_24)>=threshold) spacer[0]=0;
+    if (V(C0o_t_24)>=threshold && V(C0o_f_24)>=threshold) illegal[0]=1;
+    if (V(C0o_t_24)>=threshold) word[0]=word[0] | (1 << 24);
+    if (V(C0o_t_25)<threshold && V(C0o_f_25)<threshold) valid_word[0]=0;
+    if (V(C0o_t_25)>=threshold || V(C0o_f_25)>=threshold) spacer[0]=0;
+    if (V(C0o_t_25)>=threshold && V(C0o_f_25)>=threshold) illegal[0]=1;
+    if (V(C0o_t_25)>=threshold) word[0]=word[0] | (1 << 25);
+    if (V(C0o_t_26)<threshold && V(C0o_f_26)<threshold) valid_word[0]=0;
+    if (V(C0o_t_26)>=threshold || V(C0o_f_26)>=threshold) spacer[0]=0;
+    if (V(C0o_t_26)>=threshold && V(C0o_f_26)>=threshold) illegal[0]=1;
+    if (V(C0o_t_26)>=threshold) word[0]=word[0] | (1 << 26);
+    if (V(C0o_t_27)<threshold && V(C0o_f_27)<threshold) valid_word[0]=0;
+    if (V(C0o_t_27)>=threshold || V(C0o_f_27)>=threshold) spacer[0]=0;
+    if (V(C0o_t_27)>=threshold && V(C0o_f_27)>=threshold) illegal[0]=1;
+    if (V(C0o_t_27)>=threshold) word[0]=word[0] | (1 << 27);
+    if (V(C0o_t_28)<threshold && V(C0o_f_28)<threshold) valid_word[0]=0;
+    if (V(C0o_t_28)>=threshold || V(C0o_f_28)>=threshold) spacer[0]=0;
+    if (V(C0o_t_28)>=threshold && V(C0o_f_28)>=threshold) illegal[0]=1;
+    if (V(C0o_t_28)>=threshold) word[0]=word[0] | (1 << 28);
+    if (V(C0o_t_29)<threshold && V(C0o_f_29)<threshold) valid_word[0]=0;
+    if (V(C0o_t_29)>=threshold || V(C0o_f_29)>=threshold) spacer[0]=0;
+    if (V(C0o_t_29)>=threshold && V(C0o_f_29)>=threshold) illegal[0]=1;
+    if (V(C0o_t_29)>=threshold) word[0]=word[0] | (1 << 29);
+    if (V(C0o_t_30)<threshold && V(C0o_f_30)<threshold) valid_word[0]=0;
+    if (V(C0o_t_30)>=threshold || V(C0o_f_30)>=threshold) spacer[0]=0;
+    if (V(C0o_t_30)>=threshold && V(C0o_f_30)>=threshold) illegal[0]=1;
+    if (V(C0o_t_30)>=threshold) word[0]=word[0] | (1 << 30);
+    if (V(C0o_t_31)<threshold && V(C0o_f_31)<threshold) valid_word[0]=0;
+    if (V(C0o_t_31)>=threshold || V(C0o_f_31)>=threshold) spacer[0]=0;
+    if (V(C0o_t_31)>=threshold && V(C0o_f_31)>=threshold) illegal[0]=1;
+    if (V(C0o_t_31)>=threshold) word[0]=word[0] | (1 << 31);
+    if (active && !failure) begin
+      if (illegal[0]) begin failure=1; $display("SIM_ERROR t=%e reason=illegal_dual_rail channel=C0o",$abstime); end
+      if (rx_phase[0]==0 && valid_word[0]) begin
+        if (rx_index[0]>=18 || word[0]!=gold0(rx_index[0])) begin
+          failure=1; $display("SIM_ERROR t=%e reason=golden_mismatch channel=C0o index=%d expected=%h actual=%h",$abstime,rx_index[0],gold0(rx_index[0]),word[0]);
+        end else $display("SIM_RX t=%e channel=C0o index=%d expected=%h actual=%h PASS",$abstime,rx_index[0],gold0(rx_index[0]),word[0]);
+        held[0]=word[0]; ack[0]=1; rx_phase[0]=1;
+      end else if (rx_phase[0]==1) begin
+        if (valid_word[0] && word[0]!=held[0]) begin failure=1; $display("SIM_ERROR t=%e reason=unstable_word",$abstime); end
+        if (spacer[0]) begin ack[0]=0; rx_phase[0]=2; end
+      end else if (rx_phase[0]==2 && V(C0o_a)<threshold) begin
+        rx_index[0]=rx_index[0]+1; rx_phase[0]=0;
+      end
+    end
+    valid_word[1]=1; spacer[1]=1; illegal[1]=0; word[1]=0;
+    if (V(C1o_t_0)<threshold && V(C1o_f_0)<threshold) valid_word[1]=0;
+    if (V(C1o_t_0)>=threshold || V(C1o_f_0)>=threshold) spacer[1]=0;
+    if (V(C1o_t_0)>=threshold && V(C1o_f_0)>=threshold) illegal[1]=1;
+    if (V(C1o_t_0)>=threshold) word[1]=word[1] | (1 << 0);
+    if (V(C1o_t_1)<threshold && V(C1o_f_1)<threshold) valid_word[1]=0;
+    if (V(C1o_t_1)>=threshold || V(C1o_f_1)>=threshold) spacer[1]=0;
+    if (V(C1o_t_1)>=threshold && V(C1o_f_1)>=threshold) illegal[1]=1;
+    if (V(C1o_t_1)>=threshold) word[1]=word[1] | (1 << 1);
+    if (V(C1o_t_2)<threshold && V(C1o_f_2)<threshold) valid_word[1]=0;
+    if (V(C1o_t_2)>=threshold || V(C1o_f_2)>=threshold) spacer[1]=0;
+    if (V(C1o_t_2)>=threshold && V(C1o_f_2)>=threshold) illegal[1]=1;
+    if (V(C1o_t_2)>=threshold) word[1]=word[1] | (1 << 2);
+    if (V(C1o_t_3)<threshold && V(C1o_f_3)<threshold) valid_word[1]=0;
+    if (V(C1o_t_3)>=threshold || V(C1o_f_3)>=threshold) spacer[1]=0;
+    if (V(C1o_t_3)>=threshold && V(C1o_f_3)>=threshold) illegal[1]=1;
+    if (V(C1o_t_3)>=threshold) word[1]=word[1] | (1 << 3);
+    if (V(C1o_t_4)<threshold && V(C1o_f_4)<threshold) valid_word[1]=0;
+    if (V(C1o_t_4)>=threshold || V(C1o_f_4)>=threshold) spacer[1]=0;
+    if (V(C1o_t_4)>=threshold && V(C1o_f_4)>=threshold) illegal[1]=1;
+    if (V(C1o_t_4)>=threshold) word[1]=word[1] | (1 << 4);
+    if (V(C1o_t_5)<threshold && V(C1o_f_5)<threshold) valid_word[1]=0;
+    if (V(C1o_t_5)>=threshold || V(C1o_f_5)>=threshold) spacer[1]=0;
+    if (V(C1o_t_5)>=threshold && V(C1o_f_5)>=threshold) illegal[1]=1;
+    if (V(C1o_t_5)>=threshold) word[1]=word[1] | (1 << 5);
+    if (V(C1o_t_6)<threshold && V(C1o_f_6)<threshold) valid_word[1]=0;
+    if (V(C1o_t_6)>=threshold || V(C1o_f_6)>=threshold) spacer[1]=0;
+    if (V(C1o_t_6)>=threshold && V(C1o_f_6)>=threshold) illegal[1]=1;
+    if (V(C1o_t_6)>=threshold) word[1]=word[1] | (1 << 6);
+    if (V(C1o_t_7)<threshold && V(C1o_f_7)<threshold) valid_word[1]=0;
+    if (V(C1o_t_7)>=threshold || V(C1o_f_7)>=threshold) spacer[1]=0;
+    if (V(C1o_t_7)>=threshold && V(C1o_f_7)>=threshold) illegal[1]=1;
+    if (V(C1o_t_7)>=threshold) word[1]=word[1] | (1 << 7);
+    if (V(C1o_t_8)<threshold && V(C1o_f_8)<threshold) valid_word[1]=0;
+    if (V(C1o_t_8)>=threshold || V(C1o_f_8)>=threshold) spacer[1]=0;
+    if (V(C1o_t_8)>=threshold && V(C1o_f_8)>=threshold) illegal[1]=1;
+    if (V(C1o_t_8)>=threshold) word[1]=word[1] | (1 << 8);
+    if (V(C1o_t_9)<threshold && V(C1o_f_9)<threshold) valid_word[1]=0;
+    if (V(C1o_t_9)>=threshold || V(C1o_f_9)>=threshold) spacer[1]=0;
+    if (V(C1o_t_9)>=threshold && V(C1o_f_9)>=threshold) illegal[1]=1;
+    if (V(C1o_t_9)>=threshold) word[1]=word[1] | (1 << 9);
+    if (V(C1o_t_10)<threshold && V(C1o_f_10)<threshold) valid_word[1]=0;
+    if (V(C1o_t_10)>=threshold || V(C1o_f_10)>=threshold) spacer[1]=0;
+    if (V(C1o_t_10)>=threshold && V(C1o_f_10)>=threshold) illegal[1]=1;
+    if (V(C1o_t_10)>=threshold) word[1]=word[1] | (1 << 10);
+    if (V(C1o_t_11)<threshold && V(C1o_f_11)<threshold) valid_word[1]=0;
+    if (V(C1o_t_11)>=threshold || V(C1o_f_11)>=threshold) spacer[1]=0;
+    if (V(C1o_t_11)>=threshold && V(C1o_f_11)>=threshold) illegal[1]=1;
+    if (V(C1o_t_11)>=threshold) word[1]=word[1] | (1 << 11);
+    if (V(C1o_t_12)<threshold && V(C1o_f_12)<threshold) valid_word[1]=0;
+    if (V(C1o_t_12)>=threshold || V(C1o_f_12)>=threshold) spacer[1]=0;
+    if (V(C1o_t_12)>=threshold && V(C1o_f_12)>=threshold) illegal[1]=1;
+    if (V(C1o_t_12)>=threshold) word[1]=word[1] | (1 << 12);
+    if (V(C1o_t_13)<threshold && V(C1o_f_13)<threshold) valid_word[1]=0;
+    if (V(C1o_t_13)>=threshold || V(C1o_f_13)>=threshold) spacer[1]=0;
+    if (V(C1o_t_13)>=threshold && V(C1o_f_13)>=threshold) illegal[1]=1;
+    if (V(C1o_t_13)>=threshold) word[1]=word[1] | (1 << 13);
+    if (V(C1o_t_14)<threshold && V(C1o_f_14)<threshold) valid_word[1]=0;
+    if (V(C1o_t_14)>=threshold || V(C1o_f_14)>=threshold) spacer[1]=0;
+    if (V(C1o_t_14)>=threshold && V(C1o_f_14)>=threshold) illegal[1]=1;
+    if (V(C1o_t_14)>=threshold) word[1]=word[1] | (1 << 14);
+    if (V(C1o_t_15)<threshold && V(C1o_f_15)<threshold) valid_word[1]=0;
+    if (V(C1o_t_15)>=threshold || V(C1o_f_15)>=threshold) spacer[1]=0;
+    if (V(C1o_t_15)>=threshold && V(C1o_f_15)>=threshold) illegal[1]=1;
+    if (V(C1o_t_15)>=threshold) word[1]=word[1] | (1 << 15);
+    if (V(C1o_t_16)<threshold && V(C1o_f_16)<threshold) valid_word[1]=0;
+    if (V(C1o_t_16)>=threshold || V(C1o_f_16)>=threshold) spacer[1]=0;
+    if (V(C1o_t_16)>=threshold && V(C1o_f_16)>=threshold) illegal[1]=1;
+    if (V(C1o_t_16)>=threshold) word[1]=word[1] | (1 << 16);
+    if (V(C1o_t_17)<threshold && V(C1o_f_17)<threshold) valid_word[1]=0;
+    if (V(C1o_t_17)>=threshold || V(C1o_f_17)>=threshold) spacer[1]=0;
+    if (V(C1o_t_17)>=threshold && V(C1o_f_17)>=threshold) illegal[1]=1;
+    if (V(C1o_t_17)>=threshold) word[1]=word[1] | (1 << 17);
+    if (V(C1o_t_18)<threshold && V(C1o_f_18)<threshold) valid_word[1]=0;
+    if (V(C1o_t_18)>=threshold || V(C1o_f_18)>=threshold) spacer[1]=0;
+    if (V(C1o_t_18)>=threshold && V(C1o_f_18)>=threshold) illegal[1]=1;
+    if (V(C1o_t_18)>=threshold) word[1]=word[1] | (1 << 18);
+    if (V(C1o_t_19)<threshold && V(C1o_f_19)<threshold) valid_word[1]=0;
+    if (V(C1o_t_19)>=threshold || V(C1o_f_19)>=threshold) spacer[1]=0;
+    if (V(C1o_t_19)>=threshold && V(C1o_f_19)>=threshold) illegal[1]=1;
+    if (V(C1o_t_19)>=threshold) word[1]=word[1] | (1 << 19);
+    if (V(C1o_t_20)<threshold && V(C1o_f_20)<threshold) valid_word[1]=0;
+    if (V(C1o_t_20)>=threshold || V(C1o_f_20)>=threshold) spacer[1]=0;
+    if (V(C1o_t_20)>=threshold && V(C1o_f_20)>=threshold) illegal[1]=1;
+    if (V(C1o_t_20)>=threshold) word[1]=word[1] | (1 << 20);
+    if (V(C1o_t_21)<threshold && V(C1o_f_21)<threshold) valid_word[1]=0;
+    if (V(C1o_t_21)>=threshold || V(C1o_f_21)>=threshold) spacer[1]=0;
+    if (V(C1o_t_21)>=threshold && V(C1o_f_21)>=threshold) illegal[1]=1;
+    if (V(C1o_t_21)>=threshold) word[1]=word[1] | (1 << 21);
+    if (V(C1o_t_22)<threshold && V(C1o_f_22)<threshold) valid_word[1]=0;
+    if (V(C1o_t_22)>=threshold || V(C1o_f_22)>=threshold) spacer[1]=0;
+    if (V(C1o_t_22)>=threshold && V(C1o_f_22)>=threshold) illegal[1]=1;
+    if (V(C1o_t_22)>=threshold) word[1]=word[1] | (1 << 22);
+    if (V(C1o_t_23)<threshold && V(C1o_f_23)<threshold) valid_word[1]=0;
+    if (V(C1o_t_23)>=threshold || V(C1o_f_23)>=threshold) spacer[1]=0;
+    if (V(C1o_t_23)>=threshold && V(C1o_f_23)>=threshold) illegal[1]=1;
+    if (V(C1o_t_23)>=threshold) word[1]=word[1] | (1 << 23);
+    if (V(C1o_t_24)<threshold && V(C1o_f_24)<threshold) valid_word[1]=0;
+    if (V(C1o_t_24)>=threshold || V(C1o_f_24)>=threshold) spacer[1]=0;
+    if (V(C1o_t_24)>=threshold && V(C1o_f_24)>=threshold) illegal[1]=1;
+    if (V(C1o_t_24)>=threshold) word[1]=word[1] | (1 << 24);
+    if (V(C1o_t_25)<threshold && V(C1o_f_25)<threshold) valid_word[1]=0;
+    if (V(C1o_t_25)>=threshold || V(C1o_f_25)>=threshold) spacer[1]=0;
+    if (V(C1o_t_25)>=threshold && V(C1o_f_25)>=threshold) illegal[1]=1;
+    if (V(C1o_t_25)>=threshold) word[1]=word[1] | (1 << 25);
+    if (V(C1o_t_26)<threshold && V(C1o_f_26)<threshold) valid_word[1]=0;
+    if (V(C1o_t_26)>=threshold || V(C1o_f_26)>=threshold) spacer[1]=0;
+    if (V(C1o_t_26)>=threshold && V(C1o_f_26)>=threshold) illegal[1]=1;
+    if (V(C1o_t_26)>=threshold) word[1]=word[1] | (1 << 26);
+    if (V(C1o_t_27)<threshold && V(C1o_f_27)<threshold) valid_word[1]=0;
+    if (V(C1o_t_27)>=threshold || V(C1o_f_27)>=threshold) spacer[1]=0;
+    if (V(C1o_t_27)>=threshold && V(C1o_f_27)>=threshold) illegal[1]=1;
+    if (V(C1o_t_27)>=threshold) word[1]=word[1] | (1 << 27);
+    if (V(C1o_t_28)<threshold && V(C1o_f_28)<threshold) valid_word[1]=0;
+    if (V(C1o_t_28)>=threshold || V(C1o_f_28)>=threshold) spacer[1]=0;
+    if (V(C1o_t_28)>=threshold && V(C1o_f_28)>=threshold) illegal[1]=1;
+    if (V(C1o_t_28)>=threshold) word[1]=word[1] | (1 << 28);
+    if (V(C1o_t_29)<threshold && V(C1o_f_29)<threshold) valid_word[1]=0;
+    if (V(C1o_t_29)>=threshold || V(C1o_f_29)>=threshold) spacer[1]=0;
+    if (V(C1o_t_29)>=threshold && V(C1o_f_29)>=threshold) illegal[1]=1;
+    if (V(C1o_t_29)>=threshold) word[1]=word[1] | (1 << 29);
+    if (V(C1o_t_30)<threshold && V(C1o_f_30)<threshold) valid_word[1]=0;
+    if (V(C1o_t_30)>=threshold || V(C1o_f_30)>=threshold) spacer[1]=0;
+    if (V(C1o_t_30)>=threshold && V(C1o_f_30)>=threshold) illegal[1]=1;
+    if (V(C1o_t_30)>=threshold) word[1]=word[1] | (1 << 30);
+    if (V(C1o_t_31)<threshold && V(C1o_f_31)<threshold) valid_word[1]=0;
+    if (V(C1o_t_31)>=threshold || V(C1o_f_31)>=threshold) spacer[1]=0;
+    if (V(C1o_t_31)>=threshold && V(C1o_f_31)>=threshold) illegal[1]=1;
+    if (V(C1o_t_31)>=threshold) word[1]=word[1] | (1 << 31);
+    if (active && !failure) begin
+      if (illegal[1]) begin failure=1; $display("SIM_ERROR t=%e reason=illegal_dual_rail channel=C1o",$abstime); end
+      if (rx_phase[1]==0 && valid_word[1]) begin
+        if (rx_index[1]>=12 || word[1]!=gold1(rx_index[1])) begin
+          failure=1; $display("SIM_ERROR t=%e reason=golden_mismatch channel=C1o index=%d expected=%h actual=%h",$abstime,rx_index[1],gold1(rx_index[1]),word[1]);
+        end else $display("SIM_RX t=%e channel=C1o index=%d expected=%h actual=%h PASS",$abstime,rx_index[1],gold1(rx_index[1]),word[1]);
+        held[1]=word[1]; ack[1]=1; rx_phase[1]=1;
+      end else if (rx_phase[1]==1) begin
+        if (valid_word[1] && word[1]!=held[1]) begin failure=1; $display("SIM_ERROR t=%e reason=unstable_word",$abstime); end
+        if (spacer[1]) begin ack[1]=0; rx_phase[1]=2; end
+      end else if (rx_phase[1]==2 && V(C1o_a)<threshold) begin
+        rx_index[1]=rx_index[1]+1; rx_phase[1]=0;
+      end
+    end
+    valid_word[2]=1; spacer[2]=1; illegal[2]=0; word[2]=0;
+    if (V(C2o_t_0)<threshold && V(C2o_f_0)<threshold) valid_word[2]=0;
+    if (V(C2o_t_0)>=threshold || V(C2o_f_0)>=threshold) spacer[2]=0;
+    if (V(C2o_t_0)>=threshold && V(C2o_f_0)>=threshold) illegal[2]=1;
+    if (V(C2o_t_0)>=threshold) word[2]=word[2] | (1 << 0);
+    if (V(C2o_t_1)<threshold && V(C2o_f_1)<threshold) valid_word[2]=0;
+    if (V(C2o_t_1)>=threshold || V(C2o_f_1)>=threshold) spacer[2]=0;
+    if (V(C2o_t_1)>=threshold && V(C2o_f_1)>=threshold) illegal[2]=1;
+    if (V(C2o_t_1)>=threshold) word[2]=word[2] | (1 << 1);
+    if (V(C2o_t_2)<threshold && V(C2o_f_2)<threshold) valid_word[2]=0;
+    if (V(C2o_t_2)>=threshold || V(C2o_f_2)>=threshold) spacer[2]=0;
+    if (V(C2o_t_2)>=threshold && V(C2o_f_2)>=threshold) illegal[2]=1;
+    if (V(C2o_t_2)>=threshold) word[2]=word[2] | (1 << 2);
+    if (V(C2o_t_3)<threshold && V(C2o_f_3)<threshold) valid_word[2]=0;
+    if (V(C2o_t_3)>=threshold || V(C2o_f_3)>=threshold) spacer[2]=0;
+    if (V(C2o_t_3)>=threshold && V(C2o_f_3)>=threshold) illegal[2]=1;
+    if (V(C2o_t_3)>=threshold) word[2]=word[2] | (1 << 3);
+    if (V(C2o_t_4)<threshold && V(C2o_f_4)<threshold) valid_word[2]=0;
+    if (V(C2o_t_4)>=threshold || V(C2o_f_4)>=threshold) spacer[2]=0;
+    if (V(C2o_t_4)>=threshold && V(C2o_f_4)>=threshold) illegal[2]=1;
+    if (V(C2o_t_4)>=threshold) word[2]=word[2] | (1 << 4);
+    if (V(C2o_t_5)<threshold && V(C2o_f_5)<threshold) valid_word[2]=0;
+    if (V(C2o_t_5)>=threshold || V(C2o_f_5)>=threshold) spacer[2]=0;
+    if (V(C2o_t_5)>=threshold && V(C2o_f_5)>=threshold) illegal[2]=1;
+    if (V(C2o_t_5)>=threshold) word[2]=word[2] | (1 << 5);
+    if (V(C2o_t_6)<threshold && V(C2o_f_6)<threshold) valid_word[2]=0;
+    if (V(C2o_t_6)>=threshold || V(C2o_f_6)>=threshold) spacer[2]=0;
+    if (V(C2o_t_6)>=threshold && V(C2o_f_6)>=threshold) illegal[2]=1;
+    if (V(C2o_t_6)>=threshold) word[2]=word[2] | (1 << 6);
+    if (V(C2o_t_7)<threshold && V(C2o_f_7)<threshold) valid_word[2]=0;
+    if (V(C2o_t_7)>=threshold || V(C2o_f_7)>=threshold) spacer[2]=0;
+    if (V(C2o_t_7)>=threshold && V(C2o_f_7)>=threshold) illegal[2]=1;
+    if (V(C2o_t_7)>=threshold) word[2]=word[2] | (1 << 7);
+    if (V(C2o_t_8)<threshold && V(C2o_f_8)<threshold) valid_word[2]=0;
+    if (V(C2o_t_8)>=threshold || V(C2o_f_8)>=threshold) spacer[2]=0;
+    if (V(C2o_t_8)>=threshold && V(C2o_f_8)>=threshold) illegal[2]=1;
+    if (V(C2o_t_8)>=threshold) word[2]=word[2] | (1 << 8);
+    if (V(C2o_t_9)<threshold && V(C2o_f_9)<threshold) valid_word[2]=0;
+    if (V(C2o_t_9)>=threshold || V(C2o_f_9)>=threshold) spacer[2]=0;
+    if (V(C2o_t_9)>=threshold && V(C2o_f_9)>=threshold) illegal[2]=1;
+    if (V(C2o_t_9)>=threshold) word[2]=word[2] | (1 << 9);
+    if (V(C2o_t_10)<threshold && V(C2o_f_10)<threshold) valid_word[2]=0;
+    if (V(C2o_t_10)>=threshold || V(C2o_f_10)>=threshold) spacer[2]=0;
+    if (V(C2o_t_10)>=threshold && V(C2o_f_10)>=threshold) illegal[2]=1;
+    if (V(C2o_t_10)>=threshold) word[2]=word[2] | (1 << 10);
+    if (V(C2o_t_11)<threshold && V(C2o_f_11)<threshold) valid_word[2]=0;
+    if (V(C2o_t_11)>=threshold || V(C2o_f_11)>=threshold) spacer[2]=0;
+    if (V(C2o_t_11)>=threshold && V(C2o_f_11)>=threshold) illegal[2]=1;
+    if (V(C2o_t_11)>=threshold) word[2]=word[2] | (1 << 11);
+    if (V(C2o_t_12)<threshold && V(C2o_f_12)<threshold) valid_word[2]=0;
+    if (V(C2o_t_12)>=threshold || V(C2o_f_12)>=threshold) spacer[2]=0;
+    if (V(C2o_t_12)>=threshold && V(C2o_f_12)>=threshold) illegal[2]=1;
+    if (V(C2o_t_12)>=threshold) word[2]=word[2] | (1 << 12);
+    if (V(C2o_t_13)<threshold && V(C2o_f_13)<threshold) valid_word[2]=0;
+    if (V(C2o_t_13)>=threshold || V(C2o_f_13)>=threshold) spacer[2]=0;
+    if (V(C2o_t_13)>=threshold && V(C2o_f_13)>=threshold) illegal[2]=1;
+    if (V(C2o_t_13)>=threshold) word[2]=word[2] | (1 << 13);
+    if (V(C2o_t_14)<threshold && V(C2o_f_14)<threshold) valid_word[2]=0;
+    if (V(C2o_t_14)>=threshold || V(C2o_f_14)>=threshold) spacer[2]=0;
+    if (V(C2o_t_14)>=threshold && V(C2o_f_14)>=threshold) illegal[2]=1;
+    if (V(C2o_t_14)>=threshold) word[2]=word[2] | (1 << 14);
+    if (V(C2o_t_15)<threshold && V(C2o_f_15)<threshold) valid_word[2]=0;
+    if (V(C2o_t_15)>=threshold || V(C2o_f_15)>=threshold) spacer[2]=0;
+    if (V(C2o_t_15)>=threshold && V(C2o_f_15)>=threshold) illegal[2]=1;
+    if (V(C2o_t_15)>=threshold) word[2]=word[2] | (1 << 15);
+    if (V(C2o_t_16)<threshold && V(C2o_f_16)<threshold) valid_word[2]=0;
+    if (V(C2o_t_16)>=threshold || V(C2o_f_16)>=threshold) spacer[2]=0;
+    if (V(C2o_t_16)>=threshold && V(C2o_f_16)>=threshold) illegal[2]=1;
+    if (V(C2o_t_16)>=threshold) word[2]=word[2] | (1 << 16);
+    if (V(C2o_t_17)<threshold && V(C2o_f_17)<threshold) valid_word[2]=0;
+    if (V(C2o_t_17)>=threshold || V(C2o_f_17)>=threshold) spacer[2]=0;
+    if (V(C2o_t_17)>=threshold && V(C2o_f_17)>=threshold) illegal[2]=1;
+    if (V(C2o_t_17)>=threshold) word[2]=word[2] | (1 << 17);
+    if (V(C2o_t_18)<threshold && V(C2o_f_18)<threshold) valid_word[2]=0;
+    if (V(C2o_t_18)>=threshold || V(C2o_f_18)>=threshold) spacer[2]=0;
+    if (V(C2o_t_18)>=threshold && V(C2o_f_18)>=threshold) illegal[2]=1;
+    if (V(C2o_t_18)>=threshold) word[2]=word[2] | (1 << 18);
+    if (V(C2o_t_19)<threshold && V(C2o_f_19)<threshold) valid_word[2]=0;
+    if (V(C2o_t_19)>=threshold || V(C2o_f_19)>=threshold) spacer[2]=0;
+    if (V(C2o_t_19)>=threshold && V(C2o_f_19)>=threshold) illegal[2]=1;
+    if (V(C2o_t_19)>=threshold) word[2]=word[2] | (1 << 19);
+    if (V(C2o_t_20)<threshold && V(C2o_f_20)<threshold) valid_word[2]=0;
+    if (V(C2o_t_20)>=threshold || V(C2o_f_20)>=threshold) spacer[2]=0;
+    if (V(C2o_t_20)>=threshold && V(C2o_f_20)>=threshold) illegal[2]=1;
+    if (V(C2o_t_20)>=threshold) word[2]=word[2] | (1 << 20);
+    if (V(C2o_t_21)<threshold && V(C2o_f_21)<threshold) valid_word[2]=0;
+    if (V(C2o_t_21)>=threshold || V(C2o_f_21)>=threshold) spacer[2]=0;
+    if (V(C2o_t_21)>=threshold && V(C2o_f_21)>=threshold) illegal[2]=1;
+    if (V(C2o_t_21)>=threshold) word[2]=word[2] | (1 << 21);
+    if (V(C2o_t_22)<threshold && V(C2o_f_22)<threshold) valid_word[2]=0;
+    if (V(C2o_t_22)>=threshold || V(C2o_f_22)>=threshold) spacer[2]=0;
+    if (V(C2o_t_22)>=threshold && V(C2o_f_22)>=threshold) illegal[2]=1;
+    if (V(C2o_t_22)>=threshold) word[2]=word[2] | (1 << 22);
+    if (V(C2o_t_23)<threshold && V(C2o_f_23)<threshold) valid_word[2]=0;
+    if (V(C2o_t_23)>=threshold || V(C2o_f_23)>=threshold) spacer[2]=0;
+    if (V(C2o_t_23)>=threshold && V(C2o_f_23)>=threshold) illegal[2]=1;
+    if (V(C2o_t_23)>=threshold) word[2]=word[2] | (1 << 23);
+    if (V(C2o_t_24)<threshold && V(C2o_f_24)<threshold) valid_word[2]=0;
+    if (V(C2o_t_24)>=threshold || V(C2o_f_24)>=threshold) spacer[2]=0;
+    if (V(C2o_t_24)>=threshold && V(C2o_f_24)>=threshold) illegal[2]=1;
+    if (V(C2o_t_24)>=threshold) word[2]=word[2] | (1 << 24);
+    if (V(C2o_t_25)<threshold && V(C2o_f_25)<threshold) valid_word[2]=0;
+    if (V(C2o_t_25)>=threshold || V(C2o_f_25)>=threshold) spacer[2]=0;
+    if (V(C2o_t_25)>=threshold && V(C2o_f_25)>=threshold) illegal[2]=1;
+    if (V(C2o_t_25)>=threshold) word[2]=word[2] | (1 << 25);
+    if (V(C2o_t_26)<threshold && V(C2o_f_26)<threshold) valid_word[2]=0;
+    if (V(C2o_t_26)>=threshold || V(C2o_f_26)>=threshold) spacer[2]=0;
+    if (V(C2o_t_26)>=threshold && V(C2o_f_26)>=threshold) illegal[2]=1;
+    if (V(C2o_t_26)>=threshold) word[2]=word[2] | (1 << 26);
+    if (V(C2o_t_27)<threshold && V(C2o_f_27)<threshold) valid_word[2]=0;
+    if (V(C2o_t_27)>=threshold || V(C2o_f_27)>=threshold) spacer[2]=0;
+    if (V(C2o_t_27)>=threshold && V(C2o_f_27)>=threshold) illegal[2]=1;
+    if (V(C2o_t_27)>=threshold) word[2]=word[2] | (1 << 27);
+    if (V(C2o_t_28)<threshold && V(C2o_f_28)<threshold) valid_word[2]=0;
+    if (V(C2o_t_28)>=threshold || V(C2o_f_28)>=threshold) spacer[2]=0;
+    if (V(C2o_t_28)>=threshold && V(C2o_f_28)>=threshold) illegal[2]=1;
+    if (V(C2o_t_28)>=threshold) word[2]=word[2] | (1 << 28);
+    if (V(C2o_t_29)<threshold && V(C2o_f_29)<threshold) valid_word[2]=0;
+    if (V(C2o_t_29)>=threshold || V(C2o_f_29)>=threshold) spacer[2]=0;
+    if (V(C2o_t_29)>=threshold && V(C2o_f_29)>=threshold) illegal[2]=1;
+    if (V(C2o_t_29)>=threshold) word[2]=word[2] | (1 << 29);
+    if (V(C2o_t_30)<threshold && V(C2o_f_30)<threshold) valid_word[2]=0;
+    if (V(C2o_t_30)>=threshold || V(C2o_f_30)>=threshold) spacer[2]=0;
+    if (V(C2o_t_30)>=threshold && V(C2o_f_30)>=threshold) illegal[2]=1;
+    if (V(C2o_t_30)>=threshold) word[2]=word[2] | (1 << 30);
+    if (V(C2o_t_31)<threshold && V(C2o_f_31)<threshold) valid_word[2]=0;
+    if (V(C2o_t_31)>=threshold || V(C2o_f_31)>=threshold) spacer[2]=0;
+    if (V(C2o_t_31)>=threshold && V(C2o_f_31)>=threshold) illegal[2]=1;
+    if (V(C2o_t_31)>=threshold) word[2]=word[2] | (1 << 31);
+    if (active && !failure) begin
+      if (illegal[2]) begin failure=1; $display("SIM_ERROR t=%e reason=illegal_dual_rail channel=C2o",$abstime); end
+      if (rx_phase[2]==0 && valid_word[2]) begin
+        if (rx_index[2]>=12 || word[2]!=gold2(rx_index[2])) begin
+          failure=1; $display("SIM_ERROR t=%e reason=golden_mismatch channel=C2o index=%d expected=%h actual=%h",$abstime,rx_index[2],gold2(rx_index[2]),word[2]);
+        end else $display("SIM_RX t=%e channel=C2o index=%d expected=%h actual=%h PASS",$abstime,rx_index[2],gold2(rx_index[2]),word[2]);
+        held[2]=word[2]; ack[2]=1; rx_phase[2]=1;
+      end else if (rx_phase[2]==1) begin
+        if (valid_word[2] && word[2]!=held[2]) begin failure=1; $display("SIM_ERROR t=%e reason=unstable_word",$abstime); end
+        if (spacer[2]) begin ack[2]=0; rx_phase[2]=2; end
+      end else if (rx_phase[2]==2 && V(C2o_a)<threshold) begin
+        rx_index[2]=rx_index[2]+1; rx_phase[2]=0;
+      end
+    end
+    valid_word[3]=1; spacer[3]=1; illegal[3]=0; word[3]=0;
+    if (V(C3o_t_0)<threshold && V(C3o_f_0)<threshold) valid_word[3]=0;
+    if (V(C3o_t_0)>=threshold || V(C3o_f_0)>=threshold) spacer[3]=0;
+    if (V(C3o_t_0)>=threshold && V(C3o_f_0)>=threshold) illegal[3]=1;
+    if (V(C3o_t_0)>=threshold) word[3]=word[3] | (1 << 0);
+    if (V(C3o_t_1)<threshold && V(C3o_f_1)<threshold) valid_word[3]=0;
+    if (V(C3o_t_1)>=threshold || V(C3o_f_1)>=threshold) spacer[3]=0;
+    if (V(C3o_t_1)>=threshold && V(C3o_f_1)>=threshold) illegal[3]=1;
+    if (V(C3o_t_1)>=threshold) word[3]=word[3] | (1 << 1);
+    if (V(C3o_t_2)<threshold && V(C3o_f_2)<threshold) valid_word[3]=0;
+    if (V(C3o_t_2)>=threshold || V(C3o_f_2)>=threshold) spacer[3]=0;
+    if (V(C3o_t_2)>=threshold && V(C3o_f_2)>=threshold) illegal[3]=1;
+    if (V(C3o_t_2)>=threshold) word[3]=word[3] | (1 << 2);
+    if (V(C3o_t_3)<threshold && V(C3o_f_3)<threshold) valid_word[3]=0;
+    if (V(C3o_t_3)>=threshold || V(C3o_f_3)>=threshold) spacer[3]=0;
+    if (V(C3o_t_3)>=threshold && V(C3o_f_3)>=threshold) illegal[3]=1;
+    if (V(C3o_t_3)>=threshold) word[3]=word[3] | (1 << 3);
+    if (V(C3o_t_4)<threshold && V(C3o_f_4)<threshold) valid_word[3]=0;
+    if (V(C3o_t_4)>=threshold || V(C3o_f_4)>=threshold) spacer[3]=0;
+    if (V(C3o_t_4)>=threshold && V(C3o_f_4)>=threshold) illegal[3]=1;
+    if (V(C3o_t_4)>=threshold) word[3]=word[3] | (1 << 4);
+    if (V(C3o_t_5)<threshold && V(C3o_f_5)<threshold) valid_word[3]=0;
+    if (V(C3o_t_5)>=threshold || V(C3o_f_5)>=threshold) spacer[3]=0;
+    if (V(C3o_t_5)>=threshold && V(C3o_f_5)>=threshold) illegal[3]=1;
+    if (V(C3o_t_5)>=threshold) word[3]=word[3] | (1 << 5);
+    if (V(C3o_t_6)<threshold && V(C3o_f_6)<threshold) valid_word[3]=0;
+    if (V(C3o_t_6)>=threshold || V(C3o_f_6)>=threshold) spacer[3]=0;
+    if (V(C3o_t_6)>=threshold && V(C3o_f_6)>=threshold) illegal[3]=1;
+    if (V(C3o_t_6)>=threshold) word[3]=word[3] | (1 << 6);
+    if (V(C3o_t_7)<threshold && V(C3o_f_7)<threshold) valid_word[3]=0;
+    if (V(C3o_t_7)>=threshold || V(C3o_f_7)>=threshold) spacer[3]=0;
+    if (V(C3o_t_7)>=threshold && V(C3o_f_7)>=threshold) illegal[3]=1;
+    if (V(C3o_t_7)>=threshold) word[3]=word[3] | (1 << 7);
+    if (V(C3o_t_8)<threshold && V(C3o_f_8)<threshold) valid_word[3]=0;
+    if (V(C3o_t_8)>=threshold || V(C3o_f_8)>=threshold) spacer[3]=0;
+    if (V(C3o_t_8)>=threshold && V(C3o_f_8)>=threshold) illegal[3]=1;
+    if (V(C3o_t_8)>=threshold) word[3]=word[3] | (1 << 8);
+    if (V(C3o_t_9)<threshold && V(C3o_f_9)<threshold) valid_word[3]=0;
+    if (V(C3o_t_9)>=threshold || V(C3o_f_9)>=threshold) spacer[3]=0;
+    if (V(C3o_t_9)>=threshold && V(C3o_f_9)>=threshold) illegal[3]=1;
+    if (V(C3o_t_9)>=threshold) word[3]=word[3] | (1 << 9);
+    if (V(C3o_t_10)<threshold && V(C3o_f_10)<threshold) valid_word[3]=0;
+    if (V(C3o_t_10)>=threshold || V(C3o_f_10)>=threshold) spacer[3]=0;
+    if (V(C3o_t_10)>=threshold && V(C3o_f_10)>=threshold) illegal[3]=1;
+    if (V(C3o_t_10)>=threshold) word[3]=word[3] | (1 << 10);
+    if (V(C3o_t_11)<threshold && V(C3o_f_11)<threshold) valid_word[3]=0;
+    if (V(C3o_t_11)>=threshold || V(C3o_f_11)>=threshold) spacer[3]=0;
+    if (V(C3o_t_11)>=threshold && V(C3o_f_11)>=threshold) illegal[3]=1;
+    if (V(C3o_t_11)>=threshold) word[3]=word[3] | (1 << 11);
+    if (V(C3o_t_12)<threshold && V(C3o_f_12)<threshold) valid_word[3]=0;
+    if (V(C3o_t_12)>=threshold || V(C3o_f_12)>=threshold) spacer[3]=0;
+    if (V(C3o_t_12)>=threshold && V(C3o_f_12)>=threshold) illegal[3]=1;
+    if (V(C3o_t_12)>=threshold) word[3]=word[3] | (1 << 12);
+    if (V(C3o_t_13)<threshold && V(C3o_f_13)<threshold) valid_word[3]=0;
+    if (V(C3o_t_13)>=threshold || V(C3o_f_13)>=threshold) spacer[3]=0;
+    if (V(C3o_t_13)>=threshold && V(C3o_f_13)>=threshold) illegal[3]=1;
+    if (V(C3o_t_13)>=threshold) word[3]=word[3] | (1 << 13);
+    if (V(C3o_t_14)<threshold && V(C3o_f_14)<threshold) valid_word[3]=0;
+    if (V(C3o_t_14)>=threshold || V(C3o_f_14)>=threshold) spacer[3]=0;
+    if (V(C3o_t_14)>=threshold && V(C3o_f_14)>=threshold) illegal[3]=1;
+    if (V(C3o_t_14)>=threshold) word[3]=word[3] | (1 << 14);
+    if (V(C3o_t_15)<threshold && V(C3o_f_15)<threshold) valid_word[3]=0;
+    if (V(C3o_t_15)>=threshold || V(C3o_f_15)>=threshold) spacer[3]=0;
+    if (V(C3o_t_15)>=threshold && V(C3o_f_15)>=threshold) illegal[3]=1;
+    if (V(C3o_t_15)>=threshold) word[3]=word[3] | (1 << 15);
+    if (V(C3o_t_16)<threshold && V(C3o_f_16)<threshold) valid_word[3]=0;
+    if (V(C3o_t_16)>=threshold || V(C3o_f_16)>=threshold) spacer[3]=0;
+    if (V(C3o_t_16)>=threshold && V(C3o_f_16)>=threshold) illegal[3]=1;
+    if (V(C3o_t_16)>=threshold) word[3]=word[3] | (1 << 16);
+    if (V(C3o_t_17)<threshold && V(C3o_f_17)<threshold) valid_word[3]=0;
+    if (V(C3o_t_17)>=threshold || V(C3o_f_17)>=threshold) spacer[3]=0;
+    if (V(C3o_t_17)>=threshold && V(C3o_f_17)>=threshold) illegal[3]=1;
+    if (V(C3o_t_17)>=threshold) word[3]=word[3] | (1 << 17);
+    if (V(C3o_t_18)<threshold && V(C3o_f_18)<threshold) valid_word[3]=0;
+    if (V(C3o_t_18)>=threshold || V(C3o_f_18)>=threshold) spacer[3]=0;
+    if (V(C3o_t_18)>=threshold && V(C3o_f_18)>=threshold) illegal[3]=1;
+    if (V(C3o_t_18)>=threshold) word[3]=word[3] | (1 << 18);
+    if (V(C3o_t_19)<threshold && V(C3o_f_19)<threshold) valid_word[3]=0;
+    if (V(C3o_t_19)>=threshold || V(C3o_f_19)>=threshold) spacer[3]=0;
+    if (V(C3o_t_19)>=threshold && V(C3o_f_19)>=threshold) illegal[3]=1;
+    if (V(C3o_t_19)>=threshold) word[3]=word[3] | (1 << 19);
+    if (V(C3o_t_20)<threshold && V(C3o_f_20)<threshold) valid_word[3]=0;
+    if (V(C3o_t_20)>=threshold || V(C3o_f_20)>=threshold) spacer[3]=0;
+    if (V(C3o_t_20)>=threshold && V(C3o_f_20)>=threshold) illegal[3]=1;
+    if (V(C3o_t_20)>=threshold) word[3]=word[3] | (1 << 20);
+    if (V(C3o_t_21)<threshold && V(C3o_f_21)<threshold) valid_word[3]=0;
+    if (V(C3o_t_21)>=threshold || V(C3o_f_21)>=threshold) spacer[3]=0;
+    if (V(C3o_t_21)>=threshold && V(C3o_f_21)>=threshold) illegal[3]=1;
+    if (V(C3o_t_21)>=threshold) word[3]=word[3] | (1 << 21);
+    if (V(C3o_t_22)<threshold && V(C3o_f_22)<threshold) valid_word[3]=0;
+    if (V(C3o_t_22)>=threshold || V(C3o_f_22)>=threshold) spacer[3]=0;
+    if (V(C3o_t_22)>=threshold && V(C3o_f_22)>=threshold) illegal[3]=1;
+    if (V(C3o_t_22)>=threshold) word[3]=word[3] | (1 << 22);
+    if (V(C3o_t_23)<threshold && V(C3o_f_23)<threshold) valid_word[3]=0;
+    if (V(C3o_t_23)>=threshold || V(C3o_f_23)>=threshold) spacer[3]=0;
+    if (V(C3o_t_23)>=threshold && V(C3o_f_23)>=threshold) illegal[3]=1;
+    if (V(C3o_t_23)>=threshold) word[3]=word[3] | (1 << 23);
+    if (V(C3o_t_24)<threshold && V(C3o_f_24)<threshold) valid_word[3]=0;
+    if (V(C3o_t_24)>=threshold || V(C3o_f_24)>=threshold) spacer[3]=0;
+    if (V(C3o_t_24)>=threshold && V(C3o_f_24)>=threshold) illegal[3]=1;
+    if (V(C3o_t_24)>=threshold) word[3]=word[3] | (1 << 24);
+    if (V(C3o_t_25)<threshold && V(C3o_f_25)<threshold) valid_word[3]=0;
+    if (V(C3o_t_25)>=threshold || V(C3o_f_25)>=threshold) spacer[3]=0;
+    if (V(C3o_t_25)>=threshold && V(C3o_f_25)>=threshold) illegal[3]=1;
+    if (V(C3o_t_25)>=threshold) word[3]=word[3] | (1 << 25);
+    if (V(C3o_t_26)<threshold && V(C3o_f_26)<threshold) valid_word[3]=0;
+    if (V(C3o_t_26)>=threshold || V(C3o_f_26)>=threshold) spacer[3]=0;
+    if (V(C3o_t_26)>=threshold && V(C3o_f_26)>=threshold) illegal[3]=1;
+    if (V(C3o_t_26)>=threshold) word[3]=word[3] | (1 << 26);
+    if (V(C3o_t_27)<threshold && V(C3o_f_27)<threshold) valid_word[3]=0;
+    if (V(C3o_t_27)>=threshold || V(C3o_f_27)>=threshold) spacer[3]=0;
+    if (V(C3o_t_27)>=threshold && V(C3o_f_27)>=threshold) illegal[3]=1;
+    if (V(C3o_t_27)>=threshold) word[3]=word[3] | (1 << 27);
+    if (V(C3o_t_28)<threshold && V(C3o_f_28)<threshold) valid_word[3]=0;
+    if (V(C3o_t_28)>=threshold || V(C3o_f_28)>=threshold) spacer[3]=0;
+    if (V(C3o_t_28)>=threshold && V(C3o_f_28)>=threshold) illegal[3]=1;
+    if (V(C3o_t_28)>=threshold) word[3]=word[3] | (1 << 28);
+    if (V(C3o_t_29)<threshold && V(C3o_f_29)<threshold) valid_word[3]=0;
+    if (V(C3o_t_29)>=threshold || V(C3o_f_29)>=threshold) spacer[3]=0;
+    if (V(C3o_t_29)>=threshold && V(C3o_f_29)>=threshold) illegal[3]=1;
+    if (V(C3o_t_29)>=threshold) word[3]=word[3] | (1 << 29);
+    if (V(C3o_t_30)<threshold && V(C3o_f_30)<threshold) valid_word[3]=0;
+    if (V(C3o_t_30)>=threshold || V(C3o_f_30)>=threshold) spacer[3]=0;
+    if (V(C3o_t_30)>=threshold && V(C3o_f_30)>=threshold) illegal[3]=1;
+    if (V(C3o_t_30)>=threshold) word[3]=word[3] | (1 << 30);
+    if (V(C3o_t_31)<threshold && V(C3o_f_31)<threshold) valid_word[3]=0;
+    if (V(C3o_t_31)>=threshold || V(C3o_f_31)>=threshold) spacer[3]=0;
+    if (V(C3o_t_31)>=threshold && V(C3o_f_31)>=threshold) illegal[3]=1;
+    if (V(C3o_t_31)>=threshold) word[3]=word[3] | (1 << 31);
+    if (active && !failure) begin
+      if (illegal[3]) begin failure=1; $display("SIM_ERROR t=%e reason=illegal_dual_rail channel=C3o",$abstime); end
+      if (rx_phase[3]==0 && valid_word[3]) begin
+        if (rx_index[3]>=12 || word[3]!=gold3(rx_index[3])) begin
+          failure=1; $display("SIM_ERROR t=%e reason=golden_mismatch channel=C3o index=%d expected=%h actual=%h",$abstime,rx_index[3],gold3(rx_index[3]),word[3]);
+        end else $display("SIM_RX t=%e channel=C3o index=%d expected=%h actual=%h PASS",$abstime,rx_index[3],gold3(rx_index[3]),word[3]);
+        held[3]=word[3]; ack[3]=1; rx_phase[3]=1;
+      end else if (rx_phase[3]==1) begin
+        if (valid_word[3] && word[3]!=held[3]) begin failure=1; $display("SIM_ERROR t=%e reason=unstable_word",$abstime); end
+        if (spacer[3]) begin ack[3]=0; rx_phase[3]=2; end
+      end else if (rx_phase[3]==2 && V(C3o_a)<threshold) begin
+        rx_index[3]=rx_index[3]+1; rx_phase[3]=0;
+      end
+    end
+    valid_word[4]=1; spacer[4]=1; illegal[4]=0; word[4]=0;
+    if (V(Po_t_0)<threshold && V(Po_f_0)<threshold) valid_word[4]=0;
+    if (V(Po_t_0)>=threshold || V(Po_f_0)>=threshold) spacer[4]=0;
+    if (V(Po_t_0)>=threshold && V(Po_f_0)>=threshold) illegal[4]=1;
+    if (V(Po_t_0)>=threshold) word[4]=word[4] | (1 << 0);
+    if (V(Po_t_1)<threshold && V(Po_f_1)<threshold) valid_word[4]=0;
+    if (V(Po_t_1)>=threshold || V(Po_f_1)>=threshold) spacer[4]=0;
+    if (V(Po_t_1)>=threshold && V(Po_f_1)>=threshold) illegal[4]=1;
+    if (V(Po_t_1)>=threshold) word[4]=word[4] | (1 << 1);
+    if (V(Po_t_2)<threshold && V(Po_f_2)<threshold) valid_word[4]=0;
+    if (V(Po_t_2)>=threshold || V(Po_f_2)>=threshold) spacer[4]=0;
+    if (V(Po_t_2)>=threshold && V(Po_f_2)>=threshold) illegal[4]=1;
+    if (V(Po_t_2)>=threshold) word[4]=word[4] | (1 << 2);
+    if (V(Po_t_3)<threshold && V(Po_f_3)<threshold) valid_word[4]=0;
+    if (V(Po_t_3)>=threshold || V(Po_f_3)>=threshold) spacer[4]=0;
+    if (V(Po_t_3)>=threshold && V(Po_f_3)>=threshold) illegal[4]=1;
+    if (V(Po_t_3)>=threshold) word[4]=word[4] | (1 << 3);
+    if (V(Po_t_4)<threshold && V(Po_f_4)<threshold) valid_word[4]=0;
+    if (V(Po_t_4)>=threshold || V(Po_f_4)>=threshold) spacer[4]=0;
+    if (V(Po_t_4)>=threshold && V(Po_f_4)>=threshold) illegal[4]=1;
+    if (V(Po_t_4)>=threshold) word[4]=word[4] | (1 << 4);
+    if (V(Po_t_5)<threshold && V(Po_f_5)<threshold) valid_word[4]=0;
+    if (V(Po_t_5)>=threshold || V(Po_f_5)>=threshold) spacer[4]=0;
+    if (V(Po_t_5)>=threshold && V(Po_f_5)>=threshold) illegal[4]=1;
+    if (V(Po_t_5)>=threshold) word[4]=word[4] | (1 << 5);
+    if (V(Po_t_6)<threshold && V(Po_f_6)<threshold) valid_word[4]=0;
+    if (V(Po_t_6)>=threshold || V(Po_f_6)>=threshold) spacer[4]=0;
+    if (V(Po_t_6)>=threshold && V(Po_f_6)>=threshold) illegal[4]=1;
+    if (V(Po_t_6)>=threshold) word[4]=word[4] | (1 << 6);
+    if (V(Po_t_7)<threshold && V(Po_f_7)<threshold) valid_word[4]=0;
+    if (V(Po_t_7)>=threshold || V(Po_f_7)>=threshold) spacer[4]=0;
+    if (V(Po_t_7)>=threshold && V(Po_f_7)>=threshold) illegal[4]=1;
+    if (V(Po_t_7)>=threshold) word[4]=word[4] | (1 << 7);
+    if (V(Po_t_8)<threshold && V(Po_f_8)<threshold) valid_word[4]=0;
+    if (V(Po_t_8)>=threshold || V(Po_f_8)>=threshold) spacer[4]=0;
+    if (V(Po_t_8)>=threshold && V(Po_f_8)>=threshold) illegal[4]=1;
+    if (V(Po_t_8)>=threshold) word[4]=word[4] | (1 << 8);
+    if (V(Po_t_9)<threshold && V(Po_f_9)<threshold) valid_word[4]=0;
+    if (V(Po_t_9)>=threshold || V(Po_f_9)>=threshold) spacer[4]=0;
+    if (V(Po_t_9)>=threshold && V(Po_f_9)>=threshold) illegal[4]=1;
+    if (V(Po_t_9)>=threshold) word[4]=word[4] | (1 << 9);
+    if (V(Po_t_10)<threshold && V(Po_f_10)<threshold) valid_word[4]=0;
+    if (V(Po_t_10)>=threshold || V(Po_f_10)>=threshold) spacer[4]=0;
+    if (V(Po_t_10)>=threshold && V(Po_f_10)>=threshold) illegal[4]=1;
+    if (V(Po_t_10)>=threshold) word[4]=word[4] | (1 << 10);
+    if (V(Po_t_11)<threshold && V(Po_f_11)<threshold) valid_word[4]=0;
+    if (V(Po_t_11)>=threshold || V(Po_f_11)>=threshold) spacer[4]=0;
+    if (V(Po_t_11)>=threshold && V(Po_f_11)>=threshold) illegal[4]=1;
+    if (V(Po_t_11)>=threshold) word[4]=word[4] | (1 << 11);
+    if (V(Po_t_12)<threshold && V(Po_f_12)<threshold) valid_word[4]=0;
+    if (V(Po_t_12)>=threshold || V(Po_f_12)>=threshold) spacer[4]=0;
+    if (V(Po_t_12)>=threshold && V(Po_f_12)>=threshold) illegal[4]=1;
+    if (V(Po_t_12)>=threshold) word[4]=word[4] | (1 << 12);
+    if (V(Po_t_13)<threshold && V(Po_f_13)<threshold) valid_word[4]=0;
+    if (V(Po_t_13)>=threshold || V(Po_f_13)>=threshold) spacer[4]=0;
+    if (V(Po_t_13)>=threshold && V(Po_f_13)>=threshold) illegal[4]=1;
+    if (V(Po_t_13)>=threshold) word[4]=word[4] | (1 << 13);
+    if (V(Po_t_14)<threshold && V(Po_f_14)<threshold) valid_word[4]=0;
+    if (V(Po_t_14)>=threshold || V(Po_f_14)>=threshold) spacer[4]=0;
+    if (V(Po_t_14)>=threshold && V(Po_f_14)>=threshold) illegal[4]=1;
+    if (V(Po_t_14)>=threshold) word[4]=word[4] | (1 << 14);
+    if (V(Po_t_15)<threshold && V(Po_f_15)<threshold) valid_word[4]=0;
+    if (V(Po_t_15)>=threshold || V(Po_f_15)>=threshold) spacer[4]=0;
+    if (V(Po_t_15)>=threshold && V(Po_f_15)>=threshold) illegal[4]=1;
+    if (V(Po_t_15)>=threshold) word[4]=word[4] | (1 << 15);
+    if (V(Po_t_16)<threshold && V(Po_f_16)<threshold) valid_word[4]=0;
+    if (V(Po_t_16)>=threshold || V(Po_f_16)>=threshold) spacer[4]=0;
+    if (V(Po_t_16)>=threshold && V(Po_f_16)>=threshold) illegal[4]=1;
+    if (V(Po_t_16)>=threshold) word[4]=word[4] | (1 << 16);
+    if (V(Po_t_17)<threshold && V(Po_f_17)<threshold) valid_word[4]=0;
+    if (V(Po_t_17)>=threshold || V(Po_f_17)>=threshold) spacer[4]=0;
+    if (V(Po_t_17)>=threshold && V(Po_f_17)>=threshold) illegal[4]=1;
+    if (V(Po_t_17)>=threshold) word[4]=word[4] | (1 << 17);
+    if (V(Po_t_18)<threshold && V(Po_f_18)<threshold) valid_word[4]=0;
+    if (V(Po_t_18)>=threshold || V(Po_f_18)>=threshold) spacer[4]=0;
+    if (V(Po_t_18)>=threshold && V(Po_f_18)>=threshold) illegal[4]=1;
+    if (V(Po_t_18)>=threshold) word[4]=word[4] | (1 << 18);
+    if (V(Po_t_19)<threshold && V(Po_f_19)<threshold) valid_word[4]=0;
+    if (V(Po_t_19)>=threshold || V(Po_f_19)>=threshold) spacer[4]=0;
+    if (V(Po_t_19)>=threshold && V(Po_f_19)>=threshold) illegal[4]=1;
+    if (V(Po_t_19)>=threshold) word[4]=word[4] | (1 << 19);
+    if (V(Po_t_20)<threshold && V(Po_f_20)<threshold) valid_word[4]=0;
+    if (V(Po_t_20)>=threshold || V(Po_f_20)>=threshold) spacer[4]=0;
+    if (V(Po_t_20)>=threshold && V(Po_f_20)>=threshold) illegal[4]=1;
+    if (V(Po_t_20)>=threshold) word[4]=word[4] | (1 << 20);
+    if (V(Po_t_21)<threshold && V(Po_f_21)<threshold) valid_word[4]=0;
+    if (V(Po_t_21)>=threshold || V(Po_f_21)>=threshold) spacer[4]=0;
+    if (V(Po_t_21)>=threshold && V(Po_f_21)>=threshold) illegal[4]=1;
+    if (V(Po_t_21)>=threshold) word[4]=word[4] | (1 << 21);
+    if (V(Po_t_22)<threshold && V(Po_f_22)<threshold) valid_word[4]=0;
+    if (V(Po_t_22)>=threshold || V(Po_f_22)>=threshold) spacer[4]=0;
+    if (V(Po_t_22)>=threshold && V(Po_f_22)>=threshold) illegal[4]=1;
+    if (V(Po_t_22)>=threshold) word[4]=word[4] | (1 << 22);
+    if (V(Po_t_23)<threshold && V(Po_f_23)<threshold) valid_word[4]=0;
+    if (V(Po_t_23)>=threshold || V(Po_f_23)>=threshold) spacer[4]=0;
+    if (V(Po_t_23)>=threshold && V(Po_f_23)>=threshold) illegal[4]=1;
+    if (V(Po_t_23)>=threshold) word[4]=word[4] | (1 << 23);
+    if (V(Po_t_24)<threshold && V(Po_f_24)<threshold) valid_word[4]=0;
+    if (V(Po_t_24)>=threshold || V(Po_f_24)>=threshold) spacer[4]=0;
+    if (V(Po_t_24)>=threshold && V(Po_f_24)>=threshold) illegal[4]=1;
+    if (V(Po_t_24)>=threshold) word[4]=word[4] | (1 << 24);
+    if (V(Po_t_25)<threshold && V(Po_f_25)<threshold) valid_word[4]=0;
+    if (V(Po_t_25)>=threshold || V(Po_f_25)>=threshold) spacer[4]=0;
+    if (V(Po_t_25)>=threshold && V(Po_f_25)>=threshold) illegal[4]=1;
+    if (V(Po_t_25)>=threshold) word[4]=word[4] | (1 << 25);
+    if (V(Po_t_26)<threshold && V(Po_f_26)<threshold) valid_word[4]=0;
+    if (V(Po_t_26)>=threshold || V(Po_f_26)>=threshold) spacer[4]=0;
+    if (V(Po_t_26)>=threshold && V(Po_f_26)>=threshold) illegal[4]=1;
+    if (V(Po_t_26)>=threshold) word[4]=word[4] | (1 << 26);
+    if (V(Po_t_27)<threshold && V(Po_f_27)<threshold) valid_word[4]=0;
+    if (V(Po_t_27)>=threshold || V(Po_f_27)>=threshold) spacer[4]=0;
+    if (V(Po_t_27)>=threshold && V(Po_f_27)>=threshold) illegal[4]=1;
+    if (V(Po_t_27)>=threshold) word[4]=word[4] | (1 << 27);
+    if (V(Po_t_28)<threshold && V(Po_f_28)<threshold) valid_word[4]=0;
+    if (V(Po_t_28)>=threshold || V(Po_f_28)>=threshold) spacer[4]=0;
+    if (V(Po_t_28)>=threshold && V(Po_f_28)>=threshold) illegal[4]=1;
+    if (V(Po_t_28)>=threshold) word[4]=word[4] | (1 << 28);
+    if (V(Po_t_29)<threshold && V(Po_f_29)<threshold) valid_word[4]=0;
+    if (V(Po_t_29)>=threshold || V(Po_f_29)>=threshold) spacer[4]=0;
+    if (V(Po_t_29)>=threshold && V(Po_f_29)>=threshold) illegal[4]=1;
+    if (V(Po_t_29)>=threshold) word[4]=word[4] | (1 << 29);
+    if (V(Po_t_30)<threshold && V(Po_f_30)<threshold) valid_word[4]=0;
+    if (V(Po_t_30)>=threshold || V(Po_f_30)>=threshold) spacer[4]=0;
+    if (V(Po_t_30)>=threshold && V(Po_f_30)>=threshold) illegal[4]=1;
+    if (V(Po_t_30)>=threshold) word[4]=word[4] | (1 << 30);
+    if (V(Po_t_31)<threshold && V(Po_f_31)<threshold) valid_word[4]=0;
+    if (V(Po_t_31)>=threshold || V(Po_f_31)>=threshold) spacer[4]=0;
+    if (V(Po_t_31)>=threshold && V(Po_f_31)>=threshold) illegal[4]=1;
+    if (V(Po_t_31)>=threshold) word[4]=word[4] | (1 << 31);
+    if (active && !failure) begin
+      if (illegal[4]) begin failure=1; $display("SIM_ERROR t=%e reason=illegal_dual_rail channel=Po",$abstime); end
+      if (rx_phase[4]==0 && valid_word[4]) begin
+        if (rx_index[4]>=0 || word[4]!=gold4(rx_index[4])) begin
+          failure=1; $display("SIM_ERROR t=%e reason=golden_mismatch channel=Po index=%d expected=%h actual=%h",$abstime,rx_index[4],gold4(rx_index[4]),word[4]);
+        end else $display("SIM_RX t=%e channel=Po index=%d expected=%h actual=%h PASS",$abstime,rx_index[4],gold4(rx_index[4]),word[4]);
+        held[4]=word[4]; ack[4]=1; rx_phase[4]=1;
+      end else if (rx_phase[4]==1) begin
+        if (valid_word[4] && word[4]!=held[4]) begin failure=1; $display("SIM_ERROR t=%e reason=unstable_word",$abstime); end
+        if (spacer[4]) begin ack[4]=0; rx_phase[4]=2; end
+      end else if (rx_phase[4]==2 && V(Po_a)<threshold) begin
+        rx_index[4]=rx_index[4]+1; rx_phase[4]=0;
+      end
+    end
+    if (active && !finished && !failure && tx<40) begin
+      p=source(tx);
+      if (p==0 && phase==1 && !source_checked && $abstime>=issued+2*EDGE+TD) begin
+        input_hi=0; input_lo=0; input_valid=1; input_illegal=0;
+        if ((V(C0i_t_0)>=threshold)==(V(C0i_f_0)>=threshold)) input_valid=0;
+        if (V(C0i_t_0)>=threshold && V(C0i_f_0)>=threshold) input_illegal=1;
+        if (V(C0i_t_0)>=threshold) input_lo=input_lo | 1;
+        if ((V(C0i_t_1)>=threshold)==(V(C0i_f_1)>=threshold)) input_valid=0;
+        if (V(C0i_t_1)>=threshold && V(C0i_f_1)>=threshold) input_illegal=1;
+        if (V(C0i_t_1)>=threshold) input_lo=input_lo | 2;
+        if ((V(C0i_t_2)>=threshold)==(V(C0i_f_2)>=threshold)) input_valid=0;
+        if (V(C0i_t_2)>=threshold && V(C0i_f_2)>=threshold) input_illegal=1;
+        if (V(C0i_t_2)>=threshold) input_lo=input_lo | 4;
+        if ((V(C0i_t_3)>=threshold)==(V(C0i_f_3)>=threshold)) input_valid=0;
+        if (V(C0i_t_3)>=threshold && V(C0i_f_3)>=threshold) input_illegal=1;
+        if (V(C0i_t_3)>=threshold) input_lo=input_lo | 8;
+        if ((V(C0i_t_4)>=threshold)==(V(C0i_f_4)>=threshold)) input_valid=0;
+        if (V(C0i_t_4)>=threshold && V(C0i_f_4)>=threshold) input_illegal=1;
+        if (V(C0i_t_4)>=threshold) input_lo=input_lo | 16;
+        if ((V(C0i_t_5)>=threshold)==(V(C0i_f_5)>=threshold)) input_valid=0;
+        if (V(C0i_t_5)>=threshold && V(C0i_f_5)>=threshold) input_illegal=1;
+        if (V(C0i_t_5)>=threshold) input_lo=input_lo | 32;
+        if ((V(C0i_t_6)>=threshold)==(V(C0i_f_6)>=threshold)) input_valid=0;
+        if (V(C0i_t_6)>=threshold && V(C0i_f_6)>=threshold) input_illegal=1;
+        if (V(C0i_t_6)>=threshold) input_lo=input_lo | 64;
+        if ((V(C0i_t_7)>=threshold)==(V(C0i_f_7)>=threshold)) input_valid=0;
+        if (V(C0i_t_7)>=threshold && V(C0i_f_7)>=threshold) input_illegal=1;
+        if (V(C0i_t_7)>=threshold) input_lo=input_lo | 128;
+        if ((V(C0i_t_8)>=threshold)==(V(C0i_f_8)>=threshold)) input_valid=0;
+        if (V(C0i_t_8)>=threshold && V(C0i_f_8)>=threshold) input_illegal=1;
+        if (V(C0i_t_8)>=threshold) input_lo=input_lo | 256;
+        if ((V(C0i_t_9)>=threshold)==(V(C0i_f_9)>=threshold)) input_valid=0;
+        if (V(C0i_t_9)>=threshold && V(C0i_f_9)>=threshold) input_illegal=1;
+        if (V(C0i_t_9)>=threshold) input_lo=input_lo | 512;
+        if ((V(C0i_t_10)>=threshold)==(V(C0i_f_10)>=threshold)) input_valid=0;
+        if (V(C0i_t_10)>=threshold && V(C0i_f_10)>=threshold) input_illegal=1;
+        if (V(C0i_t_10)>=threshold) input_lo=input_lo | 1024;
+        if ((V(C0i_t_11)>=threshold)==(V(C0i_f_11)>=threshold)) input_valid=0;
+        if (V(C0i_t_11)>=threshold && V(C0i_f_11)>=threshold) input_illegal=1;
+        if (V(C0i_t_11)>=threshold) input_lo=input_lo | 2048;
+        if ((V(C0i_t_12)>=threshold)==(V(C0i_f_12)>=threshold)) input_valid=0;
+        if (V(C0i_t_12)>=threshold && V(C0i_f_12)>=threshold) input_illegal=1;
+        if (V(C0i_t_12)>=threshold) input_lo=input_lo | 4096;
+        if ((V(C0i_t_13)>=threshold)==(V(C0i_f_13)>=threshold)) input_valid=0;
+        if (V(C0i_t_13)>=threshold && V(C0i_f_13)>=threshold) input_illegal=1;
+        if (V(C0i_t_13)>=threshold) input_lo=input_lo | 8192;
+        if ((V(C0i_t_14)>=threshold)==(V(C0i_f_14)>=threshold)) input_valid=0;
+        if (V(C0i_t_14)>=threshold && V(C0i_f_14)>=threshold) input_illegal=1;
+        if (V(C0i_t_14)>=threshold) input_lo=input_lo | 16384;
+        if ((V(C0i_t_15)>=threshold)==(V(C0i_f_15)>=threshold)) input_valid=0;
+        if (V(C0i_t_15)>=threshold && V(C0i_f_15)>=threshold) input_illegal=1;
+        if (V(C0i_t_15)>=threshold) input_lo=input_lo | 32768;
+        if ((V(C0i_t_16)>=threshold)==(V(C0i_f_16)>=threshold)) input_valid=0;
+        if (V(C0i_t_16)>=threshold && V(C0i_f_16)>=threshold) input_illegal=1;
+        if (V(C0i_t_16)>=threshold) input_hi=input_hi | 1;
+        if ((V(C0i_t_17)>=threshold)==(V(C0i_f_17)>=threshold)) input_valid=0;
+        if (V(C0i_t_17)>=threshold && V(C0i_f_17)>=threshold) input_illegal=1;
+        if (V(C0i_t_17)>=threshold) input_hi=input_hi | 2;
+        if ((V(C0i_t_18)>=threshold)==(V(C0i_f_18)>=threshold)) input_valid=0;
+        if (V(C0i_t_18)>=threshold && V(C0i_f_18)>=threshold) input_illegal=1;
+        if (V(C0i_t_18)>=threshold) input_hi=input_hi | 4;
+        if ((V(C0i_t_19)>=threshold)==(V(C0i_f_19)>=threshold)) input_valid=0;
+        if (V(C0i_t_19)>=threshold && V(C0i_f_19)>=threshold) input_illegal=1;
+        if (V(C0i_t_19)>=threshold) input_hi=input_hi | 8;
+        if ((V(C0i_t_20)>=threshold)==(V(C0i_f_20)>=threshold)) input_valid=0;
+        if (V(C0i_t_20)>=threshold && V(C0i_f_20)>=threshold) input_illegal=1;
+        if (V(C0i_t_20)>=threshold) input_hi=input_hi | 16;
+        if ((V(C0i_t_21)>=threshold)==(V(C0i_f_21)>=threshold)) input_valid=0;
+        if (V(C0i_t_21)>=threshold && V(C0i_f_21)>=threshold) input_illegal=1;
+        if (V(C0i_t_21)>=threshold) input_hi=input_hi | 32;
+        if ((V(C0i_t_22)>=threshold)==(V(C0i_f_22)>=threshold)) input_valid=0;
+        if (V(C0i_t_22)>=threshold && V(C0i_f_22)>=threshold) input_illegal=1;
+        if (V(C0i_t_22)>=threshold) input_hi=input_hi | 64;
+        if ((V(C0i_t_23)>=threshold)==(V(C0i_f_23)>=threshold)) input_valid=0;
+        if (V(C0i_t_23)>=threshold && V(C0i_f_23)>=threshold) input_illegal=1;
+        if (V(C0i_t_23)>=threshold) input_hi=input_hi | 128;
+        if ((V(C0i_t_24)>=threshold)==(V(C0i_f_24)>=threshold)) input_valid=0;
+        if (V(C0i_t_24)>=threshold && V(C0i_f_24)>=threshold) input_illegal=1;
+        if (V(C0i_t_24)>=threshold) input_hi=input_hi | 256;
+        if ((V(C0i_t_25)>=threshold)==(V(C0i_f_25)>=threshold)) input_valid=0;
+        if (V(C0i_t_25)>=threshold && V(C0i_f_25)>=threshold) input_illegal=1;
+        if (V(C0i_t_25)>=threshold) input_hi=input_hi | 512;
+        if ((V(C0i_t_26)>=threshold)==(V(C0i_f_26)>=threshold)) input_valid=0;
+        if (V(C0i_t_26)>=threshold && V(C0i_f_26)>=threshold) input_illegal=1;
+        if (V(C0i_t_26)>=threshold) input_hi=input_hi | 1024;
+        if ((V(C0i_t_27)>=threshold)==(V(C0i_f_27)>=threshold)) input_valid=0;
+        if (V(C0i_t_27)>=threshold && V(C0i_f_27)>=threshold) input_illegal=1;
+        if (V(C0i_t_27)>=threshold) input_hi=input_hi | 2048;
+        if ((V(C0i_t_28)>=threshold)==(V(C0i_f_28)>=threshold)) input_valid=0;
+        if (V(C0i_t_28)>=threshold && V(C0i_f_28)>=threshold) input_illegal=1;
+        if (V(C0i_t_28)>=threshold) input_hi=input_hi | 4096;
+        if ((V(C0i_t_29)>=threshold)==(V(C0i_f_29)>=threshold)) input_valid=0;
+        if (V(C0i_t_29)>=threshold && V(C0i_f_29)>=threshold) input_illegal=1;
+        if (V(C0i_t_29)>=threshold) input_hi=input_hi | 8192;
+        if ((V(C0i_t_30)>=threshold)==(V(C0i_f_30)>=threshold)) input_valid=0;
+        if (V(C0i_t_30)>=threshold && V(C0i_f_30)>=threshold) input_illegal=1;
+        if (V(C0i_t_30)>=threshold) input_hi=input_hi | 16384;
+        if ((V(C0i_t_31)>=threshold)==(V(C0i_f_31)>=threshold)) input_valid=0;
+        if (V(C0i_t_31)>=threshold && V(C0i_f_31)>=threshold) input_illegal=1;
+        if (V(C0i_t_31)>=threshold) input_hi=input_hi | 32768;
+        if (!input_valid || input_illegal || input_hi!=stimulus_hi(tx) || input_lo!=stimulus_lo(tx)) begin
+          failure=1; $display("SIM_ERROR t=%e reason=physical_input_mismatch id=%d hi=%d lo=%d",$abstime,tx,input_hi,input_lo);
+        end else begin source_checked=1; $display("SIM_INPUT_PASS t=%e id=%d hi=%d lo=%d",$abstime,tx,input_hi,input_lo); end
+      end
+      if (p==0 && phase==1 && V(C0i_a)>=threshold) begin
+        if (source_checked) begin tx_valid[p]=0; phase=2; end
+      end else if (p==0 && phase==2 && V(C0i_a)<threshold) begin
+        phase=3; ready=$abstime;
+      end
+      if (p==1 && phase==1 && !source_checked && $abstime>=issued+2*EDGE+TD) begin
+        input_hi=0; input_lo=0; input_valid=1; input_illegal=0;
+        if ((V(C1i_t_0)>=threshold)==(V(C1i_f_0)>=threshold)) input_valid=0;
+        if (V(C1i_t_0)>=threshold && V(C1i_f_0)>=threshold) input_illegal=1;
+        if (V(C1i_t_0)>=threshold) input_lo=input_lo | 1;
+        if ((V(C1i_t_1)>=threshold)==(V(C1i_f_1)>=threshold)) input_valid=0;
+        if (V(C1i_t_1)>=threshold && V(C1i_f_1)>=threshold) input_illegal=1;
+        if (V(C1i_t_1)>=threshold) input_lo=input_lo | 2;
+        if ((V(C1i_t_2)>=threshold)==(V(C1i_f_2)>=threshold)) input_valid=0;
+        if (V(C1i_t_2)>=threshold && V(C1i_f_2)>=threshold) input_illegal=1;
+        if (V(C1i_t_2)>=threshold) input_lo=input_lo | 4;
+        if ((V(C1i_t_3)>=threshold)==(V(C1i_f_3)>=threshold)) input_valid=0;
+        if (V(C1i_t_3)>=threshold && V(C1i_f_3)>=threshold) input_illegal=1;
+        if (V(C1i_t_3)>=threshold) input_lo=input_lo | 8;
+        if ((V(C1i_t_4)>=threshold)==(V(C1i_f_4)>=threshold)) input_valid=0;
+        if (V(C1i_t_4)>=threshold && V(C1i_f_4)>=threshold) input_illegal=1;
+        if (V(C1i_t_4)>=threshold) input_lo=input_lo | 16;
+        if ((V(C1i_t_5)>=threshold)==(V(C1i_f_5)>=threshold)) input_valid=0;
+        if (V(C1i_t_5)>=threshold && V(C1i_f_5)>=threshold) input_illegal=1;
+        if (V(C1i_t_5)>=threshold) input_lo=input_lo | 32;
+        if ((V(C1i_t_6)>=threshold)==(V(C1i_f_6)>=threshold)) input_valid=0;
+        if (V(C1i_t_6)>=threshold && V(C1i_f_6)>=threshold) input_illegal=1;
+        if (V(C1i_t_6)>=threshold) input_lo=input_lo | 64;
+        if ((V(C1i_t_7)>=threshold)==(V(C1i_f_7)>=threshold)) input_valid=0;
+        if (V(C1i_t_7)>=threshold && V(C1i_f_7)>=threshold) input_illegal=1;
+        if (V(C1i_t_7)>=threshold) input_lo=input_lo | 128;
+        if ((V(C1i_t_8)>=threshold)==(V(C1i_f_8)>=threshold)) input_valid=0;
+        if (V(C1i_t_8)>=threshold && V(C1i_f_8)>=threshold) input_illegal=1;
+        if (V(C1i_t_8)>=threshold) input_lo=input_lo | 256;
+        if ((V(C1i_t_9)>=threshold)==(V(C1i_f_9)>=threshold)) input_valid=0;
+        if (V(C1i_t_9)>=threshold && V(C1i_f_9)>=threshold) input_illegal=1;
+        if (V(C1i_t_9)>=threshold) input_lo=input_lo | 512;
+        if ((V(C1i_t_10)>=threshold)==(V(C1i_f_10)>=threshold)) input_valid=0;
+        if (V(C1i_t_10)>=threshold && V(C1i_f_10)>=threshold) input_illegal=1;
+        if (V(C1i_t_10)>=threshold) input_lo=input_lo | 1024;
+        if ((V(C1i_t_11)>=threshold)==(V(C1i_f_11)>=threshold)) input_valid=0;
+        if (V(C1i_t_11)>=threshold && V(C1i_f_11)>=threshold) input_illegal=1;
+        if (V(C1i_t_11)>=threshold) input_lo=input_lo | 2048;
+        if ((V(C1i_t_12)>=threshold)==(V(C1i_f_12)>=threshold)) input_valid=0;
+        if (V(C1i_t_12)>=threshold && V(C1i_f_12)>=threshold) input_illegal=1;
+        if (V(C1i_t_12)>=threshold) input_lo=input_lo | 4096;
+        if ((V(C1i_t_13)>=threshold)==(V(C1i_f_13)>=threshold)) input_valid=0;
+        if (V(C1i_t_13)>=threshold && V(C1i_f_13)>=threshold) input_illegal=1;
+        if (V(C1i_t_13)>=threshold) input_lo=input_lo | 8192;
+        if ((V(C1i_t_14)>=threshold)==(V(C1i_f_14)>=threshold)) input_valid=0;
+        if (V(C1i_t_14)>=threshold && V(C1i_f_14)>=threshold) input_illegal=1;
+        if (V(C1i_t_14)>=threshold) input_lo=input_lo | 16384;
+        if ((V(C1i_t_15)>=threshold)==(V(C1i_f_15)>=threshold)) input_valid=0;
+        if (V(C1i_t_15)>=threshold && V(C1i_f_15)>=threshold) input_illegal=1;
+        if (V(C1i_t_15)>=threshold) input_lo=input_lo | 32768;
+        if ((V(C1i_t_16)>=threshold)==(V(C1i_f_16)>=threshold)) input_valid=0;
+        if (V(C1i_t_16)>=threshold && V(C1i_f_16)>=threshold) input_illegal=1;
+        if (V(C1i_t_16)>=threshold) input_hi=input_hi | 1;
+        if ((V(C1i_t_17)>=threshold)==(V(C1i_f_17)>=threshold)) input_valid=0;
+        if (V(C1i_t_17)>=threshold && V(C1i_f_17)>=threshold) input_illegal=1;
+        if (V(C1i_t_17)>=threshold) input_hi=input_hi | 2;
+        if ((V(C1i_t_18)>=threshold)==(V(C1i_f_18)>=threshold)) input_valid=0;
+        if (V(C1i_t_18)>=threshold && V(C1i_f_18)>=threshold) input_illegal=1;
+        if (V(C1i_t_18)>=threshold) input_hi=input_hi | 4;
+        if ((V(C1i_t_19)>=threshold)==(V(C1i_f_19)>=threshold)) input_valid=0;
+        if (V(C1i_t_19)>=threshold && V(C1i_f_19)>=threshold) input_illegal=1;
+        if (V(C1i_t_19)>=threshold) input_hi=input_hi | 8;
+        if ((V(C1i_t_20)>=threshold)==(V(C1i_f_20)>=threshold)) input_valid=0;
+        if (V(C1i_t_20)>=threshold && V(C1i_f_20)>=threshold) input_illegal=1;
+        if (V(C1i_t_20)>=threshold) input_hi=input_hi | 16;
+        if ((V(C1i_t_21)>=threshold)==(V(C1i_f_21)>=threshold)) input_valid=0;
+        if (V(C1i_t_21)>=threshold && V(C1i_f_21)>=threshold) input_illegal=1;
+        if (V(C1i_t_21)>=threshold) input_hi=input_hi | 32;
+        if ((V(C1i_t_22)>=threshold)==(V(C1i_f_22)>=threshold)) input_valid=0;
+        if (V(C1i_t_22)>=threshold && V(C1i_f_22)>=threshold) input_illegal=1;
+        if (V(C1i_t_22)>=threshold) input_hi=input_hi | 64;
+        if ((V(C1i_t_23)>=threshold)==(V(C1i_f_23)>=threshold)) input_valid=0;
+        if (V(C1i_t_23)>=threshold && V(C1i_f_23)>=threshold) input_illegal=1;
+        if (V(C1i_t_23)>=threshold) input_hi=input_hi | 128;
+        if ((V(C1i_t_24)>=threshold)==(V(C1i_f_24)>=threshold)) input_valid=0;
+        if (V(C1i_t_24)>=threshold && V(C1i_f_24)>=threshold) input_illegal=1;
+        if (V(C1i_t_24)>=threshold) input_hi=input_hi | 256;
+        if ((V(C1i_t_25)>=threshold)==(V(C1i_f_25)>=threshold)) input_valid=0;
+        if (V(C1i_t_25)>=threshold && V(C1i_f_25)>=threshold) input_illegal=1;
+        if (V(C1i_t_25)>=threshold) input_hi=input_hi | 512;
+        if ((V(C1i_t_26)>=threshold)==(V(C1i_f_26)>=threshold)) input_valid=0;
+        if (V(C1i_t_26)>=threshold && V(C1i_f_26)>=threshold) input_illegal=1;
+        if (V(C1i_t_26)>=threshold) input_hi=input_hi | 1024;
+        if ((V(C1i_t_27)>=threshold)==(V(C1i_f_27)>=threshold)) input_valid=0;
+        if (V(C1i_t_27)>=threshold && V(C1i_f_27)>=threshold) input_illegal=1;
+        if (V(C1i_t_27)>=threshold) input_hi=input_hi | 2048;
+        if ((V(C1i_t_28)>=threshold)==(V(C1i_f_28)>=threshold)) input_valid=0;
+        if (V(C1i_t_28)>=threshold && V(C1i_f_28)>=threshold) input_illegal=1;
+        if (V(C1i_t_28)>=threshold) input_hi=input_hi | 4096;
+        if ((V(C1i_t_29)>=threshold)==(V(C1i_f_29)>=threshold)) input_valid=0;
+        if (V(C1i_t_29)>=threshold && V(C1i_f_29)>=threshold) input_illegal=1;
+        if (V(C1i_t_29)>=threshold) input_hi=input_hi | 8192;
+        if ((V(C1i_t_30)>=threshold)==(V(C1i_f_30)>=threshold)) input_valid=0;
+        if (V(C1i_t_30)>=threshold && V(C1i_f_30)>=threshold) input_illegal=1;
+        if (V(C1i_t_30)>=threshold) input_hi=input_hi | 16384;
+        if ((V(C1i_t_31)>=threshold)==(V(C1i_f_31)>=threshold)) input_valid=0;
+        if (V(C1i_t_31)>=threshold && V(C1i_f_31)>=threshold) input_illegal=1;
+        if (V(C1i_t_31)>=threshold) input_hi=input_hi | 32768;
+        if (!input_valid || input_illegal || input_hi!=stimulus_hi(tx) || input_lo!=stimulus_lo(tx)) begin
+          failure=1; $display("SIM_ERROR t=%e reason=physical_input_mismatch id=%d hi=%d lo=%d",$abstime,tx,input_hi,input_lo);
+        end else begin source_checked=1; $display("SIM_INPUT_PASS t=%e id=%d hi=%d lo=%d",$abstime,tx,input_hi,input_lo); end
+      end
+      if (p==1 && phase==1 && V(C1i_a)>=threshold) begin
+        if (source_checked) begin tx_valid[p]=0; phase=2; end
+      end else if (p==1 && phase==2 && V(C1i_a)<threshold) begin
+        phase=3; ready=$abstime;
+      end
+      if (p==2 && phase==1 && !source_checked && $abstime>=issued+2*EDGE+TD) begin
+        input_hi=0; input_lo=0; input_valid=1; input_illegal=0;
+        if ((V(C2i_t_0)>=threshold)==(V(C2i_f_0)>=threshold)) input_valid=0;
+        if (V(C2i_t_0)>=threshold && V(C2i_f_0)>=threshold) input_illegal=1;
+        if (V(C2i_t_0)>=threshold) input_lo=input_lo | 1;
+        if ((V(C2i_t_1)>=threshold)==(V(C2i_f_1)>=threshold)) input_valid=0;
+        if (V(C2i_t_1)>=threshold && V(C2i_f_1)>=threshold) input_illegal=1;
+        if (V(C2i_t_1)>=threshold) input_lo=input_lo | 2;
+        if ((V(C2i_t_2)>=threshold)==(V(C2i_f_2)>=threshold)) input_valid=0;
+        if (V(C2i_t_2)>=threshold && V(C2i_f_2)>=threshold) input_illegal=1;
+        if (V(C2i_t_2)>=threshold) input_lo=input_lo | 4;
+        if ((V(C2i_t_3)>=threshold)==(V(C2i_f_3)>=threshold)) input_valid=0;
+        if (V(C2i_t_3)>=threshold && V(C2i_f_3)>=threshold) input_illegal=1;
+        if (V(C2i_t_3)>=threshold) input_lo=input_lo | 8;
+        if ((V(C2i_t_4)>=threshold)==(V(C2i_f_4)>=threshold)) input_valid=0;
+        if (V(C2i_t_4)>=threshold && V(C2i_f_4)>=threshold) input_illegal=1;
+        if (V(C2i_t_4)>=threshold) input_lo=input_lo | 16;
+        if ((V(C2i_t_5)>=threshold)==(V(C2i_f_5)>=threshold)) input_valid=0;
+        if (V(C2i_t_5)>=threshold && V(C2i_f_5)>=threshold) input_illegal=1;
+        if (V(C2i_t_5)>=threshold) input_lo=input_lo | 32;
+        if ((V(C2i_t_6)>=threshold)==(V(C2i_f_6)>=threshold)) input_valid=0;
+        if (V(C2i_t_6)>=threshold && V(C2i_f_6)>=threshold) input_illegal=1;
+        if (V(C2i_t_6)>=threshold) input_lo=input_lo | 64;
+        if ((V(C2i_t_7)>=threshold)==(V(C2i_f_7)>=threshold)) input_valid=0;
+        if (V(C2i_t_7)>=threshold && V(C2i_f_7)>=threshold) input_illegal=1;
+        if (V(C2i_t_7)>=threshold) input_lo=input_lo | 128;
+        if ((V(C2i_t_8)>=threshold)==(V(C2i_f_8)>=threshold)) input_valid=0;
+        if (V(C2i_t_8)>=threshold && V(C2i_f_8)>=threshold) input_illegal=1;
+        if (V(C2i_t_8)>=threshold) input_lo=input_lo | 256;
+        if ((V(C2i_t_9)>=threshold)==(V(C2i_f_9)>=threshold)) input_valid=0;
+        if (V(C2i_t_9)>=threshold && V(C2i_f_9)>=threshold) input_illegal=1;
+        if (V(C2i_t_9)>=threshold) input_lo=input_lo | 512;
+        if ((V(C2i_t_10)>=threshold)==(V(C2i_f_10)>=threshold)) input_valid=0;
+        if (V(C2i_t_10)>=threshold && V(C2i_f_10)>=threshold) input_illegal=1;
+        if (V(C2i_t_10)>=threshold) input_lo=input_lo | 1024;
+        if ((V(C2i_t_11)>=threshold)==(V(C2i_f_11)>=threshold)) input_valid=0;
+        if (V(C2i_t_11)>=threshold && V(C2i_f_11)>=threshold) input_illegal=1;
+        if (V(C2i_t_11)>=threshold) input_lo=input_lo | 2048;
+        if ((V(C2i_t_12)>=threshold)==(V(C2i_f_12)>=threshold)) input_valid=0;
+        if (V(C2i_t_12)>=threshold && V(C2i_f_12)>=threshold) input_illegal=1;
+        if (V(C2i_t_12)>=threshold) input_lo=input_lo | 4096;
+        if ((V(C2i_t_13)>=threshold)==(V(C2i_f_13)>=threshold)) input_valid=0;
+        if (V(C2i_t_13)>=threshold && V(C2i_f_13)>=threshold) input_illegal=1;
+        if (V(C2i_t_13)>=threshold) input_lo=input_lo | 8192;
+        if ((V(C2i_t_14)>=threshold)==(V(C2i_f_14)>=threshold)) input_valid=0;
+        if (V(C2i_t_14)>=threshold && V(C2i_f_14)>=threshold) input_illegal=1;
+        if (V(C2i_t_14)>=threshold) input_lo=input_lo | 16384;
+        if ((V(C2i_t_15)>=threshold)==(V(C2i_f_15)>=threshold)) input_valid=0;
+        if (V(C2i_t_15)>=threshold && V(C2i_f_15)>=threshold) input_illegal=1;
+        if (V(C2i_t_15)>=threshold) input_lo=input_lo | 32768;
+        if ((V(C2i_t_16)>=threshold)==(V(C2i_f_16)>=threshold)) input_valid=0;
+        if (V(C2i_t_16)>=threshold && V(C2i_f_16)>=threshold) input_illegal=1;
+        if (V(C2i_t_16)>=threshold) input_hi=input_hi | 1;
+        if ((V(C2i_t_17)>=threshold)==(V(C2i_f_17)>=threshold)) input_valid=0;
+        if (V(C2i_t_17)>=threshold && V(C2i_f_17)>=threshold) input_illegal=1;
+        if (V(C2i_t_17)>=threshold) input_hi=input_hi | 2;
+        if ((V(C2i_t_18)>=threshold)==(V(C2i_f_18)>=threshold)) input_valid=0;
+        if (V(C2i_t_18)>=threshold && V(C2i_f_18)>=threshold) input_illegal=1;
+        if (V(C2i_t_18)>=threshold) input_hi=input_hi | 4;
+        if ((V(C2i_t_19)>=threshold)==(V(C2i_f_19)>=threshold)) input_valid=0;
+        if (V(C2i_t_19)>=threshold && V(C2i_f_19)>=threshold) input_illegal=1;
+        if (V(C2i_t_19)>=threshold) input_hi=input_hi | 8;
+        if ((V(C2i_t_20)>=threshold)==(V(C2i_f_20)>=threshold)) input_valid=0;
+        if (V(C2i_t_20)>=threshold && V(C2i_f_20)>=threshold) input_illegal=1;
+        if (V(C2i_t_20)>=threshold) input_hi=input_hi | 16;
+        if ((V(C2i_t_21)>=threshold)==(V(C2i_f_21)>=threshold)) input_valid=0;
+        if (V(C2i_t_21)>=threshold && V(C2i_f_21)>=threshold) input_illegal=1;
+        if (V(C2i_t_21)>=threshold) input_hi=input_hi | 32;
+        if ((V(C2i_t_22)>=threshold)==(V(C2i_f_22)>=threshold)) input_valid=0;
+        if (V(C2i_t_22)>=threshold && V(C2i_f_22)>=threshold) input_illegal=1;
+        if (V(C2i_t_22)>=threshold) input_hi=input_hi | 64;
+        if ((V(C2i_t_23)>=threshold)==(V(C2i_f_23)>=threshold)) input_valid=0;
+        if (V(C2i_t_23)>=threshold && V(C2i_f_23)>=threshold) input_illegal=1;
+        if (V(C2i_t_23)>=threshold) input_hi=input_hi | 128;
+        if ((V(C2i_t_24)>=threshold)==(V(C2i_f_24)>=threshold)) input_valid=0;
+        if (V(C2i_t_24)>=threshold && V(C2i_f_24)>=threshold) input_illegal=1;
+        if (V(C2i_t_24)>=threshold) input_hi=input_hi | 256;
+        if ((V(C2i_t_25)>=threshold)==(V(C2i_f_25)>=threshold)) input_valid=0;
+        if (V(C2i_t_25)>=threshold && V(C2i_f_25)>=threshold) input_illegal=1;
+        if (V(C2i_t_25)>=threshold) input_hi=input_hi | 512;
+        if ((V(C2i_t_26)>=threshold)==(V(C2i_f_26)>=threshold)) input_valid=0;
+        if (V(C2i_t_26)>=threshold && V(C2i_f_26)>=threshold) input_illegal=1;
+        if (V(C2i_t_26)>=threshold) input_hi=input_hi | 1024;
+        if ((V(C2i_t_27)>=threshold)==(V(C2i_f_27)>=threshold)) input_valid=0;
+        if (V(C2i_t_27)>=threshold && V(C2i_f_27)>=threshold) input_illegal=1;
+        if (V(C2i_t_27)>=threshold) input_hi=input_hi | 2048;
+        if ((V(C2i_t_28)>=threshold)==(V(C2i_f_28)>=threshold)) input_valid=0;
+        if (V(C2i_t_28)>=threshold && V(C2i_f_28)>=threshold) input_illegal=1;
+        if (V(C2i_t_28)>=threshold) input_hi=input_hi | 4096;
+        if ((V(C2i_t_29)>=threshold)==(V(C2i_f_29)>=threshold)) input_valid=0;
+        if (V(C2i_t_29)>=threshold && V(C2i_f_29)>=threshold) input_illegal=1;
+        if (V(C2i_t_29)>=threshold) input_hi=input_hi | 8192;
+        if ((V(C2i_t_30)>=threshold)==(V(C2i_f_30)>=threshold)) input_valid=0;
+        if (V(C2i_t_30)>=threshold && V(C2i_f_30)>=threshold) input_illegal=1;
+        if (V(C2i_t_30)>=threshold) input_hi=input_hi | 16384;
+        if ((V(C2i_t_31)>=threshold)==(V(C2i_f_31)>=threshold)) input_valid=0;
+        if (V(C2i_t_31)>=threshold && V(C2i_f_31)>=threshold) input_illegal=1;
+        if (V(C2i_t_31)>=threshold) input_hi=input_hi | 32768;
+        if (!input_valid || input_illegal || input_hi!=stimulus_hi(tx) || input_lo!=stimulus_lo(tx)) begin
+          failure=1; $display("SIM_ERROR t=%e reason=physical_input_mismatch id=%d hi=%d lo=%d",$abstime,tx,input_hi,input_lo);
+        end else begin source_checked=1; $display("SIM_INPUT_PASS t=%e id=%d hi=%d lo=%d",$abstime,tx,input_hi,input_lo); end
+      end
+      if (p==2 && phase==1 && V(C2i_a)>=threshold) begin
+        if (source_checked) begin tx_valid[p]=0; phase=2; end
+      end else if (p==2 && phase==2 && V(C2i_a)<threshold) begin
+        phase=3; ready=$abstime;
+      end
+      if (p==3 && phase==1 && !source_checked && $abstime>=issued+2*EDGE+TD) begin
+        input_hi=0; input_lo=0; input_valid=1; input_illegal=0;
+        if ((V(C3i_t_0)>=threshold)==(V(C3i_f_0)>=threshold)) input_valid=0;
+        if (V(C3i_t_0)>=threshold && V(C3i_f_0)>=threshold) input_illegal=1;
+        if (V(C3i_t_0)>=threshold) input_lo=input_lo | 1;
+        if ((V(C3i_t_1)>=threshold)==(V(C3i_f_1)>=threshold)) input_valid=0;
+        if (V(C3i_t_1)>=threshold && V(C3i_f_1)>=threshold) input_illegal=1;
+        if (V(C3i_t_1)>=threshold) input_lo=input_lo | 2;
+        if ((V(C3i_t_2)>=threshold)==(V(C3i_f_2)>=threshold)) input_valid=0;
+        if (V(C3i_t_2)>=threshold && V(C3i_f_2)>=threshold) input_illegal=1;
+        if (V(C3i_t_2)>=threshold) input_lo=input_lo | 4;
+        if ((V(C3i_t_3)>=threshold)==(V(C3i_f_3)>=threshold)) input_valid=0;
+        if (V(C3i_t_3)>=threshold && V(C3i_f_3)>=threshold) input_illegal=1;
+        if (V(C3i_t_3)>=threshold) input_lo=input_lo | 8;
+        if ((V(C3i_t_4)>=threshold)==(V(C3i_f_4)>=threshold)) input_valid=0;
+        if (V(C3i_t_4)>=threshold && V(C3i_f_4)>=threshold) input_illegal=1;
+        if (V(C3i_t_4)>=threshold) input_lo=input_lo | 16;
+        if ((V(C3i_t_5)>=threshold)==(V(C3i_f_5)>=threshold)) input_valid=0;
+        if (V(C3i_t_5)>=threshold && V(C3i_f_5)>=threshold) input_illegal=1;
+        if (V(C3i_t_5)>=threshold) input_lo=input_lo | 32;
+        if ((V(C3i_t_6)>=threshold)==(V(C3i_f_6)>=threshold)) input_valid=0;
+        if (V(C3i_t_6)>=threshold && V(C3i_f_6)>=threshold) input_illegal=1;
+        if (V(C3i_t_6)>=threshold) input_lo=input_lo | 64;
+        if ((V(C3i_t_7)>=threshold)==(V(C3i_f_7)>=threshold)) input_valid=0;
+        if (V(C3i_t_7)>=threshold && V(C3i_f_7)>=threshold) input_illegal=1;
+        if (V(C3i_t_7)>=threshold) input_lo=input_lo | 128;
+        if ((V(C3i_t_8)>=threshold)==(V(C3i_f_8)>=threshold)) input_valid=0;
+        if (V(C3i_t_8)>=threshold && V(C3i_f_8)>=threshold) input_illegal=1;
+        if (V(C3i_t_8)>=threshold) input_lo=input_lo | 256;
+        if ((V(C3i_t_9)>=threshold)==(V(C3i_f_9)>=threshold)) input_valid=0;
+        if (V(C3i_t_9)>=threshold && V(C3i_f_9)>=threshold) input_illegal=1;
+        if (V(C3i_t_9)>=threshold) input_lo=input_lo | 512;
+        if ((V(C3i_t_10)>=threshold)==(V(C3i_f_10)>=threshold)) input_valid=0;
+        if (V(C3i_t_10)>=threshold && V(C3i_f_10)>=threshold) input_illegal=1;
+        if (V(C3i_t_10)>=threshold) input_lo=input_lo | 1024;
+        if ((V(C3i_t_11)>=threshold)==(V(C3i_f_11)>=threshold)) input_valid=0;
+        if (V(C3i_t_11)>=threshold && V(C3i_f_11)>=threshold) input_illegal=1;
+        if (V(C3i_t_11)>=threshold) input_lo=input_lo | 2048;
+        if ((V(C3i_t_12)>=threshold)==(V(C3i_f_12)>=threshold)) input_valid=0;
+        if (V(C3i_t_12)>=threshold && V(C3i_f_12)>=threshold) input_illegal=1;
+        if (V(C3i_t_12)>=threshold) input_lo=input_lo | 4096;
+        if ((V(C3i_t_13)>=threshold)==(V(C3i_f_13)>=threshold)) input_valid=0;
+        if (V(C3i_t_13)>=threshold && V(C3i_f_13)>=threshold) input_illegal=1;
+        if (V(C3i_t_13)>=threshold) input_lo=input_lo | 8192;
+        if ((V(C3i_t_14)>=threshold)==(V(C3i_f_14)>=threshold)) input_valid=0;
+        if (V(C3i_t_14)>=threshold && V(C3i_f_14)>=threshold) input_illegal=1;
+        if (V(C3i_t_14)>=threshold) input_lo=input_lo | 16384;
+        if ((V(C3i_t_15)>=threshold)==(V(C3i_f_15)>=threshold)) input_valid=0;
+        if (V(C3i_t_15)>=threshold && V(C3i_f_15)>=threshold) input_illegal=1;
+        if (V(C3i_t_15)>=threshold) input_lo=input_lo | 32768;
+        if ((V(C3i_t_16)>=threshold)==(V(C3i_f_16)>=threshold)) input_valid=0;
+        if (V(C3i_t_16)>=threshold && V(C3i_f_16)>=threshold) input_illegal=1;
+        if (V(C3i_t_16)>=threshold) input_hi=input_hi | 1;
+        if ((V(C3i_t_17)>=threshold)==(V(C3i_f_17)>=threshold)) input_valid=0;
+        if (V(C3i_t_17)>=threshold && V(C3i_f_17)>=threshold) input_illegal=1;
+        if (V(C3i_t_17)>=threshold) input_hi=input_hi | 2;
+        if ((V(C3i_t_18)>=threshold)==(V(C3i_f_18)>=threshold)) input_valid=0;
+        if (V(C3i_t_18)>=threshold && V(C3i_f_18)>=threshold) input_illegal=1;
+        if (V(C3i_t_18)>=threshold) input_hi=input_hi | 4;
+        if ((V(C3i_t_19)>=threshold)==(V(C3i_f_19)>=threshold)) input_valid=0;
+        if (V(C3i_t_19)>=threshold && V(C3i_f_19)>=threshold) input_illegal=1;
+        if (V(C3i_t_19)>=threshold) input_hi=input_hi | 8;
+        if ((V(C3i_t_20)>=threshold)==(V(C3i_f_20)>=threshold)) input_valid=0;
+        if (V(C3i_t_20)>=threshold && V(C3i_f_20)>=threshold) input_illegal=1;
+        if (V(C3i_t_20)>=threshold) input_hi=input_hi | 16;
+        if ((V(C3i_t_21)>=threshold)==(V(C3i_f_21)>=threshold)) input_valid=0;
+        if (V(C3i_t_21)>=threshold && V(C3i_f_21)>=threshold) input_illegal=1;
+        if (V(C3i_t_21)>=threshold) input_hi=input_hi | 32;
+        if ((V(C3i_t_22)>=threshold)==(V(C3i_f_22)>=threshold)) input_valid=0;
+        if (V(C3i_t_22)>=threshold && V(C3i_f_22)>=threshold) input_illegal=1;
+        if (V(C3i_t_22)>=threshold) input_hi=input_hi | 64;
+        if ((V(C3i_t_23)>=threshold)==(V(C3i_f_23)>=threshold)) input_valid=0;
+        if (V(C3i_t_23)>=threshold && V(C3i_f_23)>=threshold) input_illegal=1;
+        if (V(C3i_t_23)>=threshold) input_hi=input_hi | 128;
+        if ((V(C3i_t_24)>=threshold)==(V(C3i_f_24)>=threshold)) input_valid=0;
+        if (V(C3i_t_24)>=threshold && V(C3i_f_24)>=threshold) input_illegal=1;
+        if (V(C3i_t_24)>=threshold) input_hi=input_hi | 256;
+        if ((V(C3i_t_25)>=threshold)==(V(C3i_f_25)>=threshold)) input_valid=0;
+        if (V(C3i_t_25)>=threshold && V(C3i_f_25)>=threshold) input_illegal=1;
+        if (V(C3i_t_25)>=threshold) input_hi=input_hi | 512;
+        if ((V(C3i_t_26)>=threshold)==(V(C3i_f_26)>=threshold)) input_valid=0;
+        if (V(C3i_t_26)>=threshold && V(C3i_f_26)>=threshold) input_illegal=1;
+        if (V(C3i_t_26)>=threshold) input_hi=input_hi | 1024;
+        if ((V(C3i_t_27)>=threshold)==(V(C3i_f_27)>=threshold)) input_valid=0;
+        if (V(C3i_t_27)>=threshold && V(C3i_f_27)>=threshold) input_illegal=1;
+        if (V(C3i_t_27)>=threshold) input_hi=input_hi | 2048;
+        if ((V(C3i_t_28)>=threshold)==(V(C3i_f_28)>=threshold)) input_valid=0;
+        if (V(C3i_t_28)>=threshold && V(C3i_f_28)>=threshold) input_illegal=1;
+        if (V(C3i_t_28)>=threshold) input_hi=input_hi | 4096;
+        if ((V(C3i_t_29)>=threshold)==(V(C3i_f_29)>=threshold)) input_valid=0;
+        if (V(C3i_t_29)>=threshold && V(C3i_f_29)>=threshold) input_illegal=1;
+        if (V(C3i_t_29)>=threshold) input_hi=input_hi | 8192;
+        if ((V(C3i_t_30)>=threshold)==(V(C3i_f_30)>=threshold)) input_valid=0;
+        if (V(C3i_t_30)>=threshold && V(C3i_f_30)>=threshold) input_illegal=1;
+        if (V(C3i_t_30)>=threshold) input_hi=input_hi | 16384;
+        if ((V(C3i_t_31)>=threshold)==(V(C3i_f_31)>=threshold)) input_valid=0;
+        if (V(C3i_t_31)>=threshold && V(C3i_f_31)>=threshold) input_illegal=1;
+        if (V(C3i_t_31)>=threshold) input_hi=input_hi | 32768;
+        if (!input_valid || input_illegal || input_hi!=stimulus_hi(tx) || input_lo!=stimulus_lo(tx)) begin
+          failure=1; $display("SIM_ERROR t=%e reason=physical_input_mismatch id=%d hi=%d lo=%d",$abstime,tx,input_hi,input_lo);
+        end else begin source_checked=1; $display("SIM_INPUT_PASS t=%e id=%d hi=%d lo=%d",$abstime,tx,input_hi,input_lo); end
+      end
+      if (p==3 && phase==1 && V(C3i_a)>=threshold) begin
+        if (source_checked) begin tx_valid[p]=0; phase=2; end
+      end else if (p==3 && phase==2 && V(C3i_a)<threshold) begin
+        phase=3; ready=$abstime;
+      end
+      if (p==4 && phase==1 && !source_checked && $abstime>=issued+2*EDGE+TD) begin
+        input_hi=0; input_lo=0; input_valid=1; input_illegal=0;
+        if ((V(Pi_t_0)>=threshold)==(V(Pi_f_0)>=threshold)) input_valid=0;
+        if (V(Pi_t_0)>=threshold && V(Pi_f_0)>=threshold) input_illegal=1;
+        if (V(Pi_t_0)>=threshold) input_lo=input_lo | 1;
+        if ((V(Pi_t_1)>=threshold)==(V(Pi_f_1)>=threshold)) input_valid=0;
+        if (V(Pi_t_1)>=threshold && V(Pi_f_1)>=threshold) input_illegal=1;
+        if (V(Pi_t_1)>=threshold) input_lo=input_lo | 2;
+        if ((V(Pi_t_2)>=threshold)==(V(Pi_f_2)>=threshold)) input_valid=0;
+        if (V(Pi_t_2)>=threshold && V(Pi_f_2)>=threshold) input_illegal=1;
+        if (V(Pi_t_2)>=threshold) input_lo=input_lo | 4;
+        if ((V(Pi_t_3)>=threshold)==(V(Pi_f_3)>=threshold)) input_valid=0;
+        if (V(Pi_t_3)>=threshold && V(Pi_f_3)>=threshold) input_illegal=1;
+        if (V(Pi_t_3)>=threshold) input_lo=input_lo | 8;
+        if ((V(Pi_t_4)>=threshold)==(V(Pi_f_4)>=threshold)) input_valid=0;
+        if (V(Pi_t_4)>=threshold && V(Pi_f_4)>=threshold) input_illegal=1;
+        if (V(Pi_t_4)>=threshold) input_lo=input_lo | 16;
+        if ((V(Pi_t_5)>=threshold)==(V(Pi_f_5)>=threshold)) input_valid=0;
+        if (V(Pi_t_5)>=threshold && V(Pi_f_5)>=threshold) input_illegal=1;
+        if (V(Pi_t_5)>=threshold) input_lo=input_lo | 32;
+        if ((V(Pi_t_6)>=threshold)==(V(Pi_f_6)>=threshold)) input_valid=0;
+        if (V(Pi_t_6)>=threshold && V(Pi_f_6)>=threshold) input_illegal=1;
+        if (V(Pi_t_6)>=threshold) input_lo=input_lo | 64;
+        if ((V(Pi_t_7)>=threshold)==(V(Pi_f_7)>=threshold)) input_valid=0;
+        if (V(Pi_t_7)>=threshold && V(Pi_f_7)>=threshold) input_illegal=1;
+        if (V(Pi_t_7)>=threshold) input_lo=input_lo | 128;
+        if ((V(Pi_t_8)>=threshold)==(V(Pi_f_8)>=threshold)) input_valid=0;
+        if (V(Pi_t_8)>=threshold && V(Pi_f_8)>=threshold) input_illegal=1;
+        if (V(Pi_t_8)>=threshold) input_lo=input_lo | 256;
+        if ((V(Pi_t_9)>=threshold)==(V(Pi_f_9)>=threshold)) input_valid=0;
+        if (V(Pi_t_9)>=threshold && V(Pi_f_9)>=threshold) input_illegal=1;
+        if (V(Pi_t_9)>=threshold) input_lo=input_lo | 512;
+        if ((V(Pi_t_10)>=threshold)==(V(Pi_f_10)>=threshold)) input_valid=0;
+        if (V(Pi_t_10)>=threshold && V(Pi_f_10)>=threshold) input_illegal=1;
+        if (V(Pi_t_10)>=threshold) input_lo=input_lo | 1024;
+        if ((V(Pi_t_11)>=threshold)==(V(Pi_f_11)>=threshold)) input_valid=0;
+        if (V(Pi_t_11)>=threshold && V(Pi_f_11)>=threshold) input_illegal=1;
+        if (V(Pi_t_11)>=threshold) input_lo=input_lo | 2048;
+        if ((V(Pi_t_12)>=threshold)==(V(Pi_f_12)>=threshold)) input_valid=0;
+        if (V(Pi_t_12)>=threshold && V(Pi_f_12)>=threshold) input_illegal=1;
+        if (V(Pi_t_12)>=threshold) input_lo=input_lo | 4096;
+        if ((V(Pi_t_13)>=threshold)==(V(Pi_f_13)>=threshold)) input_valid=0;
+        if (V(Pi_t_13)>=threshold && V(Pi_f_13)>=threshold) input_illegal=1;
+        if (V(Pi_t_13)>=threshold) input_lo=input_lo | 8192;
+        if ((V(Pi_t_14)>=threshold)==(V(Pi_f_14)>=threshold)) input_valid=0;
+        if (V(Pi_t_14)>=threshold && V(Pi_f_14)>=threshold) input_illegal=1;
+        if (V(Pi_t_14)>=threshold) input_lo=input_lo | 16384;
+        if ((V(Pi_t_15)>=threshold)==(V(Pi_f_15)>=threshold)) input_valid=0;
+        if (V(Pi_t_15)>=threshold && V(Pi_f_15)>=threshold) input_illegal=1;
+        if (V(Pi_t_15)>=threshold) input_lo=input_lo | 32768;
+        if ((V(Pi_t_16)>=threshold)==(V(Pi_f_16)>=threshold)) input_valid=0;
+        if (V(Pi_t_16)>=threshold && V(Pi_f_16)>=threshold) input_illegal=1;
+        if (V(Pi_t_16)>=threshold) input_hi=input_hi | 1;
+        if ((V(Pi_t_17)>=threshold)==(V(Pi_f_17)>=threshold)) input_valid=0;
+        if (V(Pi_t_17)>=threshold && V(Pi_f_17)>=threshold) input_illegal=1;
+        if (V(Pi_t_17)>=threshold) input_hi=input_hi | 2;
+        if ((V(Pi_t_18)>=threshold)==(V(Pi_f_18)>=threshold)) input_valid=0;
+        if (V(Pi_t_18)>=threshold && V(Pi_f_18)>=threshold) input_illegal=1;
+        if (V(Pi_t_18)>=threshold) input_hi=input_hi | 4;
+        if ((V(Pi_t_19)>=threshold)==(V(Pi_f_19)>=threshold)) input_valid=0;
+        if (V(Pi_t_19)>=threshold && V(Pi_f_19)>=threshold) input_illegal=1;
+        if (V(Pi_t_19)>=threshold) input_hi=input_hi | 8;
+        if ((V(Pi_t_20)>=threshold)==(V(Pi_f_20)>=threshold)) input_valid=0;
+        if (V(Pi_t_20)>=threshold && V(Pi_f_20)>=threshold) input_illegal=1;
+        if (V(Pi_t_20)>=threshold) input_hi=input_hi | 16;
+        if ((V(Pi_t_21)>=threshold)==(V(Pi_f_21)>=threshold)) input_valid=0;
+        if (V(Pi_t_21)>=threshold && V(Pi_f_21)>=threshold) input_illegal=1;
+        if (V(Pi_t_21)>=threshold) input_hi=input_hi | 32;
+        if ((V(Pi_t_22)>=threshold)==(V(Pi_f_22)>=threshold)) input_valid=0;
+        if (V(Pi_t_22)>=threshold && V(Pi_f_22)>=threshold) input_illegal=1;
+        if (V(Pi_t_22)>=threshold) input_hi=input_hi | 64;
+        if ((V(Pi_t_23)>=threshold)==(V(Pi_f_23)>=threshold)) input_valid=0;
+        if (V(Pi_t_23)>=threshold && V(Pi_f_23)>=threshold) input_illegal=1;
+        if (V(Pi_t_23)>=threshold) input_hi=input_hi | 128;
+        if ((V(Pi_t_24)>=threshold)==(V(Pi_f_24)>=threshold)) input_valid=0;
+        if (V(Pi_t_24)>=threshold && V(Pi_f_24)>=threshold) input_illegal=1;
+        if (V(Pi_t_24)>=threshold) input_hi=input_hi | 256;
+        if ((V(Pi_t_25)>=threshold)==(V(Pi_f_25)>=threshold)) input_valid=0;
+        if (V(Pi_t_25)>=threshold && V(Pi_f_25)>=threshold) input_illegal=1;
+        if (V(Pi_t_25)>=threshold) input_hi=input_hi | 512;
+        if ((V(Pi_t_26)>=threshold)==(V(Pi_f_26)>=threshold)) input_valid=0;
+        if (V(Pi_t_26)>=threshold && V(Pi_f_26)>=threshold) input_illegal=1;
+        if (V(Pi_t_26)>=threshold) input_hi=input_hi | 1024;
+        if ((V(Pi_t_27)>=threshold)==(V(Pi_f_27)>=threshold)) input_valid=0;
+        if (V(Pi_t_27)>=threshold && V(Pi_f_27)>=threshold) input_illegal=1;
+        if (V(Pi_t_27)>=threshold) input_hi=input_hi | 2048;
+        if ((V(Pi_t_28)>=threshold)==(V(Pi_f_28)>=threshold)) input_valid=0;
+        if (V(Pi_t_28)>=threshold && V(Pi_f_28)>=threshold) input_illegal=1;
+        if (V(Pi_t_28)>=threshold) input_hi=input_hi | 4096;
+        if ((V(Pi_t_29)>=threshold)==(V(Pi_f_29)>=threshold)) input_valid=0;
+        if (V(Pi_t_29)>=threshold && V(Pi_f_29)>=threshold) input_illegal=1;
+        if (V(Pi_t_29)>=threshold) input_hi=input_hi | 8192;
+        if ((V(Pi_t_30)>=threshold)==(V(Pi_f_30)>=threshold)) input_valid=0;
+        if (V(Pi_t_30)>=threshold && V(Pi_f_30)>=threshold) input_illegal=1;
+        if (V(Pi_t_30)>=threshold) input_hi=input_hi | 16384;
+        if ((V(Pi_t_31)>=threshold)==(V(Pi_f_31)>=threshold)) input_valid=0;
+        if (V(Pi_t_31)>=threshold && V(Pi_f_31)>=threshold) input_illegal=1;
+        if (V(Pi_t_31)>=threshold) input_hi=input_hi | 32768;
+        if (!input_valid || input_illegal || input_hi!=stimulus_hi(tx) || input_lo!=stimulus_lo(tx)) begin
+          failure=1; $display("SIM_ERROR t=%e reason=physical_input_mismatch id=%d hi=%d lo=%d",$abstime,tx,input_hi,input_lo);
+        end else begin source_checked=1; $display("SIM_INPUT_PASS t=%e id=%d hi=%d lo=%d",$abstime,tx,input_hi,input_lo); end
+      end
+      if (p==4 && phase==1 && V(Pi_a)>=threshold) begin
+        if (source_checked) begin tx_valid[p]=0; phase=2; end
+      end else if (p==4 && phase==2 && V(Pi_a)<threshold) begin
+        phase=3; ready=$abstime;
+      end
+      drained=1; quiet=1;
+      if (V(dut_ready)<threshold) drained=0;
+      if ((route_continues(tx) ? valid_word[0] : !spacer[0]) || rx_phase[0]!=0 || rx_index[0]<target0(tx)) drained=0;
+      if ((route_continues(tx) ? valid_word[1] : !spacer[1]) || rx_phase[1]!=0 || rx_index[1]<target1(tx)) drained=0;
+      if ((route_continues(tx) ? valid_word[2] : !spacer[2]) || rx_phase[2]!=0 || rx_index[2]<target2(tx)) drained=0;
+      if ((route_continues(tx) ? valid_word[3] : !spacer[3]) || rx_phase[3]!=0 || rx_index[3]<target3(tx)) drained=0;
+      if ((route_continues(tx) ? valid_word[4] : !spacer[4]) || rx_phase[4]!=0 || rx_index[4]<target4(tx)) drained=0;
+      if (phase==3 && ((!isolated(tx) && !drain(tx)) || drained)) begin
+        if (isolated(tx) || drain(tx)) begin phase=4; ready=$abstime+IDLE_SETTLE; end
+        else begin tx=tx+1; phase=0; end
+      end
+      if (phase==4 && !drained) begin phase=3; ready=$abstime; end
+      if (phase==4 && $abstime>=ready) begin
+        $display("SIM_LUT_END t=%e id=%d",$abstime,tx); tx=tx+1; phase=0;
+      end
+      if (phase==0 && tx<40 && $abstime>=ready && (tx>0 || V(dut_ready)>=threshold)) begin
+        p=source(tx); tx_word[p]=stimulus(tx); tx_valid[p]=1; phase=1; source_checked=0; issued=$abstime;
+        $display("SIM_LUT_BEGIN t=%e id=%d case=%d local=%d",$abstime,tx,case_id(tx),local_id(tx));
+        if (p==0) $display("SIM_TX t=%e channel=C0i index=%d word=%h",$abstime,input_index(tx),tx_word[p]);
+        if (p==1) $display("SIM_TX t=%e channel=C1i index=%d word=%h",$abstime,input_index(tx),tx_word[p]);
+        if (p==2) $display("SIM_TX t=%e channel=C2i index=%d word=%h",$abstime,input_index(tx),tx_word[p]);
+        if (p==3) $display("SIM_TX t=%e channel=C3i index=%d word=%h",$abstime,input_index(tx),tx_word[p]);
+        if (p==4) $display("SIM_TX t=%e channel=Pi index=%d word=%h",$abstime,input_index(tx),tx_word[p]);
+      end
+      if (phase!=0 && $abstime-issued>PROGRESS_TIMEOUT) begin
+        failure=1; $display("SIM_ERROR t=%e reason=no_progress id=%d phase=%d",$abstime,tx,phase);
+      end
+      if (tx==0 && phase==0 && $abstime>CHECK_START+IDLE_SETTLE+PROGRESS_TIMEOUT) begin
+        failure=1; $display("SIM_ERROR t=%e reason=reset_not_ready",$abstime);
+      end
+    end
+    all_done=1;
+    if (!spacer[0] || rx_phase[0]!=0 || rx_index[0]!=18 || V(C0o_a)>=threshold) all_done=0;
+    if (!spacer[1] || rx_phase[1]!=0 || rx_index[1]!=12 || V(C1o_a)>=threshold) all_done=0;
+    if (!spacer[2] || rx_phase[2]!=0 || rx_index[2]!=12 || V(C2o_a)>=threshold) all_done=0;
+    if (!spacer[3] || rx_phase[3]!=0 || rx_index[3]!=12 || V(C3o_a)>=threshold) all_done=0;
+    if (!spacer[4] || rx_phase[4]!=0 || rx_index[4]!=0 || V(Po_a)>=threshold) all_done=0;
+    if (tx_valid[0] || V(C0i_a)>=threshold) all_done=0;
+    if (tx_valid[1] || V(C1i_a)>=threshold) all_done=0;
+    if (tx_valid[2] || V(C2i_a)>=threshold) all_done=0;
+    if (tx_valid[3] || V(C3i_a)>=threshold) all_done=0;
+    if (tx_valid[4] || V(Pi_a)>=threshold) all_done=0;
+    if (active && !finished && tx==40 && all_done && V(dut_ready)>=threshold) begin
+      finished=1; round_time=$abstime; idle_start=$abstime+IDLE_SETTLE;
+      $display("SIM_ROUND t=%e inputs=40 outputs=54",$abstime);
+    end
+    if (finished && !idle_started && $abstime>=idle_start) begin
+      idle_started=1; $display("SIM_IDLE_BEGIN t=%e",$abstime);
+    end
+    if (idle_started && !idle_completed && $abstime>=idle_start+IDLE_WINDOW) begin
+      idle_completed=1; $display("SIM_IDLE_END t=%e",$abstime);
+    end
+    // Let the failing sample commit before terminating. HSPICE can execute
+    // $finish in a trial Newton step while suppressing its diagnostic display.
+    if (failure && failure_stop<0) failure_stop=$abstime+3*TICK;
+    if (failure_stop>=0 && $abstime>=failure_stop) begin
+      $display("SIM_FAIL t=%e id=%d phase=%d",$abstime,tx,phase); $finish(0);
+    end
+    if (!failure && idle_completed && $abstime>=idle_start+IDLE_WINDOW+IDLE_MARGIN) begin
+      $display("SIM_PASS t=%e",$abstime); $finish(0);
+    end
+  end
+  @(timer(STOP_TIME-1n)) begin
+    if (!idle_completed) begin failure=1; $display("SIM_ERROR t=%e reason=timeout id=%d phase=%d",$abstime,tx,phase); $display("SIM_FAIL t=%e",$abstime); $finish(0); end
+  end
+  V(C0i_t_0) <+ transition(SUPPLY*tx_valid[0]*((tx_word[0] >> 0) & 1),TD,EDGE,EDGE);
+  V(C0i_f_0) <+ transition(SUPPLY*tx_valid[0]*(1-((tx_word[0] >> 0) & 1)),TD,EDGE,EDGE);
+  V(C0i_t_1) <+ transition(SUPPLY*tx_valid[0]*((tx_word[0] >> 1) & 1),TD,EDGE,EDGE);
+  V(C0i_f_1) <+ transition(SUPPLY*tx_valid[0]*(1-((tx_word[0] >> 1) & 1)),TD,EDGE,EDGE);
+  V(C0i_t_2) <+ transition(SUPPLY*tx_valid[0]*((tx_word[0] >> 2) & 1),TD,EDGE,EDGE);
+  V(C0i_f_2) <+ transition(SUPPLY*tx_valid[0]*(1-((tx_word[0] >> 2) & 1)),TD,EDGE,EDGE);
+  V(C0i_t_3) <+ transition(SUPPLY*tx_valid[0]*((tx_word[0] >> 3) & 1),TD,EDGE,EDGE);
+  V(C0i_f_3) <+ transition(SUPPLY*tx_valid[0]*(1-((tx_word[0] >> 3) & 1)),TD,EDGE,EDGE);
+  V(C0i_t_4) <+ transition(SUPPLY*tx_valid[0]*((tx_word[0] >> 4) & 1),TD,EDGE,EDGE);
+  V(C0i_f_4) <+ transition(SUPPLY*tx_valid[0]*(1-((tx_word[0] >> 4) & 1)),TD,EDGE,EDGE);
+  V(C0i_t_5) <+ transition(SUPPLY*tx_valid[0]*((tx_word[0] >> 5) & 1),TD,EDGE,EDGE);
+  V(C0i_f_5) <+ transition(SUPPLY*tx_valid[0]*(1-((tx_word[0] >> 5) & 1)),TD,EDGE,EDGE);
+  V(C0i_t_6) <+ transition(SUPPLY*tx_valid[0]*((tx_word[0] >> 6) & 1),TD,EDGE,EDGE);
+  V(C0i_f_6) <+ transition(SUPPLY*tx_valid[0]*(1-((tx_word[0] >> 6) & 1)),TD,EDGE,EDGE);
+  V(C0i_t_7) <+ transition(SUPPLY*tx_valid[0]*((tx_word[0] >> 7) & 1),TD,EDGE,EDGE);
+  V(C0i_f_7) <+ transition(SUPPLY*tx_valid[0]*(1-((tx_word[0] >> 7) & 1)),TD,EDGE,EDGE);
+  V(C0i_t_8) <+ transition(SUPPLY*tx_valid[0]*((tx_word[0] >> 8) & 1),TD,EDGE,EDGE);
+  V(C0i_f_8) <+ transition(SUPPLY*tx_valid[0]*(1-((tx_word[0] >> 8) & 1)),TD,EDGE,EDGE);
+  V(C0i_t_9) <+ transition(SUPPLY*tx_valid[0]*((tx_word[0] >> 9) & 1),TD,EDGE,EDGE);
+  V(C0i_f_9) <+ transition(SUPPLY*tx_valid[0]*(1-((tx_word[0] >> 9) & 1)),TD,EDGE,EDGE);
+  V(C0i_t_10) <+ transition(SUPPLY*tx_valid[0]*((tx_word[0] >> 10) & 1),TD,EDGE,EDGE);
+  V(C0i_f_10) <+ transition(SUPPLY*tx_valid[0]*(1-((tx_word[0] >> 10) & 1)),TD,EDGE,EDGE);
+  V(C0i_t_11) <+ transition(SUPPLY*tx_valid[0]*((tx_word[0] >> 11) & 1),TD,EDGE,EDGE);
+  V(C0i_f_11) <+ transition(SUPPLY*tx_valid[0]*(1-((tx_word[0] >> 11) & 1)),TD,EDGE,EDGE);
+  V(C0i_t_12) <+ transition(SUPPLY*tx_valid[0]*((tx_word[0] >> 12) & 1),TD,EDGE,EDGE);
+  V(C0i_f_12) <+ transition(SUPPLY*tx_valid[0]*(1-((tx_word[0] >> 12) & 1)),TD,EDGE,EDGE);
+  V(C0i_t_13) <+ transition(SUPPLY*tx_valid[0]*((tx_word[0] >> 13) & 1),TD,EDGE,EDGE);
+  V(C0i_f_13) <+ transition(SUPPLY*tx_valid[0]*(1-((tx_word[0] >> 13) & 1)),TD,EDGE,EDGE);
+  V(C0i_t_14) <+ transition(SUPPLY*tx_valid[0]*((tx_word[0] >> 14) & 1),TD,EDGE,EDGE);
+  V(C0i_f_14) <+ transition(SUPPLY*tx_valid[0]*(1-((tx_word[0] >> 14) & 1)),TD,EDGE,EDGE);
+  V(C0i_t_15) <+ transition(SUPPLY*tx_valid[0]*((tx_word[0] >> 15) & 1),TD,EDGE,EDGE);
+  V(C0i_f_15) <+ transition(SUPPLY*tx_valid[0]*(1-((tx_word[0] >> 15) & 1)),TD,EDGE,EDGE);
+  V(C0i_t_16) <+ transition(SUPPLY*tx_valid[0]*((tx_word[0] >> 16) & 1),TD,EDGE,EDGE);
+  V(C0i_f_16) <+ transition(SUPPLY*tx_valid[0]*(1-((tx_word[0] >> 16) & 1)),TD,EDGE,EDGE);
+  V(C0i_t_17) <+ transition(SUPPLY*tx_valid[0]*((tx_word[0] >> 17) & 1),TD,EDGE,EDGE);
+  V(C0i_f_17) <+ transition(SUPPLY*tx_valid[0]*(1-((tx_word[0] >> 17) & 1)),TD,EDGE,EDGE);
+  V(C0i_t_18) <+ transition(SUPPLY*tx_valid[0]*((tx_word[0] >> 18) & 1),TD,EDGE,EDGE);
+  V(C0i_f_18) <+ transition(SUPPLY*tx_valid[0]*(1-((tx_word[0] >> 18) & 1)),TD,EDGE,EDGE);
+  V(C0i_t_19) <+ transition(SUPPLY*tx_valid[0]*((tx_word[0] >> 19) & 1),TD,EDGE,EDGE);
+  V(C0i_f_19) <+ transition(SUPPLY*tx_valid[0]*(1-((tx_word[0] >> 19) & 1)),TD,EDGE,EDGE);
+  V(C0i_t_20) <+ transition(SUPPLY*tx_valid[0]*((tx_word[0] >> 20) & 1),TD,EDGE,EDGE);
+  V(C0i_f_20) <+ transition(SUPPLY*tx_valid[0]*(1-((tx_word[0] >> 20) & 1)),TD,EDGE,EDGE);
+  V(C0i_t_21) <+ transition(SUPPLY*tx_valid[0]*((tx_word[0] >> 21) & 1),TD,EDGE,EDGE);
+  V(C0i_f_21) <+ transition(SUPPLY*tx_valid[0]*(1-((tx_word[0] >> 21) & 1)),TD,EDGE,EDGE);
+  V(C0i_t_22) <+ transition(SUPPLY*tx_valid[0]*((tx_word[0] >> 22) & 1),TD,EDGE,EDGE);
+  V(C0i_f_22) <+ transition(SUPPLY*tx_valid[0]*(1-((tx_word[0] >> 22) & 1)),TD,EDGE,EDGE);
+  V(C0i_t_23) <+ transition(SUPPLY*tx_valid[0]*((tx_word[0] >> 23) & 1),TD,EDGE,EDGE);
+  V(C0i_f_23) <+ transition(SUPPLY*tx_valid[0]*(1-((tx_word[0] >> 23) & 1)),TD,EDGE,EDGE);
+  V(C0i_t_24) <+ transition(SUPPLY*tx_valid[0]*((tx_word[0] >> 24) & 1),TD,EDGE,EDGE);
+  V(C0i_f_24) <+ transition(SUPPLY*tx_valid[0]*(1-((tx_word[0] >> 24) & 1)),TD,EDGE,EDGE);
+  V(C0i_t_25) <+ transition(SUPPLY*tx_valid[0]*((tx_word[0] >> 25) & 1),TD,EDGE,EDGE);
+  V(C0i_f_25) <+ transition(SUPPLY*tx_valid[0]*(1-((tx_word[0] >> 25) & 1)),TD,EDGE,EDGE);
+  V(C0i_t_26) <+ transition(SUPPLY*tx_valid[0]*((tx_word[0] >> 26) & 1),TD,EDGE,EDGE);
+  V(C0i_f_26) <+ transition(SUPPLY*tx_valid[0]*(1-((tx_word[0] >> 26) & 1)),TD,EDGE,EDGE);
+  V(C0i_t_27) <+ transition(SUPPLY*tx_valid[0]*((tx_word[0] >> 27) & 1),TD,EDGE,EDGE);
+  V(C0i_f_27) <+ transition(SUPPLY*tx_valid[0]*(1-((tx_word[0] >> 27) & 1)),TD,EDGE,EDGE);
+  V(C0i_t_28) <+ transition(SUPPLY*tx_valid[0]*((tx_word[0] >> 28) & 1),TD,EDGE,EDGE);
+  V(C0i_f_28) <+ transition(SUPPLY*tx_valid[0]*(1-((tx_word[0] >> 28) & 1)),TD,EDGE,EDGE);
+  V(C0i_t_29) <+ transition(SUPPLY*tx_valid[0]*((tx_word[0] >> 29) & 1),TD,EDGE,EDGE);
+  V(C0i_f_29) <+ transition(SUPPLY*tx_valid[0]*(1-((tx_word[0] >> 29) & 1)),TD,EDGE,EDGE);
+  V(C0i_t_30) <+ transition(SUPPLY*tx_valid[0]*((tx_word[0] >> 30) & 1),TD,EDGE,EDGE);
+  V(C0i_f_30) <+ transition(SUPPLY*tx_valid[0]*(1-((tx_word[0] >> 30) & 1)),TD,EDGE,EDGE);
+  V(C0i_t_31) <+ transition(SUPPLY*tx_valid[0]*((tx_word[0] >> 31) & 1),TD,EDGE,EDGE);
+  V(C0i_f_31) <+ transition(SUPPLY*tx_valid[0]*(1-((tx_word[0] >> 31) & 1)),TD,EDGE,EDGE);
+  V(C1i_t_0) <+ transition(SUPPLY*tx_valid[1]*((tx_word[1] >> 0) & 1),TD,EDGE,EDGE);
+  V(C1i_f_0) <+ transition(SUPPLY*tx_valid[1]*(1-((tx_word[1] >> 0) & 1)),TD,EDGE,EDGE);
+  V(C1i_t_1) <+ transition(SUPPLY*tx_valid[1]*((tx_word[1] >> 1) & 1),TD,EDGE,EDGE);
+  V(C1i_f_1) <+ transition(SUPPLY*tx_valid[1]*(1-((tx_word[1] >> 1) & 1)),TD,EDGE,EDGE);
+  V(C1i_t_2) <+ transition(SUPPLY*tx_valid[1]*((tx_word[1] >> 2) & 1),TD,EDGE,EDGE);
+  V(C1i_f_2) <+ transition(SUPPLY*tx_valid[1]*(1-((tx_word[1] >> 2) & 1)),TD,EDGE,EDGE);
+  V(C1i_t_3) <+ transition(SUPPLY*tx_valid[1]*((tx_word[1] >> 3) & 1),TD,EDGE,EDGE);
+  V(C1i_f_3) <+ transition(SUPPLY*tx_valid[1]*(1-((tx_word[1] >> 3) & 1)),TD,EDGE,EDGE);
+  V(C1i_t_4) <+ transition(SUPPLY*tx_valid[1]*((tx_word[1] >> 4) & 1),TD,EDGE,EDGE);
+  V(C1i_f_4) <+ transition(SUPPLY*tx_valid[1]*(1-((tx_word[1] >> 4) & 1)),TD,EDGE,EDGE);
+  V(C1i_t_5) <+ transition(SUPPLY*tx_valid[1]*((tx_word[1] >> 5) & 1),TD,EDGE,EDGE);
+  V(C1i_f_5) <+ transition(SUPPLY*tx_valid[1]*(1-((tx_word[1] >> 5) & 1)),TD,EDGE,EDGE);
+  V(C1i_t_6) <+ transition(SUPPLY*tx_valid[1]*((tx_word[1] >> 6) & 1),TD,EDGE,EDGE);
+  V(C1i_f_6) <+ transition(SUPPLY*tx_valid[1]*(1-((tx_word[1] >> 6) & 1)),TD,EDGE,EDGE);
+  V(C1i_t_7) <+ transition(SUPPLY*tx_valid[1]*((tx_word[1] >> 7) & 1),TD,EDGE,EDGE);
+  V(C1i_f_7) <+ transition(SUPPLY*tx_valid[1]*(1-((tx_word[1] >> 7) & 1)),TD,EDGE,EDGE);
+  V(C1i_t_8) <+ transition(SUPPLY*tx_valid[1]*((tx_word[1] >> 8) & 1),TD,EDGE,EDGE);
+  V(C1i_f_8) <+ transition(SUPPLY*tx_valid[1]*(1-((tx_word[1] >> 8) & 1)),TD,EDGE,EDGE);
+  V(C1i_t_9) <+ transition(SUPPLY*tx_valid[1]*((tx_word[1] >> 9) & 1),TD,EDGE,EDGE);
+  V(C1i_f_9) <+ transition(SUPPLY*tx_valid[1]*(1-((tx_word[1] >> 9) & 1)),TD,EDGE,EDGE);
+  V(C1i_t_10) <+ transition(SUPPLY*tx_valid[1]*((tx_word[1] >> 10) & 1),TD,EDGE,EDGE);
+  V(C1i_f_10) <+ transition(SUPPLY*tx_valid[1]*(1-((tx_word[1] >> 10) & 1)),TD,EDGE,EDGE);
+  V(C1i_t_11) <+ transition(SUPPLY*tx_valid[1]*((tx_word[1] >> 11) & 1),TD,EDGE,EDGE);
+  V(C1i_f_11) <+ transition(SUPPLY*tx_valid[1]*(1-((tx_word[1] >> 11) & 1)),TD,EDGE,EDGE);
+  V(C1i_t_12) <+ transition(SUPPLY*tx_valid[1]*((tx_word[1] >> 12) & 1),TD,EDGE,EDGE);
+  V(C1i_f_12) <+ transition(SUPPLY*tx_valid[1]*(1-((tx_word[1] >> 12) & 1)),TD,EDGE,EDGE);
+  V(C1i_t_13) <+ transition(SUPPLY*tx_valid[1]*((tx_word[1] >> 13) & 1),TD,EDGE,EDGE);
+  V(C1i_f_13) <+ transition(SUPPLY*tx_valid[1]*(1-((tx_word[1] >> 13) & 1)),TD,EDGE,EDGE);
+  V(C1i_t_14) <+ transition(SUPPLY*tx_valid[1]*((tx_word[1] >> 14) & 1),TD,EDGE,EDGE);
+  V(C1i_f_14) <+ transition(SUPPLY*tx_valid[1]*(1-((tx_word[1] >> 14) & 1)),TD,EDGE,EDGE);
+  V(C1i_t_15) <+ transition(SUPPLY*tx_valid[1]*((tx_word[1] >> 15) & 1),TD,EDGE,EDGE);
+  V(C1i_f_15) <+ transition(SUPPLY*tx_valid[1]*(1-((tx_word[1] >> 15) & 1)),TD,EDGE,EDGE);
+  V(C1i_t_16) <+ transition(SUPPLY*tx_valid[1]*((tx_word[1] >> 16) & 1),TD,EDGE,EDGE);
+  V(C1i_f_16) <+ transition(SUPPLY*tx_valid[1]*(1-((tx_word[1] >> 16) & 1)),TD,EDGE,EDGE);
+  V(C1i_t_17) <+ transition(SUPPLY*tx_valid[1]*((tx_word[1] >> 17) & 1),TD,EDGE,EDGE);
+  V(C1i_f_17) <+ transition(SUPPLY*tx_valid[1]*(1-((tx_word[1] >> 17) & 1)),TD,EDGE,EDGE);
+  V(C1i_t_18) <+ transition(SUPPLY*tx_valid[1]*((tx_word[1] >> 18) & 1),TD,EDGE,EDGE);
+  V(C1i_f_18) <+ transition(SUPPLY*tx_valid[1]*(1-((tx_word[1] >> 18) & 1)),TD,EDGE,EDGE);
+  V(C1i_t_19) <+ transition(SUPPLY*tx_valid[1]*((tx_word[1] >> 19) & 1),TD,EDGE,EDGE);
+  V(C1i_f_19) <+ transition(SUPPLY*tx_valid[1]*(1-((tx_word[1] >> 19) & 1)),TD,EDGE,EDGE);
+  V(C1i_t_20) <+ transition(SUPPLY*tx_valid[1]*((tx_word[1] >> 20) & 1),TD,EDGE,EDGE);
+  V(C1i_f_20) <+ transition(SUPPLY*tx_valid[1]*(1-((tx_word[1] >> 20) & 1)),TD,EDGE,EDGE);
+  V(C1i_t_21) <+ transition(SUPPLY*tx_valid[1]*((tx_word[1] >> 21) & 1),TD,EDGE,EDGE);
+  V(C1i_f_21) <+ transition(SUPPLY*tx_valid[1]*(1-((tx_word[1] >> 21) & 1)),TD,EDGE,EDGE);
+  V(C1i_t_22) <+ transition(SUPPLY*tx_valid[1]*((tx_word[1] >> 22) & 1),TD,EDGE,EDGE);
+  V(C1i_f_22) <+ transition(SUPPLY*tx_valid[1]*(1-((tx_word[1] >> 22) & 1)),TD,EDGE,EDGE);
+  V(C1i_t_23) <+ transition(SUPPLY*tx_valid[1]*((tx_word[1] >> 23) & 1),TD,EDGE,EDGE);
+  V(C1i_f_23) <+ transition(SUPPLY*tx_valid[1]*(1-((tx_word[1] >> 23) & 1)),TD,EDGE,EDGE);
+  V(C1i_t_24) <+ transition(SUPPLY*tx_valid[1]*((tx_word[1] >> 24) & 1),TD,EDGE,EDGE);
+  V(C1i_f_24) <+ transition(SUPPLY*tx_valid[1]*(1-((tx_word[1] >> 24) & 1)),TD,EDGE,EDGE);
+  V(C1i_t_25) <+ transition(SUPPLY*tx_valid[1]*((tx_word[1] >> 25) & 1),TD,EDGE,EDGE);
+  V(C1i_f_25) <+ transition(SUPPLY*tx_valid[1]*(1-((tx_word[1] >> 25) & 1)),TD,EDGE,EDGE);
+  V(C1i_t_26) <+ transition(SUPPLY*tx_valid[1]*((tx_word[1] >> 26) & 1),TD,EDGE,EDGE);
+  V(C1i_f_26) <+ transition(SUPPLY*tx_valid[1]*(1-((tx_word[1] >> 26) & 1)),TD,EDGE,EDGE);
+  V(C1i_t_27) <+ transition(SUPPLY*tx_valid[1]*((tx_word[1] >> 27) & 1),TD,EDGE,EDGE);
+  V(C1i_f_27) <+ transition(SUPPLY*tx_valid[1]*(1-((tx_word[1] >> 27) & 1)),TD,EDGE,EDGE);
+  V(C1i_t_28) <+ transition(SUPPLY*tx_valid[1]*((tx_word[1] >> 28) & 1),TD,EDGE,EDGE);
+  V(C1i_f_28) <+ transition(SUPPLY*tx_valid[1]*(1-((tx_word[1] >> 28) & 1)),TD,EDGE,EDGE);
+  V(C1i_t_29) <+ transition(SUPPLY*tx_valid[1]*((tx_word[1] >> 29) & 1),TD,EDGE,EDGE);
+  V(C1i_f_29) <+ transition(SUPPLY*tx_valid[1]*(1-((tx_word[1] >> 29) & 1)),TD,EDGE,EDGE);
+  V(C1i_t_30) <+ transition(SUPPLY*tx_valid[1]*((tx_word[1] >> 30) & 1),TD,EDGE,EDGE);
+  V(C1i_f_30) <+ transition(SUPPLY*tx_valid[1]*(1-((tx_word[1] >> 30) & 1)),TD,EDGE,EDGE);
+  V(C1i_t_31) <+ transition(SUPPLY*tx_valid[1]*((tx_word[1] >> 31) & 1),TD,EDGE,EDGE);
+  V(C1i_f_31) <+ transition(SUPPLY*tx_valid[1]*(1-((tx_word[1] >> 31) & 1)),TD,EDGE,EDGE);
+  V(C2i_t_0) <+ transition(SUPPLY*tx_valid[2]*((tx_word[2] >> 0) & 1),TD,EDGE,EDGE);
+  V(C2i_f_0) <+ transition(SUPPLY*tx_valid[2]*(1-((tx_word[2] >> 0) & 1)),TD,EDGE,EDGE);
+  V(C2i_t_1) <+ transition(SUPPLY*tx_valid[2]*((tx_word[2] >> 1) & 1),TD,EDGE,EDGE);
+  V(C2i_f_1) <+ transition(SUPPLY*tx_valid[2]*(1-((tx_word[2] >> 1) & 1)),TD,EDGE,EDGE);
+  V(C2i_t_2) <+ transition(SUPPLY*tx_valid[2]*((tx_word[2] >> 2) & 1),TD,EDGE,EDGE);
+  V(C2i_f_2) <+ transition(SUPPLY*tx_valid[2]*(1-((tx_word[2] >> 2) & 1)),TD,EDGE,EDGE);
+  V(C2i_t_3) <+ transition(SUPPLY*tx_valid[2]*((tx_word[2] >> 3) & 1),TD,EDGE,EDGE);
+  V(C2i_f_3) <+ transition(SUPPLY*tx_valid[2]*(1-((tx_word[2] >> 3) & 1)),TD,EDGE,EDGE);
+  V(C2i_t_4) <+ transition(SUPPLY*tx_valid[2]*((tx_word[2] >> 4) & 1),TD,EDGE,EDGE);
+  V(C2i_f_4) <+ transition(SUPPLY*tx_valid[2]*(1-((tx_word[2] >> 4) & 1)),TD,EDGE,EDGE);
+  V(C2i_t_5) <+ transition(SUPPLY*tx_valid[2]*((tx_word[2] >> 5) & 1),TD,EDGE,EDGE);
+  V(C2i_f_5) <+ transition(SUPPLY*tx_valid[2]*(1-((tx_word[2] >> 5) & 1)),TD,EDGE,EDGE);
+  V(C2i_t_6) <+ transition(SUPPLY*tx_valid[2]*((tx_word[2] >> 6) & 1),TD,EDGE,EDGE);
+  V(C2i_f_6) <+ transition(SUPPLY*tx_valid[2]*(1-((tx_word[2] >> 6) & 1)),TD,EDGE,EDGE);
+  V(C2i_t_7) <+ transition(SUPPLY*tx_valid[2]*((tx_word[2] >> 7) & 1),TD,EDGE,EDGE);
+  V(C2i_f_7) <+ transition(SUPPLY*tx_valid[2]*(1-((tx_word[2] >> 7) & 1)),TD,EDGE,EDGE);
+  V(C2i_t_8) <+ transition(SUPPLY*tx_valid[2]*((tx_word[2] >> 8) & 1),TD,EDGE,EDGE);
+  V(C2i_f_8) <+ transition(SUPPLY*tx_valid[2]*(1-((tx_word[2] >> 8) & 1)),TD,EDGE,EDGE);
+  V(C2i_t_9) <+ transition(SUPPLY*tx_valid[2]*((tx_word[2] >> 9) & 1),TD,EDGE,EDGE);
+  V(C2i_f_9) <+ transition(SUPPLY*tx_valid[2]*(1-((tx_word[2] >> 9) & 1)),TD,EDGE,EDGE);
+  V(C2i_t_10) <+ transition(SUPPLY*tx_valid[2]*((tx_word[2] >> 10) & 1),TD,EDGE,EDGE);
+  V(C2i_f_10) <+ transition(SUPPLY*tx_valid[2]*(1-((tx_word[2] >> 10) & 1)),TD,EDGE,EDGE);
+  V(C2i_t_11) <+ transition(SUPPLY*tx_valid[2]*((tx_word[2] >> 11) & 1),TD,EDGE,EDGE);
+  V(C2i_f_11) <+ transition(SUPPLY*tx_valid[2]*(1-((tx_word[2] >> 11) & 1)),TD,EDGE,EDGE);
+  V(C2i_t_12) <+ transition(SUPPLY*tx_valid[2]*((tx_word[2] >> 12) & 1),TD,EDGE,EDGE);
+  V(C2i_f_12) <+ transition(SUPPLY*tx_valid[2]*(1-((tx_word[2] >> 12) & 1)),TD,EDGE,EDGE);
+  V(C2i_t_13) <+ transition(SUPPLY*tx_valid[2]*((tx_word[2] >> 13) & 1),TD,EDGE,EDGE);
+  V(C2i_f_13) <+ transition(SUPPLY*tx_valid[2]*(1-((tx_word[2] >> 13) & 1)),TD,EDGE,EDGE);
+  V(C2i_t_14) <+ transition(SUPPLY*tx_valid[2]*((tx_word[2] >> 14) & 1),TD,EDGE,EDGE);
+  V(C2i_f_14) <+ transition(SUPPLY*tx_valid[2]*(1-((tx_word[2] >> 14) & 1)),TD,EDGE,EDGE);
+  V(C2i_t_15) <+ transition(SUPPLY*tx_valid[2]*((tx_word[2] >> 15) & 1),TD,EDGE,EDGE);
+  V(C2i_f_15) <+ transition(SUPPLY*tx_valid[2]*(1-((tx_word[2] >> 15) & 1)),TD,EDGE,EDGE);
+  V(C2i_t_16) <+ transition(SUPPLY*tx_valid[2]*((tx_word[2] >> 16) & 1),TD,EDGE,EDGE);
+  V(C2i_f_16) <+ transition(SUPPLY*tx_valid[2]*(1-((tx_word[2] >> 16) & 1)),TD,EDGE,EDGE);
+  V(C2i_t_17) <+ transition(SUPPLY*tx_valid[2]*((tx_word[2] >> 17) & 1),TD,EDGE,EDGE);
+  V(C2i_f_17) <+ transition(SUPPLY*tx_valid[2]*(1-((tx_word[2] >> 17) & 1)),TD,EDGE,EDGE);
+  V(C2i_t_18) <+ transition(SUPPLY*tx_valid[2]*((tx_word[2] >> 18) & 1),TD,EDGE,EDGE);
+  V(C2i_f_18) <+ transition(SUPPLY*tx_valid[2]*(1-((tx_word[2] >> 18) & 1)),TD,EDGE,EDGE);
+  V(C2i_t_19) <+ transition(SUPPLY*tx_valid[2]*((tx_word[2] >> 19) & 1),TD,EDGE,EDGE);
+  V(C2i_f_19) <+ transition(SUPPLY*tx_valid[2]*(1-((tx_word[2] >> 19) & 1)),TD,EDGE,EDGE);
+  V(C2i_t_20) <+ transition(SUPPLY*tx_valid[2]*((tx_word[2] >> 20) & 1),TD,EDGE,EDGE);
+  V(C2i_f_20) <+ transition(SUPPLY*tx_valid[2]*(1-((tx_word[2] >> 20) & 1)),TD,EDGE,EDGE);
+  V(C2i_t_21) <+ transition(SUPPLY*tx_valid[2]*((tx_word[2] >> 21) & 1),TD,EDGE,EDGE);
+  V(C2i_f_21) <+ transition(SUPPLY*tx_valid[2]*(1-((tx_word[2] >> 21) & 1)),TD,EDGE,EDGE);
+  V(C2i_t_22) <+ transition(SUPPLY*tx_valid[2]*((tx_word[2] >> 22) & 1),TD,EDGE,EDGE);
+  V(C2i_f_22) <+ transition(SUPPLY*tx_valid[2]*(1-((tx_word[2] >> 22) & 1)),TD,EDGE,EDGE);
+  V(C2i_t_23) <+ transition(SUPPLY*tx_valid[2]*((tx_word[2] >> 23) & 1),TD,EDGE,EDGE);
+  V(C2i_f_23) <+ transition(SUPPLY*tx_valid[2]*(1-((tx_word[2] >> 23) & 1)),TD,EDGE,EDGE);
+  V(C2i_t_24) <+ transition(SUPPLY*tx_valid[2]*((tx_word[2] >> 24) & 1),TD,EDGE,EDGE);
+  V(C2i_f_24) <+ transition(SUPPLY*tx_valid[2]*(1-((tx_word[2] >> 24) & 1)),TD,EDGE,EDGE);
+  V(C2i_t_25) <+ transition(SUPPLY*tx_valid[2]*((tx_word[2] >> 25) & 1),TD,EDGE,EDGE);
+  V(C2i_f_25) <+ transition(SUPPLY*tx_valid[2]*(1-((tx_word[2] >> 25) & 1)),TD,EDGE,EDGE);
+  V(C2i_t_26) <+ transition(SUPPLY*tx_valid[2]*((tx_word[2] >> 26) & 1),TD,EDGE,EDGE);
+  V(C2i_f_26) <+ transition(SUPPLY*tx_valid[2]*(1-((tx_word[2] >> 26) & 1)),TD,EDGE,EDGE);
+  V(C2i_t_27) <+ transition(SUPPLY*tx_valid[2]*((tx_word[2] >> 27) & 1),TD,EDGE,EDGE);
+  V(C2i_f_27) <+ transition(SUPPLY*tx_valid[2]*(1-((tx_word[2] >> 27) & 1)),TD,EDGE,EDGE);
+  V(C2i_t_28) <+ transition(SUPPLY*tx_valid[2]*((tx_word[2] >> 28) & 1),TD,EDGE,EDGE);
+  V(C2i_f_28) <+ transition(SUPPLY*tx_valid[2]*(1-((tx_word[2] >> 28) & 1)),TD,EDGE,EDGE);
+  V(C2i_t_29) <+ transition(SUPPLY*tx_valid[2]*((tx_word[2] >> 29) & 1),TD,EDGE,EDGE);
+  V(C2i_f_29) <+ transition(SUPPLY*tx_valid[2]*(1-((tx_word[2] >> 29) & 1)),TD,EDGE,EDGE);
+  V(C2i_t_30) <+ transition(SUPPLY*tx_valid[2]*((tx_word[2] >> 30) & 1),TD,EDGE,EDGE);
+  V(C2i_f_30) <+ transition(SUPPLY*tx_valid[2]*(1-((tx_word[2] >> 30) & 1)),TD,EDGE,EDGE);
+  V(C2i_t_31) <+ transition(SUPPLY*tx_valid[2]*((tx_word[2] >> 31) & 1),TD,EDGE,EDGE);
+  V(C2i_f_31) <+ transition(SUPPLY*tx_valid[2]*(1-((tx_word[2] >> 31) & 1)),TD,EDGE,EDGE);
+  V(C3i_t_0) <+ transition(SUPPLY*tx_valid[3]*((tx_word[3] >> 0) & 1),TD,EDGE,EDGE);
+  V(C3i_f_0) <+ transition(SUPPLY*tx_valid[3]*(1-((tx_word[3] >> 0) & 1)),TD,EDGE,EDGE);
+  V(C3i_t_1) <+ transition(SUPPLY*tx_valid[3]*((tx_word[3] >> 1) & 1),TD,EDGE,EDGE);
+  V(C3i_f_1) <+ transition(SUPPLY*tx_valid[3]*(1-((tx_word[3] >> 1) & 1)),TD,EDGE,EDGE);
+  V(C3i_t_2) <+ transition(SUPPLY*tx_valid[3]*((tx_word[3] >> 2) & 1),TD,EDGE,EDGE);
+  V(C3i_f_2) <+ transition(SUPPLY*tx_valid[3]*(1-((tx_word[3] >> 2) & 1)),TD,EDGE,EDGE);
+  V(C3i_t_3) <+ transition(SUPPLY*tx_valid[3]*((tx_word[3] >> 3) & 1),TD,EDGE,EDGE);
+  V(C3i_f_3) <+ transition(SUPPLY*tx_valid[3]*(1-((tx_word[3] >> 3) & 1)),TD,EDGE,EDGE);
+  V(C3i_t_4) <+ transition(SUPPLY*tx_valid[3]*((tx_word[3] >> 4) & 1),TD,EDGE,EDGE);
+  V(C3i_f_4) <+ transition(SUPPLY*tx_valid[3]*(1-((tx_word[3] >> 4) & 1)),TD,EDGE,EDGE);
+  V(C3i_t_5) <+ transition(SUPPLY*tx_valid[3]*((tx_word[3] >> 5) & 1),TD,EDGE,EDGE);
+  V(C3i_f_5) <+ transition(SUPPLY*tx_valid[3]*(1-((tx_word[3] >> 5) & 1)),TD,EDGE,EDGE);
+  V(C3i_t_6) <+ transition(SUPPLY*tx_valid[3]*((tx_word[3] >> 6) & 1),TD,EDGE,EDGE);
+  V(C3i_f_6) <+ transition(SUPPLY*tx_valid[3]*(1-((tx_word[3] >> 6) & 1)),TD,EDGE,EDGE);
+  V(C3i_t_7) <+ transition(SUPPLY*tx_valid[3]*((tx_word[3] >> 7) & 1),TD,EDGE,EDGE);
+  V(C3i_f_7) <+ transition(SUPPLY*tx_valid[3]*(1-((tx_word[3] >> 7) & 1)),TD,EDGE,EDGE);
+  V(C3i_t_8) <+ transition(SUPPLY*tx_valid[3]*((tx_word[3] >> 8) & 1),TD,EDGE,EDGE);
+  V(C3i_f_8) <+ transition(SUPPLY*tx_valid[3]*(1-((tx_word[3] >> 8) & 1)),TD,EDGE,EDGE);
+  V(C3i_t_9) <+ transition(SUPPLY*tx_valid[3]*((tx_word[3] >> 9) & 1),TD,EDGE,EDGE);
+  V(C3i_f_9) <+ transition(SUPPLY*tx_valid[3]*(1-((tx_word[3] >> 9) & 1)),TD,EDGE,EDGE);
+  V(C3i_t_10) <+ transition(SUPPLY*tx_valid[3]*((tx_word[3] >> 10) & 1),TD,EDGE,EDGE);
+  V(C3i_f_10) <+ transition(SUPPLY*tx_valid[3]*(1-((tx_word[3] >> 10) & 1)),TD,EDGE,EDGE);
+  V(C3i_t_11) <+ transition(SUPPLY*tx_valid[3]*((tx_word[3] >> 11) & 1),TD,EDGE,EDGE);
+  V(C3i_f_11) <+ transition(SUPPLY*tx_valid[3]*(1-((tx_word[3] >> 11) & 1)),TD,EDGE,EDGE);
+  V(C3i_t_12) <+ transition(SUPPLY*tx_valid[3]*((tx_word[3] >> 12) & 1),TD,EDGE,EDGE);
+  V(C3i_f_12) <+ transition(SUPPLY*tx_valid[3]*(1-((tx_word[3] >> 12) & 1)),TD,EDGE,EDGE);
+  V(C3i_t_13) <+ transition(SUPPLY*tx_valid[3]*((tx_word[3] >> 13) & 1),TD,EDGE,EDGE);
+  V(C3i_f_13) <+ transition(SUPPLY*tx_valid[3]*(1-((tx_word[3] >> 13) & 1)),TD,EDGE,EDGE);
+  V(C3i_t_14) <+ transition(SUPPLY*tx_valid[3]*((tx_word[3] >> 14) & 1),TD,EDGE,EDGE);
+  V(C3i_f_14) <+ transition(SUPPLY*tx_valid[3]*(1-((tx_word[3] >> 14) & 1)),TD,EDGE,EDGE);
+  V(C3i_t_15) <+ transition(SUPPLY*tx_valid[3]*((tx_word[3] >> 15) & 1),TD,EDGE,EDGE);
+  V(C3i_f_15) <+ transition(SUPPLY*tx_valid[3]*(1-((tx_word[3] >> 15) & 1)),TD,EDGE,EDGE);
+  V(C3i_t_16) <+ transition(SUPPLY*tx_valid[3]*((tx_word[3] >> 16) & 1),TD,EDGE,EDGE);
+  V(C3i_f_16) <+ transition(SUPPLY*tx_valid[3]*(1-((tx_word[3] >> 16) & 1)),TD,EDGE,EDGE);
+  V(C3i_t_17) <+ transition(SUPPLY*tx_valid[3]*((tx_word[3] >> 17) & 1),TD,EDGE,EDGE);
+  V(C3i_f_17) <+ transition(SUPPLY*tx_valid[3]*(1-((tx_word[3] >> 17) & 1)),TD,EDGE,EDGE);
+  V(C3i_t_18) <+ transition(SUPPLY*tx_valid[3]*((tx_word[3] >> 18) & 1),TD,EDGE,EDGE);
+  V(C3i_f_18) <+ transition(SUPPLY*tx_valid[3]*(1-((tx_word[3] >> 18) & 1)),TD,EDGE,EDGE);
+  V(C3i_t_19) <+ transition(SUPPLY*tx_valid[3]*((tx_word[3] >> 19) & 1),TD,EDGE,EDGE);
+  V(C3i_f_19) <+ transition(SUPPLY*tx_valid[3]*(1-((tx_word[3] >> 19) & 1)),TD,EDGE,EDGE);
+  V(C3i_t_20) <+ transition(SUPPLY*tx_valid[3]*((tx_word[3] >> 20) & 1),TD,EDGE,EDGE);
+  V(C3i_f_20) <+ transition(SUPPLY*tx_valid[3]*(1-((tx_word[3] >> 20) & 1)),TD,EDGE,EDGE);
+  V(C3i_t_21) <+ transition(SUPPLY*tx_valid[3]*((tx_word[3] >> 21) & 1),TD,EDGE,EDGE);
+  V(C3i_f_21) <+ transition(SUPPLY*tx_valid[3]*(1-((tx_word[3] >> 21) & 1)),TD,EDGE,EDGE);
+  V(C3i_t_22) <+ transition(SUPPLY*tx_valid[3]*((tx_word[3] >> 22) & 1),TD,EDGE,EDGE);
+  V(C3i_f_22) <+ transition(SUPPLY*tx_valid[3]*(1-((tx_word[3] >> 22) & 1)),TD,EDGE,EDGE);
+  V(C3i_t_23) <+ transition(SUPPLY*tx_valid[3]*((tx_word[3] >> 23) & 1),TD,EDGE,EDGE);
+  V(C3i_f_23) <+ transition(SUPPLY*tx_valid[3]*(1-((tx_word[3] >> 23) & 1)),TD,EDGE,EDGE);
+  V(C3i_t_24) <+ transition(SUPPLY*tx_valid[3]*((tx_word[3] >> 24) & 1),TD,EDGE,EDGE);
+  V(C3i_f_24) <+ transition(SUPPLY*tx_valid[3]*(1-((tx_word[3] >> 24) & 1)),TD,EDGE,EDGE);
+  V(C3i_t_25) <+ transition(SUPPLY*tx_valid[3]*((tx_word[3] >> 25) & 1),TD,EDGE,EDGE);
+  V(C3i_f_25) <+ transition(SUPPLY*tx_valid[3]*(1-((tx_word[3] >> 25) & 1)),TD,EDGE,EDGE);
+  V(C3i_t_26) <+ transition(SUPPLY*tx_valid[3]*((tx_word[3] >> 26) & 1),TD,EDGE,EDGE);
+  V(C3i_f_26) <+ transition(SUPPLY*tx_valid[3]*(1-((tx_word[3] >> 26) & 1)),TD,EDGE,EDGE);
+  V(C3i_t_27) <+ transition(SUPPLY*tx_valid[3]*((tx_word[3] >> 27) & 1),TD,EDGE,EDGE);
+  V(C3i_f_27) <+ transition(SUPPLY*tx_valid[3]*(1-((tx_word[3] >> 27) & 1)),TD,EDGE,EDGE);
+  V(C3i_t_28) <+ transition(SUPPLY*tx_valid[3]*((tx_word[3] >> 28) & 1),TD,EDGE,EDGE);
+  V(C3i_f_28) <+ transition(SUPPLY*tx_valid[3]*(1-((tx_word[3] >> 28) & 1)),TD,EDGE,EDGE);
+  V(C3i_t_29) <+ transition(SUPPLY*tx_valid[3]*((tx_word[3] >> 29) & 1),TD,EDGE,EDGE);
+  V(C3i_f_29) <+ transition(SUPPLY*tx_valid[3]*(1-((tx_word[3] >> 29) & 1)),TD,EDGE,EDGE);
+  V(C3i_t_30) <+ transition(SUPPLY*tx_valid[3]*((tx_word[3] >> 30) & 1),TD,EDGE,EDGE);
+  V(C3i_f_30) <+ transition(SUPPLY*tx_valid[3]*(1-((tx_word[3] >> 30) & 1)),TD,EDGE,EDGE);
+  V(C3i_t_31) <+ transition(SUPPLY*tx_valid[3]*((tx_word[3] >> 31) & 1),TD,EDGE,EDGE);
+  V(C3i_f_31) <+ transition(SUPPLY*tx_valid[3]*(1-((tx_word[3] >> 31) & 1)),TD,EDGE,EDGE);
+  V(Pi_t_0) <+ transition(SUPPLY*tx_valid[4]*((tx_word[4] >> 0) & 1),TD,EDGE,EDGE);
+  V(Pi_f_0) <+ transition(SUPPLY*tx_valid[4]*(1-((tx_word[4] >> 0) & 1)),TD,EDGE,EDGE);
+  V(Pi_t_1) <+ transition(SUPPLY*tx_valid[4]*((tx_word[4] >> 1) & 1),TD,EDGE,EDGE);
+  V(Pi_f_1) <+ transition(SUPPLY*tx_valid[4]*(1-((tx_word[4] >> 1) & 1)),TD,EDGE,EDGE);
+  V(Pi_t_2) <+ transition(SUPPLY*tx_valid[4]*((tx_word[4] >> 2) & 1),TD,EDGE,EDGE);
+  V(Pi_f_2) <+ transition(SUPPLY*tx_valid[4]*(1-((tx_word[4] >> 2) & 1)),TD,EDGE,EDGE);
+  V(Pi_t_3) <+ transition(SUPPLY*tx_valid[4]*((tx_word[4] >> 3) & 1),TD,EDGE,EDGE);
+  V(Pi_f_3) <+ transition(SUPPLY*tx_valid[4]*(1-((tx_word[4] >> 3) & 1)),TD,EDGE,EDGE);
+  V(Pi_t_4) <+ transition(SUPPLY*tx_valid[4]*((tx_word[4] >> 4) & 1),TD,EDGE,EDGE);
+  V(Pi_f_4) <+ transition(SUPPLY*tx_valid[4]*(1-((tx_word[4] >> 4) & 1)),TD,EDGE,EDGE);
+  V(Pi_t_5) <+ transition(SUPPLY*tx_valid[4]*((tx_word[4] >> 5) & 1),TD,EDGE,EDGE);
+  V(Pi_f_5) <+ transition(SUPPLY*tx_valid[4]*(1-((tx_word[4] >> 5) & 1)),TD,EDGE,EDGE);
+  V(Pi_t_6) <+ transition(SUPPLY*tx_valid[4]*((tx_word[4] >> 6) & 1),TD,EDGE,EDGE);
+  V(Pi_f_6) <+ transition(SUPPLY*tx_valid[4]*(1-((tx_word[4] >> 6) & 1)),TD,EDGE,EDGE);
+  V(Pi_t_7) <+ transition(SUPPLY*tx_valid[4]*((tx_word[4] >> 7) & 1),TD,EDGE,EDGE);
+  V(Pi_f_7) <+ transition(SUPPLY*tx_valid[4]*(1-((tx_word[4] >> 7) & 1)),TD,EDGE,EDGE);
+  V(Pi_t_8) <+ transition(SUPPLY*tx_valid[4]*((tx_word[4] >> 8) & 1),TD,EDGE,EDGE);
+  V(Pi_f_8) <+ transition(SUPPLY*tx_valid[4]*(1-((tx_word[4] >> 8) & 1)),TD,EDGE,EDGE);
+  V(Pi_t_9) <+ transition(SUPPLY*tx_valid[4]*((tx_word[4] >> 9) & 1),TD,EDGE,EDGE);
+  V(Pi_f_9) <+ transition(SUPPLY*tx_valid[4]*(1-((tx_word[4] >> 9) & 1)),TD,EDGE,EDGE);
+  V(Pi_t_10) <+ transition(SUPPLY*tx_valid[4]*((tx_word[4] >> 10) & 1),TD,EDGE,EDGE);
+  V(Pi_f_10) <+ transition(SUPPLY*tx_valid[4]*(1-((tx_word[4] >> 10) & 1)),TD,EDGE,EDGE);
+  V(Pi_t_11) <+ transition(SUPPLY*tx_valid[4]*((tx_word[4] >> 11) & 1),TD,EDGE,EDGE);
+  V(Pi_f_11) <+ transition(SUPPLY*tx_valid[4]*(1-((tx_word[4] >> 11) & 1)),TD,EDGE,EDGE);
+  V(Pi_t_12) <+ transition(SUPPLY*tx_valid[4]*((tx_word[4] >> 12) & 1),TD,EDGE,EDGE);
+  V(Pi_f_12) <+ transition(SUPPLY*tx_valid[4]*(1-((tx_word[4] >> 12) & 1)),TD,EDGE,EDGE);
+  V(Pi_t_13) <+ transition(SUPPLY*tx_valid[4]*((tx_word[4] >> 13) & 1),TD,EDGE,EDGE);
+  V(Pi_f_13) <+ transition(SUPPLY*tx_valid[4]*(1-((tx_word[4] >> 13) & 1)),TD,EDGE,EDGE);
+  V(Pi_t_14) <+ transition(SUPPLY*tx_valid[4]*((tx_word[4] >> 14) & 1),TD,EDGE,EDGE);
+  V(Pi_f_14) <+ transition(SUPPLY*tx_valid[4]*(1-((tx_word[4] >> 14) & 1)),TD,EDGE,EDGE);
+  V(Pi_t_15) <+ transition(SUPPLY*tx_valid[4]*((tx_word[4] >> 15) & 1),TD,EDGE,EDGE);
+  V(Pi_f_15) <+ transition(SUPPLY*tx_valid[4]*(1-((tx_word[4] >> 15) & 1)),TD,EDGE,EDGE);
+  V(Pi_t_16) <+ transition(SUPPLY*tx_valid[4]*((tx_word[4] >> 16) & 1),TD,EDGE,EDGE);
+  V(Pi_f_16) <+ transition(SUPPLY*tx_valid[4]*(1-((tx_word[4] >> 16) & 1)),TD,EDGE,EDGE);
+  V(Pi_t_17) <+ transition(SUPPLY*tx_valid[4]*((tx_word[4] >> 17) & 1),TD,EDGE,EDGE);
+  V(Pi_f_17) <+ transition(SUPPLY*tx_valid[4]*(1-((tx_word[4] >> 17) & 1)),TD,EDGE,EDGE);
+  V(Pi_t_18) <+ transition(SUPPLY*tx_valid[4]*((tx_word[4] >> 18) & 1),TD,EDGE,EDGE);
+  V(Pi_f_18) <+ transition(SUPPLY*tx_valid[4]*(1-((tx_word[4] >> 18) & 1)),TD,EDGE,EDGE);
+  V(Pi_t_19) <+ transition(SUPPLY*tx_valid[4]*((tx_word[4] >> 19) & 1),TD,EDGE,EDGE);
+  V(Pi_f_19) <+ transition(SUPPLY*tx_valid[4]*(1-((tx_word[4] >> 19) & 1)),TD,EDGE,EDGE);
+  V(Pi_t_20) <+ transition(SUPPLY*tx_valid[4]*((tx_word[4] >> 20) & 1),TD,EDGE,EDGE);
+  V(Pi_f_20) <+ transition(SUPPLY*tx_valid[4]*(1-((tx_word[4] >> 20) & 1)),TD,EDGE,EDGE);
+  V(Pi_t_21) <+ transition(SUPPLY*tx_valid[4]*((tx_word[4] >> 21) & 1),TD,EDGE,EDGE);
+  V(Pi_f_21) <+ transition(SUPPLY*tx_valid[4]*(1-((tx_word[4] >> 21) & 1)),TD,EDGE,EDGE);
+  V(Pi_t_22) <+ transition(SUPPLY*tx_valid[4]*((tx_word[4] >> 22) & 1),TD,EDGE,EDGE);
+  V(Pi_f_22) <+ transition(SUPPLY*tx_valid[4]*(1-((tx_word[4] >> 22) & 1)),TD,EDGE,EDGE);
+  V(Pi_t_23) <+ transition(SUPPLY*tx_valid[4]*((tx_word[4] >> 23) & 1),TD,EDGE,EDGE);
+  V(Pi_f_23) <+ transition(SUPPLY*tx_valid[4]*(1-((tx_word[4] >> 23) & 1)),TD,EDGE,EDGE);
+  V(Pi_t_24) <+ transition(SUPPLY*tx_valid[4]*((tx_word[4] >> 24) & 1),TD,EDGE,EDGE);
+  V(Pi_f_24) <+ transition(SUPPLY*tx_valid[4]*(1-((tx_word[4] >> 24) & 1)),TD,EDGE,EDGE);
+  V(Pi_t_25) <+ transition(SUPPLY*tx_valid[4]*((tx_word[4] >> 25) & 1),TD,EDGE,EDGE);
+  V(Pi_f_25) <+ transition(SUPPLY*tx_valid[4]*(1-((tx_word[4] >> 25) & 1)),TD,EDGE,EDGE);
+  V(Pi_t_26) <+ transition(SUPPLY*tx_valid[4]*((tx_word[4] >> 26) & 1),TD,EDGE,EDGE);
+  V(Pi_f_26) <+ transition(SUPPLY*tx_valid[4]*(1-((tx_word[4] >> 26) & 1)),TD,EDGE,EDGE);
+  V(Pi_t_27) <+ transition(SUPPLY*tx_valid[4]*((tx_word[4] >> 27) & 1),TD,EDGE,EDGE);
+  V(Pi_f_27) <+ transition(SUPPLY*tx_valid[4]*(1-((tx_word[4] >> 27) & 1)),TD,EDGE,EDGE);
+  V(Pi_t_28) <+ transition(SUPPLY*tx_valid[4]*((tx_word[4] >> 28) & 1),TD,EDGE,EDGE);
+  V(Pi_f_28) <+ transition(SUPPLY*tx_valid[4]*(1-((tx_word[4] >> 28) & 1)),TD,EDGE,EDGE);
+  V(Pi_t_29) <+ transition(SUPPLY*tx_valid[4]*((tx_word[4] >> 29) & 1),TD,EDGE,EDGE);
+  V(Pi_f_29) <+ transition(SUPPLY*tx_valid[4]*(1-((tx_word[4] >> 29) & 1)),TD,EDGE,EDGE);
+  V(Pi_t_30) <+ transition(SUPPLY*tx_valid[4]*((tx_word[4] >> 30) & 1),TD,EDGE,EDGE);
+  V(Pi_f_30) <+ transition(SUPPLY*tx_valid[4]*(1-((tx_word[4] >> 30) & 1)),TD,EDGE,EDGE);
+  V(Pi_t_31) <+ transition(SUPPLY*tx_valid[4]*((tx_word[4] >> 31) & 1),TD,EDGE,EDGE);
+  V(Pi_f_31) <+ transition(SUPPLY*tx_valid[4]*(1-((tx_word[4] >> 31) & 1)),TD,EDGE,EDGE);
+  V(C0o_a) <+ transition(SUPPLY*ack[0],TD,EDGE,EDGE);
+  V(C1o_a) <+ transition(SUPPLY*ack[1],TD,EDGE,EDGE);
+  V(C2o_a) <+ transition(SUPPLY*ack[2],TD,EDGE,EDGE);
+  V(C3o_a) <+ transition(SUPPLY*ack[3],TD,EDGE,EDGE);
+  V(Po_a) <+ transition(SUPPLY*ack[4],TD,EDGE,EDGE);
+  V(done) <+ transition(SUPPLY*finished,0,EDGE,EDGE);
+  V(failed) <+ transition(SUPPLY*failure,0,EDGE,EDGE);
+end
+endmodule
+
+module router_quiescence(ready, s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, s14, s15, s16, s17, s18, s19, s20, s21, s22, s23, s24, s25, s26, s27, s28, s29, s30, s31, s32, s33, s34, s35, s36, s37, s38, s39, s40, s41, s42, s43, s44, s45, s46, s47, s48, s49, s50, s51, s52, s53, s54, s55, s56, s57, s58, s59, s60, s61, s62, s63, s64, s65, s66, s67, s68, s69, s70, s71, s72, s73, s74, s75, s76, s77, s78, s79, s80, s81, s82, s83, s84, s85, s86, s87, s88, s89, s90, s91, s92, s93, s94, s95, s96, s97, s98, s99, s100, s101, s102, s103, s104, s105, s106, s107, s108, s109, s110, s111, s112, s113, s114, s115, s116, s117, s118, s119, s120, s121, s122, s123, s124, s125, s126, s127, s128, s129, s130, s131, s132, s133, s134, s135, s136, s137, s138, s139, s140, s141, s142, s143, s144, s145, s146, s147, s148, s149, s150, s151, s152, s153, s154, s155, s156, s157, s158, s159, s160, s161, s162, s163, s164, s165, s166, s167, s168, s169, s170, s171, s172, s173, s174, s175, s176, s177, s178, s179, s180, s181, s182, s183, s184, s185, s186, s187, s188, s189, s190, s191, s192, s193, s194, s195, s196, s197, s198, s199, s200, s201, s202, s203, s204, s205, s206, s207, s208, s209, s210, s211, s212, s213, s214, s215, s216, s217, s218, s219, s220, s221, s222, s223, s224, s225, s226, s227, s228, s229, s230, s231, s232, s233, s234, s235, s236, s237, s238, s239, s240, s241, s242, s243, s244, s245, s246, s247, s248, s249, s250, s251, s252, s253, s254, s255, s256, s257, s258, s259, s260, s261, s262, s263, s264, s265, s266, s267, s268, s269, s270, s271, s272, s273, s274, s275, s276, s277, s278, s279, s280, s281, s282, s283, s284, s285, s286, s287, s288, s289, s290, s291, s292, s293, s294, s295, s296, s297, s298, s299, s300, s301, s302, s303, s304, s305, s306, s307, s308);
+inout ready, s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, s14, s15, s16, s17, s18, s19, s20, s21, s22, s23, s24, s25, s26, s27, s28, s29, s30, s31, s32, s33, s34, s35, s36, s37, s38, s39, s40, s41, s42, s43, s44, s45, s46, s47, s48, s49, s50, s51, s52, s53, s54, s55, s56, s57, s58, s59, s60, s61, s62, s63, s64, s65, s66, s67, s68, s69, s70, s71, s72, s73, s74, s75, s76, s77, s78, s79, s80, s81, s82, s83, s84, s85, s86, s87, s88, s89, s90, s91, s92, s93, s94, s95, s96, s97, s98, s99, s100, s101, s102, s103, s104, s105, s106, s107, s108, s109, s110, s111, s112, s113, s114, s115, s116, s117, s118, s119, s120, s121, s122, s123, s124, s125, s126, s127, s128, s129, s130, s131, s132, s133, s134, s135, s136, s137, s138, s139, s140, s141, s142, s143, s144, s145, s146, s147, s148, s149, s150, s151, s152, s153, s154, s155, s156, s157, s158, s159, s160, s161, s162, s163, s164, s165, s166, s167, s168, s169, s170, s171, s172, s173, s174, s175, s176, s177, s178, s179, s180, s181, s182, s183, s184, s185, s186, s187, s188, s189, s190, s191, s192, s193, s194, s195, s196, s197, s198, s199, s200, s201, s202, s203, s204, s205, s206, s207, s208, s209, s210, s211, s212, s213, s214, s215, s216, s217, s218, s219, s220, s221, s222, s223, s224, s225, s226, s227, s228, s229, s230, s231, s232, s233, s234, s235, s236, s237, s238, s239, s240, s241, s242, s243, s244, s245, s246, s247, s248, s249, s250, s251, s252, s253, s254, s255, s256, s257, s258, s259, s260, s261, s262, s263, s264, s265, s266, s267, s268, s269, s270, s271, s272, s273, s274, s275, s276, s277, s278, s279, s280, s281, s282, s283, s284, s285, s286, s287, s288, s289, s290, s291, s292, s293, s294, s295, s296, s297, s298, s299, s300, s301, s302, s303, s304, s305, s306, s307, s308;
+electrical ready, s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, s14, s15, s16, s17, s18, s19, s20, s21, s22, s23, s24, s25, s26, s27, s28, s29, s30, s31, s32, s33, s34, s35, s36, s37, s38, s39, s40, s41, s42, s43, s44, s45, s46, s47, s48, s49, s50, s51, s52, s53, s54, s55, s56, s57, s58, s59, s60, s61, s62, s63, s64, s65, s66, s67, s68, s69, s70, s71, s72, s73, s74, s75, s76, s77, s78, s79, s80, s81, s82, s83, s84, s85, s86, s87, s88, s89, s90, s91, s92, s93, s94, s95, s96, s97, s98, s99, s100, s101, s102, s103, s104, s105, s106, s107, s108, s109, s110, s111, s112, s113, s114, s115, s116, s117, s118, s119, s120, s121, s122, s123, s124, s125, s126, s127, s128, s129, s130, s131, s132, s133, s134, s135, s136, s137, s138, s139, s140, s141, s142, s143, s144, s145, s146, s147, s148, s149, s150, s151, s152, s153, s154, s155, s156, s157, s158, s159, s160, s161, s162, s163, s164, s165, s166, s167, s168, s169, s170, s171, s172, s173, s174, s175, s176, s177, s178, s179, s180, s181, s182, s183, s184, s185, s186, s187, s188, s189, s190, s191, s192, s193, s194, s195, s196, s197, s198, s199, s200, s201, s202, s203, s204, s205, s206, s207, s208, s209, s210, s211, s212, s213, s214, s215, s216, s217, s218, s219, s220, s221, s222, s223, s224, s225, s226, s227, s228, s229, s230, s231, s232, s233, s234, s235, s236, s237, s238, s239, s240, s241, s242, s243, s244, s245, s246, s247, s248, s249, s250, s251, s252, s253, s254, s255, s256, s257, s258, s259, s260, s261, s262, s263, s264, s265, s266, s267, s268, s269, s270, s271, s272, s273, s274, s275, s276, s277, s278, s279, s280, s281, s282, s283, s284, s285, s286, s287, s288, s289, s290, s291, s292, s293, s294, s295, s296, s297, s298, s299, s300, s301, s302, s303, s304, s305, s306, s307, s308;
+parameter real SUPPLY=1.1;
+integer quiet;
+analog begin
+quiet=1;
+if (V(s0)<0.9*SUPPLY) quiet=0;
+if (V(s1)>0.1*SUPPLY) quiet=0;
+if (V(s2)<0.9*SUPPLY) quiet=0;
+if (V(s3)<0.9*SUPPLY) quiet=0;
+if (V(s4)<0.9*SUPPLY) quiet=0;
+if (V(s5)>0.1*SUPPLY) quiet=0;
+if (V(s6)<0.9*SUPPLY) quiet=0;
+if (V(s7)<0.9*SUPPLY) quiet=0;
+if (V(s8)<0.9*SUPPLY) quiet=0;
+if (V(s9)>0.1*SUPPLY) quiet=0;
+if (V(s10)<0.9*SUPPLY) quiet=0;
+if (V(s11)<0.9*SUPPLY) quiet=0;
+if (V(s12)<0.9*SUPPLY) quiet=0;
+if (V(s13)>0.1*SUPPLY) quiet=0;
+if (V(s14)<0.9*SUPPLY) quiet=0;
+if (V(s15)<0.9*SUPPLY) quiet=0;
+if (V(s16)<0.9*SUPPLY) quiet=0;
+if (V(s17)>0.1*SUPPLY) quiet=0;
+if (V(s18)<0.9*SUPPLY) quiet=0;
+if (V(s19)<0.9*SUPPLY) quiet=0;
+if (V(s20)<0.9*SUPPLY) quiet=0;
+if (V(s21)>0.1*SUPPLY) quiet=0;
+if (V(s22)<0.9*SUPPLY) quiet=0;
+if (V(s23)<0.9*SUPPLY) quiet=0;
+if (V(s24)<0.9*SUPPLY) quiet=0;
+if (V(s25)>0.1*SUPPLY) quiet=0;
+if (V(s26)<0.9*SUPPLY) quiet=0;
+if (V(s27)<0.9*SUPPLY) quiet=0;
+if (V(s28)<0.9*SUPPLY) quiet=0;
+if (V(s29)>0.1*SUPPLY) quiet=0;
+if (V(s30)<0.9*SUPPLY) quiet=0;
+if (V(s31)<0.9*SUPPLY) quiet=0;
+if (V(s32)<0.9*SUPPLY) quiet=0;
+if (V(s33)>0.1*SUPPLY) quiet=0;
+if (V(s34)<0.9*SUPPLY) quiet=0;
+if (V(s35)<0.9*SUPPLY) quiet=0;
+if (V(s36)<0.9*SUPPLY) quiet=0;
+if (V(s37)>0.1*SUPPLY) quiet=0;
+if (V(s38)<0.9*SUPPLY) quiet=0;
+if (V(s39)<0.9*SUPPLY) quiet=0;
+if (V(s40)<0.9*SUPPLY) quiet=0;
+if (V(s41)>0.1*SUPPLY) quiet=0;
+if (V(s42)<0.9*SUPPLY) quiet=0;
+if (V(s43)<0.9*SUPPLY) quiet=0;
+if (V(s44)<0.9*SUPPLY) quiet=0;
+if (V(s45)>0.1*SUPPLY) quiet=0;
+if (V(s46)<0.9*SUPPLY) quiet=0;
+if (V(s47)<0.9*SUPPLY) quiet=0;
+if (V(s48)<0.9*SUPPLY) quiet=0;
+if (V(s49)>0.1*SUPPLY) quiet=0;
+if (V(s50)<0.9*SUPPLY) quiet=0;
+if (V(s51)<0.9*SUPPLY) quiet=0;
+if (V(s52)<0.9*SUPPLY) quiet=0;
+if (V(s53)>0.1*SUPPLY) quiet=0;
+if (V(s54)<0.9*SUPPLY) quiet=0;
+if (V(s55)<0.9*SUPPLY) quiet=0;
+if (V(s56)<0.9*SUPPLY) quiet=0;
+if (V(s57)>0.1*SUPPLY) quiet=0;
+if (V(s58)<0.9*SUPPLY) quiet=0;
+if (V(s59)<0.9*SUPPLY) quiet=0;
+if (V(s60)<0.9*SUPPLY) quiet=0;
+if (V(s61)>0.1*SUPPLY) quiet=0;
+if (V(s62)<0.9*SUPPLY) quiet=0;
+if (V(s63)<0.9*SUPPLY) quiet=0;
+if (V(s64)<0.9*SUPPLY) quiet=0;
+if (V(s65)>0.1*SUPPLY) quiet=0;
+if (V(s66)<0.9*SUPPLY) quiet=0;
+if (V(s67)<0.9*SUPPLY) quiet=0;
+if (V(s68)<0.9*SUPPLY) quiet=0;
+if (V(s69)>0.1*SUPPLY) quiet=0;
+if (V(s70)<0.9*SUPPLY) quiet=0;
+if (V(s71)<0.9*SUPPLY) quiet=0;
+if (V(s72)<0.9*SUPPLY) quiet=0;
+if (V(s73)>0.1*SUPPLY) quiet=0;
+if (V(s74)<0.9*SUPPLY) quiet=0;
+if (V(s75)<0.9*SUPPLY) quiet=0;
+if (V(s76)<0.9*SUPPLY) quiet=0;
+if (V(s77)>0.1*SUPPLY) quiet=0;
+if (V(s78)<0.9*SUPPLY) quiet=0;
+if (V(s79)<0.9*SUPPLY) quiet=0;
+if (V(s80)<0.9*SUPPLY) quiet=0;
+if (V(s81)>0.1*SUPPLY) quiet=0;
+if (V(s82)<0.9*SUPPLY) quiet=0;
+if (V(s83)<0.9*SUPPLY) quiet=0;
+if (V(s84)<0.9*SUPPLY) quiet=0;
+if (V(s85)>0.1*SUPPLY) quiet=0;
+if (V(s86)<0.9*SUPPLY) quiet=0;
+if (V(s87)<0.9*SUPPLY) quiet=0;
+if (V(s88)<0.9*SUPPLY) quiet=0;
+if (V(s89)>0.1*SUPPLY) quiet=0;
+if (V(s90)<0.9*SUPPLY) quiet=0;
+if (V(s91)<0.9*SUPPLY) quiet=0;
+if (V(s92)<0.9*SUPPLY) quiet=0;
+if (V(s93)>0.1*SUPPLY) quiet=0;
+if (V(s94)<0.9*SUPPLY) quiet=0;
+if (V(s95)<0.9*SUPPLY) quiet=0;
+if (V(s96)<0.9*SUPPLY) quiet=0;
+if (V(s97)>0.1*SUPPLY) quiet=0;
+if (V(s98)<0.9*SUPPLY) quiet=0;
+if (V(s99)<0.9*SUPPLY) quiet=0;
+if (V(s100)<0.9*SUPPLY) quiet=0;
+if (V(s101)>0.1*SUPPLY) quiet=0;
+if (V(s102)<0.9*SUPPLY) quiet=0;
+if (V(s103)<0.9*SUPPLY) quiet=0;
+if (V(s104)<0.9*SUPPLY) quiet=0;
+if (V(s105)>0.1*SUPPLY) quiet=0;
+if (V(s106)<0.9*SUPPLY) quiet=0;
+if (V(s107)<0.9*SUPPLY) quiet=0;
+if (V(s108)<0.9*SUPPLY) quiet=0;
+if (V(s109)>0.1*SUPPLY) quiet=0;
+if (V(s110)<0.9*SUPPLY) quiet=0;
+if (V(s111)<0.9*SUPPLY) quiet=0;
+if (V(s112)<0.9*SUPPLY) quiet=0;
+if (V(s113)>0.1*SUPPLY) quiet=0;
+if (V(s114)<0.9*SUPPLY) quiet=0;
+if (V(s115)<0.9*SUPPLY) quiet=0;
+if (V(s116)<0.9*SUPPLY) quiet=0;
+if (V(s117)>0.1*SUPPLY) quiet=0;
+if (V(s118)<0.9*SUPPLY) quiet=0;
+if (V(s119)<0.9*SUPPLY) quiet=0;
+if (V(s120)<0.9*SUPPLY) quiet=0;
+if (V(s121)>0.1*SUPPLY) quiet=0;
+if (V(s122)<0.9*SUPPLY) quiet=0;
+if (V(s123)<0.9*SUPPLY) quiet=0;
+if (V(s124)<0.9*SUPPLY) quiet=0;
+if (V(s125)>0.1*SUPPLY) quiet=0;
+if (V(s126)<0.9*SUPPLY) quiet=0;
+if (V(s127)<0.9*SUPPLY) quiet=0;
+if (V(s128)<0.9*SUPPLY) quiet=0;
+if (V(s129)>0.1*SUPPLY) quiet=0;
+if (V(s130)<0.9*SUPPLY) quiet=0;
+if (V(s131)<0.9*SUPPLY) quiet=0;
+if (V(s132)<0.9*SUPPLY) quiet=0;
+if (V(s133)>0.1*SUPPLY) quiet=0;
+if (V(s134)<0.9*SUPPLY) quiet=0;
+if (V(s135)<0.9*SUPPLY) quiet=0;
+if (V(s136)<0.9*SUPPLY) quiet=0;
+if (V(s137)>0.1*SUPPLY) quiet=0;
+if (V(s138)<0.9*SUPPLY) quiet=0;
+if (V(s139)<0.9*SUPPLY) quiet=0;
+if (V(s140)<0.9*SUPPLY) quiet=0;
+if (V(s141)>0.1*SUPPLY) quiet=0;
+if (V(s142)<0.9*SUPPLY) quiet=0;
+if (V(s143)<0.9*SUPPLY) quiet=0;
+if (V(s144)<0.9*SUPPLY) quiet=0;
+if (V(s145)>0.1*SUPPLY) quiet=0;
+if (V(s146)<0.9*SUPPLY) quiet=0;
+if (V(s147)<0.9*SUPPLY) quiet=0;
+if (V(s148)<0.9*SUPPLY) quiet=0;
+if (V(s149)>0.1*SUPPLY) quiet=0;
+if (V(s150)<0.9*SUPPLY) quiet=0;
+if (V(s151)<0.9*SUPPLY) quiet=0;
+if (V(s152)<0.9*SUPPLY) quiet=0;
+if (V(s153)>0.1*SUPPLY) quiet=0;
+if (V(s154)<0.9*SUPPLY) quiet=0;
+if (V(s155)<0.9*SUPPLY) quiet=0;
+if (V(s156)<0.9*SUPPLY) quiet=0;
+if (V(s157)>0.1*SUPPLY) quiet=0;
+if (V(s158)<0.9*SUPPLY) quiet=0;
+if (V(s159)<0.9*SUPPLY) quiet=0;
+if (V(s160)<0.9*SUPPLY) quiet=0;
+if (V(s161)>0.1*SUPPLY) quiet=0;
+if (V(s162)<0.9*SUPPLY) quiet=0;
+if (V(s163)<0.9*SUPPLY) quiet=0;
+if (V(s164)<0.9*SUPPLY) quiet=0;
+if (V(s165)>0.1*SUPPLY) quiet=0;
+if (V(s166)<0.9*SUPPLY) quiet=0;
+if (V(s167)<0.9*SUPPLY) quiet=0;
+if (V(s168)<0.9*SUPPLY) quiet=0;
+if (V(s169)>0.1*SUPPLY) quiet=0;
+if (V(s170)<0.9*SUPPLY) quiet=0;
+if (V(s171)<0.9*SUPPLY) quiet=0;
+if (V(s172)<0.9*SUPPLY) quiet=0;
+if (V(s173)>0.1*SUPPLY) quiet=0;
+if (V(s174)<0.9*SUPPLY) quiet=0;
+if (V(s175)<0.9*SUPPLY) quiet=0;
+if (V(s176)<0.9*SUPPLY) quiet=0;
+if (V(s177)>0.1*SUPPLY) quiet=0;
+if (V(s178)<0.9*SUPPLY) quiet=0;
+if (V(s179)<0.9*SUPPLY) quiet=0;
+if (V(s180)<0.9*SUPPLY) quiet=0;
+if (V(s181)>0.1*SUPPLY) quiet=0;
+if (V(s182)<0.9*SUPPLY) quiet=0;
+if (V(s183)<0.9*SUPPLY) quiet=0;
+if (V(s184)<0.9*SUPPLY) quiet=0;
+if (V(s185)>0.1*SUPPLY) quiet=0;
+if (V(s186)<0.9*SUPPLY) quiet=0;
+if (V(s187)<0.9*SUPPLY) quiet=0;
+if (V(s188)<0.9*SUPPLY) quiet=0;
+if (V(s189)>0.1*SUPPLY) quiet=0;
+if (V(s190)<0.9*SUPPLY) quiet=0;
+if (V(s191)<0.9*SUPPLY) quiet=0;
+if (V(s192)<0.9*SUPPLY) quiet=0;
+if (V(s193)>0.1*SUPPLY) quiet=0;
+if (V(s194)<0.9*SUPPLY) quiet=0;
+if (V(s195)<0.9*SUPPLY) quiet=0;
+if (V(s196)<0.9*SUPPLY) quiet=0;
+if (V(s197)>0.1*SUPPLY) quiet=0;
+if (V(s198)<0.9*SUPPLY) quiet=0;
+if (V(s199)<0.9*SUPPLY) quiet=0;
+if (V(s200)<0.9*SUPPLY) quiet=0;
+if (V(s201)>0.1*SUPPLY) quiet=0;
+if (V(s202)<0.9*SUPPLY) quiet=0;
+if (V(s203)<0.9*SUPPLY) quiet=0;
+if (V(s204)<0.9*SUPPLY) quiet=0;
+if (V(s205)>0.1*SUPPLY) quiet=0;
+if (V(s206)<0.9*SUPPLY) quiet=0;
+if (V(s207)<0.9*SUPPLY) quiet=0;
+if (V(s208)<0.9*SUPPLY) quiet=0;
+if (V(s209)>0.1*SUPPLY) quiet=0;
+if (V(s210)<0.9*SUPPLY) quiet=0;
+if (V(s211)<0.9*SUPPLY) quiet=0;
+if (V(s212)<0.9*SUPPLY) quiet=0;
+if (V(s213)>0.1*SUPPLY) quiet=0;
+if (V(s214)<0.9*SUPPLY) quiet=0;
+if (V(s215)<0.9*SUPPLY) quiet=0;
+if (V(s216)<0.9*SUPPLY) quiet=0;
+if (V(s217)>0.1*SUPPLY) quiet=0;
+if (V(s218)<0.9*SUPPLY) quiet=0;
+if (V(s219)<0.9*SUPPLY) quiet=0;
+if (V(s220)<0.9*SUPPLY) quiet=0;
+if (V(s221)>0.1*SUPPLY) quiet=0;
+if (V(s222)<0.9*SUPPLY) quiet=0;
+if (V(s223)<0.9*SUPPLY) quiet=0;
+if (V(s224)<0.9*SUPPLY) quiet=0;
+if (V(s225)>0.1*SUPPLY) quiet=0;
+if (V(s226)<0.9*SUPPLY) quiet=0;
+if (V(s227)<0.9*SUPPLY) quiet=0;
+if (V(s228)<0.9*SUPPLY) quiet=0;
+if (V(s229)>0.1*SUPPLY) quiet=0;
+if (V(s230)<0.9*SUPPLY) quiet=0;
+if (V(s231)<0.9*SUPPLY) quiet=0;
+if (V(s232)<0.9*SUPPLY) quiet=0;
+if (V(s233)>0.1*SUPPLY) quiet=0;
+if (V(s234)<0.9*SUPPLY) quiet=0;
+if (V(s235)<0.9*SUPPLY) quiet=0;
+if (V(s236)<0.9*SUPPLY) quiet=0;
+if (V(s237)>0.1*SUPPLY) quiet=0;
+if (V(s238)<0.9*SUPPLY) quiet=0;
+if (V(s239)<0.9*SUPPLY) quiet=0;
+if (V(s240)<0.9*SUPPLY) quiet=0;
+if (V(s241)>0.1*SUPPLY) quiet=0;
+if (V(s242)<0.9*SUPPLY) quiet=0;
+if (V(s243)<0.9*SUPPLY) quiet=0;
+if (V(s244)>0.1*SUPPLY) quiet=0;
+if (V(s245)>0.1*SUPPLY) quiet=0;
+if (V(s246)>0.1*SUPPLY) quiet=0;
+if (V(s247)>0.1*SUPPLY) quiet=0;
+if (V(s248)>0.1*SUPPLY) quiet=0;
+if (V(s249)>0.1*SUPPLY) quiet=0;
+if (V(s250)>0.1*SUPPLY) quiet=0;
+if (V(s251)>0.1*SUPPLY) quiet=0;
+if (V(s252)>0.1*SUPPLY) quiet=0;
+if (V(s253)>0.1*SUPPLY) quiet=0;
+if (V(s254)>0.1*SUPPLY) quiet=0;
+if (V(s255)>0.1*SUPPLY) quiet=0;
+if (V(s256)>0.1*SUPPLY) quiet=0;
+if (V(s257)>0.1*SUPPLY) quiet=0;
+if (V(s258)>0.1*SUPPLY) quiet=0;
+if (V(s259)>0.1*SUPPLY) quiet=0;
+if (V(s260)>0.1*SUPPLY) quiet=0;
+if (V(s261)>0.1*SUPPLY) quiet=0;
+if (V(s262)>0.1*SUPPLY) quiet=0;
+if (V(s263)>0.1*SUPPLY) quiet=0;
+if (V(s264)>0.1*SUPPLY) quiet=0;
+if (V(s265)>0.1*SUPPLY) quiet=0;
+if (V(s266)>0.1*SUPPLY) quiet=0;
+if (V(s267)>0.1*SUPPLY) quiet=0;
+if (V(s268)>0.1*SUPPLY) quiet=0;
+if (V(s269)>0.1*SUPPLY) quiet=0;
+if (V(s270)>0.1*SUPPLY) quiet=0;
+if (V(s271)>0.1*SUPPLY) quiet=0;
+if (V(s272)>0.1*SUPPLY) quiet=0;
+if (V(s273)>0.1*SUPPLY) quiet=0;
+if (V(s274)>0.1*SUPPLY) quiet=0;
+if (V(s275)>0.1*SUPPLY) quiet=0;
+if (V(s276)>0.1*SUPPLY) quiet=0;
+if (V(s277)>0.1*SUPPLY) quiet=0;
+if (V(s278)>0.1*SUPPLY) quiet=0;
+if (V(s279)>0.1*SUPPLY) quiet=0;
+if (V(s280)>0.1*SUPPLY) quiet=0;
+if (V(s281)>0.1*SUPPLY) quiet=0;
+if (V(s282)>0.1*SUPPLY) quiet=0;
+if (V(s283)>0.1*SUPPLY) quiet=0;
+if (V(s284)>0.1*SUPPLY) quiet=0;
+if (V(s285)>0.1*SUPPLY) quiet=0;
+if (V(s286)>0.1*SUPPLY) quiet=0;
+if (V(s287)>0.1*SUPPLY) quiet=0;
+if (V(s288)>0.1*SUPPLY) quiet=0;
+if (V(s289)>0.1*SUPPLY) quiet=0;
+if (V(s290)>0.1*SUPPLY) quiet=0;
+if (V(s291)>0.1*SUPPLY) quiet=0;
+if (V(s292)>0.1*SUPPLY) quiet=0;
+if (V(s293)>0.1*SUPPLY) quiet=0;
+if (V(s294)>0.1*SUPPLY) quiet=0;
+if (V(s295)>0.1*SUPPLY) quiet=0;
+if (V(s296)>0.1*SUPPLY) quiet=0;
+if (V(s297)>0.1*SUPPLY) quiet=0;
+if (V(s298)>0.1*SUPPLY) quiet=0;
+if (V(s299)>0.1*SUPPLY) quiet=0;
+if (V(s300)>0.1*SUPPLY) quiet=0;
+if (V(s301)>0.1*SUPPLY) quiet=0;
+if (V(s302)>0.1*SUPPLY) quiet=0;
+if (V(s303)>0.1*SUPPLY) quiet=0;
+if (V(s304)>0.1*SUPPLY) quiet=0;
+if (V(s305)>0.1*SUPPLY) quiet=0;
+if (V(s306)>0.1*SUPPLY) quiet=0;
+if (V(s307)>0.1*SUPPLY) quiet=0;
+if (V(s308)>0.1*SUPPLY) quiet=0;
+V(ready) <+ transition(SUPPLY*quiet,0,1p,1p);
+end
+endmodule

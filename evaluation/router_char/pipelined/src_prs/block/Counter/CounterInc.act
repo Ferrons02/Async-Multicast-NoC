@@ -1,0 +1,130 @@
+import "commons/HalfAdder.act";
+import "commons/FullAdder.act";
+
+/* Four unit-weight events are population-counted, then added to Sb. pc[7:3] and carry-in are valid zero only while pc[2:0] is valid. */
+export defproc CounterInc(bool? reset; DualRail4? Sa; DualRail8? Sb; DualRail8! So)
+{
+
+    HalfAdder ha01;
+    ha01.a.t = Sa.t[0];
+    ha01.a.f = Sa.f[0];
+    ha01.b.t = Sa.t[1];
+    ha01.b.f = Sa.f[1];
+
+    HalfAdder ha23;
+    ha23.a.t = Sa.t[2];
+    ha23.a.f = Sa.f[2];
+    ha23.b.t = Sa.t[3];
+    ha23.b.f = Sa.f[3];
+
+    HalfAdder ha_sum;
+    ha_sum.a.t = ha01.s.t;
+    ha_sum.a.f = ha01.s.f;
+    ha_sum.b.t = ha23.s.t;
+    ha_sum.b.f = ha23.s.f;
+
+    FullAdder fa_high;
+    fa_high.a.t = ha01.d.t;
+    fa_high.a.f = ha01.d.f;
+    fa_high.b.t = ha23.d.t;
+    fa_high.b.f = ha23.d.f;
+    fa_high.c.t = ha_sum.d.t;
+    fa_high.c.f = ha_sum.d.f;
+
+    FullAdder acc0;
+    acc0.a.t = ha_sum.s.t;
+    acc0.a.f = ha_sum.s.f;
+    acc0.b.t = Sb.t[0];
+    acc0.b.f = Sb.f[0];
+    acc0.s.t = So.t[0];
+    acc0.s.f = So.f[0];
+
+    FullAdder acc1;
+    acc1.a.t = fa_high.s.t;
+    acc1.a.f = fa_high.s.f;
+    acc1.b.t = Sb.t[1];
+    acc1.b.f = Sb.f[1];
+    acc1.c.t = acc0.d.t;
+    acc1.c.f = acc0.d.f;
+    acc1.s.t = So.t[1];
+    acc1.s.f = So.f[1];
+
+    FullAdder acc2;
+    acc2.a.t = fa_high.d.t;
+    acc2.a.f = fa_high.d.f;
+    acc2.b.t = Sb.t[2];
+    acc2.b.f = Sb.f[2];
+    acc2.c.t = acc1.d.t;
+    acc2.c.f = acc1.d.f;
+    acc2.s.t = So.t[2];
+    acc2.s.f = So.f[2];
+
+    FullAdder acc3;
+    acc3.b.t = Sb.t[3];
+    acc3.b.f = Sb.f[3];
+    acc3.c.t = acc2.d.t;
+    acc3.c.f = acc2.d.f;
+    acc3.s.t = So.t[3];
+    acc3.s.f = So.f[3];
+
+    FullAdder acc4;
+    acc4.b.t = Sb.t[4];
+    acc4.b.f = Sb.f[4];
+    acc4.c.t = acc3.d.t;
+    acc4.c.f = acc3.d.f;
+    acc4.s.t = So.t[4];
+    acc4.s.f = So.f[4];
+
+    FullAdder acc5;
+    acc5.b.t = Sb.t[5];
+    acc5.b.f = Sb.f[5];
+    acc5.c.t = acc4.d.t;
+    acc5.c.f = acc4.d.f;
+    acc5.s.t = So.t[5];
+    acc5.s.f = So.f[5];
+
+    FullAdder acc6;
+    acc6.b.t = Sb.t[6];
+    acc6.b.f = Sb.f[6];
+    acc6.c.t = acc5.d.t;
+    acc6.c.f = acc5.d.f;
+    acc6.s.t = So.t[6];
+    acc6.s.f = So.f[6];
+
+    FullAdder acc7;
+    acc7.b.t = Sb.t[7];
+    acc7.b.f = Sb.f[7];
+    acc7.c.t = acc6.d.t;
+    acc7.c.f = acc6.d.f;
+    acc7.s.t = So.t[7];
+    acc7.s.f = So.f[7];
+
+    // j2=fa_high.d, j1=fa_high.s, j0=ha_sum.s.
+    bool _jt[3], _jf[3];
+    prs {
+        ~fa_high.d.t => _jt[2]+
+        ~fa_high.d.f => _jf[2]+
+        ~fa_high.s.t => _jt[1]+
+        ~fa_high.s.f => _jf[1]+
+        ~ha_sum.s.t => _jt[0]+
+        ~ha_sum.s.f => _jf[0]+
+        true -> acc0.c.t-
+        (~_jt[2] | ~_jf[2]) & (~_jt[1] | ~_jf[1]) & (~_jt[0] | ~_jf[0]) & ~reset -> acc0.c.f+
+        (_jt[2] & _jf[2] & _jt[1] & _jf[1] & _jt[0] & _jf[0]) | reset -> acc0.c.f-
+        true -> acc3.a.t-
+        (~_jt[2] | ~_jf[2]) & (~_jt[1] | ~_jf[1]) & (~_jt[0] | ~_jf[0]) & ~reset -> acc3.a.f+
+        (_jt[2] & _jf[2] & _jt[1] & _jf[1] & _jt[0] & _jf[0]) | reset -> acc3.a.f-
+        true -> acc4.a.t-
+        (~_jt[2] | ~_jf[2]) & (~_jt[1] | ~_jf[1]) & (~_jt[0] | ~_jf[0]) & ~reset -> acc4.a.f+
+        (_jt[2] & _jf[2] & _jt[1] & _jf[1] & _jt[0] & _jf[0]) | reset -> acc4.a.f-
+        true -> acc5.a.t-
+        (~_jt[2] | ~_jf[2]) & (~_jt[1] | ~_jf[1]) & (~_jt[0] | ~_jf[0]) & ~reset -> acc5.a.f+
+        (_jt[2] & _jf[2] & _jt[1] & _jf[1] & _jt[0] & _jf[0]) | reset -> acc5.a.f-
+        true -> acc6.a.t-
+        (~_jt[2] | ~_jf[2]) & (~_jt[1] | ~_jf[1]) & (~_jt[0] | ~_jf[0]) & ~reset -> acc6.a.f+
+        (_jt[2] & _jf[2] & _jt[1] & _jf[1] & _jt[0] & _jf[0]) | reset -> acc6.a.f-
+        true -> acc7.a.t-
+        (~_jt[2] | ~_jf[2]) & (~_jt[1] | ~_jf[1]) & (~_jt[0] | ~_jf[0]) & ~reset -> acc7.a.f+
+        (_jt[2] & _jf[2] & _jt[1] & _jf[1] & _jt[0] & _jf[0]) | reset -> acc7.a.f-
+    }
+}

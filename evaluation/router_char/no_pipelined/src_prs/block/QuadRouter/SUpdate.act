@@ -1,0 +1,125 @@
+import "commons/Channels.act";
+
+export defproc SUpdate(
+    bool? reset;
+    ActiveDualRail4? I;
+    ActiveDualRail4! Od0, Od1, Od2, Od3;
+    ActiveDualRail8! W0, W1, W2, W3;
+    ActiveDualRail4! Ch;
+    Dataless? A
+)
+{
+    bool b[4], k, p0, p1, s, _p0, _ia, _s, _r, _ar, _p1, _aa, _cha;
+    bool _b[4], _it[4], _if[4], _wa[4];
+    bool _x[4], y[2], _z;
+    prs {
+        // Capture completion: four bit comparisons, then a two-level tree.
+        (n:4:
+            (I.t[n] & b[n]) | (I.f[n] & _b[n]) -> _x[n]-
+            ~I.t[n] & ~I.f[n] -> _x[n]+
+        )
+        (n:2:
+            ~_x[2*n+1] & ~_x[2*n] -> y[n]+
+            _x[2*n+1] & _x[2*n] -> y[n]-
+        )
+        y[1] & y[0] -> _z-
+        ~y[1] & ~y[0] -> _z+
+        // ~_p1 is p1, expressed through its existing CMOS complement.
+        ~_p1 & ~_z -> k+
+        _z -> k-
+
+        A.req & I.f[3] & I.f[2] & I.f[1] & I.f[0] & _ia -> _p0-
+        (~_ia & ~_s & (~Od0.a & ~Od1.a & ~Od2.a & ~Od3.a)) | ~_r -> _p0+
+        ~_ar & ~_s & (|n:4: ~_it[3-n]) -> p1+
+        (_s & _wa[0] & _wa[1] & _wa[2] & _wa[3] & _cha) | reset -> p1-
+        k | (Od0.a & Od1.a & Od2.a & Od3.a) -> _ia-
+        (~p0 & ~p1 & ~A.a & ~I.f[3] & ~I.f[2] & ~I.f[1] & ~I.f[0]) | ~_r -> _ia+
+        (~_p0 & ~_ia & ~Od0.a & ~Od1.a & ~Od2.a & ~Od3.a) | ~_r -> s+
+        W0.a & W1.a & W2.a & W3.a & Ch.a -> s-
+        ~_ar & (~_p1 | (~s & (|n:4: ~_it[3-n]))) -> A.a+
+        (_p1 & _ar) | reset -> A.a-
+        (n:4:
+            reset -> Od0.t[n]-
+            ~I.a & ~_p0 -> Od0.f[n]+
+            I.a | reset -> Od0.f[n]-
+        )
+        (n:4:
+            reset -> Od1.t[n]-
+            ~I.a & ~_p0 -> Od1.f[n]+
+            I.a | reset -> Od1.f[n]-
+        )
+        (n:4:
+            reset -> Od2.t[n]-
+            ~I.a & ~_p0 -> Od2.f[n]+
+            I.a | reset -> Od2.f[n]-
+        )
+        (n:4:
+            reset -> Od3.t[n]-
+            ~I.a & ~_p0 -> Od3.f[n]+
+            I.a | reset -> Od3.f[n]-
+        )
+        (n:4:
+            ~_aa & ~_s & ~_it[n] -> b[n]+
+            (A.a & s & I.f[n]) | reset -> b[n]-
+        )
+        (n:1..7:
+            reset -> W0.t[n]-
+            ~_s & ~k & ~_ia & ~_p1 -> W0.f[n]+
+            _s | reset -> W0.f[n]-
+        )
+        ~_s & ~k & ~_ia & ~_p1 & ~_b[3] -> W0.t[0]+
+        _s | reset -> W0.t[0]-
+        ~_s & ~k & ~_ia & ~_p1 & ~b[3] -> W0.f[0]+
+        _s | reset -> W0.f[0]-
+        (n:1..7:
+            reset -> W1.t[n]-
+            ~_s & ~k & ~_ia & ~_p1 -> W1.f[n]+
+            _s | reset -> W1.f[n]-
+        )
+        ~_s & ~k & ~_ia & ~_p1 & ~_b[2] -> W1.t[0]+
+        _s | reset -> W1.t[0]-
+        ~_s & ~k & ~_ia & ~_p1 & ~b[2] -> W1.f[0]+
+        _s | reset -> W1.f[0]-
+        (n:1..7:
+            reset -> W2.t[n]-
+            ~_s & ~k & ~_ia & ~_p1 -> W2.f[n]+
+            _s | reset -> W2.f[n]-
+        )
+        ~_s & ~k & ~_ia & ~_p1 & ~_b[1] -> W2.t[0]+
+        _s | reset -> W2.t[0]-
+        ~_s & ~k & ~_ia & ~_p1 & ~b[1] -> W2.f[0]+
+        _s | reset -> W2.f[0]-
+        (n:1..7:
+            reset -> W3.t[n]-
+            ~_s & ~k & ~_ia & ~_p1 -> W3.f[n]+
+            _s | reset -> W3.f[n]-
+        )
+        ~_s & ~k & ~_ia & ~_p1 & ~_b[0] -> W3.t[0]+
+        _s | reset -> W3.t[0]-
+        ~_s & ~k & ~_ia & ~_p1 & ~b[0] -> W3.f[0]+
+        _s | reset -> W3.f[0]-
+        (n:4:
+            ~_s & ~k & ~_ia & ~_p1 & ~_b[n] -> Ch.t[n]+
+            _s | reset -> Ch.t[n]-
+            ~_s & ~k & ~_ia & ~_p1 & ~b[n] -> Ch.f[n]+
+            _s | reset -> Ch.f[n]-
+        )
+        ~s => _s+
+        ~reset => _r+
+        ~A.req => _ar+
+        ~p1 => _p1+
+        ~A.a => _aa+
+        (n:4:
+            ~b[n] => _b[n]+
+            ~I.t[n] => _it[n]+
+            ~I.f[n] => _if[n]+
+        )
+        ~W0.a => _wa[0]+
+        ~W1.a => _wa[1]+
+        ~W2.a => _wa[2]+
+        ~W3.a => _wa[3]+
+        ~Ch.a => _cha+
+        ~_p0 => p0+
+        ~_ia => I.a+
+    }
+}

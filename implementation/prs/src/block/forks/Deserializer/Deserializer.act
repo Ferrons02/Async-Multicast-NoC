@@ -1,0 +1,112 @@
+import "forks/Deserializer/InputAnalyzer.act";
+import "forks/Deserializer/SplitTree7.act";
+import "forks/Deserializer/QBuffer.act";
+
+/* QB0 buffers the constant low nibble 0010, supplied on its own input request.
+ * The control ring is analyzer -> QB7 -> ... -> QB1 -> QB0 -> analyzer.
+ * New QB0 channel connections have independent wire delays; reset is direct. */
+export defproc Deserializer(bool? reset; ActiveDualRail4? I; ActiveDualRail32! O)
+{
+    bool low_gnd;
+
+    InputAnalyzer analyzer;
+    SplitTree7 split;
+    QBuffer qb0, qb1, qb2, qb3, qb4, qb5, qb6;
+    QBuffer<true> qb7;
+    analyzer.reset = reset;
+    split.reset = reset;
+    analyzer.I = I;
+    analyzer.O = split.I;
+    analyzer.R = qb7.L;
+    qb7.reset = reset;
+    qb7.I = split.O6;
+    qb7.O.t = O.t[28..31];
+    qb7.O.f = O.f[28..31];
+    qb7.O.a = O.a;
+    qb7.R = qb6.L;
+    qb6.reset = reset;
+    qb6.I = split.O5;
+    qb6.O.t = O.t[24..27];
+    qb6.O.f = O.f[24..27];
+    qb6.O.a = O.a;
+    qb6.R = qb5.L;
+    qb5.reset = reset;
+    qb5.I = split.O4;
+    qb5.O.t = O.t[20..23];
+    qb5.O.f = O.f[20..23];
+    qb5.O.a = O.a;
+    qb5.R = qb4.L;
+    qb4.reset = reset;
+    qb4.I = split.O3;
+    qb4.O.t = O.t[16..19];
+    qb4.O.f = O.f[16..19];
+    qb4.O.a = O.a;
+    qb4.R = qb3.L;
+    qb3.reset = reset;
+    qb3.I = split.O2;
+    qb3.O.t = O.t[12..15];
+    qb3.O.f = O.f[12..15];
+    qb3.O.a = O.a;
+    qb3.R = qb2.L;
+    qb2.reset = reset;
+    qb2.I = split.O1;
+    qb2.O.t = O.t[8..11];
+    qb2.O.f = O.f[8..11];
+    qb2.O.a = O.a;
+    qb2.R = qb1.L;
+    qb1.reset = reset;
+    qb1.I = split.O0;
+    qb1.O.t = O.t[4..7];
+    qb1.O.f = O.f[4..7];
+    qb1.O.a = O.a;
+    qb0.reset = reset;
+
+    // Original non-bubble PRS, PDF pp. 59-63.
+    // Reset is common; each guard pair uses one source view.
+    // Existing transport routes each retain one non-inverting stage.
+    prs {
+        true -> low_gnd-
+        qb1.R.req -> qb0.L.req+
+        ~qb1.R.req -> qb0.L.req-
+        qb0.L.a -> qb1.R.a+
+        ~qb0.L.a -> qb1.R.a-
+        qb0.R.req -> analyzer.L.req+
+        ~qb0.R.req -> analyzer.L.req-
+        analyzer.L.a -> qb0.R.a+
+        ~analyzer.L.a -> qb0.R.a-
+        low_gnd -> qb0.I.t[3]+
+        ~low_gnd -> qb0.I.t[3]-
+        low_gnd -> qb0.I.t[2]+
+        ~low_gnd -> qb0.I.t[2]-
+        qb0.I.req -> qb0.I.t[1]+
+        ~qb0.I.req -> qb0.I.t[1]-
+        low_gnd -> qb0.I.t[0]+
+        ~low_gnd -> qb0.I.t[0]-
+        qb0.I.req -> qb0.I.f[3]+
+        ~qb0.I.req -> qb0.I.f[3]-
+        qb0.I.req -> qb0.I.f[2]+
+        ~qb0.I.req -> qb0.I.f[2]-
+        low_gnd -> qb0.I.f[1]+
+        ~low_gnd -> qb0.I.f[1]-
+        qb0.I.req -> qb0.I.f[0]+
+        ~qb0.I.req -> qb0.I.f[0]-
+        qb0.O.t[0] -> O.t[0]+
+        ~qb0.O.t[0] -> O.t[0]-
+        qb0.O.f[0] -> O.f[0]+
+        ~qb0.O.f[0] -> O.f[0]-
+        qb0.O.t[1] -> O.t[1]+
+        ~qb0.O.t[1] -> O.t[1]-
+        qb0.O.f[1] -> O.f[1]+
+        ~qb0.O.f[1] -> O.f[1]-
+        qb0.O.t[2] -> O.t[2]+
+        ~qb0.O.t[2] -> O.t[2]-
+        qb0.O.f[2] -> O.f[2]+
+        ~qb0.O.f[2] -> O.f[2]-
+        qb0.O.t[3] -> O.t[3]+
+        ~qb0.O.t[3] -> O.t[3]-
+        qb0.O.f[3] -> O.f[3]+
+        ~qb0.O.f[3] -> O.f[3]-
+        O.a -> qb0.O.a+
+        ~O.a -> qb0.O.a-
+    }
+}

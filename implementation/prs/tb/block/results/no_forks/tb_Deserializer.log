@@ -1,0 +1,13 @@
+WARNING: TbFailure<1>: substituting chp model (requested prs, not found)
+WARNING: DeserializerDriver<>: substituting chp model (requested prs, not found)
+TB_RANDOM_CHOICE off
+TB_WARNING_POLICY resume-on-warn
+TB_STRESS_BEGIN 10000
+TB_STRESS_END 500009974
+[           500030534] <driver>  PASSED: rounds=14495
+TB_FINAL
+done: 1
+fail: 0
+rounds: 14495  (0x389f)
+TB_X_BEGIN
+TB_X_END

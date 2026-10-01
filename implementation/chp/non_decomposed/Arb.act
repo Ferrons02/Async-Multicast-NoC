@@ -1,0 +1,39 @@
+export
+template<pint BW>
+defproc Arb(
+  chan(int<BW>)? c0,c1,c2,c3,p,cl;
+  chan(int<BW>)! out
+) {
+
+    int <3> lock;
+    int <BW> buf;
+    bool h;
+
+    chp {
+
+        h:= true;
+
+        *[[
+            h=true ->
+            [|
+                #c0-> lock := 0
+                [] #c1-> lock := 1
+                [] #c2-> lock := 2
+                [] #c3-> lock := 3
+                [] #p-> lock := 4
+                [] #cl-> lock := 5
+            |]; h:= false
+            [] h=false -> [
+                lock = 0-> c0?buf; out!buf
+                [] lock = 1-> c1?buf; out!buf
+                [] lock = 2-> c2?buf; out!buf
+                [] lock = 3-> c3?buf; out!buf
+                [] lock = 4-> p?buf; out!buf
+                [] lock = 5-> cl?buf; out!buf
+            ]; [
+                buf{0}=1->h:=true
+                [] buf{0}=0->h:=false
+            ]
+        ]]
+    }
+}

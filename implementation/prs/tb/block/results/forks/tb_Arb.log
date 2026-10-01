@@ -1,0 +1,18 @@
+WARNING: ArbDriver<>: substituting chp model (requested prs, not found)
+WARNING: ArbMutex<>: substituting hse model (requested prs, not found)
+WARNING: ArbMutex<>: substituting hse model (requested prs, not found)
+WARNING: ArbMutex<>: substituting hse model (requested prs, not found)
+WARNING: ArbMutex<>: substituting hse model (requested prs, not found)
+WARNING: ArbMutex<>: substituting hse model (requested prs, not found)
+WARNING: TbFailure<1>: substituting chp model (requested prs, not found)
+TB_RANDOM_CHOICE off
+TB_WARNING_POLICY resume-on-warn
+TB_STRESS_BEGIN 10000
+TB_STRESS_END 500010000
+[           500012269] <driver>  PASSED: rounds=13503
+TB_FINAL
+done: 1
+fail: 0
+rounds: 13503  (0x34bf)
+TB_X_BEGIN
+TB_X_END

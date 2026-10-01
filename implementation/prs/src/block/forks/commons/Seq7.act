@@ -1,0 +1,106 @@
+import "forks/commons/Channels.act";
+
+/* Action order A0 through A6 is the original QS7 through QS1 order. */
+export defproc Seq7(bool? reset; Dataless! A0; Dataless! A1; Dataless! A2; Dataless! A3; Dataless! A4; Dataless! A5; Dataless! A6)
+{
+    bool q7, q6, q5, q4, q3, q2, q1;
+    bool fd_A0_a__A1_req;
+    bool fd_A1_a__A2_req;
+    bool fd_A2_a__A3_req;
+    bool fd_A3_a__A4_req;
+    bool fd_A4_a__A5_req;
+    bool fd_A5_a__A6_req;
+    bool fd_A6_a__A0_req;
+    bool fd_q1__A6_req;
+    bool fd_q1__q2;
+    bool fd_q2__A5_req;
+    bool fd_q2__q3;
+    bool fd_q3__A4_req;
+    bool fd_q3__q4;
+    bool fd_q4__A3_req;
+    bool fd_q4__q5;
+    bool fd_q5__A2_req;
+    bool fd_q5__q6;
+    bool fd_q6__A1_req;
+    bool fd_q6__q7;
+    bool fd_q7__A0_req;
+    bool fd_q7__q1;
+
+    // Original non-bubble PRS, PDF pp. 39–40.
+    // Reset is common; each guard pair uses one source view.
+    // Only the documented fork groups share views across targets.
+    prs {
+        reset | (fd_A6_a__A0_req & ~fd_q6__q7) -> q7+
+        (~fd_A6_a__A0_req & fd_q6__q7) -> q7-
+        (fd_A0_a__A1_req & ~fd_q5__q6) -> q6+
+        reset | (~fd_A0_a__A1_req & fd_q5__q6) -> q6-
+        (fd_A1_a__A2_req & ~fd_q4__q5) -> q5+
+        reset | (~fd_A1_a__A2_req & fd_q4__q5) -> q5-
+        (fd_A2_a__A3_req & ~fd_q3__q4) -> q4+
+        reset | (~fd_A2_a__A3_req & fd_q3__q4) -> q4-
+        (fd_A3_a__A4_req & ~fd_q2__q3) -> q3+
+        reset | (~fd_A3_a__A4_req & fd_q2__q3) -> q3-
+        (fd_A4_a__A5_req & ~fd_q1__q2) -> q2+
+        reset | (~fd_A4_a__A5_req & fd_q1__q2) -> q2-
+        (fd_A5_a__A6_req & ~fd_q7__q1) -> q1+
+        reset | (~fd_A5_a__A6_req & fd_q7__q1) -> q1-
+        fd_q7__A0_req & ~fd_A6_a__A0_req -> A0.req+
+        ~fd_q7__A0_req -> A0.req-
+        fd_q6__A1_req & ~fd_A0_a__A1_req -> A1.req+
+        ~fd_q6__A1_req -> A1.req-
+        fd_q5__A2_req & ~fd_A1_a__A2_req -> A2.req+
+        ~fd_q5__A2_req -> A2.req-
+        fd_q4__A3_req & ~fd_A2_a__A3_req -> A3.req+
+        ~fd_q4__A3_req -> A3.req-
+        fd_q3__A4_req & ~fd_A3_a__A4_req -> A4.req+
+        ~fd_q3__A4_req -> A4.req-
+        fd_q2__A5_req & ~fd_A4_a__A5_req -> A5.req+
+        ~fd_q2__A5_req -> A5.req-
+        fd_q1__A6_req & ~fd_A5_a__A6_req -> A6.req+
+        ~fd_q1__A6_req -> A6.req-
+
+        // Non-inverting wire delays.
+        A0.a -> fd_A0_a__A1_req+
+        ~A0.a -> fd_A0_a__A1_req-
+        A1.a -> fd_A1_a__A2_req+
+        ~A1.a -> fd_A1_a__A2_req-
+        A2.a -> fd_A2_a__A3_req+
+        ~A2.a -> fd_A2_a__A3_req-
+        A3.a -> fd_A3_a__A4_req+
+        ~A3.a -> fd_A3_a__A4_req-
+        A4.a -> fd_A4_a__A5_req+
+        ~A4.a -> fd_A4_a__A5_req-
+        A5.a -> fd_A5_a__A6_req+
+        ~A5.a -> fd_A5_a__A6_req-
+        A6.a -> fd_A6_a__A0_req+
+        ~A6.a -> fd_A6_a__A0_req-
+        q1 -> fd_q1__A6_req+
+        ~q1 -> fd_q1__A6_req-
+        q1 -> fd_q1__q2+
+        ~q1 -> fd_q1__q2-
+        q2 -> fd_q2__A5_req+
+        ~q2 -> fd_q2__A5_req-
+        q2 -> fd_q2__q3+
+        ~q2 -> fd_q2__q3-
+        q3 -> fd_q3__A4_req+
+        ~q3 -> fd_q3__A4_req-
+        q3 -> fd_q3__q4+
+        ~q3 -> fd_q3__q4-
+        q4 -> fd_q4__A3_req+
+        ~q4 -> fd_q4__A3_req-
+        q4 -> fd_q4__q5+
+        ~q4 -> fd_q4__q5-
+        q5 -> fd_q5__A2_req+
+        ~q5 -> fd_q5__A2_req-
+        q5 -> fd_q5__q6+
+        ~q5 -> fd_q5__q6-
+        q6 -> fd_q6__A1_req+
+        ~q6 -> fd_q6__A1_req-
+        q6 -> fd_q6__q7+
+        ~q6 -> fd_q6__q7-
+        q7 -> fd_q7__A0_req+
+        ~q7 -> fd_q7__A0_req-
+        q7 -> fd_q7__q1+
+        ~q7 -> fd_q7__q1-
+    }
+}

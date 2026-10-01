@@ -1,0 +1,21 @@
+import "commons/Channels.act";
+
+// Supplied HalfAdder' PRS, with the second operand fixed to one.
+export defproc HalfAdderP(bool? reset; DualRailBit? a; DualRailBit! d; DualRailBit! s)
+{
+    bool _dt, _df, _st, _sf;
+    prs {
+        a.t -> _dt-
+        ~a.t & ~a.f -> _dt+
+        a.f -> _df-
+        ~a.t & ~a.f -> _df+
+        a.f -> _st-
+        ~a.t & ~a.f -> _st+
+        a.t -> _sf-
+        ~a.t & ~a.f -> _sf+
+        ~_dt => d.t+
+        ~_df => d.f+
+        ~_st => s.t+
+        ~_sf => s.f+
+    }
+}

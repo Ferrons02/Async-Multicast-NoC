@@ -1,0 +1,199 @@
+// One ACTSIM reference round: I!F; I!F; I!F; Cnt?12; I!0; I!0; I!0; Cnt?0.
+// Reference: Implementation/PRS/tb/block/no_forks/tb_Counter.act.
+// Cnt is a pull channel: request rises, all output bits become valid,
+// then request falls and all output rails must return to spacer.
+`include "disciplines.vams"
+module counter_environment(
+    reset,
+    I_t_0,
+    I_t_1,
+    I_t_2,
+    I_t_3,
+    I_f_0,
+    I_f_1,
+    I_f_2,
+    I_f_3,
+    I_a,
+    Cnt_t_0,
+    Cnt_t_1,
+    Cnt_t_2,
+    Cnt_t_3,
+    Cnt_t_4,
+    Cnt_t_5,
+    Cnt_t_6,
+    Cnt_t_7,
+    Cnt_f_0,
+    Cnt_f_1,
+    Cnt_f_2,
+    Cnt_f_3,
+    Cnt_f_4,
+    Cnt_f_5,
+    Cnt_f_6,
+    Cnt_f_7,
+    Cnt_req,
+    done,
+    failed);
+inout reset, I_t_0, I_t_1, I_t_2, I_t_3, I_f_0, I_f_1, I_f_2, I_f_3, I_a, Cnt_t_0, Cnt_t_1, Cnt_t_2, Cnt_t_3, Cnt_t_4, Cnt_t_5, Cnt_t_6, Cnt_t_7, Cnt_f_0, Cnt_f_1, Cnt_f_2, Cnt_f_3, Cnt_f_4, Cnt_f_5, Cnt_f_6, Cnt_f_7, Cnt_req, done, failed;
+electrical reset, I_t_0, I_t_1, I_t_2, I_t_3, I_f_0, I_f_1, I_f_2, I_f_3, I_a, Cnt_t_0, Cnt_t_1, Cnt_t_2, Cnt_t_3, Cnt_t_4, Cnt_t_5, Cnt_t_6, Cnt_t_7, Cnt_f_0, Cnt_f_1, Cnt_f_2, Cnt_f_3, Cnt_f_4, Cnt_f_5, Cnt_f_6, Cnt_f_7, Cnt_req, done, failed;
+parameter real SUPPLY=0.0;
+parameter real TICK=10p from (0:inf);
+parameter real TD=100p from (0:inf);
+parameter real EDGE=10p from (0:inf);
+parameter real STOP_TIME=2u from (0:inf);
+integer active, finished, failure, reported, step, phase;
+integer tx_valid, tx_word, request, expected, actual, reads, sends;
+integer input_spacer, valid_word, spacer, illegal;
+real threshold, stop_after;
+// Supply-current sampling continues after the functional round, with reset low.
+parameter real IDLE_SETTLE=20n from (0:inf);
+parameter real IDLE_WINDOW=20n from (0:inf);
+parameter real IDLE_MARGIN=1n from (0:inf);
+integer idle_started, idle_completed;
+real idle_start;
+analog begin
+  @(initial_step) begin
+    idle_start=-1; idle_started=0; idle_completed=0;
+    active=0; finished=0; failure=0; reported=0;
+    step=0; phase=0; tx_valid=0; tx_word=0; request=0;
+    expected=0; reads=0; sends=0;
+    threshold=0.5*SUPPLY; stop_after=-1;
+    if (SUPPLY<=0) begin failure=1; $display("SIM_ERROR reason=invalid_supply"); end
+  end
+  @(timer(TICK,TICK)) begin
+    input_spacer=1; valid_word=1; spacer=1; illegal=0; actual=0;
+    if (V(I_t_0)>=threshold || V(I_f_0)>=threshold) input_spacer=0;
+    if (V(I_t_1)>=threshold || V(I_f_1)>=threshold) input_spacer=0;
+    if (V(I_t_2)>=threshold || V(I_f_2)>=threshold) input_spacer=0;
+    if (V(I_t_3)>=threshold || V(I_f_3)>=threshold) input_spacer=0;
+    if (V(Cnt_t_0)<threshold && V(Cnt_f_0)<threshold) valid_word=0;
+    if (V(Cnt_t_0)>=threshold || V(Cnt_f_0)>=threshold) spacer=0;
+    if (V(Cnt_t_0)>=threshold && V(Cnt_f_0)>=threshold) illegal=1;
+    if (V(Cnt_t_0)>=threshold) actual=actual | (1 << 0);
+    if (V(Cnt_t_1)<threshold && V(Cnt_f_1)<threshold) valid_word=0;
+    if (V(Cnt_t_1)>=threshold || V(Cnt_f_1)>=threshold) spacer=0;
+    if (V(Cnt_t_1)>=threshold && V(Cnt_f_1)>=threshold) illegal=1;
+    if (V(Cnt_t_1)>=threshold) actual=actual | (1 << 1);
+    if (V(Cnt_t_2)<threshold && V(Cnt_f_2)<threshold) valid_word=0;
+    if (V(Cnt_t_2)>=threshold || V(Cnt_f_2)>=threshold) spacer=0;
+    if (V(Cnt_t_2)>=threshold && V(Cnt_f_2)>=threshold) illegal=1;
+    if (V(Cnt_t_2)>=threshold) actual=actual | (1 << 2);
+    if (V(Cnt_t_3)<threshold && V(Cnt_f_3)<threshold) valid_word=0;
+    if (V(Cnt_t_3)>=threshold || V(Cnt_f_3)>=threshold) spacer=0;
+    if (V(Cnt_t_3)>=threshold && V(Cnt_f_3)>=threshold) illegal=1;
+    if (V(Cnt_t_3)>=threshold) actual=actual | (1 << 3);
+    if (V(Cnt_t_4)<threshold && V(Cnt_f_4)<threshold) valid_word=0;
+    if (V(Cnt_t_4)>=threshold || V(Cnt_f_4)>=threshold) spacer=0;
+    if (V(Cnt_t_4)>=threshold && V(Cnt_f_4)>=threshold) illegal=1;
+    if (V(Cnt_t_4)>=threshold) actual=actual | (1 << 4);
+    if (V(Cnt_t_5)<threshold && V(Cnt_f_5)<threshold) valid_word=0;
+    if (V(Cnt_t_5)>=threshold || V(Cnt_f_5)>=threshold) spacer=0;
+    if (V(Cnt_t_5)>=threshold && V(Cnt_f_5)>=threshold) illegal=1;
+    if (V(Cnt_t_5)>=threshold) actual=actual | (1 << 5);
+    if (V(Cnt_t_6)<threshold && V(Cnt_f_6)<threshold) valid_word=0;
+    if (V(Cnt_t_6)>=threshold || V(Cnt_f_6)>=threshold) spacer=0;
+    if (V(Cnt_t_6)>=threshold && V(Cnt_f_6)>=threshold) illegal=1;
+    if (V(Cnt_t_6)>=threshold) actual=actual | (1 << 6);
+    if (V(Cnt_t_7)<threshold && V(Cnt_f_7)<threshold) valid_word=0;
+    if (V(Cnt_t_7)>=threshold || V(Cnt_f_7)>=threshold) spacer=0;
+    if (V(Cnt_t_7)>=threshold && V(Cnt_f_7)>=threshold) illegal=1;
+    if (V(Cnt_t_7)>=threshold) actual=actual | (1 << 7);
+    if (!active && !finished && !failure && V(reset)<threshold) begin
+      if (!spacer || V(I_a)>=threshold) begin
+        failure=1; $display("SIM_ERROR t=%e reason=reset_spacer I.a=%e",$abstime,V(I_a));
+      end else begin active=1; $display("SIM_RESET t=%e",$abstime); end
+    end
+    if ((active || finished) && !failure && !reported) begin
+      if (illegal) begin
+        failure=1; $display("SIM_ERROR t=%e reason=illegal_dual_rail channel=Cnt",$abstime);
+      end else if (!spacer && phase!=10 && phase!=11) begin
+        failure=1; $display("SIM_ERROR t=%e reason=unexpected_output channel=Cnt phase=%d",$abstime,phase);
+      end
+      if (active && !failure) begin
+        if (phase==1 && V(I_a)>=threshold) begin
+          tx_valid=0; phase=2;
+          $display("SIM_IACK_HIGH t=%e index=%d",$abstime,sends);
+        end else if (phase==2 && V(I_a)<threshold && input_spacer) begin
+          $display("SIM_IACK_LOW t=%e index=%d",$abstime,sends);
+          sends=sends+1; step=step+1; phase=0;
+        end else if (phase==10) begin
+          if (!spacer && V(Cnt_req)<threshold) begin
+            failure=1; $display("SIM_ERROR t=%e reason=data_before_request",$abstime);
+          end else if (valid_word && V(Cnt_req)>=threshold) begin
+            if (actual!=expected) begin
+              failure=1;
+              $display("SIM_RX t=%e channel=Cnt index=%d expected=%h actual=%h FAIL",$abstime,reads,expected,actual);
+              $display("SIM_ERROR t=%e reason=golden_mismatch",$abstime);
+            end else begin
+              $display("SIM_RX t=%e channel=Cnt index=%d expected=%h actual=%h PASS",$abstime,reads,expected,actual);
+              request=0; phase=11;
+            end
+          end
+        end else if (phase==11) begin
+          if (valid_word && actual!=expected) begin
+            failure=1; $display("SIM_ERROR t=%e reason=word_changed_without_spacer",$abstime);
+          end else if (!valid_word && V(Cnt_req)>=threshold) begin
+            failure=1; $display("SIM_ERROR t=%e reason=data_withdrawn_before_request_low",$abstime);
+          end else if (spacer && V(Cnt_req)<threshold) begin
+            $display("SIM_SPACER t=%e channel=Cnt index=%d",$abstime,reads);
+            reads=reads+1; step=step+1; phase=0;
+          end
+        end
+        if (!failure && step==8 && phase==0 && sends==6 && reads==2 &&
+            input_spacer && spacer && V(I_a)<threshold && V(Cnt_req)<threshold) begin
+          finished=1; active=0;
+          $display("SIM_ROUND t=%e inputs=6 reads=2",$abstime);
+        end
+        if (!failure && !finished && phase==0 && step<8 && input_spacer && spacer &&
+            V(I_a)<threshold && V(Cnt_req)<threshold) begin
+          if (step==3 || step==7) begin
+            if (step==3) expected=12; else expected=0;
+            request=1; phase=10;
+            $display("SIM_REQUEST t=%e channel=Cnt index=%d expected=%h",$abstime,reads,expected);
+          end else begin
+            if (step<3) tx_word=15; else tx_word=0;
+            tx_valid=1; phase=1;
+            $display("SIM_TX t=%e channel=I index=%d word=%h",$abstime,sends,tx_word);
+          end
+        end
+      end
+      if (finished && (!input_spacer || !spacer || V(I_a)>=threshold || V(Cnt_req)>=threshold)) begin
+        failure=1; $display("SIM_ERROR t=%e reason=nonquiescent_completion",$abstime);
+      end
+    end
+    if (finished && !failure && idle_start < 0) idle_start=$abstime+IDLE_SETTLE;
+    if (finished && !failure && !idle_started && $abstime>=idle_start) begin
+      idle_started=1;
+      $display("SIM_IDLE_BEGIN t=%e reset=%e",$abstime,V(reset));
+    end
+    if (idle_started && !failure && !idle_completed && $abstime>=idle_start+IDLE_WINDOW) begin
+      idle_completed=1;
+      $display("SIM_IDLE_END t=%e reset=%e",$abstime,V(reset));
+    end
+    if (failure && (stop_after<0 || stop_after>$abstime+TD+2*EDGE)) stop_after=$abstime+TD+2*EDGE;
+    else if (finished && stop_after<0) stop_after=$abstime+IDLE_SETTLE+IDLE_WINDOW+IDLE_MARGIN;
+    if (!reported && stop_after>0 && $abstime>=stop_after) begin
+      reported=1;
+      if (failure) $display("SIM_FAIL t=%e reason=see_SIM_ERROR",$abstime);
+      else $display("SIM_PASS t=%e rounds=1 inputs=6 reads=2",$abstime);
+      $finish(0);
+    end
+  end
+  @(timer(STOP_TIME-4*TD-4*EDGE)) begin
+    if (!finished && !failure) begin
+      failure=1;
+      $display("SIM_ERROR t=%e reason=timeout step=%d phase=%d sends=%d reads=%d I.a=%e Cnt.req=%e",$abstime,step,phase,sends,reads,V(I_a),V(Cnt_req));
+    end
+  end
+  V(I_t_0) <+ transition(SUPPLY*tx_valid*((tx_word >> 0) & 1),TD,EDGE,EDGE);
+  V(I_f_0) <+ transition(SUPPLY*tx_valid*(1-((tx_word >> 0) & 1)),TD,EDGE,EDGE);
+  V(I_t_1) <+ transition(SUPPLY*tx_valid*((tx_word >> 1) & 1),TD,EDGE,EDGE);
+  V(I_f_1) <+ transition(SUPPLY*tx_valid*(1-((tx_word >> 1) & 1)),TD,EDGE,EDGE);
+  V(I_t_2) <+ transition(SUPPLY*tx_valid*((tx_word >> 2) & 1),TD,EDGE,EDGE);
+  V(I_f_2) <+ transition(SUPPLY*tx_valid*(1-((tx_word >> 2) & 1)),TD,EDGE,EDGE);
+  V(I_t_3) <+ transition(SUPPLY*tx_valid*((tx_word >> 3) & 1),TD,EDGE,EDGE);
+  V(I_f_3) <+ transition(SUPPLY*tx_valid*(1-((tx_word >> 3) & 1)),TD,EDGE,EDGE);
+  V(Cnt_req) <+ transition(SUPPLY*request,TD,EDGE,EDGE);
+  V(done) <+ transition(SUPPLY*finished,0,EDGE,EDGE);
+  V(failed) <+ transition(SUPPLY*failure,0,EDGE,EDGE);
+end
+endmodule

@@ -1,0 +1,31 @@
+import "Arb/Arb2.act";
+
+export defproc Arb(
+    bool? reset;
+    ActiveDualRail32? C0;
+    ActiveDualRail32? C1;
+    ActiveDualRail32? C2;
+    ActiveDualRail32? C3;
+    ActiveDualRail32? P;
+    ActiveDualRail32? M;
+    ActiveDualRail32! O
+)
+{
+    Arb2 ar0, ar1, ar2, ar3, ar4;
+    ar0.reset = reset;
+    ar1.reset = reset;
+    ar2.reset = reset;
+    ar3.reset = reset;
+    ar4.reset = reset;
+    ar0.I0 = C0;
+    ar0.I1 = C1;
+    ar1.I0 = C2;
+    ar1.I1 = C3;
+    ar2.I0 = ar0.O;
+    ar2.I1 = ar1.O;
+    ar3.I0 = P;
+    ar3.I1 = M;
+    ar4.I0 = ar2.O;
+    ar4.I1 = ar3.O;
+    ar4.O = O;
+}

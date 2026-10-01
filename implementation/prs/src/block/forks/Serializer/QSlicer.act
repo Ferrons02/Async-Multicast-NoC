@@ -1,0 +1,90 @@
+import "forks/commons/Channels.act";
+
+export defproc QSlicer(bool? reset; ActiveDualRail4? I; Dataless? A; ActiveDualRail4! O)
+{
+    bool hold_I_a;
+    bool fd_I_a__environment;
+    bool fd_O_a__I_a;
+    bool fd_I_a__A_a;
+    bool fd_I_t_0__O_t_0;
+    bool fd_A_req__O_t_0;
+    bool fd_I_f_0__O_f_0;
+    bool fd_A_req__O_f_0;
+    bool fd_I_t_1__O_t_1;
+    bool fd_A_req__O_t_1;
+    bool fd_I_f_1__O_f_1;
+    bool fd_A_req__O_f_1;
+    bool fd_I_t_2__O_t_2;
+    bool fd_A_req__O_t_2;
+    bool fd_I_f_2__O_f_2;
+    bool fd_A_req__O_f_2;
+    bool fd_I_t_3__O_t_3;
+    bool fd_A_req__O_t_3;
+    bool fd_I_f_3__O_f_3;
+    bool fd_A_req__O_f_3;
+    I.a = fd_I_a__environment;
+
+    // One delayed source view per functional destination; reset is common.
+    prs {
+        fd_O_a__I_a -> hold_I_a+
+        ~fd_O_a__I_a -> hold_I_a-
+        fd_I_a__A_a -> A.a+
+        ~fd_I_a__A_a -> A.a-
+        fd_I_t_0__O_t_0 & fd_A_req__O_t_0 -> O.t[0]+
+        ~fd_I_t_0__O_t_0 -> O.t[0]-
+        fd_I_f_0__O_f_0 & fd_A_req__O_f_0 -> O.f[0]+
+        ~fd_I_f_0__O_f_0 -> O.f[0]-
+        fd_I_t_1__O_t_1 & fd_A_req__O_t_1 -> O.t[1]+
+        ~fd_I_t_1__O_t_1 -> O.t[1]-
+        fd_I_f_1__O_f_1 & fd_A_req__O_f_1 -> O.f[1]+
+        ~fd_I_f_1__O_f_1 -> O.f[1]-
+        fd_I_t_2__O_t_2 & fd_A_req__O_t_2 -> O.t[2]+
+        ~fd_I_t_2__O_t_2 -> O.t[2]-
+        fd_I_f_2__O_f_2 & fd_A_req__O_f_2 -> O.f[2]+
+        ~fd_I_f_2__O_f_2 -> O.f[2]-
+        fd_I_t_3__O_t_3 & fd_A_req__O_t_3 -> O.t[3]+
+        ~fd_I_t_3__O_t_3 -> O.t[3]-
+        fd_I_f_3__O_f_3 & fd_A_req__O_f_3 -> O.f[3]+
+        ~fd_I_f_3__O_f_3 -> O.f[3]-
+
+        // Non-inverting wire delays.
+        hold_I_a -> fd_I_a__environment+
+        ~hold_I_a -> fd_I_a__environment-
+        O.a -> fd_O_a__I_a+
+        ~O.a -> fd_O_a__I_a-
+        hold_I_a -> fd_I_a__A_a+
+        ~hold_I_a -> fd_I_a__A_a-
+        I.t[0] -> fd_I_t_0__O_t_0+
+        ~I.t[0] -> fd_I_t_0__O_t_0-
+        A.req -> fd_A_req__O_t_0+
+        ~A.req -> fd_A_req__O_t_0-
+        I.f[0] -> fd_I_f_0__O_f_0+
+        ~I.f[0] -> fd_I_f_0__O_f_0-
+        A.req -> fd_A_req__O_f_0+
+        ~A.req -> fd_A_req__O_f_0-
+        I.t[1] -> fd_I_t_1__O_t_1+
+        ~I.t[1] -> fd_I_t_1__O_t_1-
+        A.req -> fd_A_req__O_t_1+
+        ~A.req -> fd_A_req__O_t_1-
+        I.f[1] -> fd_I_f_1__O_f_1+
+        ~I.f[1] -> fd_I_f_1__O_f_1-
+        A.req -> fd_A_req__O_f_1+
+        ~A.req -> fd_A_req__O_f_1-
+        I.t[2] -> fd_I_t_2__O_t_2+
+        ~I.t[2] -> fd_I_t_2__O_t_2-
+        A.req -> fd_A_req__O_t_2+
+        ~A.req -> fd_A_req__O_t_2-
+        I.f[2] -> fd_I_f_2__O_f_2+
+        ~I.f[2] -> fd_I_f_2__O_f_2-
+        A.req -> fd_A_req__O_f_2+
+        ~A.req -> fd_A_req__O_f_2-
+        I.t[3] -> fd_I_t_3__O_t_3+
+        ~I.t[3] -> fd_I_t_3__O_t_3-
+        A.req -> fd_A_req__O_t_3+
+        ~A.req -> fd_A_req__O_t_3-
+        I.f[3] -> fd_I_f_3__O_f_3+
+        ~I.f[3] -> fd_I_f_3__O_f_3-
+        A.req -> fd_A_req__O_f_3+
+        ~A.req -> fd_A_req__O_f_3-
+    }
+}

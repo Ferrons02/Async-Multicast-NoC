@@ -1,0 +1,279 @@
+import "forks/commons/Channels.act";
+
+/* O returns rails in response to O.req, using the existing PassiveDualRail4 convention. */
+export defproc InputAnalyzer(
+    bool? reset;
+    ActiveDualRail4? I;
+    PassiveDualRail4! O;
+    Dataless! R;
+    Dataless? L
+)
+{
+    bool f, k, m, s, v, route_seen;
+    bool hold_I_a;
+    bool hold_L_a;
+    bool hold_O_f_0;
+    bool hold_O_f_1;
+    bool hold_O_f_2;
+    bool hold_O_f_3;
+    bool hold_O_t_0;
+    bool hold_O_t_1;
+    bool hold_O_t_2;
+    bool hold_O_t_3;
+    bool hold_R_req;
+    bool fd_I_a__environment;
+    bool fd_I_f_0__O_f_0;
+    bool fd_I_f_1__O_f_1;
+    bool fd_I_f_2__O_f_2;
+    bool fd_I_f_3__O_f_3;
+    bool fd_I_t_0__O_t_0;
+    bool fd_I_t_0__m;
+    bool fd_I_t_1__O_t_1;
+    bool fd_I_t_1__m;
+    bool fd_I_t_2__O_t_2;
+    bool fd_I_t_2__m;
+    bool fd_I_t_3__O_t_3;
+    bool fd_I_t_3__m;
+    bool fd_L_a__environment;
+    bool fd_L_req__I_a;
+    bool fd_L_req__L_a;
+    bool fd_L_req__f;
+    bool fd_L_req__v;
+    bool fd_O_f_0__environment;
+    bool fd_O_f_0__m;
+    bool fd_O_f_1__environment;
+    bool fd_O_f_1__m;
+    bool fd_O_f_2__environment;
+    bool fd_O_f_2__m;
+    bool fd_O_f_3__environment;
+    bool fd_O_f_3__m;
+    bool fd_O_req__I_a;
+    bool fd_O_req__O_f_0;
+    bool fd_O_req__O_f_1;
+    bool fd_O_req__O_f_2;
+    bool fd_O_req__O_f_3;
+    bool fd_O_req__f;
+    bool fd_O_t_0__environment;
+    bool fd_O_t_0__m;
+    bool fd_O_t_1__environment;
+    bool fd_O_t_1__m;
+    bool fd_O_t_2__environment;
+    bool fd_O_t_2__m;
+    bool fd_O_t_3__environment;
+    bool fd_O_t_3__m;
+    bool fd_R_a__R_req;
+    bool fd_R_req__environment;
+    bool fd_R_req__s;
+    bool fd_f__I_a;
+    bool fd_f__O_f_0;
+    bool fd_f__O_f_1;
+    bool fd_f__O_f_2;
+    bool fd_f__O_f_3;
+    bool fd_f__s;
+    bool fd_k__I_a;
+    bool fd_k__O_f_0;
+    bool fd_k__O_f_1;
+    bool fd_k__O_f_2;
+    bool fd_k__O_f_3;
+    bool fd_k__f;
+    bool fd_m__I_a;
+    bool fd_m__v;
+    bool fd_s__L_a;
+    bool fd_s__R_req;
+    bool fd_v__I_a;
+    bool fd_v__O_f_0;
+    bool fd_v__O_f_1;
+    bool fd_v__O_f_2;
+    bool fd_v__O_f_3;
+    bool fd_v__f;
+    bool fd_v__s;
+    I.a = fd_I_a__environment;
+    L.a = fd_L_a__environment;
+    O.f[0] = fd_O_f_0__environment;
+    O.f[1] = fd_O_f_1__environment;
+    O.f[2] = fd_O_f_2__environment;
+    O.f[3] = fd_O_f_3__environment;
+    O.t[0] = fd_O_t_0__environment;
+    O.t[1] = fd_O_t_1__environment;
+    O.t[2] = fd_O_t_2__environment;
+    O.t[3] = fd_O_t_3__environment;
+    R.req = fd_R_req__environment;
+
+    // Original non-bubble PRS, PDF pp. 63–64.
+    // Reset is common; each guard pair uses one source view.
+    // Only the documented fork groups share views across targets.
+    prs {
+        // Track a nonempty route across full words. A zero flush then emits
+        // an all-zero-data terminator even if v (current word occupancy) is
+        // clear. Empty routes still emit nothing. Input acknowledgement
+        // waits for setting the latch; k- waits for clearing it.
+        fd_m__I_a -> route_seen+
+        (fd_I_a__environment & fd_k__I_a) | reset -> route_seen-
+        fd_O_req__I_a & ((fd_I_t_0__m) | (fd_I_t_1__m) | (fd_I_t_2__m) | (fd_I_t_3__m)) -> m+
+        (fd_I_a__environment & (((~fd_O_t_0__m & ~fd_O_f_0__m)) & ((~fd_O_t_1__m & ~fd_O_f_1__m)) & ((~fd_O_t_2__m & ~fd_O_f_2__m)) & ((~fd_O_t_3__m & ~fd_O_f_3__m)))) | reset -> m-
+        ~fd_L_req__v & ~fd_O_req__I_a & fd_m__v -> v+
+        fd_L_req__v | reset -> v-
+        fd_k__f & (fd_v__f | route_seen) & ~fd_O_req__f -> f+
+        (fd_L_req__f & ~fd_I_a__environment & ~fd_k__f) | reset -> f-
+        fd_O_req__f & ((fd_I_f_0__O_f_0) & (fd_I_f_1__O_f_1) & (fd_I_f_2__O_f_2) & (fd_I_f_3__O_f_3)) -> k+
+        ((~fd_I_f_0__O_f_0) & (~fd_I_f_1__O_f_1) & (~fd_I_f_2__O_f_2) & (~fd_I_f_3__O_f_3) & ~route_seen) | reset -> k-
+        (fd_f__I_a & fd_L_req__I_a & fd_k__I_a) | (fd_v__I_a & fd_m__I_a & route_seen & ~fd_O_req__I_a) | (~fd_v__I_a & ~route_seen & fd_k__I_a) -> hold_I_a+
+        ~fd_k__I_a & ~fd_m__I_a -> hold_I_a-
+        fd_L_req__L_a & ~fd_v__s & ~fd_f__s -> s+
+        fd_R_req__s | reset -> s-
+        fd_s__L_a & fd_L_req__L_a -> hold_L_a+
+        ~fd_L_req__L_a | reset -> hold_L_a-
+        (fd_s__R_req & ~fd_L_a__environment & ~fd_L_req__L_a) | reset -> hold_R_req+
+        fd_R_a__R_req & ~fd_s__R_req -> hold_R_req-
+        fd_m__I_a & fd_I_t_0__O_t_0 -> hold_O_t_0+
+        ~fd_I_t_0__O_t_0 -> hold_O_t_0-
+        (fd_m__I_a & fd_I_f_0__O_f_0) | (fd_O_req__O_f_0 & (fd_v__O_f_0 | route_seen) & fd_k__O_f_0) -> hold_O_f_0+
+        ~fd_I_f_0__O_f_0 | (fd_f__O_f_0 & ~fd_O_req__O_f_0) -> hold_O_f_0-
+        fd_m__I_a & fd_I_t_1__O_t_1 -> hold_O_t_1+
+        ~fd_I_t_1__O_t_1 -> hold_O_t_1-
+        (fd_m__I_a & fd_I_f_1__O_f_1) | (fd_O_req__O_f_1 & (fd_v__O_f_1 | route_seen) & fd_k__O_f_1) -> hold_O_f_1+
+        ~fd_I_f_1__O_f_1 | (fd_f__O_f_1 & ~fd_O_req__O_f_1) -> hold_O_f_1-
+        fd_m__I_a & fd_I_t_2__O_t_2 -> hold_O_t_2+
+        ~fd_I_t_2__O_t_2 -> hold_O_t_2-
+        (fd_m__I_a & fd_I_f_2__O_f_2) | (fd_O_req__O_f_2 & (fd_v__O_f_2 | route_seen) & fd_k__O_f_2) -> hold_O_f_2+
+        ~fd_I_f_2__O_f_2 | (fd_f__O_f_2 & ~fd_O_req__O_f_2) -> hold_O_f_2-
+        fd_m__I_a & fd_I_t_3__O_t_3 -> hold_O_t_3+
+        ~fd_I_t_3__O_t_3 -> hold_O_t_3-
+        (fd_m__I_a & fd_I_f_3__O_f_3) | (fd_O_req__O_f_3 & (fd_v__O_f_3 | route_seen) & fd_k__O_f_3) -> hold_O_f_3+
+        ~fd_I_f_3__O_f_3 | (fd_f__O_f_3 & ~fd_O_req__O_f_3) -> hold_O_f_3-
+
+        // Non-inverting wire delays.
+        hold_I_a -> fd_I_a__environment+
+        ~hold_I_a -> fd_I_a__environment-
+        I.f[0] -> fd_I_f_0__O_f_0+
+        ~I.f[0] -> fd_I_f_0__O_f_0-
+        I.f[1] -> fd_I_f_1__O_f_1+
+        ~I.f[1] -> fd_I_f_1__O_f_1-
+        I.f[2] -> fd_I_f_2__O_f_2+
+        ~I.f[2] -> fd_I_f_2__O_f_2-
+        I.f[3] -> fd_I_f_3__O_f_3+
+        ~I.f[3] -> fd_I_f_3__O_f_3-
+        I.t[0] -> fd_I_t_0__O_t_0+
+        ~I.t[0] -> fd_I_t_0__O_t_0-
+        I.t[0] -> fd_I_t_0__m+
+        ~I.t[0] -> fd_I_t_0__m-
+        I.t[1] -> fd_I_t_1__O_t_1+
+        ~I.t[1] -> fd_I_t_1__O_t_1-
+        I.t[1] -> fd_I_t_1__m+
+        ~I.t[1] -> fd_I_t_1__m-
+        I.t[2] -> fd_I_t_2__O_t_2+
+        ~I.t[2] -> fd_I_t_2__O_t_2-
+        I.t[2] -> fd_I_t_2__m+
+        ~I.t[2] -> fd_I_t_2__m-
+        I.t[3] -> fd_I_t_3__O_t_3+
+        ~I.t[3] -> fd_I_t_3__O_t_3-
+        I.t[3] -> fd_I_t_3__m+
+        ~I.t[3] -> fd_I_t_3__m-
+        hold_L_a -> fd_L_a__environment+
+        ~hold_L_a -> fd_L_a__environment-
+        L.req -> fd_L_req__I_a+
+        ~L.req -> fd_L_req__I_a-
+        L.req -> fd_L_req__L_a+
+        ~L.req -> fd_L_req__L_a-
+        L.req -> fd_L_req__f+
+        ~L.req -> fd_L_req__f-
+        L.req -> fd_L_req__v+
+        ~L.req -> fd_L_req__v-
+        hold_O_f_0 -> fd_O_f_0__environment+
+        ~hold_O_f_0 -> fd_O_f_0__environment-
+        hold_O_f_0 -> fd_O_f_0__m+
+        ~hold_O_f_0 -> fd_O_f_0__m-
+        hold_O_f_1 -> fd_O_f_1__environment+
+        ~hold_O_f_1 -> fd_O_f_1__environment-
+        hold_O_f_1 -> fd_O_f_1__m+
+        ~hold_O_f_1 -> fd_O_f_1__m-
+        hold_O_f_2 -> fd_O_f_2__environment+
+        ~hold_O_f_2 -> fd_O_f_2__environment-
+        hold_O_f_2 -> fd_O_f_2__m+
+        ~hold_O_f_2 -> fd_O_f_2__m-
+        hold_O_f_3 -> fd_O_f_3__environment+
+        ~hold_O_f_3 -> fd_O_f_3__environment-
+        hold_O_f_3 -> fd_O_f_3__m+
+        ~hold_O_f_3 -> fd_O_f_3__m-
+        O.req -> fd_O_req__I_a+
+        ~O.req -> fd_O_req__I_a-
+        O.req -> fd_O_req__O_f_0+
+        ~O.req -> fd_O_req__O_f_0-
+        O.req -> fd_O_req__O_f_1+
+        ~O.req -> fd_O_req__O_f_1-
+        O.req -> fd_O_req__O_f_2+
+        ~O.req -> fd_O_req__O_f_2-
+        O.req -> fd_O_req__O_f_3+
+        ~O.req -> fd_O_req__O_f_3-
+        O.req -> fd_O_req__f+
+        ~O.req -> fd_O_req__f-
+        hold_O_t_0 -> fd_O_t_0__environment+
+        ~hold_O_t_0 -> fd_O_t_0__environment-
+        hold_O_t_0 -> fd_O_t_0__m+
+        ~hold_O_t_0 -> fd_O_t_0__m-
+        hold_O_t_1 -> fd_O_t_1__environment+
+        ~hold_O_t_1 -> fd_O_t_1__environment-
+        hold_O_t_1 -> fd_O_t_1__m+
+        ~hold_O_t_1 -> fd_O_t_1__m-
+        hold_O_t_2 -> fd_O_t_2__environment+
+        ~hold_O_t_2 -> fd_O_t_2__environment-
+        hold_O_t_2 -> fd_O_t_2__m+
+        ~hold_O_t_2 -> fd_O_t_2__m-
+        hold_O_t_3 -> fd_O_t_3__environment+
+        ~hold_O_t_3 -> fd_O_t_3__environment-
+        hold_O_t_3 -> fd_O_t_3__m+
+        ~hold_O_t_3 -> fd_O_t_3__m-
+        R.a -> fd_R_a__R_req+
+        ~R.a -> fd_R_a__R_req-
+        hold_R_req -> fd_R_req__environment+
+        ~hold_R_req -> fd_R_req__environment-
+        hold_R_req -> fd_R_req__s+
+        ~hold_R_req -> fd_R_req__s-
+        f -> fd_f__I_a+
+        ~f -> fd_f__I_a-
+        f -> fd_f__O_f_0+
+        ~f -> fd_f__O_f_0-
+        f -> fd_f__O_f_1+
+        ~f -> fd_f__O_f_1-
+        f -> fd_f__O_f_2+
+        ~f -> fd_f__O_f_2-
+        f -> fd_f__O_f_3+
+        ~f -> fd_f__O_f_3-
+        f -> fd_f__s+
+        ~f -> fd_f__s-
+        k -> fd_k__I_a+
+        ~k -> fd_k__I_a-
+        k -> fd_k__O_f_0+
+        ~k -> fd_k__O_f_0-
+        k -> fd_k__O_f_1+
+        ~k -> fd_k__O_f_1-
+        k -> fd_k__O_f_2+
+        ~k -> fd_k__O_f_2-
+        k -> fd_k__O_f_3+
+        ~k -> fd_k__O_f_3-
+        k -> fd_k__f+
+        ~k -> fd_k__f-
+        m -> fd_m__I_a+
+        ~m -> fd_m__I_a-
+        m -> fd_m__v+
+        ~m -> fd_m__v-
+        s -> fd_s__L_a+
+        ~s -> fd_s__L_a-
+        s -> fd_s__R_req+
+        ~s -> fd_s__R_req-
+        v -> fd_v__I_a+
+        ~v -> fd_v__I_a-
+        v -> fd_v__O_f_0+
+        ~v -> fd_v__O_f_0-
+        v -> fd_v__O_f_1+
+        ~v -> fd_v__O_f_1-
+        v -> fd_v__O_f_2+
+        ~v -> fd_v__O_f_2-
+        v -> fd_v__O_f_3+
+        ~v -> fd_v__O_f_3-
+        v -> fd_v__f+
+        ~v -> fd_v__f-
+        v -> fd_v__s+
+        ~v -> fd_v__s-
+    }
+}

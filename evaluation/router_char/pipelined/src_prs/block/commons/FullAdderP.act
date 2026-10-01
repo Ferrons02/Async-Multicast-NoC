@@ -1,0 +1,21 @@
+import "commons/Channels.act";
+
+// Supplied FullAdder' PRS, with the second operand fixed to one.
+export defproc FullAdderP(bool? reset; DualRailBit? a; DualRailBit? c; DualRailBit! d; DualRailBit! s)
+{
+    bool _dt, _df, _st, _sf;
+    prs {
+        a.t | c.t -> _dt-
+        ~a.t & ~a.f & ~c.t & ~c.f -> _dt+
+        a.f & c.f -> _df-
+        ~a.t & ~a.f & ~c.t & ~c.f -> _df+
+        (c.t & a.t) | (c.f & a.f) -> _st-
+        ~c.t & ~c.f -> _st+
+        (c.f | a.f) & (c.t | a.t) -> _sf-
+        ~c.t & ~c.f -> _sf+
+        ~_dt => d.t+
+        ~_df => d.f+
+        ~_st => s.t+
+        ~_sf => s.f+
+    }
+}

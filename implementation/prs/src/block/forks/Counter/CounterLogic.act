@@ -1,0 +1,787 @@
+import "forks/commons/Channels.act";
+
+export defproc CounterLogic(
+    bool? reset;
+    ActiveDualRail4? I;
+    PassiveDualRail8! Cnt;
+    ActiveDualRail8! P;
+    PassiveDualRail8? Q;
+    DualRail4! Sa;
+    DualRail8! Sb;
+    DualRail8? So
+)
+{
+    bool k, v, w;
+    bool hold_Cnt_f_0;
+    bool hold_Cnt_f_1;
+    bool hold_Cnt_f_2;
+    bool hold_Cnt_f_3;
+    bool hold_Cnt_f_4;
+    bool hold_Cnt_f_5;
+    bool hold_Cnt_f_6;
+    bool hold_Cnt_f_7;
+    bool hold_Cnt_t_0;
+    bool hold_Cnt_t_1;
+    bool hold_Cnt_t_2;
+    bool hold_Cnt_t_3;
+    bool hold_Cnt_t_4;
+    bool hold_Cnt_t_5;
+    bool hold_Cnt_t_6;
+    bool hold_Cnt_t_7;
+    bool hold_I_a;
+    bool hold_Q_req;
+    bool hold_Sa_f_3;
+    bool hold_Sa_t_3;
+    bool hold_Sb_f_0;
+    bool hold_Sb_f_1;
+    bool hold_Sb_f_2;
+    bool hold_Sb_f_3;
+    bool hold_Sb_f_4;
+    bool hold_Sb_f_5;
+    bool hold_Sb_f_6;
+    bool hold_Sb_f_7;
+    bool hold_Sb_t_0;
+    bool hold_Sb_t_1;
+    bool hold_Sb_t_2;
+    bool hold_Sb_t_3;
+    bool hold_Sb_t_4;
+    bool hold_Sb_t_5;
+    bool hold_Sb_t_6;
+    bool hold_Sb_t_7;
+    bool fd_Cnt_f_0__environment;
+    bool fd_Cnt_f_0__w;
+    bool fd_Cnt_f_1__environment;
+    bool fd_Cnt_f_1__w;
+    bool fd_Cnt_f_2__environment;
+    bool fd_Cnt_f_2__w;
+    bool fd_Cnt_f_3__environment;
+    bool fd_Cnt_f_3__w;
+    bool fd_Cnt_f_4__environment;
+    bool fd_Cnt_f_4__w;
+    bool fd_Cnt_f_5__environment;
+    bool fd_Cnt_f_5__w;
+    bool fd_Cnt_f_6__environment;
+    bool fd_Cnt_f_6__w;
+    bool fd_Cnt_f_7__environment;
+    bool fd_Cnt_f_7__w;
+    bool fd_Cnt_req__Cnt_f_0;
+    bool fd_Cnt_req__Cnt_f_1;
+    bool fd_Cnt_req__Cnt_f_2;
+    bool fd_Cnt_req__Cnt_f_3;
+    bool fd_Cnt_req__Cnt_f_4;
+    bool fd_Cnt_req__Cnt_f_5;
+    bool fd_Cnt_req__Cnt_f_6;
+    bool fd_Cnt_req__Cnt_f_7;
+    bool fd_Cnt_req__Cnt_t_0;
+    bool fd_Cnt_req__Cnt_t_1;
+    bool fd_Cnt_req__Cnt_t_2;
+    bool fd_Cnt_req__Cnt_t_3;
+    bool fd_Cnt_req__Cnt_t_4;
+    bool fd_Cnt_req__Cnt_t_5;
+    bool fd_Cnt_req__Cnt_t_6;
+    bool fd_Cnt_req__Cnt_t_7;
+    bool fd_Cnt_req__Q_req;
+    bool fd_Cnt_req__v;
+    bool fd_Cnt_t_0__environment;
+    bool fd_Cnt_t_0__w;
+    bool fd_Cnt_t_1__environment;
+    bool fd_Cnt_t_1__w;
+    bool fd_Cnt_t_2__environment;
+    bool fd_Cnt_t_2__w;
+    bool fd_Cnt_t_3__environment;
+    bool fd_Cnt_t_3__w;
+    bool fd_Cnt_t_4__environment;
+    bool fd_Cnt_t_4__w;
+    bool fd_Cnt_t_5__environment;
+    bool fd_Cnt_t_5__w;
+    bool fd_Cnt_t_6__environment;
+    bool fd_Cnt_t_6__w;
+    bool fd_Cnt_t_7__environment;
+    bool fd_Cnt_t_7__w;
+    bool fd_I_a__Q_req;
+    bool fd_I_a__Sb_f_0;
+    bool fd_I_a__Sb_f_1;
+    bool fd_I_a__Sb_f_2;
+    bool fd_I_a__Sb_f_3;
+    bool fd_I_a__Sb_f_4;
+    bool fd_I_a__Sb_f_5;
+    bool fd_I_a__Sb_f_6;
+    bool fd_I_a__Sb_t_0;
+    bool fd_I_a__Sb_t_1;
+    bool fd_I_a__Sb_t_2;
+    bool fd_I_a__Sb_t_3;
+    bool fd_I_a__Sb_t_4;
+    bool fd_I_a__Sb_t_5;
+    bool fd_I_a__Sb_t_6;
+    bool fd_I_a__environment;
+    bool fd_I_f_0__Sa_f_0;
+    bool fd_I_f_1__Sa_f_1;
+    bool fd_I_f_2__Sa_f_2;
+    bool fd_I_f_3__Sa_f_3;
+    bool fd_I_f_3__k;
+    bool fd_I_t_0__Sa_t_0;
+    bool fd_I_t_1__Sa_t_1;
+    bool fd_I_t_2__Sa_t_2;
+    bool fd_I_t_3__Sa_t_3;
+    bool fd_I_t_3__k;
+    bool fd_P_a__I_a;
+    bool fd_Q_f_0__Cnt_f_0;
+    bool fd_Q_f_0__Sb_f_0;
+    bool fd_Q_f_1__Cnt_f_1;
+    bool fd_Q_f_1__Sb_f_1;
+    bool fd_Q_f_2__Cnt_f_2;
+    bool fd_Q_f_2__Sb_f_2;
+    bool fd_Q_f_3__Cnt_f_3;
+    bool fd_Q_f_3__Sb_f_3;
+    bool fd_Q_f_4__Cnt_f_4;
+    bool fd_Q_f_4__Sb_f_4;
+    bool fd_Q_f_5__Cnt_f_5;
+    bool fd_Q_f_5__Sb_f_5;
+    bool fd_Q_f_6__Cnt_f_6;
+    bool fd_Q_f_6__Sb_f_6;
+    bool fd_Q_f_7__Cnt_f_7;
+    bool fd_Q_f_7__Sb_f_7;
+    bool fd_Q_req__environment;
+    bool fd_Q_t_0__Cnt_t_0;
+    bool fd_Q_t_0__Sb_t_0;
+    bool fd_Q_t_1__Cnt_t_1;
+    bool fd_Q_t_1__Sb_t_1;
+    bool fd_Q_t_2__Cnt_t_2;
+    bool fd_Q_t_2__Sb_t_2;
+    bool fd_Q_t_3__Cnt_t_3;
+    bool fd_Q_t_3__Sb_t_3;
+    bool fd_Q_t_4__Cnt_t_4;
+    bool fd_Q_t_4__Sb_t_4;
+    bool fd_Q_t_5__Cnt_t_5;
+    bool fd_Q_t_5__Sb_t_5;
+    bool fd_Q_t_6__Cnt_t_6;
+    bool fd_Q_t_6__Sb_t_6;
+    bool fd_Q_t_7__Cnt_t_7;
+    bool fd_Q_t_7__Sb_t_7;
+    bool fd_Sa_f_3__I_a;
+    bool fd_Sa_f_3__environment;
+    bool fd_Sa_t_3__I_a;
+    bool fd_Sa_t_3__environment;
+    bool fd_Sb_f_0__Q_req;
+    bool fd_Sb_f_0__environment;
+    bool fd_Sb_f_1__Q_req;
+    bool fd_Sb_f_1__environment;
+    bool fd_Sb_f_2__Q_req;
+    bool fd_Sb_f_2__environment;
+    bool fd_Sb_f_3__Q_req;
+    bool fd_Sb_f_3__environment;
+    bool fd_Sb_f_4__Q_req;
+    bool fd_Sb_f_4__environment;
+    bool fd_Sb_f_5__Q_req;
+    bool fd_Sb_f_5__environment;
+    bool fd_Sb_f_6__Q_req;
+    bool fd_Sb_f_6__environment;
+    bool fd_Sb_f_7__Q_req;
+    bool fd_Sb_f_7__environment;
+    bool fd_Sb_t_0__Q_req;
+    bool fd_Sb_t_0__environment;
+    bool fd_Sb_t_1__Q_req;
+    bool fd_Sb_t_1__environment;
+    bool fd_Sb_t_2__Q_req;
+    bool fd_Sb_t_2__environment;
+    bool fd_Sb_t_3__Q_req;
+    bool fd_Sb_t_3__environment;
+    bool fd_Sb_t_4__Q_req;
+    bool fd_Sb_t_4__environment;
+    bool fd_Sb_t_5__Q_req;
+    bool fd_Sb_t_5__environment;
+    bool fd_Sb_t_6__Q_req;
+    bool fd_Sb_t_6__environment;
+    bool fd_Sb_t_7__Q_req;
+    bool fd_Sb_t_7__environment;
+    bool fd_So_f_0__P_f_0;
+    bool fd_So_f_1__P_f_1;
+    bool fd_So_f_2__P_f_2;
+    bool fd_So_f_3__P_f_3;
+    bool fd_So_f_4__P_f_4;
+    bool fd_So_f_5__P_f_5;
+    bool fd_So_f_6__P_f_6;
+    bool fd_So_f_7__P_f_7;
+    bool fd_So_t_0__P_t_0;
+    bool fd_So_t_1__P_t_1;
+    bool fd_So_t_2__P_t_2;
+    bool fd_So_t_3__P_t_3;
+    bool fd_So_t_4__P_t_4;
+    bool fd_So_t_5__P_t_5;
+    bool fd_So_t_6__P_t_6;
+    bool fd_So_t_7__P_t_7;
+    bool fd_k__I_a;
+    bool fd_k__Sb_f_0;
+    bool fd_k__Sb_f_1;
+    bool fd_k__Sb_f_2;
+    bool fd_k__Sb_f_3;
+    bool fd_k__Sb_f_4;
+    bool fd_k__Sb_f_5;
+    bool fd_k__Sb_f_6;
+    bool fd_k__Sb_f_7;
+    bool fd_k__Sb_t_0;
+    bool fd_k__Sb_t_1;
+    bool fd_k__Sb_t_2;
+    bool fd_k__Sb_t_3;
+    bool fd_k__Sb_t_4;
+    bool fd_k__Sb_t_5;
+    bool fd_k__Sb_t_6;
+    bool fd_k__Sb_t_7;
+    bool fd_v__Q_req;
+    bool fd_v__k;
+    bool fd_v__w;
+    bool fd_w__P_f_0;
+    bool fd_w__P_f_1;
+    bool fd_w__P_f_2;
+    bool fd_w__P_f_3;
+    bool fd_w__P_f_4;
+    bool fd_w__P_f_5;
+    bool fd_w__P_f_6;
+    bool fd_w__P_f_7;
+    Cnt.f[0] = fd_Cnt_f_0__environment;
+    Cnt.f[1] = fd_Cnt_f_1__environment;
+    Cnt.f[2] = fd_Cnt_f_2__environment;
+    Cnt.f[3] = fd_Cnt_f_3__environment;
+    Cnt.f[4] = fd_Cnt_f_4__environment;
+    Cnt.f[5] = fd_Cnt_f_5__environment;
+    Cnt.f[6] = fd_Cnt_f_6__environment;
+    Cnt.f[7] = fd_Cnt_f_7__environment;
+    Cnt.t[0] = fd_Cnt_t_0__environment;
+    Cnt.t[1] = fd_Cnt_t_1__environment;
+    Cnt.t[2] = fd_Cnt_t_2__environment;
+    Cnt.t[3] = fd_Cnt_t_3__environment;
+    Cnt.t[4] = fd_Cnt_t_4__environment;
+    Cnt.t[5] = fd_Cnt_t_5__environment;
+    Cnt.t[6] = fd_Cnt_t_6__environment;
+    Cnt.t[7] = fd_Cnt_t_7__environment;
+    I.a = fd_I_a__environment;
+    Q.req = fd_Q_req__environment;
+    Sa.f[3] = fd_Sa_f_3__environment;
+    Sa.t[3] = fd_Sa_t_3__environment;
+    Sb.f[0] = fd_Sb_f_0__environment;
+    Sb.f[1] = fd_Sb_f_1__environment;
+    Sb.f[2] = fd_Sb_f_2__environment;
+    Sb.f[3] = fd_Sb_f_3__environment;
+    Sb.f[4] = fd_Sb_f_4__environment;
+    Sb.f[5] = fd_Sb_f_5__environment;
+    Sb.f[6] = fd_Sb_f_6__environment;
+    Sb.f[7] = fd_Sb_f_7__environment;
+    Sb.t[0] = fd_Sb_t_0__environment;
+    Sb.t[1] = fd_Sb_t_1__environment;
+    Sb.t[2] = fd_Sb_t_2__environment;
+    Sb.t[3] = fd_Sb_t_3__environment;
+    Sb.t[4] = fd_Sb_t_4__environment;
+    Sb.t[5] = fd_Sb_t_5__environment;
+    Sb.t[6] = fd_Sb_t_6__environment;
+    Sb.t[7] = fd_Sb_t_7__environment;
+
+    // Original non-bubble PRS, PDF pp. 54–56.
+    // Reset is common; each guard pair uses one source view.
+    // Only the documented fork groups share views across targets.
+    prs {
+        (fd_v__Q_req & fd_Cnt_req__Q_req) | (~fd_I_a__Q_req & ~fd_Sb_t_7__Q_req & ~fd_Sb_f_7__Q_req & fd_k__I_a) -> hold_Q_req+
+        (fd_v__Q_req & ~fd_Cnt_req__Q_req) | (((fd_Sb_t_0__Q_req | fd_Sb_f_0__Q_req)) & ((fd_Sb_t_1__Q_req | fd_Sb_f_1__Q_req)) & ((fd_Sb_t_2__Q_req | fd_Sb_f_2__Q_req)) & ((fd_Sb_t_3__Q_req | fd_Sb_f_3__Q_req)) & ((fd_Sb_t_4__Q_req | fd_Sb_f_4__Q_req)) & ((fd_Sb_t_5__Q_req | fd_Sb_f_5__Q_req)) & ((fd_Sb_t_6__Q_req | fd_Sb_f_6__Q_req)) & ((fd_Sb_t_7__Q_req | fd_Sb_f_7__Q_req))) | reset -> hold_Q_req-
+        (fd_Sa_t_3__I_a | fd_Sa_f_3__I_a) & fd_P_a__I_a -> hold_I_a+
+        ~fd_k__I_a | reset -> hold_I_a-
+        (fd_I_t_3__k | fd_I_f_3__k) & ~fd_P_a__I_a & ~fd_v__k -> k+
+        (~fd_P_a__I_a & fd_I_a__environment) | reset -> k-
+        fd_Cnt_req__v -> v+
+        fd_P_a__I_a | reset -> v-
+        fd_v__w & ~fd_Cnt_req__v & (((~fd_Cnt_t_0__w & ~fd_Cnt_f_0__w)) & ((~fd_Cnt_t_1__w & ~fd_Cnt_f_1__w)) & ((~fd_Cnt_t_2__w & ~fd_Cnt_f_2__w)) & ((~fd_Cnt_t_3__w & ~fd_Cnt_f_3__w)) & ((~fd_Cnt_t_4__w & ~fd_Cnt_f_4__w)) & ((~fd_Cnt_t_5__w & ~fd_Cnt_f_5__w)) & ((~fd_Cnt_t_6__w & ~fd_Cnt_f_6__w)) & ((~fd_Cnt_t_7__w & ~fd_Cnt_f_7__w))) -> w+
+        ~fd_v__w -> w-
+        fd_I_t_0__Sa_t_0 & fd_k__I_a -> Sa.t[0]+
+        ~fd_I_t_0__Sa_t_0 -> Sa.t[0]-
+        fd_I_f_0__Sa_f_0 & fd_k__I_a -> Sa.f[0]+
+        ~fd_I_f_0__Sa_f_0 -> Sa.f[0]-
+        fd_I_t_1__Sa_t_1 & fd_k__I_a -> Sa.t[1]+
+        ~fd_I_t_1__Sa_t_1 -> Sa.t[1]-
+        fd_I_f_1__Sa_f_1 & fd_k__I_a -> Sa.f[1]+
+        ~fd_I_f_1__Sa_f_1 -> Sa.f[1]-
+        fd_I_t_2__Sa_t_2 & fd_k__I_a -> Sa.t[2]+
+        ~fd_I_t_2__Sa_t_2 -> Sa.t[2]-
+        fd_I_f_2__Sa_f_2 & fd_k__I_a -> Sa.f[2]+
+        ~fd_I_f_2__Sa_f_2 -> Sa.f[2]-
+        fd_I_t_3__Sa_t_3 & fd_k__I_a -> hold_Sa_t_3+
+        ~fd_I_t_3__Sa_t_3 -> hold_Sa_t_3-
+        fd_I_f_3__Sa_f_3 & fd_k__I_a -> hold_Sa_f_3+
+        ~fd_I_f_3__Sa_f_3 -> hold_Sa_f_3-
+        fd_Q_t_0__Sb_t_0 & fd_k__Sb_t_0 -> hold_Sb_t_0+
+        (~fd_Q_t_0__Sb_t_0 & fd_I_a__Sb_t_0) | reset -> hold_Sb_t_0-
+        fd_Q_f_0__Sb_f_0 & fd_k__Sb_f_0 -> hold_Sb_f_0+
+        (~fd_Q_f_0__Sb_f_0 & fd_I_a__Sb_f_0) | reset -> hold_Sb_f_0-
+        fd_So_t_0__P_t_0 & ~fd_Q_req__environment -> P.t[0]+
+        ~fd_So_t_0__P_t_0 -> P.t[0]-
+        (fd_So_f_0__P_f_0 & ~fd_Q_req__environment) | fd_w__P_f_0 -> P.f[0]+
+        ~fd_So_f_0__P_f_0 & ~fd_w__P_f_0 -> P.f[0]-
+        fd_Cnt_req__Cnt_t_0 & fd_Q_t_0__Cnt_t_0 -> hold_Cnt_t_0+
+        ~fd_Q_t_0__Cnt_t_0 -> hold_Cnt_t_0-
+        fd_Cnt_req__Cnt_f_0 & fd_Q_f_0__Cnt_f_0 -> hold_Cnt_f_0+
+        ~fd_Q_f_0__Cnt_f_0 -> hold_Cnt_f_0-
+        fd_Q_t_1__Sb_t_1 & fd_k__Sb_t_1 -> hold_Sb_t_1+
+        (~fd_Q_t_1__Sb_t_1 & fd_I_a__Sb_t_1) | reset -> hold_Sb_t_1-
+        fd_Q_f_1__Sb_f_1 & fd_k__Sb_f_1 -> hold_Sb_f_1+
+        (~fd_Q_f_1__Sb_f_1 & fd_I_a__Sb_f_1) | reset -> hold_Sb_f_1-
+        fd_So_t_1__P_t_1 & ~fd_Q_req__environment -> P.t[1]+
+        ~fd_So_t_1__P_t_1 -> P.t[1]-
+        (fd_So_f_1__P_f_1 & ~fd_Q_req__environment) | fd_w__P_f_1 -> P.f[1]+
+        ~fd_So_f_1__P_f_1 & ~fd_w__P_f_1 -> P.f[1]-
+        fd_Cnt_req__Cnt_t_1 & fd_Q_t_1__Cnt_t_1 -> hold_Cnt_t_1+
+        ~fd_Q_t_1__Cnt_t_1 -> hold_Cnt_t_1-
+        fd_Cnt_req__Cnt_f_1 & fd_Q_f_1__Cnt_f_1 -> hold_Cnt_f_1+
+        ~fd_Q_f_1__Cnt_f_1 -> hold_Cnt_f_1-
+        fd_Q_t_2__Sb_t_2 & fd_k__Sb_t_2 -> hold_Sb_t_2+
+        (~fd_Q_t_2__Sb_t_2 & fd_I_a__Sb_t_2) | reset -> hold_Sb_t_2-
+        fd_Q_f_2__Sb_f_2 & fd_k__Sb_f_2 -> hold_Sb_f_2+
+        (~fd_Q_f_2__Sb_f_2 & fd_I_a__Sb_f_2) | reset -> hold_Sb_f_2-
+        fd_So_t_2__P_t_2 & ~fd_Q_req__environment -> P.t[2]+
+        ~fd_So_t_2__P_t_2 -> P.t[2]-
+        (fd_So_f_2__P_f_2 & ~fd_Q_req__environment) | fd_w__P_f_2 -> P.f[2]+
+        ~fd_So_f_2__P_f_2 & ~fd_w__P_f_2 -> P.f[2]-
+        fd_Cnt_req__Cnt_t_2 & fd_Q_t_2__Cnt_t_2 -> hold_Cnt_t_2+
+        ~fd_Q_t_2__Cnt_t_2 -> hold_Cnt_t_2-
+        fd_Cnt_req__Cnt_f_2 & fd_Q_f_2__Cnt_f_2 -> hold_Cnt_f_2+
+        ~fd_Q_f_2__Cnt_f_2 -> hold_Cnt_f_2-
+        fd_Q_t_3__Sb_t_3 & fd_k__Sb_t_3 -> hold_Sb_t_3+
+        (~fd_Q_t_3__Sb_t_3 & fd_I_a__Sb_t_3) | reset -> hold_Sb_t_3-
+        fd_Q_f_3__Sb_f_3 & fd_k__Sb_f_3 -> hold_Sb_f_3+
+        (~fd_Q_f_3__Sb_f_3 & fd_I_a__Sb_f_3) | reset -> hold_Sb_f_3-
+        fd_So_t_3__P_t_3 & ~fd_Q_req__environment -> P.t[3]+
+        ~fd_So_t_3__P_t_3 -> P.t[3]-
+        (fd_So_f_3__P_f_3 & ~fd_Q_req__environment) | fd_w__P_f_3 -> P.f[3]+
+        ~fd_So_f_3__P_f_3 & ~fd_w__P_f_3 -> P.f[3]-
+        fd_Cnt_req__Cnt_t_3 & fd_Q_t_3__Cnt_t_3 -> hold_Cnt_t_3+
+        ~fd_Q_t_3__Cnt_t_3 -> hold_Cnt_t_3-
+        fd_Cnt_req__Cnt_f_3 & fd_Q_f_3__Cnt_f_3 -> hold_Cnt_f_3+
+        ~fd_Q_f_3__Cnt_f_3 -> hold_Cnt_f_3-
+        fd_Q_t_4__Sb_t_4 & fd_k__Sb_t_4 -> hold_Sb_t_4+
+        (~fd_Q_t_4__Sb_t_4 & fd_I_a__Sb_t_4) | reset -> hold_Sb_t_4-
+        fd_Q_f_4__Sb_f_4 & fd_k__Sb_f_4 -> hold_Sb_f_4+
+        (~fd_Q_f_4__Sb_f_4 & fd_I_a__Sb_f_4) | reset -> hold_Sb_f_4-
+        fd_So_t_4__P_t_4 & ~fd_Q_req__environment -> P.t[4]+
+        ~fd_So_t_4__P_t_4 -> P.t[4]-
+        (fd_So_f_4__P_f_4 & ~fd_Q_req__environment) | fd_w__P_f_4 -> P.f[4]+
+        ~fd_So_f_4__P_f_4 & ~fd_w__P_f_4 -> P.f[4]-
+        fd_Cnt_req__Cnt_t_4 & fd_Q_t_4__Cnt_t_4 -> hold_Cnt_t_4+
+        ~fd_Q_t_4__Cnt_t_4 -> hold_Cnt_t_4-
+        fd_Cnt_req__Cnt_f_4 & fd_Q_f_4__Cnt_f_4 -> hold_Cnt_f_4+
+        ~fd_Q_f_4__Cnt_f_4 -> hold_Cnt_f_4-
+        fd_Q_t_5__Sb_t_5 & fd_k__Sb_t_5 -> hold_Sb_t_5+
+        (~fd_Q_t_5__Sb_t_5 & fd_I_a__Sb_t_5) | reset -> hold_Sb_t_5-
+        fd_Q_f_5__Sb_f_5 & fd_k__Sb_f_5 -> hold_Sb_f_5+
+        (~fd_Q_f_5__Sb_f_5 & fd_I_a__Sb_f_5) | reset -> hold_Sb_f_5-
+        fd_So_t_5__P_t_5 & ~fd_Q_req__environment -> P.t[5]+
+        ~fd_So_t_5__P_t_5 -> P.t[5]-
+        (fd_So_f_5__P_f_5 & ~fd_Q_req__environment) | fd_w__P_f_5 -> P.f[5]+
+        ~fd_So_f_5__P_f_5 & ~fd_w__P_f_5 -> P.f[5]-
+        fd_Cnt_req__Cnt_t_5 & fd_Q_t_5__Cnt_t_5 -> hold_Cnt_t_5+
+        ~fd_Q_t_5__Cnt_t_5 -> hold_Cnt_t_5-
+        fd_Cnt_req__Cnt_f_5 & fd_Q_f_5__Cnt_f_5 -> hold_Cnt_f_5+
+        ~fd_Q_f_5__Cnt_f_5 -> hold_Cnt_f_5-
+        fd_Q_t_6__Sb_t_6 & fd_k__Sb_t_6 -> hold_Sb_t_6+
+        (~fd_Q_t_6__Sb_t_6 & fd_I_a__Sb_t_6) | reset -> hold_Sb_t_6-
+        fd_Q_f_6__Sb_f_6 & fd_k__Sb_f_6 -> hold_Sb_f_6+
+        (~fd_Q_f_6__Sb_f_6 & fd_I_a__Sb_f_6) | reset -> hold_Sb_f_6-
+        fd_So_t_6__P_t_6 & ~fd_Q_req__environment -> P.t[6]+
+        ~fd_So_t_6__P_t_6 -> P.t[6]-
+        (fd_So_f_6__P_f_6 & ~fd_Q_req__environment) | fd_w__P_f_6 -> P.f[6]+
+        ~fd_So_f_6__P_f_6 & ~fd_w__P_f_6 -> P.f[6]-
+        fd_Cnt_req__Cnt_t_6 & fd_Q_t_6__Cnt_t_6 -> hold_Cnt_t_6+
+        ~fd_Q_t_6__Cnt_t_6 -> hold_Cnt_t_6-
+        fd_Cnt_req__Cnt_f_6 & fd_Q_f_6__Cnt_f_6 -> hold_Cnt_f_6+
+        ~fd_Q_f_6__Cnt_f_6 -> hold_Cnt_f_6-
+        fd_Q_t_7__Sb_t_7 & fd_k__Sb_t_7 -> hold_Sb_t_7+
+        (~fd_Q_t_7__Sb_t_7 & fd_I_a__Q_req) | reset -> hold_Sb_t_7-
+        fd_Q_f_7__Sb_f_7 & fd_k__Sb_f_7 -> hold_Sb_f_7+
+        (~fd_Q_f_7__Sb_f_7 & fd_I_a__Q_req) | reset -> hold_Sb_f_7-
+        fd_So_t_7__P_t_7 & ~fd_Q_req__environment -> P.t[7]+
+        ~fd_So_t_7__P_t_7 -> P.t[7]-
+        (fd_So_f_7__P_f_7 & ~fd_Q_req__environment) | fd_w__P_f_7 -> P.f[7]+
+        ~fd_So_f_7__P_f_7 & ~fd_w__P_f_7 -> P.f[7]-
+        fd_Cnt_req__Cnt_t_7 & fd_Q_t_7__Cnt_t_7 -> hold_Cnt_t_7+
+        ~fd_Q_t_7__Cnt_t_7 -> hold_Cnt_t_7-
+        fd_Cnt_req__Cnt_f_7 & fd_Q_f_7__Cnt_f_7 -> hold_Cnt_f_7+
+        ~fd_Q_f_7__Cnt_f_7 -> hold_Cnt_f_7-
+
+        // Non-inverting wire delays.
+        hold_Cnt_f_0 -> fd_Cnt_f_0__environment+
+        ~hold_Cnt_f_0 -> fd_Cnt_f_0__environment-
+        hold_Cnt_f_0 -> fd_Cnt_f_0__w+
+        ~hold_Cnt_f_0 -> fd_Cnt_f_0__w-
+        hold_Cnt_f_1 -> fd_Cnt_f_1__environment+
+        ~hold_Cnt_f_1 -> fd_Cnt_f_1__environment-
+        hold_Cnt_f_1 -> fd_Cnt_f_1__w+
+        ~hold_Cnt_f_1 -> fd_Cnt_f_1__w-
+        hold_Cnt_f_2 -> fd_Cnt_f_2__environment+
+        ~hold_Cnt_f_2 -> fd_Cnt_f_2__environment-
+        hold_Cnt_f_2 -> fd_Cnt_f_2__w+
+        ~hold_Cnt_f_2 -> fd_Cnt_f_2__w-
+        hold_Cnt_f_3 -> fd_Cnt_f_3__environment+
+        ~hold_Cnt_f_3 -> fd_Cnt_f_3__environment-
+        hold_Cnt_f_3 -> fd_Cnt_f_3__w+
+        ~hold_Cnt_f_3 -> fd_Cnt_f_3__w-
+        hold_Cnt_f_4 -> fd_Cnt_f_4__environment+
+        ~hold_Cnt_f_4 -> fd_Cnt_f_4__environment-
+        hold_Cnt_f_4 -> fd_Cnt_f_4__w+
+        ~hold_Cnt_f_4 -> fd_Cnt_f_4__w-
+        hold_Cnt_f_5 -> fd_Cnt_f_5__environment+
+        ~hold_Cnt_f_5 -> fd_Cnt_f_5__environment-
+        hold_Cnt_f_5 -> fd_Cnt_f_5__w+
+        ~hold_Cnt_f_5 -> fd_Cnt_f_5__w-
+        hold_Cnt_f_6 -> fd_Cnt_f_6__environment+
+        ~hold_Cnt_f_6 -> fd_Cnt_f_6__environment-
+        hold_Cnt_f_6 -> fd_Cnt_f_6__w+
+        ~hold_Cnt_f_6 -> fd_Cnt_f_6__w-
+        hold_Cnt_f_7 -> fd_Cnt_f_7__environment+
+        ~hold_Cnt_f_7 -> fd_Cnt_f_7__environment-
+        hold_Cnt_f_7 -> fd_Cnt_f_7__w+
+        ~hold_Cnt_f_7 -> fd_Cnt_f_7__w-
+        Cnt.req -> fd_Cnt_req__Cnt_f_0+
+        ~Cnt.req -> fd_Cnt_req__Cnt_f_0-
+        Cnt.req -> fd_Cnt_req__Cnt_f_1+
+        ~Cnt.req -> fd_Cnt_req__Cnt_f_1-
+        Cnt.req -> fd_Cnt_req__Cnt_f_2+
+        ~Cnt.req -> fd_Cnt_req__Cnt_f_2-
+        Cnt.req -> fd_Cnt_req__Cnt_f_3+
+        ~Cnt.req -> fd_Cnt_req__Cnt_f_3-
+        Cnt.req -> fd_Cnt_req__Cnt_f_4+
+        ~Cnt.req -> fd_Cnt_req__Cnt_f_4-
+        Cnt.req -> fd_Cnt_req__Cnt_f_5+
+        ~Cnt.req -> fd_Cnt_req__Cnt_f_5-
+        Cnt.req -> fd_Cnt_req__Cnt_f_6+
+        ~Cnt.req -> fd_Cnt_req__Cnt_f_6-
+        Cnt.req -> fd_Cnt_req__Cnt_f_7+
+        ~Cnt.req -> fd_Cnt_req__Cnt_f_7-
+        Cnt.req -> fd_Cnt_req__Cnt_t_0+
+        ~Cnt.req -> fd_Cnt_req__Cnt_t_0-
+        Cnt.req -> fd_Cnt_req__Cnt_t_1+
+        ~Cnt.req -> fd_Cnt_req__Cnt_t_1-
+        Cnt.req -> fd_Cnt_req__Cnt_t_2+
+        ~Cnt.req -> fd_Cnt_req__Cnt_t_2-
+        Cnt.req -> fd_Cnt_req__Cnt_t_3+
+        ~Cnt.req -> fd_Cnt_req__Cnt_t_3-
+        Cnt.req -> fd_Cnt_req__Cnt_t_4+
+        ~Cnt.req -> fd_Cnt_req__Cnt_t_4-
+        Cnt.req -> fd_Cnt_req__Cnt_t_5+
+        ~Cnt.req -> fd_Cnt_req__Cnt_t_5-
+        Cnt.req -> fd_Cnt_req__Cnt_t_6+
+        ~Cnt.req -> fd_Cnt_req__Cnt_t_6-
+        Cnt.req -> fd_Cnt_req__Cnt_t_7+
+        ~Cnt.req -> fd_Cnt_req__Cnt_t_7-
+        Cnt.req -> fd_Cnt_req__Q_req+
+        ~Cnt.req -> fd_Cnt_req__Q_req-
+        Cnt.req -> fd_Cnt_req__v+
+        ~Cnt.req -> fd_Cnt_req__v-
+        hold_Cnt_t_0 -> fd_Cnt_t_0__environment+
+        ~hold_Cnt_t_0 -> fd_Cnt_t_0__environment-
+        hold_Cnt_t_0 -> fd_Cnt_t_0__w+
+        ~hold_Cnt_t_0 -> fd_Cnt_t_0__w-
+        hold_Cnt_t_1 -> fd_Cnt_t_1__environment+
+        ~hold_Cnt_t_1 -> fd_Cnt_t_1__environment-
+        hold_Cnt_t_1 -> fd_Cnt_t_1__w+
+        ~hold_Cnt_t_1 -> fd_Cnt_t_1__w-
+        hold_Cnt_t_2 -> fd_Cnt_t_2__environment+
+        ~hold_Cnt_t_2 -> fd_Cnt_t_2__environment-
+        hold_Cnt_t_2 -> fd_Cnt_t_2__w+
+        ~hold_Cnt_t_2 -> fd_Cnt_t_2__w-
+        hold_Cnt_t_3 -> fd_Cnt_t_3__environment+
+        ~hold_Cnt_t_3 -> fd_Cnt_t_3__environment-
+        hold_Cnt_t_3 -> fd_Cnt_t_3__w+
+        ~hold_Cnt_t_3 -> fd_Cnt_t_3__w-
+        hold_Cnt_t_4 -> fd_Cnt_t_4__environment+
+        ~hold_Cnt_t_4 -> fd_Cnt_t_4__environment-
+        hold_Cnt_t_4 -> fd_Cnt_t_4__w+
+        ~hold_Cnt_t_4 -> fd_Cnt_t_4__w-
+        hold_Cnt_t_5 -> fd_Cnt_t_5__environment+
+        ~hold_Cnt_t_5 -> fd_Cnt_t_5__environment-
+        hold_Cnt_t_5 -> fd_Cnt_t_5__w+
+        ~hold_Cnt_t_5 -> fd_Cnt_t_5__w-
+        hold_Cnt_t_6 -> fd_Cnt_t_6__environment+
+        ~hold_Cnt_t_6 -> fd_Cnt_t_6__environment-
+        hold_Cnt_t_6 -> fd_Cnt_t_6__w+
+        ~hold_Cnt_t_6 -> fd_Cnt_t_6__w-
+        hold_Cnt_t_7 -> fd_Cnt_t_7__environment+
+        ~hold_Cnt_t_7 -> fd_Cnt_t_7__environment-
+        hold_Cnt_t_7 -> fd_Cnt_t_7__w+
+        ~hold_Cnt_t_7 -> fd_Cnt_t_7__w-
+        hold_I_a -> fd_I_a__Q_req+
+        ~hold_I_a -> fd_I_a__Q_req-
+        hold_I_a -> fd_I_a__Sb_f_0+
+        ~hold_I_a -> fd_I_a__Sb_f_0-
+        hold_I_a -> fd_I_a__Sb_f_1+
+        ~hold_I_a -> fd_I_a__Sb_f_1-
+        hold_I_a -> fd_I_a__Sb_f_2+
+        ~hold_I_a -> fd_I_a__Sb_f_2-
+        hold_I_a -> fd_I_a__Sb_f_3+
+        ~hold_I_a -> fd_I_a__Sb_f_3-
+        hold_I_a -> fd_I_a__Sb_f_4+
+        ~hold_I_a -> fd_I_a__Sb_f_4-
+        hold_I_a -> fd_I_a__Sb_f_5+
+        ~hold_I_a -> fd_I_a__Sb_f_5-
+        hold_I_a -> fd_I_a__Sb_f_6+
+        ~hold_I_a -> fd_I_a__Sb_f_6-
+        hold_I_a -> fd_I_a__Sb_t_0+
+        ~hold_I_a -> fd_I_a__Sb_t_0-
+        hold_I_a -> fd_I_a__Sb_t_1+
+        ~hold_I_a -> fd_I_a__Sb_t_1-
+        hold_I_a -> fd_I_a__Sb_t_2+
+        ~hold_I_a -> fd_I_a__Sb_t_2-
+        hold_I_a -> fd_I_a__Sb_t_3+
+        ~hold_I_a -> fd_I_a__Sb_t_3-
+        hold_I_a -> fd_I_a__Sb_t_4+
+        ~hold_I_a -> fd_I_a__Sb_t_4-
+        hold_I_a -> fd_I_a__Sb_t_5+
+        ~hold_I_a -> fd_I_a__Sb_t_5-
+        hold_I_a -> fd_I_a__Sb_t_6+
+        ~hold_I_a -> fd_I_a__Sb_t_6-
+        hold_I_a -> fd_I_a__environment+
+        ~hold_I_a -> fd_I_a__environment-
+        I.f[0] -> fd_I_f_0__Sa_f_0+
+        ~I.f[0] -> fd_I_f_0__Sa_f_0-
+        I.f[1] -> fd_I_f_1__Sa_f_1+
+        ~I.f[1] -> fd_I_f_1__Sa_f_1-
+        I.f[2] -> fd_I_f_2__Sa_f_2+
+        ~I.f[2] -> fd_I_f_2__Sa_f_2-
+        I.f[3] -> fd_I_f_3__Sa_f_3+
+        ~I.f[3] -> fd_I_f_3__Sa_f_3-
+        I.f[3] -> fd_I_f_3__k+
+        ~I.f[3] -> fd_I_f_3__k-
+        I.t[0] -> fd_I_t_0__Sa_t_0+
+        ~I.t[0] -> fd_I_t_0__Sa_t_0-
+        I.t[1] -> fd_I_t_1__Sa_t_1+
+        ~I.t[1] -> fd_I_t_1__Sa_t_1-
+        I.t[2] -> fd_I_t_2__Sa_t_2+
+        ~I.t[2] -> fd_I_t_2__Sa_t_2-
+        I.t[3] -> fd_I_t_3__Sa_t_3+
+        ~I.t[3] -> fd_I_t_3__Sa_t_3-
+        I.t[3] -> fd_I_t_3__k+
+        ~I.t[3] -> fd_I_t_3__k-
+        P.a -> fd_P_a__I_a+
+        ~P.a -> fd_P_a__I_a-
+        Q.f[0] -> fd_Q_f_0__Cnt_f_0+
+        ~Q.f[0] -> fd_Q_f_0__Cnt_f_0-
+        Q.f[0] -> fd_Q_f_0__Sb_f_0+
+        ~Q.f[0] -> fd_Q_f_0__Sb_f_0-
+        Q.f[1] -> fd_Q_f_1__Cnt_f_1+
+        ~Q.f[1] -> fd_Q_f_1__Cnt_f_1-
+        Q.f[1] -> fd_Q_f_1__Sb_f_1+
+        ~Q.f[1] -> fd_Q_f_1__Sb_f_1-
+        Q.f[2] -> fd_Q_f_2__Cnt_f_2+
+        ~Q.f[2] -> fd_Q_f_2__Cnt_f_2-
+        Q.f[2] -> fd_Q_f_2__Sb_f_2+
+        ~Q.f[2] -> fd_Q_f_2__Sb_f_2-
+        Q.f[3] -> fd_Q_f_3__Cnt_f_3+
+        ~Q.f[3] -> fd_Q_f_3__Cnt_f_3-
+        Q.f[3] -> fd_Q_f_3__Sb_f_3+
+        ~Q.f[3] -> fd_Q_f_3__Sb_f_3-
+        Q.f[4] -> fd_Q_f_4__Cnt_f_4+
+        ~Q.f[4] -> fd_Q_f_4__Cnt_f_4-
+        Q.f[4] -> fd_Q_f_4__Sb_f_4+
+        ~Q.f[4] -> fd_Q_f_4__Sb_f_4-
+        Q.f[5] -> fd_Q_f_5__Cnt_f_5+
+        ~Q.f[5] -> fd_Q_f_5__Cnt_f_5-
+        Q.f[5] -> fd_Q_f_5__Sb_f_5+
+        ~Q.f[5] -> fd_Q_f_5__Sb_f_5-
+        Q.f[6] -> fd_Q_f_6__Cnt_f_6+
+        ~Q.f[6] -> fd_Q_f_6__Cnt_f_6-
+        Q.f[6] -> fd_Q_f_6__Sb_f_6+
+        ~Q.f[6] -> fd_Q_f_6__Sb_f_6-
+        Q.f[7] -> fd_Q_f_7__Cnt_f_7+
+        ~Q.f[7] -> fd_Q_f_7__Cnt_f_7-
+        Q.f[7] -> fd_Q_f_7__Sb_f_7+
+        ~Q.f[7] -> fd_Q_f_7__Sb_f_7-
+        hold_Q_req -> fd_Q_req__environment+
+        ~hold_Q_req -> fd_Q_req__environment-
+        Q.t[0] -> fd_Q_t_0__Cnt_t_0+
+        ~Q.t[0] -> fd_Q_t_0__Cnt_t_0-
+        Q.t[0] -> fd_Q_t_0__Sb_t_0+
+        ~Q.t[0] -> fd_Q_t_0__Sb_t_0-
+        Q.t[1] -> fd_Q_t_1__Cnt_t_1+
+        ~Q.t[1] -> fd_Q_t_1__Cnt_t_1-
+        Q.t[1] -> fd_Q_t_1__Sb_t_1+
+        ~Q.t[1] -> fd_Q_t_1__Sb_t_1-
+        Q.t[2] -> fd_Q_t_2__Cnt_t_2+
+        ~Q.t[2] -> fd_Q_t_2__Cnt_t_2-
+        Q.t[2] -> fd_Q_t_2__Sb_t_2+
+        ~Q.t[2] -> fd_Q_t_2__Sb_t_2-
+        Q.t[3] -> fd_Q_t_3__Cnt_t_3+
+        ~Q.t[3] -> fd_Q_t_3__Cnt_t_3-
+        Q.t[3] -> fd_Q_t_3__Sb_t_3+
+        ~Q.t[3] -> fd_Q_t_3__Sb_t_3-
+        Q.t[4] -> fd_Q_t_4__Cnt_t_4+
+        ~Q.t[4] -> fd_Q_t_4__Cnt_t_4-
+        Q.t[4] -> fd_Q_t_4__Sb_t_4+
+        ~Q.t[4] -> fd_Q_t_4__Sb_t_4-
+        Q.t[5] -> fd_Q_t_5__Cnt_t_5+
+        ~Q.t[5] -> fd_Q_t_5__Cnt_t_5-
+        Q.t[5] -> fd_Q_t_5__Sb_t_5+
+        ~Q.t[5] -> fd_Q_t_5__Sb_t_5-
+        Q.t[6] -> fd_Q_t_6__Cnt_t_6+
+        ~Q.t[6] -> fd_Q_t_6__Cnt_t_6-
+        Q.t[6] -> fd_Q_t_6__Sb_t_6+
+        ~Q.t[6] -> fd_Q_t_6__Sb_t_6-
+        Q.t[7] -> fd_Q_t_7__Cnt_t_7+
+        ~Q.t[7] -> fd_Q_t_7__Cnt_t_7-
+        Q.t[7] -> fd_Q_t_7__Sb_t_7+
+        ~Q.t[7] -> fd_Q_t_7__Sb_t_7-
+        hold_Sa_f_3 -> fd_Sa_f_3__I_a+
+        ~hold_Sa_f_3 -> fd_Sa_f_3__I_a-
+        hold_Sa_f_3 -> fd_Sa_f_3__environment+
+        ~hold_Sa_f_3 -> fd_Sa_f_3__environment-
+        hold_Sa_t_3 -> fd_Sa_t_3__I_a+
+        ~hold_Sa_t_3 -> fd_Sa_t_3__I_a-
+        hold_Sa_t_3 -> fd_Sa_t_3__environment+
+        ~hold_Sa_t_3 -> fd_Sa_t_3__environment-
+        hold_Sb_f_0 -> fd_Sb_f_0__Q_req+
+        ~hold_Sb_f_0 -> fd_Sb_f_0__Q_req-
+        hold_Sb_f_0 -> fd_Sb_f_0__environment+
+        ~hold_Sb_f_0 -> fd_Sb_f_0__environment-
+        hold_Sb_f_1 -> fd_Sb_f_1__Q_req+
+        ~hold_Sb_f_1 -> fd_Sb_f_1__Q_req-
+        hold_Sb_f_1 -> fd_Sb_f_1__environment+
+        ~hold_Sb_f_1 -> fd_Sb_f_1__environment-
+        hold_Sb_f_2 -> fd_Sb_f_2__Q_req+
+        ~hold_Sb_f_2 -> fd_Sb_f_2__Q_req-
+        hold_Sb_f_2 -> fd_Sb_f_2__environment+
+        ~hold_Sb_f_2 -> fd_Sb_f_2__environment-
+        hold_Sb_f_3 -> fd_Sb_f_3__Q_req+
+        ~hold_Sb_f_3 -> fd_Sb_f_3__Q_req-
+        hold_Sb_f_3 -> fd_Sb_f_3__environment+
+        ~hold_Sb_f_3 -> fd_Sb_f_3__environment-
+        hold_Sb_f_4 -> fd_Sb_f_4__Q_req+
+        ~hold_Sb_f_4 -> fd_Sb_f_4__Q_req-
+        hold_Sb_f_4 -> fd_Sb_f_4__environment+
+        ~hold_Sb_f_4 -> fd_Sb_f_4__environment-
+        hold_Sb_f_5 -> fd_Sb_f_5__Q_req+
+        ~hold_Sb_f_5 -> fd_Sb_f_5__Q_req-
+        hold_Sb_f_5 -> fd_Sb_f_5__environment+
+        ~hold_Sb_f_5 -> fd_Sb_f_5__environment-
+        hold_Sb_f_6 -> fd_Sb_f_6__Q_req+
+        ~hold_Sb_f_6 -> fd_Sb_f_6__Q_req-
+        hold_Sb_f_6 -> fd_Sb_f_6__environment+
+        ~hold_Sb_f_6 -> fd_Sb_f_6__environment-
+        hold_Sb_f_7 -> fd_Sb_f_7__Q_req+
+        ~hold_Sb_f_7 -> fd_Sb_f_7__Q_req-
+        hold_Sb_f_7 -> fd_Sb_f_7__environment+
+        ~hold_Sb_f_7 -> fd_Sb_f_7__environment-
+        hold_Sb_t_0 -> fd_Sb_t_0__Q_req+
+        ~hold_Sb_t_0 -> fd_Sb_t_0__Q_req-
+        hold_Sb_t_0 -> fd_Sb_t_0__environment+
+        ~hold_Sb_t_0 -> fd_Sb_t_0__environment-
+        hold_Sb_t_1 -> fd_Sb_t_1__Q_req+
+        ~hold_Sb_t_1 -> fd_Sb_t_1__Q_req-
+        hold_Sb_t_1 -> fd_Sb_t_1__environment+
+        ~hold_Sb_t_1 -> fd_Sb_t_1__environment-
+        hold_Sb_t_2 -> fd_Sb_t_2__Q_req+
+        ~hold_Sb_t_2 -> fd_Sb_t_2__Q_req-
+        hold_Sb_t_2 -> fd_Sb_t_2__environment+
+        ~hold_Sb_t_2 -> fd_Sb_t_2__environment-
+        hold_Sb_t_3 -> fd_Sb_t_3__Q_req+
+        ~hold_Sb_t_3 -> fd_Sb_t_3__Q_req-
+        hold_Sb_t_3 -> fd_Sb_t_3__environment+
+        ~hold_Sb_t_3 -> fd_Sb_t_3__environment-
+        hold_Sb_t_4 -> fd_Sb_t_4__Q_req+
+        ~hold_Sb_t_4 -> fd_Sb_t_4__Q_req-
+        hold_Sb_t_4 -> fd_Sb_t_4__environment+
+        ~hold_Sb_t_4 -> fd_Sb_t_4__environment-
+        hold_Sb_t_5 -> fd_Sb_t_5__Q_req+
+        ~hold_Sb_t_5 -> fd_Sb_t_5__Q_req-
+        hold_Sb_t_5 -> fd_Sb_t_5__environment+
+        ~hold_Sb_t_5 -> fd_Sb_t_5__environment-
+        hold_Sb_t_6 -> fd_Sb_t_6__Q_req+
+        ~hold_Sb_t_6 -> fd_Sb_t_6__Q_req-
+        hold_Sb_t_6 -> fd_Sb_t_6__environment+
+        ~hold_Sb_t_6 -> fd_Sb_t_6__environment-
+        hold_Sb_t_7 -> fd_Sb_t_7__Q_req+
+        ~hold_Sb_t_7 -> fd_Sb_t_7__Q_req-
+        hold_Sb_t_7 -> fd_Sb_t_7__environment+
+        ~hold_Sb_t_7 -> fd_Sb_t_7__environment-
+        So.f[0] -> fd_So_f_0__P_f_0+
+        ~So.f[0] -> fd_So_f_0__P_f_0-
+        So.f[1] -> fd_So_f_1__P_f_1+
+        ~So.f[1] -> fd_So_f_1__P_f_1-
+        So.f[2] -> fd_So_f_2__P_f_2+
+        ~So.f[2] -> fd_So_f_2__P_f_2-
+        So.f[3] -> fd_So_f_3__P_f_3+
+        ~So.f[3] -> fd_So_f_3__P_f_3-
+        So.f[4] -> fd_So_f_4__P_f_4+
+        ~So.f[4] -> fd_So_f_4__P_f_4-
+        So.f[5] -> fd_So_f_5__P_f_5+
+        ~So.f[5] -> fd_So_f_5__P_f_5-
+        So.f[6] -> fd_So_f_6__P_f_6+
+        ~So.f[6] -> fd_So_f_6__P_f_6-
+        So.f[7] -> fd_So_f_7__P_f_7+
+        ~So.f[7] -> fd_So_f_7__P_f_7-
+        So.t[0] -> fd_So_t_0__P_t_0+
+        ~So.t[0] -> fd_So_t_0__P_t_0-
+        So.t[1] -> fd_So_t_1__P_t_1+
+        ~So.t[1] -> fd_So_t_1__P_t_1-
+        So.t[2] -> fd_So_t_2__P_t_2+
+        ~So.t[2] -> fd_So_t_2__P_t_2-
+        So.t[3] -> fd_So_t_3__P_t_3+
+        ~So.t[3] -> fd_So_t_3__P_t_3-
+        So.t[4] -> fd_So_t_4__P_t_4+
+        ~So.t[4] -> fd_So_t_4__P_t_4-
+        So.t[5] -> fd_So_t_5__P_t_5+
+        ~So.t[5] -> fd_So_t_5__P_t_5-
+        So.t[6] -> fd_So_t_6__P_t_6+
+        ~So.t[6] -> fd_So_t_6__P_t_6-
+        So.t[7] -> fd_So_t_7__P_t_7+
+        ~So.t[7] -> fd_So_t_7__P_t_7-
+        k -> fd_k__I_a+
+        ~k -> fd_k__I_a-
+        k -> fd_k__Sb_f_0+
+        ~k -> fd_k__Sb_f_0-
+        k -> fd_k__Sb_f_1+
+        ~k -> fd_k__Sb_f_1-
+        k -> fd_k__Sb_f_2+
+        ~k -> fd_k__Sb_f_2-
+        k -> fd_k__Sb_f_3+
+        ~k -> fd_k__Sb_f_3-
+        k -> fd_k__Sb_f_4+
+        ~k -> fd_k__Sb_f_4-
+        k -> fd_k__Sb_f_5+
+        ~k -> fd_k__Sb_f_5-
+        k -> fd_k__Sb_f_6+
+        ~k -> fd_k__Sb_f_6-
+        k -> fd_k__Sb_f_7+
+        ~k -> fd_k__Sb_f_7-
+        k -> fd_k__Sb_t_0+
+        ~k -> fd_k__Sb_t_0-
+        k -> fd_k__Sb_t_1+
+        ~k -> fd_k__Sb_t_1-
+        k -> fd_k__Sb_t_2+
+        ~k -> fd_k__Sb_t_2-
+        k -> fd_k__Sb_t_3+
+        ~k -> fd_k__Sb_t_3-
+        k -> fd_k__Sb_t_4+
+        ~k -> fd_k__Sb_t_4-
+        k -> fd_k__Sb_t_5+
+        ~k -> fd_k__Sb_t_5-
+        k -> fd_k__Sb_t_6+
+        ~k -> fd_k__Sb_t_6-
+        k -> fd_k__Sb_t_7+
+        ~k -> fd_k__Sb_t_7-
+        v -> fd_v__Q_req+
+        ~v -> fd_v__Q_req-
+        v -> fd_v__k+
+        ~v -> fd_v__k-
+        v -> fd_v__w+
+        ~v -> fd_v__w-
+        w -> fd_w__P_f_0+
+        ~w -> fd_w__P_f_0-
+        w -> fd_w__P_f_1+
+        ~w -> fd_w__P_f_1-
+        w -> fd_w__P_f_2+
+        ~w -> fd_w__P_f_2-
+        w -> fd_w__P_f_3+
+        ~w -> fd_w__P_f_3-
+        w -> fd_w__P_f_4+
+        ~w -> fd_w__P_f_4-
+        w -> fd_w__P_f_5+
+        ~w -> fd_w__P_f_5-
+        w -> fd_w__P_f_6+
+        ~w -> fd_w__P_f_6-
+        w -> fd_w__P_f_7+
+        ~w -> fd_w__P_f_7-
+    }
+}

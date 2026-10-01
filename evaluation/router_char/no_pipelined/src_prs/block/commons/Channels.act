@@ -1,0 +1,51 @@
+/*
+===============================================================================
+ SHARED CHANNEL TYPES
+===============================================================================
+
+ActiveDualRail4 and ActiveDualRail32 are ordinary four-phase dual-rail channels:
+  - t/f carry the data rails;
+  - a is the explicit acknowledge.
+
+PassiveDualRail4 and PassiveDualRail8 use a single request bit. The validity of
+the t/f rails is the implicit acknowledge/completion condition for the request.
+
+With PassiveDualRailN? an endpoint drives req and reads t/f.
+With PassiveDualRailN! an endpoint reads req and drives t/f.
+===============================================================================
+*/
+
+export defchan ActiveDualRail4 <: chan(int<4>) (
+    bool?! t[4], f[4];
+    bool!? a
+) {}
+
+export defchan ActiveDualRail32 <: chan(int<32>) (
+    bool?! t[32], f[32];
+    bool!? a
+) {}
+
+export defchan PassiveDualRail8 <: chan(int<8>) (
+    bool!? req;
+    bool?! t[8], f[8]
+) {}
+
+export defchan PassiveDualRail4 <: chan(int<4>) (
+    bool!? req;
+    bool?! t[4], f[4]
+) {}
+
+/* Width-parameterized push channel for shared merge datapaths. */
+export template<pint N>
+defchan ActiveDualRail <: chan(int<N>) (bool?! t[N], f[N]; bool!? a) {}
+
+export defchan ActiveDualRail1 <: chan(int<1>) (bool?! t[1], f[1]; bool!? a) {}
+export defchan ActiveDualRail8 <: chan(int<8>) (bool?! t[8], f[8]; bool!? a) {}
+
+/* Datapath rails have implicit validity and no separate request/acknowledge. */
+export defchan DualRail4 <: chan(int<4>) (bool?! t[4], f[4]) {}
+export defchan DualRail8 <: chan(int<8>) (bool?! t[8], f[8]) {}
+export deftype DualRailBit <: int<1> (bool?! t, f) {}
+
+/* ! initiates the handshake; ? receives req and returns a. */
+export defchan Dataless <: chan(bool) (bool?! req; bool!? a) {}

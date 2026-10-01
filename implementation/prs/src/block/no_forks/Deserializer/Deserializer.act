@@ -1,0 +1,81 @@
+import "no_forks/Deserializer/InputAnalyzer.act";
+import "no_forks/Deserializer/SplitTree7.act";
+import "no_forks/Deserializer/QBuffer.act";
+
+/* QB0 buffers the constant low nibble 0010, supplied on its own input request.
+ * The control ring is analyzer -> QB7 -> ... -> QB1 -> QB0 -> analyzer.
+ * All eight buffer outputs share O.a. */
+export defproc Deserializer(bool? reset; ActiveDualRail4? I; ActiveDualRail32! O)
+{
+    bool low_gnd;
+
+    InputAnalyzer analyzer;
+    SplitTree7 split;
+    QBuffer qb0, qb1, qb2, qb3, qb4, qb5, qb6, qb7;
+    analyzer.reset = reset;
+    split.reset = reset;
+    analyzer.I = I;
+    analyzer.O = split.I;
+    analyzer.R = qb7.L;
+    qb0.R = analyzer.L;
+    qb7.reset = reset;
+    qb7.I = split.O6;
+    qb7.O.t = O.t[28..31];
+    qb7.O.f = O.f[28..31];
+    qb7.O.a = O.a;
+    qb7.R = qb6.L;
+    qb6.reset = reset;
+    qb6.I = split.O5;
+    qb6.O.t = O.t[24..27];
+    qb6.O.f = O.f[24..27];
+    qb6.O.a = O.a;
+    qb6.R = qb5.L;
+    qb5.reset = reset;
+    qb5.I = split.O4;
+    qb5.O.t = O.t[20..23];
+    qb5.O.f = O.f[20..23];
+    qb5.O.a = O.a;
+    qb5.R = qb4.L;
+    qb4.reset = reset;
+    qb4.I = split.O3;
+    qb4.O.t = O.t[16..19];
+    qb4.O.f = O.f[16..19];
+    qb4.O.a = O.a;
+    qb4.R = qb3.L;
+    qb3.reset = reset;
+    qb3.I = split.O2;
+    qb3.O.t = O.t[12..15];
+    qb3.O.f = O.f[12..15];
+    qb3.O.a = O.a;
+    qb3.R = qb2.L;
+    qb2.reset = reset;
+    qb2.I = split.O1;
+    qb2.O.t = O.t[8..11];
+    qb2.O.f = O.f[8..11];
+    qb2.O.a = O.a;
+    qb2.R = qb1.L;
+    qb1.reset = reset;
+    qb1.I = split.O0;
+    qb1.O.t = O.t[4..7];
+    qb1.O.f = O.f[4..7];
+    qb1.O.a = O.a;
+    qb1.R = qb0.L;
+    qb0.reset = reset;
+    qb0.O.t = O.t[0..3];
+    qb0.O.f = O.f[0..3];
+    qb0.O.a = O.a;
+
+    // Passive constant source: valid 0010 while requested, spacer otherwise.
+    qb0.I.t[3] = low_gnd;
+    qb0.I.t[2] = low_gnd;
+    qb0.I.t[1] = qb0.I.req;
+    qb0.I.t[0] = low_gnd;
+    qb0.I.f[3] = qb0.I.req;
+    qb0.I.f[2] = qb0.I.req;
+    qb0.I.f[1] = low_gnd;
+    qb0.I.f[0] = qb0.I.req;
+
+    prs {
+        true -> low_gnd-
+    }
+}

@@ -1,0 +1,19 @@
+import "no_forks/commons/Channels.act";
+
+/* WAIT_SPACER is retained for interface compatibility; the PDF uses ~O.a release. */
+export template<pint N = 4; pbool WAIT_SPACER = true>
+defproc Merge(ActiveDualRail?<N> I0; ActiveDualRail?<N> I1; ActiveDualRail!<N> O)
+{
+
+    // Original non-bubble PRS: RouterDecompositionBubbleReshuffling.pdf, pp. 40.
+    prs {
+        O.a & (I0.t[N-1] | I0.f[N-1]) -> I0.a+
+        ~O.a -> I0.a-
+        O.a & (I1.t[N-1] | I1.f[N-1]) -> I1.a+
+        ~O.a -> I1.a-
+        (i:N:
+            I0.t[i] | I1.t[i] => O.t[i]+
+            I0.f[i] | I1.f[i] => O.f[i]+
+        )
+    }
+}

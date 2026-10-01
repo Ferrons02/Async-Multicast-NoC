@@ -1,0 +1,21 @@
+import "commons/Channels.act";
+
+// Literal supplied PRS. _o_t/_o_f are complemented output holding nodes.
+// Leave channel direction inference to ACT: the shared ack is a through-wire.
+export defproc QSlicer(bool? reset; ActiveDualRail4 I; Dataless A; ActiveDualRail4 O)
+{
+    bool _o_t[4], _o_f[4];
+    // The two non-inverting wire equations are physical connections.
+    I.a = O.a;
+    A.a = I.a;
+    prs {
+        (k:4:
+            I.t[k] & A.req -> _o_t[k]-
+            ~I.t[k] -> _o_t[k]+
+            I.f[k] & A.req -> _o_f[k]-
+            ~I.f[k] -> _o_f[k]+
+            ~_o_t[k] => O.t[k]+
+            ~_o_f[k] => O.f[k]+
+        )
+    }
+}

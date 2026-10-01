@@ -1,0 +1,94 @@
+import "subsystem/no_forks/ChildRouter.act";
+import "subsystem/no_forks/ParentRouter.act";
+import "subsystem/no_forks/MltcUnit.act";
+import "no_forks/Arb/Arb.act";
+
+/* RouterArch.png: sources select destinations; each physical output has one Arb.
+ * ParentRouter has no P output. ARM.M, ARP.P and ARP.M stay in spacer.
+ * Fork mode adds one ordinary PRS wire stage on every top-level channel;
+ * ACTsim random delays apply to both transitions, as in the subsystems. */
+export defproc Router(bool? reset;
+    ActiveDualRail32? C0i, C1i, C2i, C3i, Pi;
+    ActiveDualRail32! C0o, C1o, C2o, C3o, Po)
+{
+    ChildRouter CRT0, CRT1, CRT2, CRT3;
+    ParentRouter PRT;
+    Arb ARC0, ARC1, ARC2, ARC3, ARP, ARM;
+    MltcUnit MU;
+
+    CRT0.reset = reset;
+    CRT1.reset = reset;
+    CRT2.reset = reset;
+    CRT3.reset = reset;
+    PRT.reset = reset;
+    ARC0.reset = reset;
+    ARC1.reset = reset;
+    ARC2.reset = reset;
+    ARC3.reset = reset;
+    ARP.reset = reset;
+    ARM.reset = reset;
+    MU.reset = reset;
+
+    C0i = CRT0.I;
+    C1i = CRT1.I;
+    C2i = CRT2.I;
+    C3i = CRT3.I;
+    Pi = PRT.I;
+    CRT0.C0 = ARC0.C0;
+    CRT0.C1 = ARC1.C0;
+    CRT0.C2 = ARC2.C0;
+    CRT0.C3 = ARC3.C0;
+    CRT0.P = ARP.C0;
+    CRT0.M = ARM.C0;
+    CRT1.C0 = ARC0.C1;
+    CRT1.C1 = ARC1.C1;
+    CRT1.C2 = ARC2.C1;
+    CRT1.C3 = ARC3.C1;
+    CRT1.P = ARP.C1;
+    CRT1.M = ARM.C1;
+    CRT2.C0 = ARC0.C2;
+    CRT2.C1 = ARC1.C2;
+    CRT2.C2 = ARC2.C2;
+    CRT2.C3 = ARC3.C2;
+    CRT2.P = ARP.C2;
+    CRT2.M = ARM.C2;
+    CRT3.C0 = ARC0.C3;
+    CRT3.C1 = ARC1.C3;
+    CRT3.C2 = ARC2.C3;
+    CRT3.C3 = ARC3.C3;
+    CRT3.P = ARP.C3;
+    CRT3.M = ARM.C3;
+    PRT.C0 = ARC0.P;
+    PRT.C1 = ARC1.P;
+    PRT.C2 = ARC2.P;
+    PRT.C3 = ARC3.P;
+    PRT.M = ARM.P;
+    ARM.O = MU.I;
+    MU.C0 = ARC0.M;
+    MU.C1 = ARC1.M;
+    MU.C2 = ARC2.M;
+    MU.C3 = ARC3.M;
+    ARC0.O = C0o;
+    ARC1.O = C1o;
+    ARC2.O = C2o;
+    ARC3.O = C3o;
+    ARP.O = Po;
+
+    prs {
+        // No source: dual-rail spacer, never a valid zero token.
+        (i:32:
+            true -> ARM.M.t[i]-
+            true -> ARM.M.f[i]-
+        )
+        // No source: dual-rail spacer, never a valid zero token.
+        (i:32:
+            true -> ARP.P.t[i]-
+            true -> ARP.P.f[i]-
+        )
+        // No source: dual-rail spacer, never a valid zero token.
+        (i:32:
+            true -> ARP.M.t[i]-
+            true -> ARP.M.f[i]-
+        )
+    }
+}

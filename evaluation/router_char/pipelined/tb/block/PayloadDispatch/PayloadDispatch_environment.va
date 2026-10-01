@@ -1,0 +1,1226 @@
+// One complete reference round from Implementation/PRS/tb/block/no_forks/tb_PayloadDispatch.act.
+// Sequential producer: Ch!A; I!FFFFFFFE; I!FFFFFFFE; I!FFFFFFFF; Ch!F; I!FFFFFFFF.
+// Four independent receivers: C0 and C2 expect FE,FE,FF,FF; C1 and C3 expect FF.
+// All transitions follow four-phase handshakes; no fixed-time data pulses.
+`include "disciplines.vams"
+module payloaddispatch_environment(
+    reset,
+    I_t_0,
+    I_t_1,
+    I_t_2,
+    I_t_3,
+    I_t_4,
+    I_t_5,
+    I_t_6,
+    I_t_7,
+    I_t_8,
+    I_t_9,
+    I_t_10,
+    I_t_11,
+    I_t_12,
+    I_t_13,
+    I_t_14,
+    I_t_15,
+    I_t_16,
+    I_t_17,
+    I_t_18,
+    I_t_19,
+    I_t_20,
+    I_t_21,
+    I_t_22,
+    I_t_23,
+    I_t_24,
+    I_t_25,
+    I_t_26,
+    I_t_27,
+    I_t_28,
+    I_t_29,
+    I_t_30,
+    I_t_31,
+    I_f_0,
+    I_f_1,
+    I_f_2,
+    I_f_3,
+    I_f_4,
+    I_f_5,
+    I_f_6,
+    I_f_7,
+    I_f_8,
+    I_f_9,
+    I_f_10,
+    I_f_11,
+    I_f_12,
+    I_f_13,
+    I_f_14,
+    I_f_15,
+    I_f_16,
+    I_f_17,
+    I_f_18,
+    I_f_19,
+    I_f_20,
+    I_f_21,
+    I_f_22,
+    I_f_23,
+    I_f_24,
+    I_f_25,
+    I_f_26,
+    I_f_27,
+    I_f_28,
+    I_f_29,
+    I_f_30,
+    I_f_31,
+    I_a,
+    Ch_t_0,
+    Ch_t_1,
+    Ch_t_2,
+    Ch_t_3,
+    Ch_f_0,
+    Ch_f_1,
+    Ch_f_2,
+    Ch_f_3,
+    Ch_a,
+    C0_t_0,
+    C0_t_1,
+    C0_t_2,
+    C0_t_3,
+    C0_t_4,
+    C0_t_5,
+    C0_t_6,
+    C0_t_7,
+    C0_t_8,
+    C0_t_9,
+    C0_t_10,
+    C0_t_11,
+    C0_t_12,
+    C0_t_13,
+    C0_t_14,
+    C0_t_15,
+    C0_t_16,
+    C0_t_17,
+    C0_t_18,
+    C0_t_19,
+    C0_t_20,
+    C0_t_21,
+    C0_t_22,
+    C0_t_23,
+    C0_t_24,
+    C0_t_25,
+    C0_t_26,
+    C0_t_27,
+    C0_t_28,
+    C0_t_29,
+    C0_t_30,
+    C0_t_31,
+    C0_f_0,
+    C0_f_1,
+    C0_f_2,
+    C0_f_3,
+    C0_f_4,
+    C0_f_5,
+    C0_f_6,
+    C0_f_7,
+    C0_f_8,
+    C0_f_9,
+    C0_f_10,
+    C0_f_11,
+    C0_f_12,
+    C0_f_13,
+    C0_f_14,
+    C0_f_15,
+    C0_f_16,
+    C0_f_17,
+    C0_f_18,
+    C0_f_19,
+    C0_f_20,
+    C0_f_21,
+    C0_f_22,
+    C0_f_23,
+    C0_f_24,
+    C0_f_25,
+    C0_f_26,
+    C0_f_27,
+    C0_f_28,
+    C0_f_29,
+    C0_f_30,
+    C0_f_31,
+    C0_a,
+    C1_t_0,
+    C1_t_1,
+    C1_t_2,
+    C1_t_3,
+    C1_t_4,
+    C1_t_5,
+    C1_t_6,
+    C1_t_7,
+    C1_t_8,
+    C1_t_9,
+    C1_t_10,
+    C1_t_11,
+    C1_t_12,
+    C1_t_13,
+    C1_t_14,
+    C1_t_15,
+    C1_t_16,
+    C1_t_17,
+    C1_t_18,
+    C1_t_19,
+    C1_t_20,
+    C1_t_21,
+    C1_t_22,
+    C1_t_23,
+    C1_t_24,
+    C1_t_25,
+    C1_t_26,
+    C1_t_27,
+    C1_t_28,
+    C1_t_29,
+    C1_t_30,
+    C1_t_31,
+    C1_f_0,
+    C1_f_1,
+    C1_f_2,
+    C1_f_3,
+    C1_f_4,
+    C1_f_5,
+    C1_f_6,
+    C1_f_7,
+    C1_f_8,
+    C1_f_9,
+    C1_f_10,
+    C1_f_11,
+    C1_f_12,
+    C1_f_13,
+    C1_f_14,
+    C1_f_15,
+    C1_f_16,
+    C1_f_17,
+    C1_f_18,
+    C1_f_19,
+    C1_f_20,
+    C1_f_21,
+    C1_f_22,
+    C1_f_23,
+    C1_f_24,
+    C1_f_25,
+    C1_f_26,
+    C1_f_27,
+    C1_f_28,
+    C1_f_29,
+    C1_f_30,
+    C1_f_31,
+    C1_a,
+    C2_t_0,
+    C2_t_1,
+    C2_t_2,
+    C2_t_3,
+    C2_t_4,
+    C2_t_5,
+    C2_t_6,
+    C2_t_7,
+    C2_t_8,
+    C2_t_9,
+    C2_t_10,
+    C2_t_11,
+    C2_t_12,
+    C2_t_13,
+    C2_t_14,
+    C2_t_15,
+    C2_t_16,
+    C2_t_17,
+    C2_t_18,
+    C2_t_19,
+    C2_t_20,
+    C2_t_21,
+    C2_t_22,
+    C2_t_23,
+    C2_t_24,
+    C2_t_25,
+    C2_t_26,
+    C2_t_27,
+    C2_t_28,
+    C2_t_29,
+    C2_t_30,
+    C2_t_31,
+    C2_f_0,
+    C2_f_1,
+    C2_f_2,
+    C2_f_3,
+    C2_f_4,
+    C2_f_5,
+    C2_f_6,
+    C2_f_7,
+    C2_f_8,
+    C2_f_9,
+    C2_f_10,
+    C2_f_11,
+    C2_f_12,
+    C2_f_13,
+    C2_f_14,
+    C2_f_15,
+    C2_f_16,
+    C2_f_17,
+    C2_f_18,
+    C2_f_19,
+    C2_f_20,
+    C2_f_21,
+    C2_f_22,
+    C2_f_23,
+    C2_f_24,
+    C2_f_25,
+    C2_f_26,
+    C2_f_27,
+    C2_f_28,
+    C2_f_29,
+    C2_f_30,
+    C2_f_31,
+    C2_a,
+    C3_t_0,
+    C3_t_1,
+    C3_t_2,
+    C3_t_3,
+    C3_t_4,
+    C3_t_5,
+    C3_t_6,
+    C3_t_7,
+    C3_t_8,
+    C3_t_9,
+    C3_t_10,
+    C3_t_11,
+    C3_t_12,
+    C3_t_13,
+    C3_t_14,
+    C3_t_15,
+    C3_t_16,
+    C3_t_17,
+    C3_t_18,
+    C3_t_19,
+    C3_t_20,
+    C3_t_21,
+    C3_t_22,
+    C3_t_23,
+    C3_t_24,
+    C3_t_25,
+    C3_t_26,
+    C3_t_27,
+    C3_t_28,
+    C3_t_29,
+    C3_t_30,
+    C3_t_31,
+    C3_f_0,
+    C3_f_1,
+    C3_f_2,
+    C3_f_3,
+    C3_f_4,
+    C3_f_5,
+    C3_f_6,
+    C3_f_7,
+    C3_f_8,
+    C3_f_9,
+    C3_f_10,
+    C3_f_11,
+    C3_f_12,
+    C3_f_13,
+    C3_f_14,
+    C3_f_15,
+    C3_f_16,
+    C3_f_17,
+    C3_f_18,
+    C3_f_19,
+    C3_f_20,
+    C3_f_21,
+    C3_f_22,
+    C3_f_23,
+    C3_f_24,
+    C3_f_25,
+    C3_f_26,
+    C3_f_27,
+    C3_f_28,
+    C3_f_29,
+    C3_f_30,
+    C3_f_31,
+    C3_a,
+    done,
+    failed);
+inout reset, I_t_0, I_t_1, I_t_2, I_t_3, I_t_4, I_t_5, I_t_6, I_t_7, I_t_8, I_t_9, I_t_10, I_t_11, I_t_12, I_t_13, I_t_14, I_t_15, I_t_16, I_t_17, I_t_18, I_t_19, I_t_20, I_t_21, I_t_22, I_t_23, I_t_24, I_t_25, I_t_26, I_t_27, I_t_28, I_t_29, I_t_30, I_t_31, I_f_0, I_f_1, I_f_2, I_f_3, I_f_4, I_f_5, I_f_6, I_f_7, I_f_8, I_f_9, I_f_10, I_f_11, I_f_12, I_f_13, I_f_14, I_f_15, I_f_16, I_f_17, I_f_18, I_f_19, I_f_20, I_f_21, I_f_22, I_f_23, I_f_24, I_f_25, I_f_26, I_f_27, I_f_28, I_f_29, I_f_30, I_f_31, I_a, Ch_t_0, Ch_t_1, Ch_t_2, Ch_t_3, Ch_f_0, Ch_f_1, Ch_f_2, Ch_f_3, Ch_a, C0_t_0, C0_t_1, C0_t_2, C0_t_3, C0_t_4, C0_t_5, C0_t_6, C0_t_7, C0_t_8, C0_t_9, C0_t_10, C0_t_11, C0_t_12, C0_t_13, C0_t_14, C0_t_15, C0_t_16, C0_t_17, C0_t_18, C0_t_19, C0_t_20, C0_t_21, C0_t_22, C0_t_23, C0_t_24, C0_t_25, C0_t_26, C0_t_27, C0_t_28, C0_t_29, C0_t_30, C0_t_31, C0_f_0, C0_f_1, C0_f_2, C0_f_3, C0_f_4, C0_f_5, C0_f_6, C0_f_7, C0_f_8, C0_f_9, C0_f_10, C0_f_11, C0_f_12, C0_f_13, C0_f_14, C0_f_15, C0_f_16, C0_f_17, C0_f_18, C0_f_19, C0_f_20, C0_f_21, C0_f_22, C0_f_23, C0_f_24, C0_f_25, C0_f_26, C0_f_27, C0_f_28, C0_f_29, C0_f_30, C0_f_31, C0_a, C1_t_0, C1_t_1, C1_t_2, C1_t_3, C1_t_4, C1_t_5, C1_t_6, C1_t_7, C1_t_8, C1_t_9, C1_t_10, C1_t_11, C1_t_12, C1_t_13, C1_t_14, C1_t_15, C1_t_16, C1_t_17, C1_t_18, C1_t_19, C1_t_20, C1_t_21, C1_t_22, C1_t_23, C1_t_24, C1_t_25, C1_t_26, C1_t_27, C1_t_28, C1_t_29, C1_t_30, C1_t_31, C1_f_0, C1_f_1, C1_f_2, C1_f_3, C1_f_4, C1_f_5, C1_f_6, C1_f_7, C1_f_8, C1_f_9, C1_f_10, C1_f_11, C1_f_12, C1_f_13, C1_f_14, C1_f_15, C1_f_16, C1_f_17, C1_f_18, C1_f_19, C1_f_20, C1_f_21, C1_f_22, C1_f_23, C1_f_24, C1_f_25, C1_f_26, C1_f_27, C1_f_28, C1_f_29, C1_f_30, C1_f_31, C1_a, C2_t_0, C2_t_1, C2_t_2, C2_t_3, C2_t_4, C2_t_5, C2_t_6, C2_t_7, C2_t_8, C2_t_9, C2_t_10, C2_t_11, C2_t_12, C2_t_13, C2_t_14, C2_t_15, C2_t_16, C2_t_17, C2_t_18, C2_t_19, C2_t_20, C2_t_21, C2_t_22, C2_t_23, C2_t_24, C2_t_25, C2_t_26, C2_t_27, C2_t_28, C2_t_29, C2_t_30, C2_t_31, C2_f_0, C2_f_1, C2_f_2, C2_f_3, C2_f_4, C2_f_5, C2_f_6, C2_f_7, C2_f_8, C2_f_9, C2_f_10, C2_f_11, C2_f_12, C2_f_13, C2_f_14, C2_f_15, C2_f_16, C2_f_17, C2_f_18, C2_f_19, C2_f_20, C2_f_21, C2_f_22, C2_f_23, C2_f_24, C2_f_25, C2_f_26, C2_f_27, C2_f_28, C2_f_29, C2_f_30, C2_f_31, C2_a, C3_t_0, C3_t_1, C3_t_2, C3_t_3, C3_t_4, C3_t_5, C3_t_6, C3_t_7, C3_t_8, C3_t_9, C3_t_10, C3_t_11, C3_t_12, C3_t_13, C3_t_14, C3_t_15, C3_t_16, C3_t_17, C3_t_18, C3_t_19, C3_t_20, C3_t_21, C3_t_22, C3_t_23, C3_t_24, C3_t_25, C3_t_26, C3_t_27, C3_t_28, C3_t_29, C3_t_30, C3_t_31, C3_f_0, C3_f_1, C3_f_2, C3_f_3, C3_f_4, C3_f_5, C3_f_6, C3_f_7, C3_f_8, C3_f_9, C3_f_10, C3_f_11, C3_f_12, C3_f_13, C3_f_14, C3_f_15, C3_f_16, C3_f_17, C3_f_18, C3_f_19, C3_f_20, C3_f_21, C3_f_22, C3_f_23, C3_f_24, C3_f_25, C3_f_26, C3_f_27, C3_f_28, C3_f_29, C3_f_30, C3_f_31, C3_a, done, failed;
+electrical reset, I_t_0, I_t_1, I_t_2, I_t_3, I_t_4, I_t_5, I_t_6, I_t_7, I_t_8, I_t_9, I_t_10, I_t_11, I_t_12, I_t_13, I_t_14, I_t_15, I_t_16, I_t_17, I_t_18, I_t_19, I_t_20, I_t_21, I_t_22, I_t_23, I_t_24, I_t_25, I_t_26, I_t_27, I_t_28, I_t_29, I_t_30, I_t_31, I_f_0, I_f_1, I_f_2, I_f_3, I_f_4, I_f_5, I_f_6, I_f_7, I_f_8, I_f_9, I_f_10, I_f_11, I_f_12, I_f_13, I_f_14, I_f_15, I_f_16, I_f_17, I_f_18, I_f_19, I_f_20, I_f_21, I_f_22, I_f_23, I_f_24, I_f_25, I_f_26, I_f_27, I_f_28, I_f_29, I_f_30, I_f_31, I_a, Ch_t_0, Ch_t_1, Ch_t_2, Ch_t_3, Ch_f_0, Ch_f_1, Ch_f_2, Ch_f_3, Ch_a, C0_t_0, C0_t_1, C0_t_2, C0_t_3, C0_t_4, C0_t_5, C0_t_6, C0_t_7, C0_t_8, C0_t_9, C0_t_10, C0_t_11, C0_t_12, C0_t_13, C0_t_14, C0_t_15, C0_t_16, C0_t_17, C0_t_18, C0_t_19, C0_t_20, C0_t_21, C0_t_22, C0_t_23, C0_t_24, C0_t_25, C0_t_26, C0_t_27, C0_t_28, C0_t_29, C0_t_30, C0_t_31, C0_f_0, C0_f_1, C0_f_2, C0_f_3, C0_f_4, C0_f_5, C0_f_6, C0_f_7, C0_f_8, C0_f_9, C0_f_10, C0_f_11, C0_f_12, C0_f_13, C0_f_14, C0_f_15, C0_f_16, C0_f_17, C0_f_18, C0_f_19, C0_f_20, C0_f_21, C0_f_22, C0_f_23, C0_f_24, C0_f_25, C0_f_26, C0_f_27, C0_f_28, C0_f_29, C0_f_30, C0_f_31, C0_a, C1_t_0, C1_t_1, C1_t_2, C1_t_3, C1_t_4, C1_t_5, C1_t_6, C1_t_7, C1_t_8, C1_t_9, C1_t_10, C1_t_11, C1_t_12, C1_t_13, C1_t_14, C1_t_15, C1_t_16, C1_t_17, C1_t_18, C1_t_19, C1_t_20, C1_t_21, C1_t_22, C1_t_23, C1_t_24, C1_t_25, C1_t_26, C1_t_27, C1_t_28, C1_t_29, C1_t_30, C1_t_31, C1_f_0, C1_f_1, C1_f_2, C1_f_3, C1_f_4, C1_f_5, C1_f_6, C1_f_7, C1_f_8, C1_f_9, C1_f_10, C1_f_11, C1_f_12, C1_f_13, C1_f_14, C1_f_15, C1_f_16, C1_f_17, C1_f_18, C1_f_19, C1_f_20, C1_f_21, C1_f_22, C1_f_23, C1_f_24, C1_f_25, C1_f_26, C1_f_27, C1_f_28, C1_f_29, C1_f_30, C1_f_31, C1_a, C2_t_0, C2_t_1, C2_t_2, C2_t_3, C2_t_4, C2_t_5, C2_t_6, C2_t_7, C2_t_8, C2_t_9, C2_t_10, C2_t_11, C2_t_12, C2_t_13, C2_t_14, C2_t_15, C2_t_16, C2_t_17, C2_t_18, C2_t_19, C2_t_20, C2_t_21, C2_t_22, C2_t_23, C2_t_24, C2_t_25, C2_t_26, C2_t_27, C2_t_28, C2_t_29, C2_t_30, C2_t_31, C2_f_0, C2_f_1, C2_f_2, C2_f_3, C2_f_4, C2_f_5, C2_f_6, C2_f_7, C2_f_8, C2_f_9, C2_f_10, C2_f_11, C2_f_12, C2_f_13, C2_f_14, C2_f_15, C2_f_16, C2_f_17, C2_f_18, C2_f_19, C2_f_20, C2_f_21, C2_f_22, C2_f_23, C2_f_24, C2_f_25, C2_f_26, C2_f_27, C2_f_28, C2_f_29, C2_f_30, C2_f_31, C2_a, C3_t_0, C3_t_1, C3_t_2, C3_t_3, C3_t_4, C3_t_5, C3_t_6, C3_t_7, C3_t_8, C3_t_9, C3_t_10, C3_t_11, C3_t_12, C3_t_13, C3_t_14, C3_t_15, C3_t_16, C3_t_17, C3_t_18, C3_t_19, C3_t_20, C3_t_21, C3_t_22, C3_t_23, C3_t_24, C3_t_25, C3_t_26, C3_t_27, C3_t_28, C3_t_29, C3_t_30, C3_t_31, C3_f_0, C3_f_1, C3_f_2, C3_f_3, C3_f_4, C3_f_5, C3_f_6, C3_f_7, C3_f_8, C3_f_9, C3_f_10, C3_f_11, C3_f_12, C3_f_13, C3_f_14, C3_f_15, C3_f_16, C3_f_17, C3_f_18, C3_f_19, C3_f_20, C3_f_21, C3_f_22, C3_f_23, C3_f_24, C3_f_25, C3_f_26, C3_f_27, C3_f_28, C3_f_29, C3_f_30, C3_f_31, C3_a, done, failed;
+parameter real SUPPLY=0.0;
+parameter real TICK=10p from (0:inf);
+parameter real TD=100p from (0:inf);
+parameter real EDGE=10p from (0:inf);
+parameter real STOP_TIME=2u from (0:inf);
+integer active, finished, failure, reported;
+integer tx_step, tx_phase, tx_i_valid, tx_ch_valid, tx_hi, tx_lo, tx_ch;
+integer input_spacer, control_spacer, control_step;
+real threshold, stop_after, producer_ack;
+integer rx_index0, rx_phase0, ack0, valid0, spacer0, illegal0;
+integer word0_hi, word0_lo, expected0_hi, expected0_lo;
+integer rx_index1, rx_phase1, ack1, valid1, spacer1, illegal1;
+integer word1_hi, word1_lo, expected1_hi, expected1_lo;
+integer rx_index2, rx_phase2, ack2, valid2, spacer2, illegal2;
+integer word2_hi, word2_lo, expected2_hi, expected2_lo;
+integer rx_index3, rx_phase3, ack3, valid3, spacer3, illegal3;
+integer word3_hi, word3_lo, expected3_hi, expected3_lo;
+// Supply-current sampling continues after the functional round, with reset low.
+parameter real IDLE_SETTLE=20n from (0:inf);
+parameter real IDLE_WINDOW=20n from (0:inf);
+parameter real IDLE_MARGIN=1n from (0:inf);
+integer idle_started, idle_completed;
+real idle_start;
+analog begin
+  @(initial_step) begin
+    idle_start=-1; idle_started=0; idle_completed=0;
+    active=0; finished=0; failure=0; reported=0;
+    tx_step=0; tx_phase=0; tx_i_valid=0; tx_ch_valid=0;
+    tx_hi=0; tx_lo=0; tx_ch=0;
+    threshold=0.5*SUPPLY; stop_after=-1;
+    rx_index0=0; rx_phase0=0; ack0=0; expected0_hi=0; expected0_lo=0;
+    rx_index1=0; rx_phase1=0; ack1=0; expected1_hi=0; expected1_lo=0;
+    rx_index2=0; rx_phase2=0; ack2=0; expected2_hi=0; expected2_lo=0;
+    rx_index3=0; rx_phase3=0; ack3=0; expected3_hi=0; expected3_lo=0;
+    if (SUPPLY <= 0) begin failure=1; $display("SIM_ERROR reason=invalid_supply"); end
+  end
+  @(timer(TICK,TICK)) begin
+    input_spacer=1; control_spacer=1;
+    if (V(I_t_0) >= threshold || V(I_f_0) >= threshold) input_spacer=0;
+    if (V(I_t_1) >= threshold || V(I_f_1) >= threshold) input_spacer=0;
+    if (V(I_t_2) >= threshold || V(I_f_2) >= threshold) input_spacer=0;
+    if (V(I_t_3) >= threshold || V(I_f_3) >= threshold) input_spacer=0;
+    if (V(I_t_4) >= threshold || V(I_f_4) >= threshold) input_spacer=0;
+    if (V(I_t_5) >= threshold || V(I_f_5) >= threshold) input_spacer=0;
+    if (V(I_t_6) >= threshold || V(I_f_6) >= threshold) input_spacer=0;
+    if (V(I_t_7) >= threshold || V(I_f_7) >= threshold) input_spacer=0;
+    if (V(I_t_8) >= threshold || V(I_f_8) >= threshold) input_spacer=0;
+    if (V(I_t_9) >= threshold || V(I_f_9) >= threshold) input_spacer=0;
+    if (V(I_t_10) >= threshold || V(I_f_10) >= threshold) input_spacer=0;
+    if (V(I_t_11) >= threshold || V(I_f_11) >= threshold) input_spacer=0;
+    if (V(I_t_12) >= threshold || V(I_f_12) >= threshold) input_spacer=0;
+    if (V(I_t_13) >= threshold || V(I_f_13) >= threshold) input_spacer=0;
+    if (V(I_t_14) >= threshold || V(I_f_14) >= threshold) input_spacer=0;
+    if (V(I_t_15) >= threshold || V(I_f_15) >= threshold) input_spacer=0;
+    if (V(I_t_16) >= threshold || V(I_f_16) >= threshold) input_spacer=0;
+    if (V(I_t_17) >= threshold || V(I_f_17) >= threshold) input_spacer=0;
+    if (V(I_t_18) >= threshold || V(I_f_18) >= threshold) input_spacer=0;
+    if (V(I_t_19) >= threshold || V(I_f_19) >= threshold) input_spacer=0;
+    if (V(I_t_20) >= threshold || V(I_f_20) >= threshold) input_spacer=0;
+    if (V(I_t_21) >= threshold || V(I_f_21) >= threshold) input_spacer=0;
+    if (V(I_t_22) >= threshold || V(I_f_22) >= threshold) input_spacer=0;
+    if (V(I_t_23) >= threshold || V(I_f_23) >= threshold) input_spacer=0;
+    if (V(I_t_24) >= threshold || V(I_f_24) >= threshold) input_spacer=0;
+    if (V(I_t_25) >= threshold || V(I_f_25) >= threshold) input_spacer=0;
+    if (V(I_t_26) >= threshold || V(I_f_26) >= threshold) input_spacer=0;
+    if (V(I_t_27) >= threshold || V(I_f_27) >= threshold) input_spacer=0;
+    if (V(I_t_28) >= threshold || V(I_f_28) >= threshold) input_spacer=0;
+    if (V(I_t_29) >= threshold || V(I_f_29) >= threshold) input_spacer=0;
+    if (V(I_t_30) >= threshold || V(I_f_30) >= threshold) input_spacer=0;
+    if (V(I_t_31) >= threshold || V(I_f_31) >= threshold) input_spacer=0;
+    if (V(Ch_t_0) >= threshold || V(Ch_f_0) >= threshold) control_spacer=0;
+    if (V(Ch_t_1) >= threshold || V(Ch_f_1) >= threshold) control_spacer=0;
+    if (V(Ch_t_2) >= threshold || V(Ch_f_2) >= threshold) control_spacer=0;
+    if (V(Ch_t_3) >= threshold || V(Ch_f_3) >= threshold) control_spacer=0;
+    valid0=1; spacer0=1; illegal0=0; word0_hi=0; word0_lo=0;
+    if (V(C0_t_0) < threshold && V(C0_f_0) < threshold) valid0=0;
+    if (V(C0_t_0) >= threshold || V(C0_f_0) >= threshold) spacer0=0;
+    if (V(C0_t_0) >= threshold && V(C0_f_0) >= threshold) illegal0=1;
+    if (V(C0_t_0) >= threshold) word0_lo=word0_lo | (1 << 0);
+    if (V(C0_t_1) < threshold && V(C0_f_1) < threshold) valid0=0;
+    if (V(C0_t_1) >= threshold || V(C0_f_1) >= threshold) spacer0=0;
+    if (V(C0_t_1) >= threshold && V(C0_f_1) >= threshold) illegal0=1;
+    if (V(C0_t_1) >= threshold) word0_lo=word0_lo | (1 << 1);
+    if (V(C0_t_2) < threshold && V(C0_f_2) < threshold) valid0=0;
+    if (V(C0_t_2) >= threshold || V(C0_f_2) >= threshold) spacer0=0;
+    if (V(C0_t_2) >= threshold && V(C0_f_2) >= threshold) illegal0=1;
+    if (V(C0_t_2) >= threshold) word0_lo=word0_lo | (1 << 2);
+    if (V(C0_t_3) < threshold && V(C0_f_3) < threshold) valid0=0;
+    if (V(C0_t_3) >= threshold || V(C0_f_3) >= threshold) spacer0=0;
+    if (V(C0_t_3) >= threshold && V(C0_f_3) >= threshold) illegal0=1;
+    if (V(C0_t_3) >= threshold) word0_lo=word0_lo | (1 << 3);
+    if (V(C0_t_4) < threshold && V(C0_f_4) < threshold) valid0=0;
+    if (V(C0_t_4) >= threshold || V(C0_f_4) >= threshold) spacer0=0;
+    if (V(C0_t_4) >= threshold && V(C0_f_4) >= threshold) illegal0=1;
+    if (V(C0_t_4) >= threshold) word0_lo=word0_lo | (1 << 4);
+    if (V(C0_t_5) < threshold && V(C0_f_5) < threshold) valid0=0;
+    if (V(C0_t_5) >= threshold || V(C0_f_5) >= threshold) spacer0=0;
+    if (V(C0_t_5) >= threshold && V(C0_f_5) >= threshold) illegal0=1;
+    if (V(C0_t_5) >= threshold) word0_lo=word0_lo | (1 << 5);
+    if (V(C0_t_6) < threshold && V(C0_f_6) < threshold) valid0=0;
+    if (V(C0_t_6) >= threshold || V(C0_f_6) >= threshold) spacer0=0;
+    if (V(C0_t_6) >= threshold && V(C0_f_6) >= threshold) illegal0=1;
+    if (V(C0_t_6) >= threshold) word0_lo=word0_lo | (1 << 6);
+    if (V(C0_t_7) < threshold && V(C0_f_7) < threshold) valid0=0;
+    if (V(C0_t_7) >= threshold || V(C0_f_7) >= threshold) spacer0=0;
+    if (V(C0_t_7) >= threshold && V(C0_f_7) >= threshold) illegal0=1;
+    if (V(C0_t_7) >= threshold) word0_lo=word0_lo | (1 << 7);
+    if (V(C0_t_8) < threshold && V(C0_f_8) < threshold) valid0=0;
+    if (V(C0_t_8) >= threshold || V(C0_f_8) >= threshold) spacer0=0;
+    if (V(C0_t_8) >= threshold && V(C0_f_8) >= threshold) illegal0=1;
+    if (V(C0_t_8) >= threshold) word0_lo=word0_lo | (1 << 8);
+    if (V(C0_t_9) < threshold && V(C0_f_9) < threshold) valid0=0;
+    if (V(C0_t_9) >= threshold || V(C0_f_9) >= threshold) spacer0=0;
+    if (V(C0_t_9) >= threshold && V(C0_f_9) >= threshold) illegal0=1;
+    if (V(C0_t_9) >= threshold) word0_lo=word0_lo | (1 << 9);
+    if (V(C0_t_10) < threshold && V(C0_f_10) < threshold) valid0=0;
+    if (V(C0_t_10) >= threshold || V(C0_f_10) >= threshold) spacer0=0;
+    if (V(C0_t_10) >= threshold && V(C0_f_10) >= threshold) illegal0=1;
+    if (V(C0_t_10) >= threshold) word0_lo=word0_lo | (1 << 10);
+    if (V(C0_t_11) < threshold && V(C0_f_11) < threshold) valid0=0;
+    if (V(C0_t_11) >= threshold || V(C0_f_11) >= threshold) spacer0=0;
+    if (V(C0_t_11) >= threshold && V(C0_f_11) >= threshold) illegal0=1;
+    if (V(C0_t_11) >= threshold) word0_lo=word0_lo | (1 << 11);
+    if (V(C0_t_12) < threshold && V(C0_f_12) < threshold) valid0=0;
+    if (V(C0_t_12) >= threshold || V(C0_f_12) >= threshold) spacer0=0;
+    if (V(C0_t_12) >= threshold && V(C0_f_12) >= threshold) illegal0=1;
+    if (V(C0_t_12) >= threshold) word0_lo=word0_lo | (1 << 12);
+    if (V(C0_t_13) < threshold && V(C0_f_13) < threshold) valid0=0;
+    if (V(C0_t_13) >= threshold || V(C0_f_13) >= threshold) spacer0=0;
+    if (V(C0_t_13) >= threshold && V(C0_f_13) >= threshold) illegal0=1;
+    if (V(C0_t_13) >= threshold) word0_lo=word0_lo | (1 << 13);
+    if (V(C0_t_14) < threshold && V(C0_f_14) < threshold) valid0=0;
+    if (V(C0_t_14) >= threshold || V(C0_f_14) >= threshold) spacer0=0;
+    if (V(C0_t_14) >= threshold && V(C0_f_14) >= threshold) illegal0=1;
+    if (V(C0_t_14) >= threshold) word0_lo=word0_lo | (1 << 14);
+    if (V(C0_t_15) < threshold && V(C0_f_15) < threshold) valid0=0;
+    if (V(C0_t_15) >= threshold || V(C0_f_15) >= threshold) spacer0=0;
+    if (V(C0_t_15) >= threshold && V(C0_f_15) >= threshold) illegal0=1;
+    if (V(C0_t_15) >= threshold) word0_lo=word0_lo | (1 << 15);
+    if (V(C0_t_16) < threshold && V(C0_f_16) < threshold) valid0=0;
+    if (V(C0_t_16) >= threshold || V(C0_f_16) >= threshold) spacer0=0;
+    if (V(C0_t_16) >= threshold && V(C0_f_16) >= threshold) illegal0=1;
+    if (V(C0_t_16) >= threshold) word0_hi=word0_hi | (1 << 0);
+    if (V(C0_t_17) < threshold && V(C0_f_17) < threshold) valid0=0;
+    if (V(C0_t_17) >= threshold || V(C0_f_17) >= threshold) spacer0=0;
+    if (V(C0_t_17) >= threshold && V(C0_f_17) >= threshold) illegal0=1;
+    if (V(C0_t_17) >= threshold) word0_hi=word0_hi | (1 << 1);
+    if (V(C0_t_18) < threshold && V(C0_f_18) < threshold) valid0=0;
+    if (V(C0_t_18) >= threshold || V(C0_f_18) >= threshold) spacer0=0;
+    if (V(C0_t_18) >= threshold && V(C0_f_18) >= threshold) illegal0=1;
+    if (V(C0_t_18) >= threshold) word0_hi=word0_hi | (1 << 2);
+    if (V(C0_t_19) < threshold && V(C0_f_19) < threshold) valid0=0;
+    if (V(C0_t_19) >= threshold || V(C0_f_19) >= threshold) spacer0=0;
+    if (V(C0_t_19) >= threshold && V(C0_f_19) >= threshold) illegal0=1;
+    if (V(C0_t_19) >= threshold) word0_hi=word0_hi | (1 << 3);
+    if (V(C0_t_20) < threshold && V(C0_f_20) < threshold) valid0=0;
+    if (V(C0_t_20) >= threshold || V(C0_f_20) >= threshold) spacer0=0;
+    if (V(C0_t_20) >= threshold && V(C0_f_20) >= threshold) illegal0=1;
+    if (V(C0_t_20) >= threshold) word0_hi=word0_hi | (1 << 4);
+    if (V(C0_t_21) < threshold && V(C0_f_21) < threshold) valid0=0;
+    if (V(C0_t_21) >= threshold || V(C0_f_21) >= threshold) spacer0=0;
+    if (V(C0_t_21) >= threshold && V(C0_f_21) >= threshold) illegal0=1;
+    if (V(C0_t_21) >= threshold) word0_hi=word0_hi | (1 << 5);
+    if (V(C0_t_22) < threshold && V(C0_f_22) < threshold) valid0=0;
+    if (V(C0_t_22) >= threshold || V(C0_f_22) >= threshold) spacer0=0;
+    if (V(C0_t_22) >= threshold && V(C0_f_22) >= threshold) illegal0=1;
+    if (V(C0_t_22) >= threshold) word0_hi=word0_hi | (1 << 6);
+    if (V(C0_t_23) < threshold && V(C0_f_23) < threshold) valid0=0;
+    if (V(C0_t_23) >= threshold || V(C0_f_23) >= threshold) spacer0=0;
+    if (V(C0_t_23) >= threshold && V(C0_f_23) >= threshold) illegal0=1;
+    if (V(C0_t_23) >= threshold) word0_hi=word0_hi | (1 << 7);
+    if (V(C0_t_24) < threshold && V(C0_f_24) < threshold) valid0=0;
+    if (V(C0_t_24) >= threshold || V(C0_f_24) >= threshold) spacer0=0;
+    if (V(C0_t_24) >= threshold && V(C0_f_24) >= threshold) illegal0=1;
+    if (V(C0_t_24) >= threshold) word0_hi=word0_hi | (1 << 8);
+    if (V(C0_t_25) < threshold && V(C0_f_25) < threshold) valid0=0;
+    if (V(C0_t_25) >= threshold || V(C0_f_25) >= threshold) spacer0=0;
+    if (V(C0_t_25) >= threshold && V(C0_f_25) >= threshold) illegal0=1;
+    if (V(C0_t_25) >= threshold) word0_hi=word0_hi | (1 << 9);
+    if (V(C0_t_26) < threshold && V(C0_f_26) < threshold) valid0=0;
+    if (V(C0_t_26) >= threshold || V(C0_f_26) >= threshold) spacer0=0;
+    if (V(C0_t_26) >= threshold && V(C0_f_26) >= threshold) illegal0=1;
+    if (V(C0_t_26) >= threshold) word0_hi=word0_hi | (1 << 10);
+    if (V(C0_t_27) < threshold && V(C0_f_27) < threshold) valid0=0;
+    if (V(C0_t_27) >= threshold || V(C0_f_27) >= threshold) spacer0=0;
+    if (V(C0_t_27) >= threshold && V(C0_f_27) >= threshold) illegal0=1;
+    if (V(C0_t_27) >= threshold) word0_hi=word0_hi | (1 << 11);
+    if (V(C0_t_28) < threshold && V(C0_f_28) < threshold) valid0=0;
+    if (V(C0_t_28) >= threshold || V(C0_f_28) >= threshold) spacer0=0;
+    if (V(C0_t_28) >= threshold && V(C0_f_28) >= threshold) illegal0=1;
+    if (V(C0_t_28) >= threshold) word0_hi=word0_hi | (1 << 12);
+    if (V(C0_t_29) < threshold && V(C0_f_29) < threshold) valid0=0;
+    if (V(C0_t_29) >= threshold || V(C0_f_29) >= threshold) spacer0=0;
+    if (V(C0_t_29) >= threshold && V(C0_f_29) >= threshold) illegal0=1;
+    if (V(C0_t_29) >= threshold) word0_hi=word0_hi | (1 << 13);
+    if (V(C0_t_30) < threshold && V(C0_f_30) < threshold) valid0=0;
+    if (V(C0_t_30) >= threshold || V(C0_f_30) >= threshold) spacer0=0;
+    if (V(C0_t_30) >= threshold && V(C0_f_30) >= threshold) illegal0=1;
+    if (V(C0_t_30) >= threshold) word0_hi=word0_hi | (1 << 14);
+    if (V(C0_t_31) < threshold && V(C0_f_31) < threshold) valid0=0;
+    if (V(C0_t_31) >= threshold || V(C0_f_31) >= threshold) spacer0=0;
+    if (V(C0_t_31) >= threshold && V(C0_f_31) >= threshold) illegal0=1;
+    if (V(C0_t_31) >= threshold) word0_hi=word0_hi | (1 << 15);
+    valid1=1; spacer1=1; illegal1=0; word1_hi=0; word1_lo=0;
+    if (V(C1_t_0) < threshold && V(C1_f_0) < threshold) valid1=0;
+    if (V(C1_t_0) >= threshold || V(C1_f_0) >= threshold) spacer1=0;
+    if (V(C1_t_0) >= threshold && V(C1_f_0) >= threshold) illegal1=1;
+    if (V(C1_t_0) >= threshold) word1_lo=word1_lo | (1 << 0);
+    if (V(C1_t_1) < threshold && V(C1_f_1) < threshold) valid1=0;
+    if (V(C1_t_1) >= threshold || V(C1_f_1) >= threshold) spacer1=0;
+    if (V(C1_t_1) >= threshold && V(C1_f_1) >= threshold) illegal1=1;
+    if (V(C1_t_1) >= threshold) word1_lo=word1_lo | (1 << 1);
+    if (V(C1_t_2) < threshold && V(C1_f_2) < threshold) valid1=0;
+    if (V(C1_t_2) >= threshold || V(C1_f_2) >= threshold) spacer1=0;
+    if (V(C1_t_2) >= threshold && V(C1_f_2) >= threshold) illegal1=1;
+    if (V(C1_t_2) >= threshold) word1_lo=word1_lo | (1 << 2);
+    if (V(C1_t_3) < threshold && V(C1_f_3) < threshold) valid1=0;
+    if (V(C1_t_3) >= threshold || V(C1_f_3) >= threshold) spacer1=0;
+    if (V(C1_t_3) >= threshold && V(C1_f_3) >= threshold) illegal1=1;
+    if (V(C1_t_3) >= threshold) word1_lo=word1_lo | (1 << 3);
+    if (V(C1_t_4) < threshold && V(C1_f_4) < threshold) valid1=0;
+    if (V(C1_t_4) >= threshold || V(C1_f_4) >= threshold) spacer1=0;
+    if (V(C1_t_4) >= threshold && V(C1_f_4) >= threshold) illegal1=1;
+    if (V(C1_t_4) >= threshold) word1_lo=word1_lo | (1 << 4);
+    if (V(C1_t_5) < threshold && V(C1_f_5) < threshold) valid1=0;
+    if (V(C1_t_5) >= threshold || V(C1_f_5) >= threshold) spacer1=0;
+    if (V(C1_t_5) >= threshold && V(C1_f_5) >= threshold) illegal1=1;
+    if (V(C1_t_5) >= threshold) word1_lo=word1_lo | (1 << 5);
+    if (V(C1_t_6) < threshold && V(C1_f_6) < threshold) valid1=0;
+    if (V(C1_t_6) >= threshold || V(C1_f_6) >= threshold) spacer1=0;
+    if (V(C1_t_6) >= threshold && V(C1_f_6) >= threshold) illegal1=1;
+    if (V(C1_t_6) >= threshold) word1_lo=word1_lo | (1 << 6);
+    if (V(C1_t_7) < threshold && V(C1_f_7) < threshold) valid1=0;
+    if (V(C1_t_7) >= threshold || V(C1_f_7) >= threshold) spacer1=0;
+    if (V(C1_t_7) >= threshold && V(C1_f_7) >= threshold) illegal1=1;
+    if (V(C1_t_7) >= threshold) word1_lo=word1_lo | (1 << 7);
+    if (V(C1_t_8) < threshold && V(C1_f_8) < threshold) valid1=0;
+    if (V(C1_t_8) >= threshold || V(C1_f_8) >= threshold) spacer1=0;
+    if (V(C1_t_8) >= threshold && V(C1_f_8) >= threshold) illegal1=1;
+    if (V(C1_t_8) >= threshold) word1_lo=word1_lo | (1 << 8);
+    if (V(C1_t_9) < threshold && V(C1_f_9) < threshold) valid1=0;
+    if (V(C1_t_9) >= threshold || V(C1_f_9) >= threshold) spacer1=0;
+    if (V(C1_t_9) >= threshold && V(C1_f_9) >= threshold) illegal1=1;
+    if (V(C1_t_9) >= threshold) word1_lo=word1_lo | (1 << 9);
+    if (V(C1_t_10) < threshold && V(C1_f_10) < threshold) valid1=0;
+    if (V(C1_t_10) >= threshold || V(C1_f_10) >= threshold) spacer1=0;
+    if (V(C1_t_10) >= threshold && V(C1_f_10) >= threshold) illegal1=1;
+    if (V(C1_t_10) >= threshold) word1_lo=word1_lo | (1 << 10);
+    if (V(C1_t_11) < threshold && V(C1_f_11) < threshold) valid1=0;
+    if (V(C1_t_11) >= threshold || V(C1_f_11) >= threshold) spacer1=0;
+    if (V(C1_t_11) >= threshold && V(C1_f_11) >= threshold) illegal1=1;
+    if (V(C1_t_11) >= threshold) word1_lo=word1_lo | (1 << 11);
+    if (V(C1_t_12) < threshold && V(C1_f_12) < threshold) valid1=0;
+    if (V(C1_t_12) >= threshold || V(C1_f_12) >= threshold) spacer1=0;
+    if (V(C1_t_12) >= threshold && V(C1_f_12) >= threshold) illegal1=1;
+    if (V(C1_t_12) >= threshold) word1_lo=word1_lo | (1 << 12);
+    if (V(C1_t_13) < threshold && V(C1_f_13) < threshold) valid1=0;
+    if (V(C1_t_13) >= threshold || V(C1_f_13) >= threshold) spacer1=0;
+    if (V(C1_t_13) >= threshold && V(C1_f_13) >= threshold) illegal1=1;
+    if (V(C1_t_13) >= threshold) word1_lo=word1_lo | (1 << 13);
+    if (V(C1_t_14) < threshold && V(C1_f_14) < threshold) valid1=0;
+    if (V(C1_t_14) >= threshold || V(C1_f_14) >= threshold) spacer1=0;
+    if (V(C1_t_14) >= threshold && V(C1_f_14) >= threshold) illegal1=1;
+    if (V(C1_t_14) >= threshold) word1_lo=word1_lo | (1 << 14);
+    if (V(C1_t_15) < threshold && V(C1_f_15) < threshold) valid1=0;
+    if (V(C1_t_15) >= threshold || V(C1_f_15) >= threshold) spacer1=0;
+    if (V(C1_t_15) >= threshold && V(C1_f_15) >= threshold) illegal1=1;
+    if (V(C1_t_15) >= threshold) word1_lo=word1_lo | (1 << 15);
+    if (V(C1_t_16) < threshold && V(C1_f_16) < threshold) valid1=0;
+    if (V(C1_t_16) >= threshold || V(C1_f_16) >= threshold) spacer1=0;
+    if (V(C1_t_16) >= threshold && V(C1_f_16) >= threshold) illegal1=1;
+    if (V(C1_t_16) >= threshold) word1_hi=word1_hi | (1 << 0);
+    if (V(C1_t_17) < threshold && V(C1_f_17) < threshold) valid1=0;
+    if (V(C1_t_17) >= threshold || V(C1_f_17) >= threshold) spacer1=0;
+    if (V(C1_t_17) >= threshold && V(C1_f_17) >= threshold) illegal1=1;
+    if (V(C1_t_17) >= threshold) word1_hi=word1_hi | (1 << 1);
+    if (V(C1_t_18) < threshold && V(C1_f_18) < threshold) valid1=0;
+    if (V(C1_t_18) >= threshold || V(C1_f_18) >= threshold) spacer1=0;
+    if (V(C1_t_18) >= threshold && V(C1_f_18) >= threshold) illegal1=1;
+    if (V(C1_t_18) >= threshold) word1_hi=word1_hi | (1 << 2);
+    if (V(C1_t_19) < threshold && V(C1_f_19) < threshold) valid1=0;
+    if (V(C1_t_19) >= threshold || V(C1_f_19) >= threshold) spacer1=0;
+    if (V(C1_t_19) >= threshold && V(C1_f_19) >= threshold) illegal1=1;
+    if (V(C1_t_19) >= threshold) word1_hi=word1_hi | (1 << 3);
+    if (V(C1_t_20) < threshold && V(C1_f_20) < threshold) valid1=0;
+    if (V(C1_t_20) >= threshold || V(C1_f_20) >= threshold) spacer1=0;
+    if (V(C1_t_20) >= threshold && V(C1_f_20) >= threshold) illegal1=1;
+    if (V(C1_t_20) >= threshold) word1_hi=word1_hi | (1 << 4);
+    if (V(C1_t_21) < threshold && V(C1_f_21) < threshold) valid1=0;
+    if (V(C1_t_21) >= threshold || V(C1_f_21) >= threshold) spacer1=0;
+    if (V(C1_t_21) >= threshold && V(C1_f_21) >= threshold) illegal1=1;
+    if (V(C1_t_21) >= threshold) word1_hi=word1_hi | (1 << 5);
+    if (V(C1_t_22) < threshold && V(C1_f_22) < threshold) valid1=0;
+    if (V(C1_t_22) >= threshold || V(C1_f_22) >= threshold) spacer1=0;
+    if (V(C1_t_22) >= threshold && V(C1_f_22) >= threshold) illegal1=1;
+    if (V(C1_t_22) >= threshold) word1_hi=word1_hi | (1 << 6);
+    if (V(C1_t_23) < threshold && V(C1_f_23) < threshold) valid1=0;
+    if (V(C1_t_23) >= threshold || V(C1_f_23) >= threshold) spacer1=0;
+    if (V(C1_t_23) >= threshold && V(C1_f_23) >= threshold) illegal1=1;
+    if (V(C1_t_23) >= threshold) word1_hi=word1_hi | (1 << 7);
+    if (V(C1_t_24) < threshold && V(C1_f_24) < threshold) valid1=0;
+    if (V(C1_t_24) >= threshold || V(C1_f_24) >= threshold) spacer1=0;
+    if (V(C1_t_24) >= threshold && V(C1_f_24) >= threshold) illegal1=1;
+    if (V(C1_t_24) >= threshold) word1_hi=word1_hi | (1 << 8);
+    if (V(C1_t_25) < threshold && V(C1_f_25) < threshold) valid1=0;
+    if (V(C1_t_25) >= threshold || V(C1_f_25) >= threshold) spacer1=0;
+    if (V(C1_t_25) >= threshold && V(C1_f_25) >= threshold) illegal1=1;
+    if (V(C1_t_25) >= threshold) word1_hi=word1_hi | (1 << 9);
+    if (V(C1_t_26) < threshold && V(C1_f_26) < threshold) valid1=0;
+    if (V(C1_t_26) >= threshold || V(C1_f_26) >= threshold) spacer1=0;
+    if (V(C1_t_26) >= threshold && V(C1_f_26) >= threshold) illegal1=1;
+    if (V(C1_t_26) >= threshold) word1_hi=word1_hi | (1 << 10);
+    if (V(C1_t_27) < threshold && V(C1_f_27) < threshold) valid1=0;
+    if (V(C1_t_27) >= threshold || V(C1_f_27) >= threshold) spacer1=0;
+    if (V(C1_t_27) >= threshold && V(C1_f_27) >= threshold) illegal1=1;
+    if (V(C1_t_27) >= threshold) word1_hi=word1_hi | (1 << 11);
+    if (V(C1_t_28) < threshold && V(C1_f_28) < threshold) valid1=0;
+    if (V(C1_t_28) >= threshold || V(C1_f_28) >= threshold) spacer1=0;
+    if (V(C1_t_28) >= threshold && V(C1_f_28) >= threshold) illegal1=1;
+    if (V(C1_t_28) >= threshold) word1_hi=word1_hi | (1 << 12);
+    if (V(C1_t_29) < threshold && V(C1_f_29) < threshold) valid1=0;
+    if (V(C1_t_29) >= threshold || V(C1_f_29) >= threshold) spacer1=0;
+    if (V(C1_t_29) >= threshold && V(C1_f_29) >= threshold) illegal1=1;
+    if (V(C1_t_29) >= threshold) word1_hi=word1_hi | (1 << 13);
+    if (V(C1_t_30) < threshold && V(C1_f_30) < threshold) valid1=0;
+    if (V(C1_t_30) >= threshold || V(C1_f_30) >= threshold) spacer1=0;
+    if (V(C1_t_30) >= threshold && V(C1_f_30) >= threshold) illegal1=1;
+    if (V(C1_t_30) >= threshold) word1_hi=word1_hi | (1 << 14);
+    if (V(C1_t_31) < threshold && V(C1_f_31) < threshold) valid1=0;
+    if (V(C1_t_31) >= threshold || V(C1_f_31) >= threshold) spacer1=0;
+    if (V(C1_t_31) >= threshold && V(C1_f_31) >= threshold) illegal1=1;
+    if (V(C1_t_31) >= threshold) word1_hi=word1_hi | (1 << 15);
+    valid2=1; spacer2=1; illegal2=0; word2_hi=0; word2_lo=0;
+    if (V(C2_t_0) < threshold && V(C2_f_0) < threshold) valid2=0;
+    if (V(C2_t_0) >= threshold || V(C2_f_0) >= threshold) spacer2=0;
+    if (V(C2_t_0) >= threshold && V(C2_f_0) >= threshold) illegal2=1;
+    if (V(C2_t_0) >= threshold) word2_lo=word2_lo | (1 << 0);
+    if (V(C2_t_1) < threshold && V(C2_f_1) < threshold) valid2=0;
+    if (V(C2_t_1) >= threshold || V(C2_f_1) >= threshold) spacer2=0;
+    if (V(C2_t_1) >= threshold && V(C2_f_1) >= threshold) illegal2=1;
+    if (V(C2_t_1) >= threshold) word2_lo=word2_lo | (1 << 1);
+    if (V(C2_t_2) < threshold && V(C2_f_2) < threshold) valid2=0;
+    if (V(C2_t_2) >= threshold || V(C2_f_2) >= threshold) spacer2=0;
+    if (V(C2_t_2) >= threshold && V(C2_f_2) >= threshold) illegal2=1;
+    if (V(C2_t_2) >= threshold) word2_lo=word2_lo | (1 << 2);
+    if (V(C2_t_3) < threshold && V(C2_f_3) < threshold) valid2=0;
+    if (V(C2_t_3) >= threshold || V(C2_f_3) >= threshold) spacer2=0;
+    if (V(C2_t_3) >= threshold && V(C2_f_3) >= threshold) illegal2=1;
+    if (V(C2_t_3) >= threshold) word2_lo=word2_lo | (1 << 3);
+    if (V(C2_t_4) < threshold && V(C2_f_4) < threshold) valid2=0;
+    if (V(C2_t_4) >= threshold || V(C2_f_4) >= threshold) spacer2=0;
+    if (V(C2_t_4) >= threshold && V(C2_f_4) >= threshold) illegal2=1;
+    if (V(C2_t_4) >= threshold) word2_lo=word2_lo | (1 << 4);
+    if (V(C2_t_5) < threshold && V(C2_f_5) < threshold) valid2=0;
+    if (V(C2_t_5) >= threshold || V(C2_f_5) >= threshold) spacer2=0;
+    if (V(C2_t_5) >= threshold && V(C2_f_5) >= threshold) illegal2=1;
+    if (V(C2_t_5) >= threshold) word2_lo=word2_lo | (1 << 5);
+    if (V(C2_t_6) < threshold && V(C2_f_6) < threshold) valid2=0;
+    if (V(C2_t_6) >= threshold || V(C2_f_6) >= threshold) spacer2=0;
+    if (V(C2_t_6) >= threshold && V(C2_f_6) >= threshold) illegal2=1;
+    if (V(C2_t_6) >= threshold) word2_lo=word2_lo | (1 << 6);
+    if (V(C2_t_7) < threshold && V(C2_f_7) < threshold) valid2=0;
+    if (V(C2_t_7) >= threshold || V(C2_f_7) >= threshold) spacer2=0;
+    if (V(C2_t_7) >= threshold && V(C2_f_7) >= threshold) illegal2=1;
+    if (V(C2_t_7) >= threshold) word2_lo=word2_lo | (1 << 7);
+    if (V(C2_t_8) < threshold && V(C2_f_8) < threshold) valid2=0;
+    if (V(C2_t_8) >= threshold || V(C2_f_8) >= threshold) spacer2=0;
+    if (V(C2_t_8) >= threshold && V(C2_f_8) >= threshold) illegal2=1;
+    if (V(C2_t_8) >= threshold) word2_lo=word2_lo | (1 << 8);
+    if (V(C2_t_9) < threshold && V(C2_f_9) < threshold) valid2=0;
+    if (V(C2_t_9) >= threshold || V(C2_f_9) >= threshold) spacer2=0;
+    if (V(C2_t_9) >= threshold && V(C2_f_9) >= threshold) illegal2=1;
+    if (V(C2_t_9) >= threshold) word2_lo=word2_lo | (1 << 9);
+    if (V(C2_t_10) < threshold && V(C2_f_10) < threshold) valid2=0;
+    if (V(C2_t_10) >= threshold || V(C2_f_10) >= threshold) spacer2=0;
+    if (V(C2_t_10) >= threshold && V(C2_f_10) >= threshold) illegal2=1;
+    if (V(C2_t_10) >= threshold) word2_lo=word2_lo | (1 << 10);
+    if (V(C2_t_11) < threshold && V(C2_f_11) < threshold) valid2=0;
+    if (V(C2_t_11) >= threshold || V(C2_f_11) >= threshold) spacer2=0;
+    if (V(C2_t_11) >= threshold && V(C2_f_11) >= threshold) illegal2=1;
+    if (V(C2_t_11) >= threshold) word2_lo=word2_lo | (1 << 11);
+    if (V(C2_t_12) < threshold && V(C2_f_12) < threshold) valid2=0;
+    if (V(C2_t_12) >= threshold || V(C2_f_12) >= threshold) spacer2=0;
+    if (V(C2_t_12) >= threshold && V(C2_f_12) >= threshold) illegal2=1;
+    if (V(C2_t_12) >= threshold) word2_lo=word2_lo | (1 << 12);
+    if (V(C2_t_13) < threshold && V(C2_f_13) < threshold) valid2=0;
+    if (V(C2_t_13) >= threshold || V(C2_f_13) >= threshold) spacer2=0;
+    if (V(C2_t_13) >= threshold && V(C2_f_13) >= threshold) illegal2=1;
+    if (V(C2_t_13) >= threshold) word2_lo=word2_lo | (1 << 13);
+    if (V(C2_t_14) < threshold && V(C2_f_14) < threshold) valid2=0;
+    if (V(C2_t_14) >= threshold || V(C2_f_14) >= threshold) spacer2=0;
+    if (V(C2_t_14) >= threshold && V(C2_f_14) >= threshold) illegal2=1;
+    if (V(C2_t_14) >= threshold) word2_lo=word2_lo | (1 << 14);
+    if (V(C2_t_15) < threshold && V(C2_f_15) < threshold) valid2=0;
+    if (V(C2_t_15) >= threshold || V(C2_f_15) >= threshold) spacer2=0;
+    if (V(C2_t_15) >= threshold && V(C2_f_15) >= threshold) illegal2=1;
+    if (V(C2_t_15) >= threshold) word2_lo=word2_lo | (1 << 15);
+    if (V(C2_t_16) < threshold && V(C2_f_16) < threshold) valid2=0;
+    if (V(C2_t_16) >= threshold || V(C2_f_16) >= threshold) spacer2=0;
+    if (V(C2_t_16) >= threshold && V(C2_f_16) >= threshold) illegal2=1;
+    if (V(C2_t_16) >= threshold) word2_hi=word2_hi | (1 << 0);
+    if (V(C2_t_17) < threshold && V(C2_f_17) < threshold) valid2=0;
+    if (V(C2_t_17) >= threshold || V(C2_f_17) >= threshold) spacer2=0;
+    if (V(C2_t_17) >= threshold && V(C2_f_17) >= threshold) illegal2=1;
+    if (V(C2_t_17) >= threshold) word2_hi=word2_hi | (1 << 1);
+    if (V(C2_t_18) < threshold && V(C2_f_18) < threshold) valid2=0;
+    if (V(C2_t_18) >= threshold || V(C2_f_18) >= threshold) spacer2=0;
+    if (V(C2_t_18) >= threshold && V(C2_f_18) >= threshold) illegal2=1;
+    if (V(C2_t_18) >= threshold) word2_hi=word2_hi | (1 << 2);
+    if (V(C2_t_19) < threshold && V(C2_f_19) < threshold) valid2=0;
+    if (V(C2_t_19) >= threshold || V(C2_f_19) >= threshold) spacer2=0;
+    if (V(C2_t_19) >= threshold && V(C2_f_19) >= threshold) illegal2=1;
+    if (V(C2_t_19) >= threshold) word2_hi=word2_hi | (1 << 3);
+    if (V(C2_t_20) < threshold && V(C2_f_20) < threshold) valid2=0;
+    if (V(C2_t_20) >= threshold || V(C2_f_20) >= threshold) spacer2=0;
+    if (V(C2_t_20) >= threshold && V(C2_f_20) >= threshold) illegal2=1;
+    if (V(C2_t_20) >= threshold) word2_hi=word2_hi | (1 << 4);
+    if (V(C2_t_21) < threshold && V(C2_f_21) < threshold) valid2=0;
+    if (V(C2_t_21) >= threshold || V(C2_f_21) >= threshold) spacer2=0;
+    if (V(C2_t_21) >= threshold && V(C2_f_21) >= threshold) illegal2=1;
+    if (V(C2_t_21) >= threshold) word2_hi=word2_hi | (1 << 5);
+    if (V(C2_t_22) < threshold && V(C2_f_22) < threshold) valid2=0;
+    if (V(C2_t_22) >= threshold || V(C2_f_22) >= threshold) spacer2=0;
+    if (V(C2_t_22) >= threshold && V(C2_f_22) >= threshold) illegal2=1;
+    if (V(C2_t_22) >= threshold) word2_hi=word2_hi | (1 << 6);
+    if (V(C2_t_23) < threshold && V(C2_f_23) < threshold) valid2=0;
+    if (V(C2_t_23) >= threshold || V(C2_f_23) >= threshold) spacer2=0;
+    if (V(C2_t_23) >= threshold && V(C2_f_23) >= threshold) illegal2=1;
+    if (V(C2_t_23) >= threshold) word2_hi=word2_hi | (1 << 7);
+    if (V(C2_t_24) < threshold && V(C2_f_24) < threshold) valid2=0;
+    if (V(C2_t_24) >= threshold || V(C2_f_24) >= threshold) spacer2=0;
+    if (V(C2_t_24) >= threshold && V(C2_f_24) >= threshold) illegal2=1;
+    if (V(C2_t_24) >= threshold) word2_hi=word2_hi | (1 << 8);
+    if (V(C2_t_25) < threshold && V(C2_f_25) < threshold) valid2=0;
+    if (V(C2_t_25) >= threshold || V(C2_f_25) >= threshold) spacer2=0;
+    if (V(C2_t_25) >= threshold && V(C2_f_25) >= threshold) illegal2=1;
+    if (V(C2_t_25) >= threshold) word2_hi=word2_hi | (1 << 9);
+    if (V(C2_t_26) < threshold && V(C2_f_26) < threshold) valid2=0;
+    if (V(C2_t_26) >= threshold || V(C2_f_26) >= threshold) spacer2=0;
+    if (V(C2_t_26) >= threshold && V(C2_f_26) >= threshold) illegal2=1;
+    if (V(C2_t_26) >= threshold) word2_hi=word2_hi | (1 << 10);
+    if (V(C2_t_27) < threshold && V(C2_f_27) < threshold) valid2=0;
+    if (V(C2_t_27) >= threshold || V(C2_f_27) >= threshold) spacer2=0;
+    if (V(C2_t_27) >= threshold && V(C2_f_27) >= threshold) illegal2=1;
+    if (V(C2_t_27) >= threshold) word2_hi=word2_hi | (1 << 11);
+    if (V(C2_t_28) < threshold && V(C2_f_28) < threshold) valid2=0;
+    if (V(C2_t_28) >= threshold || V(C2_f_28) >= threshold) spacer2=0;
+    if (V(C2_t_28) >= threshold && V(C2_f_28) >= threshold) illegal2=1;
+    if (V(C2_t_28) >= threshold) word2_hi=word2_hi | (1 << 12);
+    if (V(C2_t_29) < threshold && V(C2_f_29) < threshold) valid2=0;
+    if (V(C2_t_29) >= threshold || V(C2_f_29) >= threshold) spacer2=0;
+    if (V(C2_t_29) >= threshold && V(C2_f_29) >= threshold) illegal2=1;
+    if (V(C2_t_29) >= threshold) word2_hi=word2_hi | (1 << 13);
+    if (V(C2_t_30) < threshold && V(C2_f_30) < threshold) valid2=0;
+    if (V(C2_t_30) >= threshold || V(C2_f_30) >= threshold) spacer2=0;
+    if (V(C2_t_30) >= threshold && V(C2_f_30) >= threshold) illegal2=1;
+    if (V(C2_t_30) >= threshold) word2_hi=word2_hi | (1 << 14);
+    if (V(C2_t_31) < threshold && V(C2_f_31) < threshold) valid2=0;
+    if (V(C2_t_31) >= threshold || V(C2_f_31) >= threshold) spacer2=0;
+    if (V(C2_t_31) >= threshold && V(C2_f_31) >= threshold) illegal2=1;
+    if (V(C2_t_31) >= threshold) word2_hi=word2_hi | (1 << 15);
+    valid3=1; spacer3=1; illegal3=0; word3_hi=0; word3_lo=0;
+    if (V(C3_t_0) < threshold && V(C3_f_0) < threshold) valid3=0;
+    if (V(C3_t_0) >= threshold || V(C3_f_0) >= threshold) spacer3=0;
+    if (V(C3_t_0) >= threshold && V(C3_f_0) >= threshold) illegal3=1;
+    if (V(C3_t_0) >= threshold) word3_lo=word3_lo | (1 << 0);
+    if (V(C3_t_1) < threshold && V(C3_f_1) < threshold) valid3=0;
+    if (V(C3_t_1) >= threshold || V(C3_f_1) >= threshold) spacer3=0;
+    if (V(C3_t_1) >= threshold && V(C3_f_1) >= threshold) illegal3=1;
+    if (V(C3_t_1) >= threshold) word3_lo=word3_lo | (1 << 1);
+    if (V(C3_t_2) < threshold && V(C3_f_2) < threshold) valid3=0;
+    if (V(C3_t_2) >= threshold || V(C3_f_2) >= threshold) spacer3=0;
+    if (V(C3_t_2) >= threshold && V(C3_f_2) >= threshold) illegal3=1;
+    if (V(C3_t_2) >= threshold) word3_lo=word3_lo | (1 << 2);
+    if (V(C3_t_3) < threshold && V(C3_f_3) < threshold) valid3=0;
+    if (V(C3_t_3) >= threshold || V(C3_f_3) >= threshold) spacer3=0;
+    if (V(C3_t_3) >= threshold && V(C3_f_3) >= threshold) illegal3=1;
+    if (V(C3_t_3) >= threshold) word3_lo=word3_lo | (1 << 3);
+    if (V(C3_t_4) < threshold && V(C3_f_4) < threshold) valid3=0;
+    if (V(C3_t_4) >= threshold || V(C3_f_4) >= threshold) spacer3=0;
+    if (V(C3_t_4) >= threshold && V(C3_f_4) >= threshold) illegal3=1;
+    if (V(C3_t_4) >= threshold) word3_lo=word3_lo | (1 << 4);
+    if (V(C3_t_5) < threshold && V(C3_f_5) < threshold) valid3=0;
+    if (V(C3_t_5) >= threshold || V(C3_f_5) >= threshold) spacer3=0;
+    if (V(C3_t_5) >= threshold && V(C3_f_5) >= threshold) illegal3=1;
+    if (V(C3_t_5) >= threshold) word3_lo=word3_lo | (1 << 5);
+    if (V(C3_t_6) < threshold && V(C3_f_6) < threshold) valid3=0;
+    if (V(C3_t_6) >= threshold || V(C3_f_6) >= threshold) spacer3=0;
+    if (V(C3_t_6) >= threshold && V(C3_f_6) >= threshold) illegal3=1;
+    if (V(C3_t_6) >= threshold) word3_lo=word3_lo | (1 << 6);
+    if (V(C3_t_7) < threshold && V(C3_f_7) < threshold) valid3=0;
+    if (V(C3_t_7) >= threshold || V(C3_f_7) >= threshold) spacer3=0;
+    if (V(C3_t_7) >= threshold && V(C3_f_7) >= threshold) illegal3=1;
+    if (V(C3_t_7) >= threshold) word3_lo=word3_lo | (1 << 7);
+    if (V(C3_t_8) < threshold && V(C3_f_8) < threshold) valid3=0;
+    if (V(C3_t_8) >= threshold || V(C3_f_8) >= threshold) spacer3=0;
+    if (V(C3_t_8) >= threshold && V(C3_f_8) >= threshold) illegal3=1;
+    if (V(C3_t_8) >= threshold) word3_lo=word3_lo | (1 << 8);
+    if (V(C3_t_9) < threshold && V(C3_f_9) < threshold) valid3=0;
+    if (V(C3_t_9) >= threshold || V(C3_f_9) >= threshold) spacer3=0;
+    if (V(C3_t_9) >= threshold && V(C3_f_9) >= threshold) illegal3=1;
+    if (V(C3_t_9) >= threshold) word3_lo=word3_lo | (1 << 9);
+    if (V(C3_t_10) < threshold && V(C3_f_10) < threshold) valid3=0;
+    if (V(C3_t_10) >= threshold || V(C3_f_10) >= threshold) spacer3=0;
+    if (V(C3_t_10) >= threshold && V(C3_f_10) >= threshold) illegal3=1;
+    if (V(C3_t_10) >= threshold) word3_lo=word3_lo | (1 << 10);
+    if (V(C3_t_11) < threshold && V(C3_f_11) < threshold) valid3=0;
+    if (V(C3_t_11) >= threshold || V(C3_f_11) >= threshold) spacer3=0;
+    if (V(C3_t_11) >= threshold && V(C3_f_11) >= threshold) illegal3=1;
+    if (V(C3_t_11) >= threshold) word3_lo=word3_lo | (1 << 11);
+    if (V(C3_t_12) < threshold && V(C3_f_12) < threshold) valid3=0;
+    if (V(C3_t_12) >= threshold || V(C3_f_12) >= threshold) spacer3=0;
+    if (V(C3_t_12) >= threshold && V(C3_f_12) >= threshold) illegal3=1;
+    if (V(C3_t_12) >= threshold) word3_lo=word3_lo | (1 << 12);
+    if (V(C3_t_13) < threshold && V(C3_f_13) < threshold) valid3=0;
+    if (V(C3_t_13) >= threshold || V(C3_f_13) >= threshold) spacer3=0;
+    if (V(C3_t_13) >= threshold && V(C3_f_13) >= threshold) illegal3=1;
+    if (V(C3_t_13) >= threshold) word3_lo=word3_lo | (1 << 13);
+    if (V(C3_t_14) < threshold && V(C3_f_14) < threshold) valid3=0;
+    if (V(C3_t_14) >= threshold || V(C3_f_14) >= threshold) spacer3=0;
+    if (V(C3_t_14) >= threshold && V(C3_f_14) >= threshold) illegal3=1;
+    if (V(C3_t_14) >= threshold) word3_lo=word3_lo | (1 << 14);
+    if (V(C3_t_15) < threshold && V(C3_f_15) < threshold) valid3=0;
+    if (V(C3_t_15) >= threshold || V(C3_f_15) >= threshold) spacer3=0;
+    if (V(C3_t_15) >= threshold && V(C3_f_15) >= threshold) illegal3=1;
+    if (V(C3_t_15) >= threshold) word3_lo=word3_lo | (1 << 15);
+    if (V(C3_t_16) < threshold && V(C3_f_16) < threshold) valid3=0;
+    if (V(C3_t_16) >= threshold || V(C3_f_16) >= threshold) spacer3=0;
+    if (V(C3_t_16) >= threshold && V(C3_f_16) >= threshold) illegal3=1;
+    if (V(C3_t_16) >= threshold) word3_hi=word3_hi | (1 << 0);
+    if (V(C3_t_17) < threshold && V(C3_f_17) < threshold) valid3=0;
+    if (V(C3_t_17) >= threshold || V(C3_f_17) >= threshold) spacer3=0;
+    if (V(C3_t_17) >= threshold && V(C3_f_17) >= threshold) illegal3=1;
+    if (V(C3_t_17) >= threshold) word3_hi=word3_hi | (1 << 1);
+    if (V(C3_t_18) < threshold && V(C3_f_18) < threshold) valid3=0;
+    if (V(C3_t_18) >= threshold || V(C3_f_18) >= threshold) spacer3=0;
+    if (V(C3_t_18) >= threshold && V(C3_f_18) >= threshold) illegal3=1;
+    if (V(C3_t_18) >= threshold) word3_hi=word3_hi | (1 << 2);
+    if (V(C3_t_19) < threshold && V(C3_f_19) < threshold) valid3=0;
+    if (V(C3_t_19) >= threshold || V(C3_f_19) >= threshold) spacer3=0;
+    if (V(C3_t_19) >= threshold && V(C3_f_19) >= threshold) illegal3=1;
+    if (V(C3_t_19) >= threshold) word3_hi=word3_hi | (1 << 3);
+    if (V(C3_t_20) < threshold && V(C3_f_20) < threshold) valid3=0;
+    if (V(C3_t_20) >= threshold || V(C3_f_20) >= threshold) spacer3=0;
+    if (V(C3_t_20) >= threshold && V(C3_f_20) >= threshold) illegal3=1;
+    if (V(C3_t_20) >= threshold) word3_hi=word3_hi | (1 << 4);
+    if (V(C3_t_21) < threshold && V(C3_f_21) < threshold) valid3=0;
+    if (V(C3_t_21) >= threshold || V(C3_f_21) >= threshold) spacer3=0;
+    if (V(C3_t_21) >= threshold && V(C3_f_21) >= threshold) illegal3=1;
+    if (V(C3_t_21) >= threshold) word3_hi=word3_hi | (1 << 5);
+    if (V(C3_t_22) < threshold && V(C3_f_22) < threshold) valid3=0;
+    if (V(C3_t_22) >= threshold || V(C3_f_22) >= threshold) spacer3=0;
+    if (V(C3_t_22) >= threshold && V(C3_f_22) >= threshold) illegal3=1;
+    if (V(C3_t_22) >= threshold) word3_hi=word3_hi | (1 << 6);
+    if (V(C3_t_23) < threshold && V(C3_f_23) < threshold) valid3=0;
+    if (V(C3_t_23) >= threshold || V(C3_f_23) >= threshold) spacer3=0;
+    if (V(C3_t_23) >= threshold && V(C3_f_23) >= threshold) illegal3=1;
+    if (V(C3_t_23) >= threshold) word3_hi=word3_hi | (1 << 7);
+    if (V(C3_t_24) < threshold && V(C3_f_24) < threshold) valid3=0;
+    if (V(C3_t_24) >= threshold || V(C3_f_24) >= threshold) spacer3=0;
+    if (V(C3_t_24) >= threshold && V(C3_f_24) >= threshold) illegal3=1;
+    if (V(C3_t_24) >= threshold) word3_hi=word3_hi | (1 << 8);
+    if (V(C3_t_25) < threshold && V(C3_f_25) < threshold) valid3=0;
+    if (V(C3_t_25) >= threshold || V(C3_f_25) >= threshold) spacer3=0;
+    if (V(C3_t_25) >= threshold && V(C3_f_25) >= threshold) illegal3=1;
+    if (V(C3_t_25) >= threshold) word3_hi=word3_hi | (1 << 9);
+    if (V(C3_t_26) < threshold && V(C3_f_26) < threshold) valid3=0;
+    if (V(C3_t_26) >= threshold || V(C3_f_26) >= threshold) spacer3=0;
+    if (V(C3_t_26) >= threshold && V(C3_f_26) >= threshold) illegal3=1;
+    if (V(C3_t_26) >= threshold) word3_hi=word3_hi | (1 << 10);
+    if (V(C3_t_27) < threshold && V(C3_f_27) < threshold) valid3=0;
+    if (V(C3_t_27) >= threshold || V(C3_f_27) >= threshold) spacer3=0;
+    if (V(C3_t_27) >= threshold && V(C3_f_27) >= threshold) illegal3=1;
+    if (V(C3_t_27) >= threshold) word3_hi=word3_hi | (1 << 11);
+    if (V(C3_t_28) < threshold && V(C3_f_28) < threshold) valid3=0;
+    if (V(C3_t_28) >= threshold || V(C3_f_28) >= threshold) spacer3=0;
+    if (V(C3_t_28) >= threshold && V(C3_f_28) >= threshold) illegal3=1;
+    if (V(C3_t_28) >= threshold) word3_hi=word3_hi | (1 << 12);
+    if (V(C3_t_29) < threshold && V(C3_f_29) < threshold) valid3=0;
+    if (V(C3_t_29) >= threshold || V(C3_f_29) >= threshold) spacer3=0;
+    if (V(C3_t_29) >= threshold && V(C3_f_29) >= threshold) illegal3=1;
+    if (V(C3_t_29) >= threshold) word3_hi=word3_hi | (1 << 13);
+    if (V(C3_t_30) < threshold && V(C3_f_30) < threshold) valid3=0;
+    if (V(C3_t_30) >= threshold || V(C3_f_30) >= threshold) spacer3=0;
+    if (V(C3_t_30) >= threshold && V(C3_f_30) >= threshold) illegal3=1;
+    if (V(C3_t_30) >= threshold) word3_hi=word3_hi | (1 << 14);
+    if (V(C3_t_31) < threshold && V(C3_f_31) < threshold) valid3=0;
+    if (V(C3_t_31) >= threshold || V(C3_f_31) >= threshold) spacer3=0;
+    if (V(C3_t_31) >= threshold && V(C3_f_31) >= threshold) illegal3=1;
+    if (V(C3_t_31) >= threshold) word3_hi=word3_hi | (1 << 15);
+    if (!active && !finished && !failure && V(reset) < threshold) begin
+      if (!spacer0 || !spacer1 || !spacer2 || !spacer3 || V(I_a) >= threshold || V(Ch_a) >= threshold) begin
+        failure=1; $display("SIM_ERROR t=%e reason=reset_spacer I.a=%e Ch.a=%e",$abstime,V(I_a),V(Ch_a));
+      end else begin active=1; $display("SIM_RESET t=%e",$abstime); end
+    end
+    if ((active || finished) && !failure && !reported) begin
+      if (illegal0 || illegal1 || illegal2 || illegal3) begin
+        failure=1;
+        $display("SIM_ERROR t=%e reason=illegal_dual_rail C0=%d C1=%d C2=%d C3=%d",$abstime,illegal0,illegal1,illegal2,illegal3);
+      end
+      if (!failure) begin
+        if (rx_phase0 == 0 && valid0 && !spacer0) begin
+          if (rx_index0 >= 4) begin
+            failure=1; $display("SIM_ERROR t=%e reason=unexpected_output channel=C0 index=%d step=%d",$abstime,rx_index0,tx_step);
+          end else begin
+            expected0_hi=65535; expected0_lo=65535; if (rx_index0<2) expected0_lo=65534;
+            if (word0_hi != expected0_hi || word0_lo != expected0_lo) begin
+              failure=1;
+              $display("SIM_RX t=%e channel=C0 index=%d expected=%04h%04h actual=%04h%04h FAIL",$abstime,rx_index0,expected0_hi,expected0_lo,word0_hi,word0_lo);
+              $display("SIM_ERROR t=%e reason=golden_mismatch channel=C0",$abstime);
+            end else begin
+              $display("SIM_RX t=%e channel=C0 index=%d expected=%04h%04h actual=%04h%04h PASS",$abstime,rx_index0,expected0_hi,expected0_lo,word0_hi,word0_lo);
+              ack0=1; rx_phase0=1;
+            end
+          end
+        end else if (rx_phase0 == 1) begin
+          if (valid0 && (word0_hi != expected0_hi || word0_lo != expected0_lo)) begin
+            failure=1; $display("SIM_ERROR t=%e reason=word_changed_without_spacer channel=C0",$abstime);
+          end else if (!valid0 && V(C0_a) < threshold) begin
+            failure=1; $display("SIM_ERROR t=%e reason=data_withdrawn_before_ack channel=C0",$abstime);
+          end else if (spacer0 && V(C0_a) >= threshold) begin
+            ack0=0; rx_phase0=2;
+            $display("SIM_SPACER t=%e channel=C0 index=%d",$abstime,rx_index0);
+          end
+        end else if (rx_phase0 == 2) begin
+          if (!spacer0) begin
+            failure=1; $display("SIM_ERROR t=%e reason=data_before_ack_low channel=C0",$abstime);
+          end else if (V(C0_a) < threshold) begin
+            $display("SIM_ACK_LOW t=%e channel=C0 index=%d",$abstime,rx_index0);
+            rx_index0=rx_index0+1; rx_phase0=0;
+          end
+        end
+      end
+      if (!failure) begin
+        if (rx_phase1 == 0 && valid1 && !spacer1) begin
+          if (rx_index1 >= 1 || tx_step < 5) begin
+            failure=1; $display("SIM_ERROR t=%e reason=unexpected_output channel=C1 index=%d step=%d",$abstime,rx_index1,tx_step);
+          end else begin
+            expected1_hi=65535; expected1_lo=65535;
+            if (word1_hi != expected1_hi || word1_lo != expected1_lo) begin
+              failure=1;
+              $display("SIM_RX t=%e channel=C1 index=%d expected=%04h%04h actual=%04h%04h FAIL",$abstime,rx_index1,expected1_hi,expected1_lo,word1_hi,word1_lo);
+              $display("SIM_ERROR t=%e reason=golden_mismatch channel=C1",$abstime);
+            end else begin
+              $display("SIM_RX t=%e channel=C1 index=%d expected=%04h%04h actual=%04h%04h PASS",$abstime,rx_index1,expected1_hi,expected1_lo,word1_hi,word1_lo);
+              ack1=1; rx_phase1=1;
+            end
+          end
+        end else if (rx_phase1 == 1) begin
+          if (valid1 && (word1_hi != expected1_hi || word1_lo != expected1_lo)) begin
+            failure=1; $display("SIM_ERROR t=%e reason=word_changed_without_spacer channel=C1",$abstime);
+          end else if (!valid1 && V(C1_a) < threshold) begin
+            failure=1; $display("SIM_ERROR t=%e reason=data_withdrawn_before_ack channel=C1",$abstime);
+          end else if (spacer1 && V(C1_a) >= threshold) begin
+            ack1=0; rx_phase1=2;
+            $display("SIM_SPACER t=%e channel=C1 index=%d",$abstime,rx_index1);
+          end
+        end else if (rx_phase1 == 2) begin
+          if (!spacer1) begin
+            failure=1; $display("SIM_ERROR t=%e reason=data_before_ack_low channel=C1",$abstime);
+          end else if (V(C1_a) < threshold) begin
+            $display("SIM_ACK_LOW t=%e channel=C1 index=%d",$abstime,rx_index1);
+            rx_index1=rx_index1+1; rx_phase1=0;
+          end
+        end
+      end
+      if (!failure) begin
+        if (rx_phase2 == 0 && valid2 && !spacer2) begin
+          if (rx_index2 >= 4) begin
+            failure=1; $display("SIM_ERROR t=%e reason=unexpected_output channel=C2 index=%d step=%d",$abstime,rx_index2,tx_step);
+          end else begin
+            expected2_hi=65535; expected2_lo=65535; if (rx_index2<2) expected2_lo=65534;
+            if (word2_hi != expected2_hi || word2_lo != expected2_lo) begin
+              failure=1;
+              $display("SIM_RX t=%e channel=C2 index=%d expected=%04h%04h actual=%04h%04h FAIL",$abstime,rx_index2,expected2_hi,expected2_lo,word2_hi,word2_lo);
+              $display("SIM_ERROR t=%e reason=golden_mismatch channel=C2",$abstime);
+            end else begin
+              $display("SIM_RX t=%e channel=C2 index=%d expected=%04h%04h actual=%04h%04h PASS",$abstime,rx_index2,expected2_hi,expected2_lo,word2_hi,word2_lo);
+              ack2=1; rx_phase2=1;
+            end
+          end
+        end else if (rx_phase2 == 1) begin
+          if (valid2 && (word2_hi != expected2_hi || word2_lo != expected2_lo)) begin
+            failure=1; $display("SIM_ERROR t=%e reason=word_changed_without_spacer channel=C2",$abstime);
+          end else if (!valid2 && V(C2_a) < threshold) begin
+            failure=1; $display("SIM_ERROR t=%e reason=data_withdrawn_before_ack channel=C2",$abstime);
+          end else if (spacer2 && V(C2_a) >= threshold) begin
+            ack2=0; rx_phase2=2;
+            $display("SIM_SPACER t=%e channel=C2 index=%d",$abstime,rx_index2);
+          end
+        end else if (rx_phase2 == 2) begin
+          if (!spacer2) begin
+            failure=1; $display("SIM_ERROR t=%e reason=data_before_ack_low channel=C2",$abstime);
+          end else if (V(C2_a) < threshold) begin
+            $display("SIM_ACK_LOW t=%e channel=C2 index=%d",$abstime,rx_index2);
+            rx_index2=rx_index2+1; rx_phase2=0;
+          end
+        end
+      end
+      if (!failure) begin
+        if (rx_phase3 == 0 && valid3 && !spacer3) begin
+          if (rx_index3 >= 1 || tx_step < 5) begin
+            failure=1; $display("SIM_ERROR t=%e reason=unexpected_output channel=C3 index=%d step=%d",$abstime,rx_index3,tx_step);
+          end else begin
+            expected3_hi=65535; expected3_lo=65535;
+            if (word3_hi != expected3_hi || word3_lo != expected3_lo) begin
+              failure=1;
+              $display("SIM_RX t=%e channel=C3 index=%d expected=%04h%04h actual=%04h%04h FAIL",$abstime,rx_index3,expected3_hi,expected3_lo,word3_hi,word3_lo);
+              $display("SIM_ERROR t=%e reason=golden_mismatch channel=C3",$abstime);
+            end else begin
+              $display("SIM_RX t=%e channel=C3 index=%d expected=%04h%04h actual=%04h%04h PASS",$abstime,rx_index3,expected3_hi,expected3_lo,word3_hi,word3_lo);
+              ack3=1; rx_phase3=1;
+            end
+          end
+        end else if (rx_phase3 == 1) begin
+          if (valid3 && (word3_hi != expected3_hi || word3_lo != expected3_lo)) begin
+            failure=1; $display("SIM_ERROR t=%e reason=word_changed_without_spacer channel=C3",$abstime);
+          end else if (!valid3 && V(C3_a) < threshold) begin
+            failure=1; $display("SIM_ERROR t=%e reason=data_withdrawn_before_ack channel=C3",$abstime);
+          end else if (spacer3 && V(C3_a) >= threshold) begin
+            ack3=0; rx_phase3=2;
+            $display("SIM_SPACER t=%e channel=C3 index=%d",$abstime,rx_index3);
+          end
+        end else if (rx_phase3 == 2) begin
+          if (!spacer3) begin
+            failure=1; $display("SIM_ERROR t=%e reason=data_before_ack_low channel=C3",$abstime);
+          end else if (V(C3_a) < threshold) begin
+            $display("SIM_ACK_LOW t=%e channel=C3 index=%d",$abstime,rx_index3);
+            rx_index3=rx_index3+1; rx_phase3=0;
+          end
+        end
+      end
+      if (active && !failure) begin
+        control_step=(tx_step==0 || tx_step==4);
+        if (control_step) producer_ack=V(Ch_a); else producer_ack=V(I_a);
+        if (tx_phase == 1 && producer_ack >= threshold) begin
+          if (!control_step && (V(C0_a) < threshold || V(C2_a) < threshold ||
+              (tx_step==5 && (V(C1_a) < threshold || V(C3_a) < threshold)))) begin
+            failure=1; $display("SIM_ERROR t=%e reason=early_input_ack step=%d",$abstime,tx_step);
+          end else begin
+            tx_i_valid=0; tx_ch_valid=0; tx_phase=2;
+            if (control_step) $display("SIM_IACK_HIGH t=%e channel=Ch step=%d",$abstime,tx_step);
+            else $display("SIM_IACK_HIGH t=%e channel=I step=%d",$abstime,tx_step);
+          end
+        end else if (tx_phase==2 && producer_ack < threshold && input_spacer && control_spacer) begin
+          if (control_step) $display("SIM_IACK_LOW t=%e channel=Ch step=%d",$abstime,tx_step);
+          else $display("SIM_IACK_LOW t=%e channel=I step=%d",$abstime,tx_step);
+          tx_step=tx_step+1; tx_phase=0;
+        end
+        if (!failure && tx_step==6 && rx_index0==4 && rx_index1==1 && rx_index2==4 && rx_index3==1 &&
+            tx_phase==0 && rx_phase0==0 && rx_phase1==0 && rx_phase2==0 && rx_phase3==0 &&
+            input_spacer && control_spacer && spacer0 && spacer1 && spacer2 && spacer3 &&
+            V(I_a)<threshold && V(Ch_a)<threshold && V(C0_a)<threshold && V(C1_a)<threshold &&
+            V(C2_a)<threshold && V(C3_a)<threshold) begin
+          finished=1; active=0;
+          $display("SIM_ROUND t=%e controls=2 inputs=4 C0=4 C1=1 C2=4 C3=1",$abstime);
+        end
+        if (!failure && !finished && tx_phase==0 && tx_step<6 && input_spacer && control_spacer &&
+            V(I_a)<threshold && V(Ch_a)<threshold) begin
+          if (tx_step==0 || tx_step==4) begin
+            if (tx_step==0) tx_ch=10; else tx_ch=15;
+            tx_ch_valid=1;
+            $display("SIM_TX t=%e channel=Ch step=%d word=%h",$abstime,tx_step,tx_ch);
+          end else begin
+            tx_hi=65535;
+            if (tx_step==1 || tx_step==2) tx_lo=65534; else tx_lo=65535;
+            tx_i_valid=1;
+            $display("SIM_TX t=%e channel=I step=%d word=%04h%04h",$abstime,tx_step,tx_hi,tx_lo);
+          end
+          tx_phase=1;
+        end
+      end
+      if (finished && (!input_spacer || !control_spacer || !spacer0 || !spacer1 || !spacer2 || !spacer3 ||
+          V(I_a)>=threshold || V(Ch_a)>=threshold)) begin
+        failure=1; $display("SIM_ERROR t=%e reason=nonquiescent_completion",$abstime);
+      end
+    end
+    if (finished && !failure && idle_start < 0) idle_start=$abstime+IDLE_SETTLE;
+    if (finished && !failure && !idle_started && $abstime>=idle_start) begin
+      idle_started=1;
+      $display("SIM_IDLE_BEGIN t=%e reset=%e",$abstime,V(reset));
+    end
+    if (idle_started && !failure && !idle_completed && $abstime>=idle_start+IDLE_WINDOW) begin
+      idle_completed=1;
+      $display("SIM_IDLE_END t=%e reset=%e",$abstime,V(reset));
+    end
+    if (failure && (stop_after<0 || stop_after>$abstime+TD+2*EDGE)) stop_after=$abstime+TD+2*EDGE;
+    else if (finished && stop_after<0) stop_after=$abstime+IDLE_SETTLE+IDLE_WINDOW+IDLE_MARGIN;
+    if (!reported && stop_after>0 && $abstime>=stop_after) begin
+      reported=1;
+      if (failure) $display("SIM_FAIL t=%e reason=see_SIM_ERROR",$abstime);
+      else $display("SIM_PASS t=%e rounds=1 controls=2 inputs=4 C0=4 C1=1 C2=4 C3=1",$abstime);
+      $finish(0);
+    end
+  end
+  @(timer(STOP_TIME-4*TD-4*EDGE)) begin
+    if (!finished && !failure) begin
+      failure=1;
+      $display("SIM_ERROR t=%e reason=timeout step=%d tx_phase=%d rx=%d,%d,%d,%d I.a=%e Ch.a=%e",$abstime,tx_step,tx_phase,rx_index0,rx_index1,rx_index2,rx_index3,V(I_a),V(Ch_a));
+    end
+  end
+  V(I_t_0) <+ transition(SUPPLY*tx_i_valid*((tx_lo >> 0) & 1),TD,EDGE,EDGE);
+  V(I_f_0) <+ transition(SUPPLY*tx_i_valid*(1-((tx_lo >> 0) & 1)),TD,EDGE,EDGE);
+  V(I_t_1) <+ transition(SUPPLY*tx_i_valid*((tx_lo >> 1) & 1),TD,EDGE,EDGE);
+  V(I_f_1) <+ transition(SUPPLY*tx_i_valid*(1-((tx_lo >> 1) & 1)),TD,EDGE,EDGE);
+  V(I_t_2) <+ transition(SUPPLY*tx_i_valid*((tx_lo >> 2) & 1),TD,EDGE,EDGE);
+  V(I_f_2) <+ transition(SUPPLY*tx_i_valid*(1-((tx_lo >> 2) & 1)),TD,EDGE,EDGE);
+  V(I_t_3) <+ transition(SUPPLY*tx_i_valid*((tx_lo >> 3) & 1),TD,EDGE,EDGE);
+  V(I_f_3) <+ transition(SUPPLY*tx_i_valid*(1-((tx_lo >> 3) & 1)),TD,EDGE,EDGE);
+  V(I_t_4) <+ transition(SUPPLY*tx_i_valid*((tx_lo >> 4) & 1),TD,EDGE,EDGE);
+  V(I_f_4) <+ transition(SUPPLY*tx_i_valid*(1-((tx_lo >> 4) & 1)),TD,EDGE,EDGE);
+  V(I_t_5) <+ transition(SUPPLY*tx_i_valid*((tx_lo >> 5) & 1),TD,EDGE,EDGE);
+  V(I_f_5) <+ transition(SUPPLY*tx_i_valid*(1-((tx_lo >> 5) & 1)),TD,EDGE,EDGE);
+  V(I_t_6) <+ transition(SUPPLY*tx_i_valid*((tx_lo >> 6) & 1),TD,EDGE,EDGE);
+  V(I_f_6) <+ transition(SUPPLY*tx_i_valid*(1-((tx_lo >> 6) & 1)),TD,EDGE,EDGE);
+  V(I_t_7) <+ transition(SUPPLY*tx_i_valid*((tx_lo >> 7) & 1),TD,EDGE,EDGE);
+  V(I_f_7) <+ transition(SUPPLY*tx_i_valid*(1-((tx_lo >> 7) & 1)),TD,EDGE,EDGE);
+  V(I_t_8) <+ transition(SUPPLY*tx_i_valid*((tx_lo >> 8) & 1),TD,EDGE,EDGE);
+  V(I_f_8) <+ transition(SUPPLY*tx_i_valid*(1-((tx_lo >> 8) & 1)),TD,EDGE,EDGE);
+  V(I_t_9) <+ transition(SUPPLY*tx_i_valid*((tx_lo >> 9) & 1),TD,EDGE,EDGE);
+  V(I_f_9) <+ transition(SUPPLY*tx_i_valid*(1-((tx_lo >> 9) & 1)),TD,EDGE,EDGE);
+  V(I_t_10) <+ transition(SUPPLY*tx_i_valid*((tx_lo >> 10) & 1),TD,EDGE,EDGE);
+  V(I_f_10) <+ transition(SUPPLY*tx_i_valid*(1-((tx_lo >> 10) & 1)),TD,EDGE,EDGE);
+  V(I_t_11) <+ transition(SUPPLY*tx_i_valid*((tx_lo >> 11) & 1),TD,EDGE,EDGE);
+  V(I_f_11) <+ transition(SUPPLY*tx_i_valid*(1-((tx_lo >> 11) & 1)),TD,EDGE,EDGE);
+  V(I_t_12) <+ transition(SUPPLY*tx_i_valid*((tx_lo >> 12) & 1),TD,EDGE,EDGE);
+  V(I_f_12) <+ transition(SUPPLY*tx_i_valid*(1-((tx_lo >> 12) & 1)),TD,EDGE,EDGE);
+  V(I_t_13) <+ transition(SUPPLY*tx_i_valid*((tx_lo >> 13) & 1),TD,EDGE,EDGE);
+  V(I_f_13) <+ transition(SUPPLY*tx_i_valid*(1-((tx_lo >> 13) & 1)),TD,EDGE,EDGE);
+  V(I_t_14) <+ transition(SUPPLY*tx_i_valid*((tx_lo >> 14) & 1),TD,EDGE,EDGE);
+  V(I_f_14) <+ transition(SUPPLY*tx_i_valid*(1-((tx_lo >> 14) & 1)),TD,EDGE,EDGE);
+  V(I_t_15) <+ transition(SUPPLY*tx_i_valid*((tx_lo >> 15) & 1),TD,EDGE,EDGE);
+  V(I_f_15) <+ transition(SUPPLY*tx_i_valid*(1-((tx_lo >> 15) & 1)),TD,EDGE,EDGE);
+  V(I_t_16) <+ transition(SUPPLY*tx_i_valid*((tx_hi >> 0) & 1),TD,EDGE,EDGE);
+  V(I_f_16) <+ transition(SUPPLY*tx_i_valid*(1-((tx_hi >> 0) & 1)),TD,EDGE,EDGE);
+  V(I_t_17) <+ transition(SUPPLY*tx_i_valid*((tx_hi >> 1) & 1),TD,EDGE,EDGE);
+  V(I_f_17) <+ transition(SUPPLY*tx_i_valid*(1-((tx_hi >> 1) & 1)),TD,EDGE,EDGE);
+  V(I_t_18) <+ transition(SUPPLY*tx_i_valid*((tx_hi >> 2) & 1),TD,EDGE,EDGE);
+  V(I_f_18) <+ transition(SUPPLY*tx_i_valid*(1-((tx_hi >> 2) & 1)),TD,EDGE,EDGE);
+  V(I_t_19) <+ transition(SUPPLY*tx_i_valid*((tx_hi >> 3) & 1),TD,EDGE,EDGE);
+  V(I_f_19) <+ transition(SUPPLY*tx_i_valid*(1-((tx_hi >> 3) & 1)),TD,EDGE,EDGE);
+  V(I_t_20) <+ transition(SUPPLY*tx_i_valid*((tx_hi >> 4) & 1),TD,EDGE,EDGE);
+  V(I_f_20) <+ transition(SUPPLY*tx_i_valid*(1-((tx_hi >> 4) & 1)),TD,EDGE,EDGE);
+  V(I_t_21) <+ transition(SUPPLY*tx_i_valid*((tx_hi >> 5) & 1),TD,EDGE,EDGE);
+  V(I_f_21) <+ transition(SUPPLY*tx_i_valid*(1-((tx_hi >> 5) & 1)),TD,EDGE,EDGE);
+  V(I_t_22) <+ transition(SUPPLY*tx_i_valid*((tx_hi >> 6) & 1),TD,EDGE,EDGE);
+  V(I_f_22) <+ transition(SUPPLY*tx_i_valid*(1-((tx_hi >> 6) & 1)),TD,EDGE,EDGE);
+  V(I_t_23) <+ transition(SUPPLY*tx_i_valid*((tx_hi >> 7) & 1),TD,EDGE,EDGE);
+  V(I_f_23) <+ transition(SUPPLY*tx_i_valid*(1-((tx_hi >> 7) & 1)),TD,EDGE,EDGE);
+  V(I_t_24) <+ transition(SUPPLY*tx_i_valid*((tx_hi >> 8) & 1),TD,EDGE,EDGE);
+  V(I_f_24) <+ transition(SUPPLY*tx_i_valid*(1-((tx_hi >> 8) & 1)),TD,EDGE,EDGE);
+  V(I_t_25) <+ transition(SUPPLY*tx_i_valid*((tx_hi >> 9) & 1),TD,EDGE,EDGE);
+  V(I_f_25) <+ transition(SUPPLY*tx_i_valid*(1-((tx_hi >> 9) & 1)),TD,EDGE,EDGE);
+  V(I_t_26) <+ transition(SUPPLY*tx_i_valid*((tx_hi >> 10) & 1),TD,EDGE,EDGE);
+  V(I_f_26) <+ transition(SUPPLY*tx_i_valid*(1-((tx_hi >> 10) & 1)),TD,EDGE,EDGE);
+  V(I_t_27) <+ transition(SUPPLY*tx_i_valid*((tx_hi >> 11) & 1),TD,EDGE,EDGE);
+  V(I_f_27) <+ transition(SUPPLY*tx_i_valid*(1-((tx_hi >> 11) & 1)),TD,EDGE,EDGE);
+  V(I_t_28) <+ transition(SUPPLY*tx_i_valid*((tx_hi >> 12) & 1),TD,EDGE,EDGE);
+  V(I_f_28) <+ transition(SUPPLY*tx_i_valid*(1-((tx_hi >> 12) & 1)),TD,EDGE,EDGE);
+  V(I_t_29) <+ transition(SUPPLY*tx_i_valid*((tx_hi >> 13) & 1),TD,EDGE,EDGE);
+  V(I_f_29) <+ transition(SUPPLY*tx_i_valid*(1-((tx_hi >> 13) & 1)),TD,EDGE,EDGE);
+  V(I_t_30) <+ transition(SUPPLY*tx_i_valid*((tx_hi >> 14) & 1),TD,EDGE,EDGE);
+  V(I_f_30) <+ transition(SUPPLY*tx_i_valid*(1-((tx_hi >> 14) & 1)),TD,EDGE,EDGE);
+  V(I_t_31) <+ transition(SUPPLY*tx_i_valid*((tx_hi >> 15) & 1),TD,EDGE,EDGE);
+  V(I_f_31) <+ transition(SUPPLY*tx_i_valid*(1-((tx_hi >> 15) & 1)),TD,EDGE,EDGE);
+  V(Ch_t_0) <+ transition(SUPPLY*tx_ch_valid*((tx_ch >> 0) & 1),TD,EDGE,EDGE);
+  V(Ch_f_0) <+ transition(SUPPLY*tx_ch_valid*(1-((tx_ch >> 0) & 1)),TD,EDGE,EDGE);
+  V(Ch_t_1) <+ transition(SUPPLY*tx_ch_valid*((tx_ch >> 1) & 1),TD,EDGE,EDGE);
+  V(Ch_f_1) <+ transition(SUPPLY*tx_ch_valid*(1-((tx_ch >> 1) & 1)),TD,EDGE,EDGE);
+  V(Ch_t_2) <+ transition(SUPPLY*tx_ch_valid*((tx_ch >> 2) & 1),TD,EDGE,EDGE);
+  V(Ch_f_2) <+ transition(SUPPLY*tx_ch_valid*(1-((tx_ch >> 2) & 1)),TD,EDGE,EDGE);
+  V(Ch_t_3) <+ transition(SUPPLY*tx_ch_valid*((tx_ch >> 3) & 1),TD,EDGE,EDGE);
+  V(Ch_f_3) <+ transition(SUPPLY*tx_ch_valid*(1-((tx_ch >> 3) & 1)),TD,EDGE,EDGE);
+  V(C0_a) <+ transition(SUPPLY*ack0,TD,EDGE,EDGE);
+  V(C1_a) <+ transition(SUPPLY*ack1,TD,EDGE,EDGE);
+  V(C2_a) <+ transition(SUPPLY*ack2,TD,EDGE,EDGE);
+  V(C3_a) <+ transition(SUPPLY*ack3,TD,EDGE,EDGE);
+  V(done) <+ transition(SUPPLY*finished,0,EDGE,EDGE);
+  V(failed) <+ transition(SUPPLY*failure,0,EDGE,EDGE);
+end
+endmodule

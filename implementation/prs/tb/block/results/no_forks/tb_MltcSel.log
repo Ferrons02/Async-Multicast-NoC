@@ -1,0 +1,13 @@
+WARNING: TbFailure<2>: substituting chp model (requested prs, not found)
+WARNING: MltcSelDriver<>: substituting chp model (requested prs, not found)
+TB_RANDOM_CHOICE off
+TB_WARNING_POLICY resume-on-warn
+TB_STRESS_BEGIN 10000
+TB_STRESS_END 500009917
+[           500012592] <driver>  PASSED: rounds=198237
+TB_FINAL
+done: 1
+fail: 0
+rounds: 198237  (0x3065d)
+TB_X_BEGIN
+TB_X_END

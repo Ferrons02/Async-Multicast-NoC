@@ -1,0 +1,150 @@
+import "../../../src/block/forks/Serializer/Serializer.act";
+import "../testbench_support.act";
+
+/* Fixed stimulus and immediate per-receive checks from BLOCK_TESTBENCH_PLAN.md. */
+/* Global controls avoid an actsim state-offset bug for parent-owned CHP
+ * Boolean ports beside the PRS hierarchy. The command file uses these names. */
+bool reset, stop, fail, done, ready;
+int<32> rounds;
+Initialize { actions { ready- } }
+bool bad[1];
+TbPush<32> I;
+TbPush<4> O;
+
+defproc SerializerDriver(
+    bool bad_O;
+    TbPush!<32> I;
+    TbPush?<4> O
+)
+{
+    /* ACT disallows nonlocal ports directly in loop guards. Sample the
+     * external stop/fail flags at each completed sequence boundary. */
+    bool running;
+    int<4> out_O;
+    chp {
+        ready := false; stop := false; done := false; rounds := 0;
+        bad_O := false;
+        ready := true; running := true;
+        [~reset];
+        *[running ->
+            ((
+            I!0xFFFFFFF2;
+            I!0x76543212
+            ),(
+            O?out_O;
+            [out_O != 0xF ->
+                bad_O := true;
+                log("FAILED: O expected ", 0xF, ", got ", out_O, ", round ", rounds);
+                assert(out_O = 0xF, "O golden mismatch");
+                [reset]
+            [] else -> skip];
+            O?out_O;
+            [out_O != 0xF ->
+                bad_O := true;
+                log("FAILED: O expected ", 0xF, ", got ", out_O, ", round ", rounds);
+                assert(out_O = 0xF, "O golden mismatch");
+                [reset]
+            [] else -> skip];
+            O?out_O;
+            [out_O != 0xF ->
+                bad_O := true;
+                log("FAILED: O expected ", 0xF, ", got ", out_O, ", round ", rounds);
+                assert(out_O = 0xF, "O golden mismatch");
+                [reset]
+            [] else -> skip];
+            O?out_O;
+            [out_O != 0xF ->
+                bad_O := true;
+                log("FAILED: O expected ", 0xF, ", got ", out_O, ", round ", rounds);
+                assert(out_O = 0xF, "O golden mismatch");
+                [reset]
+            [] else -> skip];
+            O?out_O;
+            [out_O != 0xF ->
+                bad_O := true;
+                log("FAILED: O expected ", 0xF, ", got ", out_O, ", round ", rounds);
+                assert(out_O = 0xF, "O golden mismatch");
+                [reset]
+            [] else -> skip];
+            O?out_O;
+            [out_O != 0xF ->
+                bad_O := true;
+                log("FAILED: O expected ", 0xF, ", got ", out_O, ", round ", rounds);
+                assert(out_O = 0xF, "O golden mismatch");
+                [reset]
+            [] else -> skip];
+            O?out_O;
+            [out_O != 0xF ->
+                bad_O := true;
+                log("FAILED: O expected ", 0xF, ", got ", out_O, ", round ", rounds);
+                assert(out_O = 0xF, "O golden mismatch");
+                [reset]
+            [] else -> skip];
+            O?out_O;
+            [out_O != 7 ->
+                bad_O := true;
+                log("FAILED: O expected ", 7, ", got ", out_O, ", round ", rounds);
+                assert(out_O = 7, "O golden mismatch");
+                [reset]
+            [] else -> skip];
+            O?out_O;
+            [out_O != 6 ->
+                bad_O := true;
+                log("FAILED: O expected ", 6, ", got ", out_O, ", round ", rounds);
+                assert(out_O = 6, "O golden mismatch");
+                [reset]
+            [] else -> skip];
+            O?out_O;
+            [out_O != 5 ->
+                bad_O := true;
+                log("FAILED: O expected ", 5, ", got ", out_O, ", round ", rounds);
+                assert(out_O = 5, "O golden mismatch");
+                [reset]
+            [] else -> skip];
+            O?out_O;
+            [out_O != 4 ->
+                bad_O := true;
+                log("FAILED: O expected ", 4, ", got ", out_O, ", round ", rounds);
+                assert(out_O = 4, "O golden mismatch");
+                [reset]
+            [] else -> skip];
+            O?out_O;
+            [out_O != 3 ->
+                bad_O := true;
+                log("FAILED: O expected ", 3, ", got ", out_O, ", round ", rounds);
+                assert(out_O = 3, "O golden mismatch");
+                [reset]
+            [] else -> skip];
+            O?out_O;
+            [out_O != 2 ->
+                bad_O := true;
+                log("FAILED: O expected ", 2, ", got ", out_O, ", round ", rounds);
+                assert(out_O = 2, "O golden mismatch");
+                [reset]
+            [] else -> skip];
+            O?out_O;
+            [out_O != 1 ->
+                bad_O := true;
+                log("FAILED: O expected ", 1, ", got ", out_O, ", round ", rounds);
+                assert(out_O = 1, "O golden mismatch");
+                [reset]
+            [] else -> skip]
+            ));
+            rounds := rounds + 1;
+            [stop | fail -> running := false [] else -> skip]
+        ];
+        done := true;
+        [fail -> log("FAILED")
+        [] else -> log("PASSED: rounds=", rounds)]
+    }
+}
+
+defproc tb_Serializer()
+{
+    Serializer dut;
+    dut.reset = reset;
+    TbPushSender<32> wire_I(I, dut.I.t, dut.I.f, dut.I.a);
+    TbPushReceiver<4> wire_O(O, dut.O.t, dut.O.f, dut.O.a);
+    TbFailure<1> failure(ready, bad, fail);
+    SerializerDriver driver(bad[0], I, O);
+}

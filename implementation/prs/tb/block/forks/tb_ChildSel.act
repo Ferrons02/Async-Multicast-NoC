@@ -1,0 +1,111 @@
+import "../../../src/block/forks/ChildSel/ChildSel.act";
+import "../testbench_support.act";
+
+/* Current leaf mapping is O3,O2,O1,O0. Input route bits 11 then 01
+ * select O3 then O1; two header shifts give FFFF9FFE. O0 and O2 stay silent.
+ * This follows current source rather than the plan's O0/O1 and 3FFF9FFE. */
+/* Global controls avoid an actsim state-offset bug for parent-owned CHP
+ * Boolean ports beside the PRS hierarchy. The command file uses these names. */
+bool reset, stop, fail, done, ready;
+int<32> rounds;
+Initialize { actions { ready- } }
+bool bad[4];
+TbPush<32> I;
+TbPush<32> O3;
+TbPush<32> O1;
+TbPush<32> O0;
+TbPush<32> O2;
+
+defproc ChildSelDriver(
+    bool bad_O3, bad_O1;
+    TbPush!<32> I;
+    TbPush?<32> O3;
+    TbPush?<32> O1
+)
+{
+    /* ACT disallows nonlocal ports directly in loop guards. Sample the
+     * external stop/fail flags at each completed sequence boundary. */
+    bool running;
+    int<32> out_O3;
+    int<32> out_O1;
+    chp {
+        ready := false; stop := false; done := false; rounds := 0;
+        bad_O3 := false; bad_O1 := false;
+        ready := true; running := true;
+        [~reset];
+        *[running ->
+            ((
+            I!0xFFFFFFFE;
+            I!0xFFFFFFFE;
+            I!0xFFFFFFFF;
+            I!0x7FFFFFFE;
+            I!0xFFFFFFFE;
+            I!0xFFFFFFFF
+            ),(
+            O3?out_O3;
+            [out_O3 != 0xFFFF9FFE ->
+                bad_O3 := true;
+                log("FAILED: O3 expected ", 0xFFFF9FFE, ", got ", out_O3, ", round ", rounds);
+                assert(out_O3 = 0xFFFF9FFE, "O3 golden mismatch");
+                [reset]
+            [] else -> skip];
+            O3?out_O3;
+            [out_O3 != 0xFFFFFFFE ->
+                bad_O3 := true;
+                log("FAILED: O3 expected ", 0xFFFFFFFE, ", got ", out_O3, ", round ", rounds);
+                assert(out_O3 = 0xFFFFFFFE, "O3 golden mismatch");
+                [reset]
+            [] else -> skip];
+            O3?out_O3;
+            [out_O3 != 0xFFFFFFFF ->
+                bad_O3 := true;
+                log("FAILED: O3 expected ", 0xFFFFFFFF, ", got ", out_O3, ", round ", rounds);
+                assert(out_O3 = 0xFFFFFFFF, "O3 golden mismatch");
+                [reset]
+            [] else -> skip]
+            ),(
+            O1?out_O1;
+            [out_O1 != 0xFFFF9FFE ->
+                bad_O1 := true;
+                log("FAILED: O1 expected ", 0xFFFF9FFE, ", got ", out_O1, ", round ", rounds);
+                assert(out_O1 = 0xFFFF9FFE, "O1 golden mismatch");
+                [reset]
+            [] else -> skip];
+            O1?out_O1;
+            [out_O1 != 0xFFFFFFFE ->
+                bad_O1 := true;
+                log("FAILED: O1 expected ", 0xFFFFFFFE, ", got ", out_O1, ", round ", rounds);
+                assert(out_O1 = 0xFFFFFFFE, "O1 golden mismatch");
+                [reset]
+            [] else -> skip];
+            O1?out_O1;
+            [out_O1 != 0xFFFFFFFF ->
+                bad_O1 := true;
+                log("FAILED: O1 expected ", 0xFFFFFFFF, ", got ", out_O1, ", round ", rounds);
+                assert(out_O1 = 0xFFFFFFFF, "O1 golden mismatch");
+                [reset]
+            [] else -> skip]
+            ));
+            rounds := rounds + 1;
+            [stop | fail -> running := false [] else -> skip]
+        ];
+        done := true;
+        [fail -> log("FAILED")
+        [] else -> log("PASSED: rounds=", rounds)]
+    }
+}
+
+defproc tb_ChildSel()
+{
+    ChildSel dut;
+    dut.reset = reset;
+    TbPushSender<32> wire_I(I, dut.I.t, dut.I.f, dut.I.a);
+    TbPushReceiver<32> wire_O3(O3, dut.O3.t, dut.O3.f, dut.O3.a);
+    TbPushReceiver<32> wire_O1(O1, dut.O1.t, dut.O1.f, dut.O1.a);
+    TbPushReceiver<32> wire_O0(O0, dut.O0.t, dut.O0.f, dut.O0.a);
+    TbPushReceiver<32> wire_O2(O2, dut.O2.t, dut.O2.f, dut.O2.a);
+    TbQuiet<32> quiet_O0(reset, O0, bad[2]);
+    TbQuiet<32> quiet_O2(reset, O2, bad[3]);
+    TbFailure<4> failure(ready, bad, fail);
+    ChildSelDriver driver(bad[0], bad[1], I, O3, O1);
+}

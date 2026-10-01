@@ -1,0 +1,150 @@
+Module: ChildSel
+Status: COMPLETE - functional PASS
+Waveform: /home/cad/ferroma/benchmark/analog_sim/pipelined/tb/block/results/ChildSel/ChildSel_waves.csv
+Events: /home/cad/ferroma/benchmark/analog_sim/pipelined/tb/block/results/ChildSel/ChildSel.log
+Last Complete Sample: 154.060000 ns
+Operating Point: PTM65 TT; VDD=1.1 V; temperature=27 C
+Timing boundary: complete dual-rail validity at VDD/2, linearly interpolated.
+Measurement protocol: heavy_pipeline_header_payload_v1
+Pipeline energy: whole-DUT observation window; overlapping buffered transfers are not isolated per-flit energies.
+Pipeline recovery is signed: negative means input released before matching output, not a negative reset delay.
+Energy basis: idle-leakage-subtracted physical window (dynamic estimate).
+Simulation campaign: /tmp/ferroma_analog_campaign_VUaHCyYg
+
+Leakage Power
+-------------
+54.367660 uW
+No transitions on saved functional nodes; interfaces idle; reset low.
+Idle-only interval: 143.075000 .. 153.080000 ns
+Neighboring idle means (uW): 54.358561, 54.367627, 54.368760, 54.366560
+LEAKAGE_AUDIT {"drift": 4.046738125255385e-05, "neighbor_means": [5.4358560910610165e-05, 5.436762738573976e-05, 5.4368759739813695e-05, 5.436655962300156e-05], "power": 5.436765968140763e-05, "reason": "No transitions on saved functional nodes; interfaces idle; reset low.", "relative_std": 2.4365594356792435e-05, "transitions": 0, "voltage_columns_checked": 326, "window": [1.43075e-07, 1.5308e-07]}
+
+Packet Phase Selection
+----------------------
+Initial/header and payload are selected independently from the checked testbench sequence.
+Payload prefers a nonterminal flit. A final payload is used only when no nonterminal matched sample exists for that table cell.
+Each cell is one observed transaction, not a mean or a guaranteed steady-state limit.
+Both displayed samples follow O3 in the same packet. Identical FFFFFFFE words at I[0] and I[1] have different protocol roles.
+
+Initial / Header
+----------------
+I->C: i[0] -> o3[0]; word=0xfffffffe; routing header to O3.
+
+Initial / Header - Forward Time (ns)
+------------------------------------
+Input / Output                     C
+I                           0.485835
+
+Initial / Header - Recovery Time (ns)
+-------------------------------------
+Input / Output                     C
+I                           1.663307
+
+Initial / Header - Energy per Bit (fJ/bit)
+------------------------------------------
+Input / Output                     C
+I                          44.801249
+
+Payload / Steady-State Sample
+-----------------------------
+I->C: i[1] -> o3[1]; word=0xfffffffe; intermediate payload to O3.
+
+Payload / Steady-State Sample - Forward Time (ns)
+-------------------------------------------------
+Input / Output                     C
+I                           0.216465
+
+Payload / Steady-State Sample - Recovery Time (ns)
+--------------------------------------------------
+Input / Output                     C
+I                           1.846530
+
+Payload / Steady-State Sample - Energy per Bit (fJ/bit)
+-------------------------------------------------------
+Input / Output                     C
+I                          36.447267
+
+Input Phase Coverage
+--------------------
+i[0]=FFFFFFFE: routing header to O3; matched output
+PHASE_AUDIT {"input_index": 0, "input_word": "0xfffffffe", "matched_output": true, "packet_phase": "header", "packet_role": "routing header to O3", "source": "i", "terminal_payload": false}
+i[1]=FFFFFFFE: intermediate payload to O3; matched output
+PHASE_AUDIT {"input_index": 1, "input_word": "0xfffffffe", "matched_output": true, "packet_phase": "payload", "packet_role": "intermediate payload to O3", "source": "i", "terminal_payload": false}
+i[2]=FFFFFFFF: final payload to O3; matched output
+PHASE_AUDIT {"input_index": 2, "input_word": "0xffffffff", "matched_output": true, "packet_phase": "payload", "packet_role": "final payload to O3", "source": "i", "terminal_payload": true}
+i[3]=7FFFFFFE: routing header to O1; matched output
+PHASE_AUDIT {"input_index": 3, "input_word": "0x7ffffffe", "matched_output": true, "packet_phase": "header", "packet_role": "routing header to O1", "source": "i", "terminal_payload": false}
+i[4]=FFFFFFFE: intermediate payload to O1; matched output
+PHASE_AUDIT {"input_index": 4, "input_word": "0xfffffffe", "matched_output": true, "packet_phase": "payload", "packet_role": "intermediate payload to O1", "source": "i", "terminal_payload": false}
+i[5]=FFFFFFFF: final payload to O1; matched output
+PHASE_AUDIT {"input_index": 5, "input_word": "0xffffffff", "matched_output": true, "packet_phase": "payload", "packet_role": "final payload to O1", "source": "i", "terminal_payload": true}
+
+Input Cycle Time by Packet Phase
+--------------------------------
+Cycle = own input valid -> own ack-low AFTER its ack-high (physical VDD/2 crossings).
+This is not next-input spacing, output spacing or end-to-end latency.
+Raw physical times include finite testbench slew/polling and any backpressure; no waits are subtracted.
+Header includes consumed setup words and routing continuations. Payload prefers nonterminal flits per route;
+terminal payload is used only where that route has no nonterminal sample. Every input is audited below.
+Mean/min/max describe observed samples; they are not guaranteed saturated steady-state bounds.
+
+Header Input Cycle Time (ns)
+Source  Route                       N        Mean         Min         Max  Selection
+i       o1                            1    2.166494    2.166494    2.166494  header
+i       o3                            1    2.182884    2.182884    2.182884  header
+
+Payload Input Cycle Time (ns)
+Source  Route                       N        Mean         Min         Max  Selection
+i       o1                            1    2.078727    2.078727    2.078727  nonterminal
+i       o3                            1    2.093736    2.093736    2.093736  nonterminal
+INPUT_CYCLE_AUDIT {"ack_high": 1.006894377421539e-07, "ack_low": 1.0219788440371336e-07, "case": null, "cycle_s": 2.182883573473439e-09, "input_index": 0, "phase": "header", "route": "o3", "selected_for_phase_summary": true, "source": "i", "terminal_payload": false, "valid": 1.0001500083023992e-07, "word": "FFFFFFFE"}
+INPUT_CYCLE_AUDIT {"ack_high": 1.0281739430804015e-07, "ack_low": 1.0429873944145502e-07, "case": null, "cycle_s": 2.0937363978501584e-09, "input_index": 1, "phase": "payload", "route": "o3", "selected_for_phase_summary": true, "source": "i", "terminal_payload": false, "valid": 1.0220500304360486e-07, "word": "FFFFFFFE"}
+INPUT_CYCLE_AUDIT {"ack_high": 1.0483285816434338e-07, "ack_low": 1.0654007431688067e-07, "case": null, "cycle_s": 2.2350751537896583e-09, "input_index": 2, "phase": "payload", "route": "o3", "selected_for_phase_summary": false, "source": "i", "terminal_payload": true, "valid": 1.0430499916309101e-07, "word": "FFFFFFFF"}
+INPUT_CYCLE_AUDIT {"ack_high": 1.0722725628693749e-07, "ack_low": 1.0872149824906107e-07, "case": null, "cycle_s": 2.166493850169824e-09, "input_index": 3, "phase": "header", "route": "o1", "selected_for_phase_summary": true, "source": "i", "terminal_payload": false, "valid": 1.0655500439889125e-07, "word": "7FFFFFFE"}
+INPUT_CYCLE_AUDIT {"ack_high": 1.093374328992683e-07, "ack_low": 1.1081372809298957e-07, "case": null, "cycle_s": 2.0787269212925378e-09, "input_index": 4, "phase": "payload", "route": "o1", "selected_for_phase_summary": true, "source": "i", "terminal_payload": false, "valid": 1.0873500117169704e-07, "word": "FFFFFFFE"}
+INPUT_CYCLE_AUDIT {"ack_high": 1.1135277904321063e-07, "ack_low": 1.1306306894136511e-07, "case": null, "cycle_s": 2.2380656010877137e-09, "input_index": 5, "phase": "payload", "route": "o1", "selected_for_phase_summary": false, "source": "i", "terminal_payload": true, "valid": 1.108250033402774e-07, "word": "FFFFFFFF"}
+
+Measurement Interpretation
+--------------------------
+Timing values subtract only observed external waits of the measured handshake/batch; overlapping waits are counted once.
+The corrected values are trace-based de-embedding estimates. Concurrent internal work and arbitration cannot be replayed from boundary traces.
+They are not a guarantee of identical timing in an unmeasured zero-delay environment. Raw physical times and all removed intervals follow.
+Energy uses the physical start/end interval, with idle leakage subtracted when available. Switching energy during waits is retained.
+No whole-round average or arbitrary inter-transaction idle time is assigned to a transfer. Energy per Bit uses the requested 32-bit normalization.
+Supply boundary is the entire DUT. Simultaneous output copies share one transaction energy; unrelated concurrent traffic is not separable.
+Overlapping destination windows must not be added: they can integrate the same supply current twice.
+If leakage is N/A, displayed energy/bit is gross observed DUT window energy/32, not isolated dynamic transfer energy.
+Input/output edge slew and loading are those of the saved simulation. N/A means unsupported, unobserved or not yet complete.
+All saved functional nodes are checked for idle transitions; unsaved internal nodes cannot be certified directly from these traces.
+
+Selected Transactions and Reproducible Boundaries
+-------------------------------------------------
+initial:I->C: i[0] -> o3[0]
+  input valid=100.015001 ns; output/batch end=100.500836 ns; input ack low=102.197884 ns
+  raw forward/cycle=0.485835 ns; removed testbench wait=0.000000 ns; corrected=0.485835 ns
+  raw recovery=1.697048 ns; removed testbench wait=0.033741 ns; corrected=1.663307 ns
+  physical energy window=100.015001 .. 102.197884 ns; gross=1.552318 pJ; leakage-subtracted=1.433640 pJ
+  excluded forward waits (ns): []
+  excluded recovery waits (ns): [(100.5008360246, 100.51499893591941), (100.6894377421539, 100.69500240040534), (100.85098883499708, 100.86500268323306)]
+  overlapping buffered transfers: none recorded; see attribution
+  overlapping other input handshakes: none observed
+SELECTED_AUDIT {"ack_low": 1.0219788440371336e-07, "class_destination": "C", "class_source": "I", "destinations": ["o3"], "dynamic_energy": 1.4336399743257843e-12, "energy_attribution": "single matched transfer boundary window", "energy_end": 1.0219788440371336e-07, "energy_per_bit": 4.480124919768076e-14, "energy_start": 1.0001500083023992e-07, "forward": 4.858351943600797e-10, "forward_raw": 4.858351943600797e-10, "forward_tb_wait": 0, "gross_energy": 1.5523182455725232e-12, "input_indices": [0], "input_words": ["0xfffffffe"], "inputs": [{"ack_high": 1.006894377421539e-07, "ack_low": 1.0219788440371336e-07, "index": 0, "invalid": 1.0069500240040535e-07, "port": "i", "spacer": 1.0069500240040535e-07, "valid": 1.0001500083023992e-07, "word": 4294967294}], "key": "initial:I->C", "label": "i[0] -> o3[0]", "output_indices": [["o3", 0]], "output_valid": 1.005008360246e-07, "outputs": [{"ack_high": 1.0051499893591941e-07, "ack_low": 1.0086500268323306e-07, "index": 0, "invalid": 1.0064593820398331e-07, "port": "o3", "spacer": 1.0085098883499708e-07, "valid": 1.005008360246e-07, "word": 4294942718}], "overlapping_buffered_transfers": [], "overlapping_input_handshakes": [], "packet_phase": "header", "packet_role": "routing header to O3", "recovery": 1.6633069613065241e-09, "recovery_raw": 1.6970483791133594e-09, "recovery_tb_wait": 3.374141780683529e-11, "removed_forward_intervals": [], "removed_recovery_intervals": [[1.005008360246e-07, 1.0051499893591941e-07], [1.006894377421539e-07, 1.0069500240040535e-07], [1.0085098883499708e-07, 1.0086500268323306e-07]], "source": "i", "start": 1.0001500083023992e-07, "table_phase": "initial", "terminal_fallback": false, "terminal_payload": false}
+payload:I->C: i[1] -> o3[1]
+  input valid=102.205003 ns; output/batch end=102.421468 ns; input ack low=104.298739 ns
+  raw forward/cycle=0.216465 ns; removed testbench wait=0.000000 ns; corrected=0.216465 ns
+  raw recovery=1.877271 ns; removed testbench wait=0.030741 ns; corrected=1.846530 ns
+  physical energy window=102.205003 .. 104.298739 ns; gross=1.280144 pJ; leakage-subtracted=1.166313 pJ
+  excluded forward waits (ns): []
+  excluded recovery waits (ns): [(102.42146831334742, 102.43500280809941), (102.81739430804015, 102.82499693202404), (102.90539480587562, 102.9149986379026)]
+  overlapping buffered transfers: none recorded; see attribution
+  overlapping other input handshakes: none observed
+SELECTED_AUDIT {"ack_low": 1.0429873944145502e-07, "class_destination": "C", "class_source": "I", "destinations": ["o3"], "dynamic_energy": 1.1663125421871955e-12, "energy_attribution": "single matched transfer boundary window", "energy_end": 1.0429873944145502e-07, "energy_per_bit": 3.644726694334986e-14, "energy_start": 1.0220500304360486e-07, "forward": 2.1646526974255161e-10, "forward_raw": 2.1646526974255161e-10, "forward_tb_wait": 0, "gross_energy": 1.280144090128089e-12, "input_indices": [1], "input_words": ["0xfffffffe"], "inputs": [{"ack_high": 1.0281739430804015e-07, "ack_low": 1.0429873944145502e-07, "index": 1, "invalid": 1.0282499693202403e-07, "port": "i", "spacer": 1.0282499693202403e-07, "valid": 1.0220500304360486e-07, "word": 4294967294}], "key": "payload:I->C", "label": "i[1] -> o3[1]", "output_indices": [["o3", 1]], "output_valid": 1.0242146831334742e-07, "outputs": [{"ack_high": 1.024350028080994e-07, "ack_low": 1.029149986379026e-07, "index": 1, "invalid": 1.0284733145053437e-07, "port": "o3", "spacer": 1.0290539480587561e-07, "valid": 1.0242146831334742e-07, "word": 4294967294}], "overlapping_buffered_transfers": [], "overlapping_input_handshakes": [], "packet_phase": "payload", "packet_role": "intermediate payload to O3", "recovery": 1.8465301773447496e-09, "recovery_raw": 1.8772711281076067e-09, "recovery_tb_wait": 3.074095076285712e-11, "removed_forward_intervals": [], "removed_recovery_intervals": [[1.0242146831334742e-07, 1.024350028080994e-07], [1.0281739430804015e-07, 1.0282499693202403e-07], [1.0290539480587561e-07, 1.029149986379026e-07]], "source": "i", "start": 1.0220500304360486e-07, "table_phase": "payload", "terminal_fallback": false, "terminal_payload": false}
+
+All Matched Physical Transactions (audit, SI units)
+---------------------------------------------------
+TRANSACTION_AUDIT {"ack_low": 1.0219788440371336e-07, "class_destination": "C", "class_source": "I", "destinations": ["o3"], "dynamic_energy": 1.4336399743257843e-12, "energy_attribution": "single matched transfer boundary window", "energy_end": 1.0219788440371336e-07, "energy_per_bit": 4.480124919768076e-14, "energy_start": 1.0001500083023992e-07, "forward": 4.858351943600797e-10, "forward_raw": 4.858351943600797e-10, "forward_tb_wait": 0, "gross_energy": 1.5523182455725232e-12, "input_indices": [0], "input_words": ["0xfffffffe"], "inputs": [{"ack_high": 1.006894377421539e-07, "ack_low": 1.0219788440371336e-07, "index": 0, "invalid": 1.0069500240040535e-07, "port": "i", "spacer": 1.0069500240040535e-07, "valid": 1.0001500083023992e-07, "word": 4294967294}], "label": "i[0] -> o3[0]", "output_indices": [["o3", 0]], "output_valid": 1.005008360246e-07, "outputs": [{"ack_high": 1.0051499893591941e-07, "ack_low": 1.0086500268323306e-07, "index": 0, "invalid": 1.0064593820398331e-07, "port": "o3", "spacer": 1.0085098883499708e-07, "valid": 1.005008360246e-07, "word": 4294942718}], "overlapping_buffered_transfers": [], "overlapping_input_handshakes": [], "packet_phase": "header", "packet_role": "routing header to O3", "recovery": 1.6633069613065241e-09, "recovery_raw": 1.6970483791133594e-09, "recovery_tb_wait": 3.374141780683529e-11, "removed_forward_intervals": [], "removed_recovery_intervals": [[1.005008360246e-07, 1.0051499893591941e-07], [1.006894377421539e-07, 1.0069500240040535e-07], [1.0085098883499708e-07, 1.0086500268323306e-07]], "source": "i", "start": 1.0001500083023992e-07, "terminal_payload": false}
+TRANSACTION_AUDIT {"ack_low": 1.0429873944145502e-07, "class_destination": "C", "class_source": "I", "destinations": ["o3"], "dynamic_energy": 1.1663125421871955e-12, "energy_attribution": "single matched transfer boundary window", "energy_end": 1.0429873944145502e-07, "energy_per_bit": 3.644726694334986e-14, "energy_start": 1.0220500304360486e-07, "forward": 2.1646526974255161e-10, "forward_raw": 2.1646526974255161e-10, "forward_tb_wait": 0, "gross_energy": 1.280144090128089e-12, "input_indices": [1], "input_words": ["0xfffffffe"], "inputs": [{"ack_high": 1.0281739430804015e-07, "ack_low": 1.0429873944145502e-07, "index": 1, "invalid": 1.0282499693202403e-07, "port": "i", "spacer": 1.0282499693202403e-07, "valid": 1.0220500304360486e-07, "word": 4294967294}], "label": "i[1] -> o3[1]", "output_indices": [["o3", 1]], "output_valid": 1.0242146831334742e-07, "outputs": [{"ack_high": 1.024350028080994e-07, "ack_low": 1.029149986379026e-07, "index": 1, "invalid": 1.0284733145053437e-07, "port": "o3", "spacer": 1.0290539480587561e-07, "valid": 1.0242146831334742e-07, "word": 4294967294}], "overlapping_buffered_transfers": [], "overlapping_input_handshakes": [], "packet_phase": "payload", "packet_role": "intermediate payload to O3", "recovery": 1.8465301773447496e-09, "recovery_raw": 1.8772711281076067e-09, "recovery_tb_wait": 3.074095076285712e-11, "removed_forward_intervals": [], "removed_recovery_intervals": [[1.0242146831334742e-07, 1.024350028080994e-07], [1.0281739430804015e-07, 1.0282499693202403e-07], [1.0290539480587561e-07, 1.029149986379026e-07]], "source": "i", "start": 1.0220500304360486e-07, "terminal_payload": false}
+TRANSACTION_AUDIT {"ack_low": 1.0654007431688067e-07, "class_destination": "C", "class_source": "I", "destinations": ["o3"], "dynamic_energy": 1.2593745558067387e-12, "energy_attribution": "single matched transfer boundary window", "energy_end": 1.0654007431688067e-07, "energy_per_bit": 3.9355454868960586e-14, "energy_start": 1.0430499916309101e-07, "forward": 2.1051416583443806e-10, "forward_raw": 2.1051416583443806e-10, "forward_tb_wait": 0, "gross_energy": 1.3808903611303448e-12, "input_indices": [2], "input_words": ["0xffffffff"], "inputs": [{"ack_high": 1.0483285816434338e-07, "ack_low": 1.0654007431688067e-07, "index": 2, "invalid": 1.0484500135777788e-07, "port": "i", "spacer": 1.0484500135777788e-07, "valid": 1.0430499916309101e-07, "word": 4294967295}], "label": "i[2] -> o3[2]", "output_indices": [["o3", 2]], "output_valid": 1.0451551332892545e-07, "outputs": [{"ack_high": 1.0452499953711932e-07, "ack_low": 1.0500499744576617e-07, "index": 2, "invalid": 1.049438688712715e-07, "port": "o3", "spacer": 1.049963434318774e-07, "valid": 1.0451551332892545e-07, "word": 4294967295}], "overlapping_buffered_transfers": [], "overlapping_input_handshakes": [], "packet_phase": "payload", "packet_role": "final payload to O3", "recovery": 1.9942775724380842e-09, "recovery_raw": 2.0245609879552202e-09, "recovery_tb_wait": 3.0283415517135985e-11, "removed_forward_intervals": [], "removed_recovery_intervals": [[1.0451551332892545e-07, 1.0452499953711932e-07], [1.0483285816434338e-07, 1.0484500135777788e-07], [1.049963434318774e-07, 1.0500499744576617e-07]], "source": "i", "start": 1.0430499916309101e-07, "terminal_payload": true}
+TRANSACTION_AUDIT {"ack_low": 1.0872149824906107e-07, "class_destination": "C", "class_source": "I", "destinations": ["o1"], "dynamic_energy": 1.4271140140118766e-12, "energy_attribution": "single matched transfer boundary window", "energy_end": 1.0872149824906107e-07, "energy_per_bit": 4.4597312937871144e-14, "energy_start": 1.0655500439889125e-07, "forward": 4.915269995763447e-10, "forward_raw": 4.915269995763447e-10, "forward_tb_wait": 0, "gross_energy": 1.5449012143597721e-12, "input_indices": [3], "input_words": ["0x7ffffffe"], "inputs": [{"ack_high": 1.0722725628693749e-07, "ack_low": 1.0872149824906107e-07, "index": 3, "invalid": 1.0723500036534026e-07, "port": "i", "spacer": 1.0723500036534026e-07, "valid": 1.0655500439889125e-07, "word": 2147483646}], "label": "i[3] -> o1[0]", "output_indices": [["o1", 0]], "output_valid": 1.0704653139846759e-07, "outputs": [{"ack_high": 1.0705500121881595e-07, "ack_low": 1.0741500376227122e-07, "index": 0, "invalid": 1.071851309731297e-07, "port": "o1", "spacer": 1.0740201789535675e-07, "valid": 1.0704653139846759e-07, "word": 4294942718}], "overlapping_buffered_transfers": [], "overlapping_input_handshakes": [], "packet_phase": "header", "packet_role": "routing header to O1", "recovery": 1.645767084927893e-09, "recovery_raw": 1.6749668505934792e-09, "recovery_tb_wait": 2.919976566558628e-11, "removed_forward_intervals": [], "removed_recovery_intervals": [[1.0704653139846759e-07, 1.0705500121881595e-07], [1.0722725628693749e-07, 1.0723500036534026e-07], [1.0740201789535675e-07, 1.0741500376227122e-07]], "source": "i", "start": 1.0655500439889125e-07, "terminal_payload": false}
+TRANSACTION_AUDIT {"ack_low": 1.1081372809298957e-07, "class_destination": "C", "class_source": "I", "destinations": ["o1"], "dynamic_energy": 1.1695390021613958e-12, "energy_attribution": "single matched transfer boundary window", "energy_end": 1.1081372809298957e-07, "energy_per_bit": 3.654809381754362e-14, "energy_start": 1.0873500117169704e-07, "forward": 2.1661670463590045e-10, "forward_raw": 2.1661670463590045e-10, "forward_tb_wait": 0, "gross_energy": 1.2825545199888088e-12, "input_indices": [4], "input_words": ["0xfffffffe"], "inputs": [{"ack_high": 1.093374328992683e-07, "ack_low": 1.1081372809298957e-07, "index": 4, "invalid": 1.0934500389463768e-07, "port": "i", "spacer": 1.0934500389463768e-07, "valid": 1.0873500117169704e-07, "word": 4294967294}], "label": "i[4] -> o1[1]", "output_indices": [["o1", 1]], "output_valid": 1.0895161787633294e-07, "outputs": [{"ack_high": 1.0896500225192298e-07, "ack_low": 1.0944500280352962e-07, "index": 1, "invalid": 1.0937688346857084e-07, "port": "o1", "spacer": 1.0943475992277131e-07, "valid": 1.0895161787633294e-07, "word": 4294967294}], "overlapping_buffered_transfers": [], "overlapping_input_handshakes": [], "packet_phase": "payload", "packet_role": "intermediate payload to O1", "recovery": 1.8309119649389075e-09, "recovery_raw": 1.8621102166566373e-09, "recovery_tb_wait": 3.119825171772979e-11, "removed_forward_intervals": [], "removed_recovery_intervals": [[1.0895161787633294e-07, 1.0896500225192298e-07], [1.093374328992683e-07, 1.0934500389463768e-07], [1.0943475992277131e-07, 1.0944500280352962e-07]], "source": "i", "start": 1.0873500117169704e-07, "terminal_payload": false}
+TRANSACTION_AUDIT {"ack_low": 1.1306306894136511e-07, "class_destination": "C", "class_source": "I", "destinations": ["o1"], "dynamic_energy": 1.2583209295842105e-12, "energy_attribution": "single matched transfer boundary window", "energy_end": 1.1306306894136511e-07, "energy_per_bit": 3.932252904950658e-14, "energy_start": 1.108250033402774e-07, "forward": 2.0900341215041285e-10, "forward_raw": 2.0900341215041285e-10, "forward_tb_wait": 0, "gross_energy": 1.3799993185288124e-12, "input_indices": [5], "input_words": ["0xffffffff"], "inputs": [{"ack_high": 1.1135277904321063e-07, "ack_low": 1.1306306894136511e-07, "index": 5, "invalid": 1.1136500079942688e-07, "port": "i", "spacer": 1.1136500079942688e-07, "valid": 1.108250033402774e-07, "word": 4294967295}], "label": "i[5] -> o1[2]", "output_indices": [["o1", 2]], "output_valid": 1.110340067524278e-07, "outputs": [{"ack_high": 1.1104500306116388e-07, "ack_low": 1.1152499755886696e-07, "index": 2, "invalid": 1.1146217607526281e-07, "port": "o1", "spacer": 1.1151526612618437e-07, "valid": 1.110340067524278e-07, "word": 4294967295}], "overlapping_buffered_transfers": [], "overlapping_input_handshakes": [], "packet_phase": "payload", "packet_role": "final payload to O1", "recovery": 1.996112691302389e-09, "recovery_raw": 2.029062188937301e-09, "recovery_tb_wait": 3.294949763491177e-11, "removed_forward_intervals": [], "removed_recovery_intervals": [[1.110340067524278e-07, 1.1104500306116388e-07], [1.1135277904321063e-07, 1.1136500079942688e-07], [1.1151526612618437e-07, 1.1152499755886696e-07]], "source": "i", "start": 1.108250033402774e-07, "terminal_payload": true}

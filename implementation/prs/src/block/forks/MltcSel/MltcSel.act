@@ -1,0 +1,736 @@
+import "forks/commons/Channels.act";
+
+/* MltcSel: PRS-only process without testbench managers. */
+
+export defproc MltcSel(bool? reset; ActiveDualRail32? I; ActiveDualRail32! O0, O1)
+{
+    bool p, s, w_0i, ws0, ws1;
+    bool hold_I_a;
+    bool fd_I_a__environment;
+    bool fd_I_a__ws0;
+    bool fd_I_a__ws1;
+    bool fd_I_f_0__O0_f_0;
+    bool fd_I_f_0__O1_f_0;
+    bool fd_I_f_0__ws0;
+    bool fd_I_f_10__O0_f_10;
+    bool fd_I_f_10__O1_f_10;
+    bool fd_I_f_11__O0_f_11;
+    bool fd_I_f_11__O1_f_11;
+    bool fd_I_f_12__O0_f_12;
+    bool fd_I_f_12__O1_f_12;
+    bool fd_I_f_13__O0_f_13;
+    bool fd_I_f_13__O1_f_13;
+    bool fd_I_f_14__O0_f_14;
+    bool fd_I_f_14__O1_f_14;
+    bool fd_I_f_15__O0_f_15;
+    bool fd_I_f_15__O1_f_15;
+    bool fd_I_f_16__O0_f_16;
+    bool fd_I_f_16__O1_f_16;
+    bool fd_I_f_17__O0_f_17;
+    bool fd_I_f_17__O1_f_17;
+    bool fd_I_f_18__O0_f_18;
+    bool fd_I_f_18__O1_f_18;
+    bool fd_I_f_19__O0_f_19;
+    bool fd_I_f_19__O1_f_19;
+    bool fd_I_f_1__O0_f_1;
+    bool fd_I_f_1__O1_f_1;
+    bool fd_I_f_1__p;
+    bool fd_I_f_1__w_0i;
+    bool fd_I_f_20__O0_f_20;
+    bool fd_I_f_20__O1_f_20;
+    bool fd_I_f_21__O0_f_21;
+    bool fd_I_f_21__O1_f_21;
+    bool fd_I_f_22__O0_f_22;
+    bool fd_I_f_22__O1_f_22;
+    bool fd_I_f_23__O0_f_23;
+    bool fd_I_f_23__O1_f_23;
+    bool fd_I_f_24__O0_f_24;
+    bool fd_I_f_24__O1_f_24;
+    bool fd_I_f_25__O0_f_25;
+    bool fd_I_f_25__O1_f_25;
+    bool fd_I_f_26__O0_f_26;
+    bool fd_I_f_26__O1_f_26;
+    bool fd_I_f_27__O0_f_27;
+    bool fd_I_f_27__O1_f_27;
+    bool fd_I_f_28__O0_f_28;
+    bool fd_I_f_28__O1_f_28;
+    bool fd_I_f_29__O0_f_29;
+    bool fd_I_f_29__O1_f_29;
+    bool fd_I_f_2__O0_f_2;
+    bool fd_I_f_2__O1_f_2;
+    bool fd_I_f_30__O0_f_30;
+    bool fd_I_f_30__O1_f_30;
+    bool fd_I_f_31__O0_f_31;
+    bool fd_I_f_31__O1_f_31;
+    bool fd_I_f_3__O0_f_3;
+    bool fd_I_f_3__O1_f_3;
+    bool fd_I_f_4__O0_f_4;
+    bool fd_I_f_4__O1_f_4;
+    bool fd_I_f_5__O0_f_5;
+    bool fd_I_f_5__O1_f_5;
+    bool fd_I_f_6__O0_f_6;
+    bool fd_I_f_6__O1_f_6;
+    bool fd_I_f_7__O0_f_7;
+    bool fd_I_f_7__O1_f_7;
+    bool fd_I_f_8__O0_f_8;
+    bool fd_I_f_8__O1_f_8;
+    bool fd_I_f_9__O0_f_9;
+    bool fd_I_f_9__O1_f_9;
+    bool fd_I_t_0__O0_t_0;
+    bool fd_I_t_0__O1_t_0;
+    bool fd_I_t_0__ws1;
+    bool fd_I_t_10__O0_t_10;
+    bool fd_I_t_10__O1_t_10;
+    bool fd_I_t_11__O0_t_11;
+    bool fd_I_t_11__O1_t_11;
+    bool fd_I_t_12__O0_t_12;
+    bool fd_I_t_12__O1_t_12;
+    bool fd_I_t_13__O0_t_13;
+    bool fd_I_t_13__O1_t_13;
+    bool fd_I_t_14__O0_t_14;
+    bool fd_I_t_14__O1_t_14;
+    bool fd_I_t_15__O0_t_15;
+    bool fd_I_t_15__O1_t_15;
+    bool fd_I_t_16__O0_t_16;
+    bool fd_I_t_16__O1_t_16;
+    bool fd_I_t_17__O0_t_17;
+    bool fd_I_t_17__O1_t_17;
+    bool fd_I_t_18__O0_t_18;
+    bool fd_I_t_18__O1_t_18;
+    bool fd_I_t_19__O0_t_19;
+    bool fd_I_t_19__O1_t_19;
+    bool fd_I_t_1__O0_t_1;
+    bool fd_I_t_1__O1_t_1;
+    bool fd_I_t_1__p;
+    bool fd_I_t_1__w_0i;
+    bool fd_I_t_20__O0_t_20;
+    bool fd_I_t_20__O1_t_20;
+    bool fd_I_t_21__O0_t_21;
+    bool fd_I_t_21__O1_t_21;
+    bool fd_I_t_22__O0_t_22;
+    bool fd_I_t_22__O1_t_22;
+    bool fd_I_t_23__O0_t_23;
+    bool fd_I_t_23__O1_t_23;
+    bool fd_I_t_24__O0_t_24;
+    bool fd_I_t_24__O1_t_24;
+    bool fd_I_t_25__O0_t_25;
+    bool fd_I_t_25__O1_t_25;
+    bool fd_I_t_26__O0_t_26;
+    bool fd_I_t_26__O1_t_26;
+    bool fd_I_t_27__O0_t_27;
+    bool fd_I_t_27__O1_t_27;
+    bool fd_I_t_28__O0_t_28;
+    bool fd_I_t_28__O1_t_28;
+    bool fd_I_t_29__O0_t_29;
+    bool fd_I_t_29__O1_t_29;
+    bool fd_I_t_2__O0_t_2;
+    bool fd_I_t_2__O1_t_2;
+    bool fd_I_t_30__O0_t_30;
+    bool fd_I_t_30__O1_t_30;
+    bool fd_I_t_31__O0_t_31;
+    bool fd_I_t_31__O1_t_31;
+    bool fd_I_t_3__O0_t_3;
+    bool fd_I_t_3__O1_t_3;
+    bool fd_I_t_4__O0_t_4;
+    bool fd_I_t_4__O1_t_4;
+    bool fd_I_t_5__O0_t_5;
+    bool fd_I_t_5__O1_t_5;
+    bool fd_I_t_6__O0_t_6;
+    bool fd_I_t_6__O1_t_6;
+    bool fd_I_t_7__O0_t_7;
+    bool fd_I_t_7__O1_t_7;
+    bool fd_I_t_8__O0_t_8;
+    bool fd_I_t_8__O1_t_8;
+    bool fd_I_t_9__O0_t_9;
+    bool fd_I_t_9__O1_t_9;
+    bool fd_O0_a__I_a;
+    bool fd_O0_a__w_0i;
+    bool fd_O1_a__I_a;
+    bool fd_O1_a__w_0i;
+    bool fd_p__O0_f_0;
+    bool fd_s__O0_f_0;
+    bool fd_s__p;
+    bool fd_s__w_0i;
+    bool fd_w_0i__I_a;
+    bool fd_w_0i__s;
+    bool fd_ws0__I_a;
+    bool fd_ws1__I_a;
+    bool fd_ws1__s;
+    I.a = fd_I_a__environment;
+
+    // Original non-bubble PRS, PDF pp. 29–30.
+    // Reset is common; each guard pair uses one source view.
+    // Only the documented fork groups share views across targets.
+    prs {
+        (fd_I_t_1__p & fd_s__p) | reset -> p+
+        fd_I_f_1__p & fd_s__p -> p-
+        fd_s__w_0i & ((fd_I_t_1__w_0i & fd_p__O0_f_0) | (fd_I_f_1__w_0i & ~fd_p__O0_f_0)) -> w_0i+
+        (~fd_s__w_0i & (fd_O0_a__w_0i | fd_O1_a__w_0i)) | reset -> w_0i-
+        ~fd_s__O0_f_0 & fd_I_f_0__ws0 -> ws0+
+        (~fd_s__O0_f_0 & fd_I_a__ws0 & ~fd_O0_a__I_a & ~fd_O1_a__I_a) | reset -> ws0-
+        ~fd_s__O0_f_0 & fd_I_t_0__ws1 -> ws1+
+        (fd_s__O0_f_0 & fd_I_a__ws1 & ~fd_O0_a__I_a & ~fd_O1_a__I_a) | reset -> ws1-
+        (fd_ws1__s & fd_I_a__environment & ~fd_O0_a__I_a & ~fd_O1_a__I_a) | reset -> s+
+        fd_w_0i__s -> s-
+        (fd_O0_a__I_a | fd_O1_a__I_a) & (fd_ws1__I_a | fd_ws0__I_a) & ~fd_w_0i__I_a -> hold_I_a+
+        ~fd_O0_a__I_a & ~fd_O1_a__I_a & ~fd_ws1__I_a & ~fd_ws0__I_a -> hold_I_a-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_0__O0_t_0 -> O0.t[0]+
+        ~fd_I_t_0__O0_t_0 -> O0.t[0]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_0__O0_f_0 -> O0.f[0]+
+        ~fd_I_f_0__O0_f_0 -> O0.f[0]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_0__O1_t_0 -> O1.t[0]+
+        ~fd_I_t_0__O1_t_0 -> O1.t[0]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_0__O1_f_0 -> O1.f[0]+
+        ~fd_I_f_0__O1_f_0 -> O1.f[0]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_1__O0_t_1 -> O0.t[1]+
+        ~fd_I_t_1__O0_t_1 -> O0.t[1]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_1__O0_f_1 -> O0.f[1]+
+        ~fd_I_f_1__O0_f_1 -> O0.f[1]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_1__O1_t_1 -> O1.t[1]+
+        ~fd_I_t_1__O1_t_1 -> O1.t[1]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_1__O1_f_1 -> O1.f[1]+
+        ~fd_I_f_1__O1_f_1 -> O1.f[1]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_2__O0_t_2 -> O0.t[2]+
+        ~fd_I_t_2__O0_t_2 -> O0.t[2]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_2__O0_f_2 -> O0.f[2]+
+        ~fd_I_f_2__O0_f_2 -> O0.f[2]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_2__O1_t_2 -> O1.t[2]+
+        ~fd_I_t_2__O1_t_2 -> O1.t[2]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_2__O1_f_2 -> O1.f[2]+
+        ~fd_I_f_2__O1_f_2 -> O1.f[2]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_3__O0_t_3 -> O0.t[3]+
+        ~fd_I_t_3__O0_t_3 -> O0.t[3]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_3__O0_f_3 -> O0.f[3]+
+        ~fd_I_f_3__O0_f_3 -> O0.f[3]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_3__O1_t_3 -> O1.t[3]+
+        ~fd_I_t_3__O1_t_3 -> O1.t[3]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_3__O1_f_3 -> O1.f[3]+
+        ~fd_I_f_3__O1_f_3 -> O1.f[3]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_4__O0_t_4 -> O0.t[4]+
+        ~fd_I_t_4__O0_t_4 -> O0.t[4]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_4__O0_f_4 -> O0.f[4]+
+        ~fd_I_f_4__O0_f_4 -> O0.f[4]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_4__O1_t_4 -> O1.t[4]+
+        ~fd_I_t_4__O1_t_4 -> O1.t[4]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_4__O1_f_4 -> O1.f[4]+
+        ~fd_I_f_4__O1_f_4 -> O1.f[4]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_5__O0_t_5 -> O0.t[5]+
+        ~fd_I_t_5__O0_t_5 -> O0.t[5]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_5__O0_f_5 -> O0.f[5]+
+        ~fd_I_f_5__O0_f_5 -> O0.f[5]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_5__O1_t_5 -> O1.t[5]+
+        ~fd_I_t_5__O1_t_5 -> O1.t[5]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_5__O1_f_5 -> O1.f[5]+
+        ~fd_I_f_5__O1_f_5 -> O1.f[5]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_6__O0_t_6 -> O0.t[6]+
+        ~fd_I_t_6__O0_t_6 -> O0.t[6]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_6__O0_f_6 -> O0.f[6]+
+        ~fd_I_f_6__O0_f_6 -> O0.f[6]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_6__O1_t_6 -> O1.t[6]+
+        ~fd_I_t_6__O1_t_6 -> O1.t[6]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_6__O1_f_6 -> O1.f[6]+
+        ~fd_I_f_6__O1_f_6 -> O1.f[6]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_7__O0_t_7 -> O0.t[7]+
+        ~fd_I_t_7__O0_t_7 -> O0.t[7]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_7__O0_f_7 -> O0.f[7]+
+        ~fd_I_f_7__O0_f_7 -> O0.f[7]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_7__O1_t_7 -> O1.t[7]+
+        ~fd_I_t_7__O1_t_7 -> O1.t[7]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_7__O1_f_7 -> O1.f[7]+
+        ~fd_I_f_7__O1_f_7 -> O1.f[7]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_8__O0_t_8 -> O0.t[8]+
+        ~fd_I_t_8__O0_t_8 -> O0.t[8]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_8__O0_f_8 -> O0.f[8]+
+        ~fd_I_f_8__O0_f_8 -> O0.f[8]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_8__O1_t_8 -> O1.t[8]+
+        ~fd_I_t_8__O1_t_8 -> O1.t[8]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_8__O1_f_8 -> O1.f[8]+
+        ~fd_I_f_8__O1_f_8 -> O1.f[8]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_9__O0_t_9 -> O0.t[9]+
+        ~fd_I_t_9__O0_t_9 -> O0.t[9]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_9__O0_f_9 -> O0.f[9]+
+        ~fd_I_f_9__O0_f_9 -> O0.f[9]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_9__O1_t_9 -> O1.t[9]+
+        ~fd_I_t_9__O1_t_9 -> O1.t[9]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_9__O1_f_9 -> O1.f[9]+
+        ~fd_I_f_9__O1_f_9 -> O1.f[9]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_10__O0_t_10 -> O0.t[10]+
+        ~fd_I_t_10__O0_t_10 -> O0.t[10]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_10__O0_f_10 -> O0.f[10]+
+        ~fd_I_f_10__O0_f_10 -> O0.f[10]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_10__O1_t_10 -> O1.t[10]+
+        ~fd_I_t_10__O1_t_10 -> O1.t[10]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_10__O1_f_10 -> O1.f[10]+
+        ~fd_I_f_10__O1_f_10 -> O1.f[10]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_11__O0_t_11 -> O0.t[11]+
+        ~fd_I_t_11__O0_t_11 -> O0.t[11]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_11__O0_f_11 -> O0.f[11]+
+        ~fd_I_f_11__O0_f_11 -> O0.f[11]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_11__O1_t_11 -> O1.t[11]+
+        ~fd_I_t_11__O1_t_11 -> O1.t[11]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_11__O1_f_11 -> O1.f[11]+
+        ~fd_I_f_11__O1_f_11 -> O1.f[11]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_12__O0_t_12 -> O0.t[12]+
+        ~fd_I_t_12__O0_t_12 -> O0.t[12]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_12__O0_f_12 -> O0.f[12]+
+        ~fd_I_f_12__O0_f_12 -> O0.f[12]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_12__O1_t_12 -> O1.t[12]+
+        ~fd_I_t_12__O1_t_12 -> O1.t[12]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_12__O1_f_12 -> O1.f[12]+
+        ~fd_I_f_12__O1_f_12 -> O1.f[12]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_13__O0_t_13 -> O0.t[13]+
+        ~fd_I_t_13__O0_t_13 -> O0.t[13]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_13__O0_f_13 -> O0.f[13]+
+        ~fd_I_f_13__O0_f_13 -> O0.f[13]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_13__O1_t_13 -> O1.t[13]+
+        ~fd_I_t_13__O1_t_13 -> O1.t[13]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_13__O1_f_13 -> O1.f[13]+
+        ~fd_I_f_13__O1_f_13 -> O1.f[13]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_14__O0_t_14 -> O0.t[14]+
+        ~fd_I_t_14__O0_t_14 -> O0.t[14]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_14__O0_f_14 -> O0.f[14]+
+        ~fd_I_f_14__O0_f_14 -> O0.f[14]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_14__O1_t_14 -> O1.t[14]+
+        ~fd_I_t_14__O1_t_14 -> O1.t[14]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_14__O1_f_14 -> O1.f[14]+
+        ~fd_I_f_14__O1_f_14 -> O1.f[14]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_15__O0_t_15 -> O0.t[15]+
+        ~fd_I_t_15__O0_t_15 -> O0.t[15]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_15__O0_f_15 -> O0.f[15]+
+        ~fd_I_f_15__O0_f_15 -> O0.f[15]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_15__O1_t_15 -> O1.t[15]+
+        ~fd_I_t_15__O1_t_15 -> O1.t[15]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_15__O1_f_15 -> O1.f[15]+
+        ~fd_I_f_15__O1_f_15 -> O1.f[15]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_16__O0_t_16 -> O0.t[16]+
+        ~fd_I_t_16__O0_t_16 -> O0.t[16]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_16__O0_f_16 -> O0.f[16]+
+        ~fd_I_f_16__O0_f_16 -> O0.f[16]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_16__O1_t_16 -> O1.t[16]+
+        ~fd_I_t_16__O1_t_16 -> O1.t[16]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_16__O1_f_16 -> O1.f[16]+
+        ~fd_I_f_16__O1_f_16 -> O1.f[16]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_17__O0_t_17 -> O0.t[17]+
+        ~fd_I_t_17__O0_t_17 -> O0.t[17]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_17__O0_f_17 -> O0.f[17]+
+        ~fd_I_f_17__O0_f_17 -> O0.f[17]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_17__O1_t_17 -> O1.t[17]+
+        ~fd_I_t_17__O1_t_17 -> O1.t[17]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_17__O1_f_17 -> O1.f[17]+
+        ~fd_I_f_17__O1_f_17 -> O1.f[17]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_18__O0_t_18 -> O0.t[18]+
+        ~fd_I_t_18__O0_t_18 -> O0.t[18]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_18__O0_f_18 -> O0.f[18]+
+        ~fd_I_f_18__O0_f_18 -> O0.f[18]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_18__O1_t_18 -> O1.t[18]+
+        ~fd_I_t_18__O1_t_18 -> O1.t[18]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_18__O1_f_18 -> O1.f[18]+
+        ~fd_I_f_18__O1_f_18 -> O1.f[18]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_19__O0_t_19 -> O0.t[19]+
+        ~fd_I_t_19__O0_t_19 -> O0.t[19]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_19__O0_f_19 -> O0.f[19]+
+        ~fd_I_f_19__O0_f_19 -> O0.f[19]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_19__O1_t_19 -> O1.t[19]+
+        ~fd_I_t_19__O1_t_19 -> O1.t[19]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_19__O1_f_19 -> O1.f[19]+
+        ~fd_I_f_19__O1_f_19 -> O1.f[19]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_20__O0_t_20 -> O0.t[20]+
+        ~fd_I_t_20__O0_t_20 -> O0.t[20]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_20__O0_f_20 -> O0.f[20]+
+        ~fd_I_f_20__O0_f_20 -> O0.f[20]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_20__O1_t_20 -> O1.t[20]+
+        ~fd_I_t_20__O1_t_20 -> O1.t[20]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_20__O1_f_20 -> O1.f[20]+
+        ~fd_I_f_20__O1_f_20 -> O1.f[20]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_21__O0_t_21 -> O0.t[21]+
+        ~fd_I_t_21__O0_t_21 -> O0.t[21]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_21__O0_f_21 -> O0.f[21]+
+        ~fd_I_f_21__O0_f_21 -> O0.f[21]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_21__O1_t_21 -> O1.t[21]+
+        ~fd_I_t_21__O1_t_21 -> O1.t[21]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_21__O1_f_21 -> O1.f[21]+
+        ~fd_I_f_21__O1_f_21 -> O1.f[21]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_22__O0_t_22 -> O0.t[22]+
+        ~fd_I_t_22__O0_t_22 -> O0.t[22]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_22__O0_f_22 -> O0.f[22]+
+        ~fd_I_f_22__O0_f_22 -> O0.f[22]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_22__O1_t_22 -> O1.t[22]+
+        ~fd_I_t_22__O1_t_22 -> O1.t[22]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_22__O1_f_22 -> O1.f[22]+
+        ~fd_I_f_22__O1_f_22 -> O1.f[22]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_23__O0_t_23 -> O0.t[23]+
+        ~fd_I_t_23__O0_t_23 -> O0.t[23]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_23__O0_f_23 -> O0.f[23]+
+        ~fd_I_f_23__O0_f_23 -> O0.f[23]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_23__O1_t_23 -> O1.t[23]+
+        ~fd_I_t_23__O1_t_23 -> O1.t[23]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_23__O1_f_23 -> O1.f[23]+
+        ~fd_I_f_23__O1_f_23 -> O1.f[23]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_24__O0_t_24 -> O0.t[24]+
+        ~fd_I_t_24__O0_t_24 -> O0.t[24]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_24__O0_f_24 -> O0.f[24]+
+        ~fd_I_f_24__O0_f_24 -> O0.f[24]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_24__O1_t_24 -> O1.t[24]+
+        ~fd_I_t_24__O1_t_24 -> O1.t[24]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_24__O1_f_24 -> O1.f[24]+
+        ~fd_I_f_24__O1_f_24 -> O1.f[24]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_25__O0_t_25 -> O0.t[25]+
+        ~fd_I_t_25__O0_t_25 -> O0.t[25]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_25__O0_f_25 -> O0.f[25]+
+        ~fd_I_f_25__O0_f_25 -> O0.f[25]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_25__O1_t_25 -> O1.t[25]+
+        ~fd_I_t_25__O1_t_25 -> O1.t[25]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_25__O1_f_25 -> O1.f[25]+
+        ~fd_I_f_25__O1_f_25 -> O1.f[25]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_26__O0_t_26 -> O0.t[26]+
+        ~fd_I_t_26__O0_t_26 -> O0.t[26]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_26__O0_f_26 -> O0.f[26]+
+        ~fd_I_f_26__O0_f_26 -> O0.f[26]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_26__O1_t_26 -> O1.t[26]+
+        ~fd_I_t_26__O1_t_26 -> O1.t[26]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_26__O1_f_26 -> O1.f[26]+
+        ~fd_I_f_26__O1_f_26 -> O1.f[26]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_27__O0_t_27 -> O0.t[27]+
+        ~fd_I_t_27__O0_t_27 -> O0.t[27]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_27__O0_f_27 -> O0.f[27]+
+        ~fd_I_f_27__O0_f_27 -> O0.f[27]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_27__O1_t_27 -> O1.t[27]+
+        ~fd_I_t_27__O1_t_27 -> O1.t[27]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_27__O1_f_27 -> O1.f[27]+
+        ~fd_I_f_27__O1_f_27 -> O1.f[27]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_28__O0_t_28 -> O0.t[28]+
+        ~fd_I_t_28__O0_t_28 -> O0.t[28]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_28__O0_f_28 -> O0.f[28]+
+        ~fd_I_f_28__O0_f_28 -> O0.f[28]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_28__O1_t_28 -> O1.t[28]+
+        ~fd_I_t_28__O1_t_28 -> O1.t[28]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_28__O1_f_28 -> O1.f[28]+
+        ~fd_I_f_28__O1_f_28 -> O1.f[28]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_29__O0_t_29 -> O0.t[29]+
+        ~fd_I_t_29__O0_t_29 -> O0.t[29]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_29__O0_f_29 -> O0.f[29]+
+        ~fd_I_f_29__O0_f_29 -> O0.f[29]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_29__O1_t_29 -> O1.t[29]+
+        ~fd_I_t_29__O1_t_29 -> O1.t[29]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_29__O1_f_29 -> O1.f[29]+
+        ~fd_I_f_29__O1_f_29 -> O1.f[29]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_30__O0_t_30 -> O0.t[30]+
+        ~fd_I_t_30__O0_t_30 -> O0.t[30]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_30__O0_f_30 -> O0.f[30]+
+        ~fd_I_f_30__O0_f_30 -> O0.f[30]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_30__O1_t_30 -> O1.t[30]+
+        ~fd_I_t_30__O1_t_30 -> O1.t[30]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_30__O1_f_30 -> O1.f[30]+
+        ~fd_I_f_30__O1_f_30 -> O1.f[30]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_31__O0_t_31 -> O0.t[31]+
+        ~fd_I_t_31__O0_t_31 -> O0.t[31]-
+        fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_31__O0_f_31 -> O0.f[31]+
+        ~fd_I_f_31__O0_f_31 -> O0.f[31]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_t_31__O1_t_31 -> O1.t[31]+
+        ~fd_I_t_31__O1_t_31 -> O1.t[31]-
+        ~fd_p__O0_f_0 & ~fd_s__O0_f_0 & fd_I_f_31__O1_f_31 -> O1.f[31]+
+        ~fd_I_f_31__O1_f_31 -> O1.f[31]-
+
+        // Non-inverting wire delays.
+        hold_I_a -> fd_I_a__environment+
+        ~hold_I_a -> fd_I_a__environment-
+        hold_I_a -> fd_I_a__ws0+
+        ~hold_I_a -> fd_I_a__ws0-
+        hold_I_a -> fd_I_a__ws1+
+        ~hold_I_a -> fd_I_a__ws1-
+        I.f[0] -> fd_I_f_0__O0_f_0+
+        ~I.f[0] -> fd_I_f_0__O0_f_0-
+        I.f[0] -> fd_I_f_0__O1_f_0+
+        ~I.f[0] -> fd_I_f_0__O1_f_0-
+        I.f[0] -> fd_I_f_0__ws0+
+        ~I.f[0] -> fd_I_f_0__ws0-
+        I.f[10] -> fd_I_f_10__O0_f_10+
+        ~I.f[10] -> fd_I_f_10__O0_f_10-
+        I.f[10] -> fd_I_f_10__O1_f_10+
+        ~I.f[10] -> fd_I_f_10__O1_f_10-
+        I.f[11] -> fd_I_f_11__O0_f_11+
+        ~I.f[11] -> fd_I_f_11__O0_f_11-
+        I.f[11] -> fd_I_f_11__O1_f_11+
+        ~I.f[11] -> fd_I_f_11__O1_f_11-
+        I.f[12] -> fd_I_f_12__O0_f_12+
+        ~I.f[12] -> fd_I_f_12__O0_f_12-
+        I.f[12] -> fd_I_f_12__O1_f_12+
+        ~I.f[12] -> fd_I_f_12__O1_f_12-
+        I.f[13] -> fd_I_f_13__O0_f_13+
+        ~I.f[13] -> fd_I_f_13__O0_f_13-
+        I.f[13] -> fd_I_f_13__O1_f_13+
+        ~I.f[13] -> fd_I_f_13__O1_f_13-
+        I.f[14] -> fd_I_f_14__O0_f_14+
+        ~I.f[14] -> fd_I_f_14__O0_f_14-
+        I.f[14] -> fd_I_f_14__O1_f_14+
+        ~I.f[14] -> fd_I_f_14__O1_f_14-
+        I.f[15] -> fd_I_f_15__O0_f_15+
+        ~I.f[15] -> fd_I_f_15__O0_f_15-
+        I.f[15] -> fd_I_f_15__O1_f_15+
+        ~I.f[15] -> fd_I_f_15__O1_f_15-
+        I.f[16] -> fd_I_f_16__O0_f_16+
+        ~I.f[16] -> fd_I_f_16__O0_f_16-
+        I.f[16] -> fd_I_f_16__O1_f_16+
+        ~I.f[16] -> fd_I_f_16__O1_f_16-
+        I.f[17] -> fd_I_f_17__O0_f_17+
+        ~I.f[17] -> fd_I_f_17__O0_f_17-
+        I.f[17] -> fd_I_f_17__O1_f_17+
+        ~I.f[17] -> fd_I_f_17__O1_f_17-
+        I.f[18] -> fd_I_f_18__O0_f_18+
+        ~I.f[18] -> fd_I_f_18__O0_f_18-
+        I.f[18] -> fd_I_f_18__O1_f_18+
+        ~I.f[18] -> fd_I_f_18__O1_f_18-
+        I.f[19] -> fd_I_f_19__O0_f_19+
+        ~I.f[19] -> fd_I_f_19__O0_f_19-
+        I.f[19] -> fd_I_f_19__O1_f_19+
+        ~I.f[19] -> fd_I_f_19__O1_f_19-
+        I.f[1] -> fd_I_f_1__O0_f_1+
+        ~I.f[1] -> fd_I_f_1__O0_f_1-
+        I.f[1] -> fd_I_f_1__O1_f_1+
+        ~I.f[1] -> fd_I_f_1__O1_f_1-
+        I.f[1] -> fd_I_f_1__p+
+        ~I.f[1] -> fd_I_f_1__p-
+        I.f[1] -> fd_I_f_1__w_0i+
+        ~I.f[1] -> fd_I_f_1__w_0i-
+        I.f[20] -> fd_I_f_20__O0_f_20+
+        ~I.f[20] -> fd_I_f_20__O0_f_20-
+        I.f[20] -> fd_I_f_20__O1_f_20+
+        ~I.f[20] -> fd_I_f_20__O1_f_20-
+        I.f[21] -> fd_I_f_21__O0_f_21+
+        ~I.f[21] -> fd_I_f_21__O0_f_21-
+        I.f[21] -> fd_I_f_21__O1_f_21+
+        ~I.f[21] -> fd_I_f_21__O1_f_21-
+        I.f[22] -> fd_I_f_22__O0_f_22+
+        ~I.f[22] -> fd_I_f_22__O0_f_22-
+        I.f[22] -> fd_I_f_22__O1_f_22+
+        ~I.f[22] -> fd_I_f_22__O1_f_22-
+        I.f[23] -> fd_I_f_23__O0_f_23+
+        ~I.f[23] -> fd_I_f_23__O0_f_23-
+        I.f[23] -> fd_I_f_23__O1_f_23+
+        ~I.f[23] -> fd_I_f_23__O1_f_23-
+        I.f[24] -> fd_I_f_24__O0_f_24+
+        ~I.f[24] -> fd_I_f_24__O0_f_24-
+        I.f[24] -> fd_I_f_24__O1_f_24+
+        ~I.f[24] -> fd_I_f_24__O1_f_24-
+        I.f[25] -> fd_I_f_25__O0_f_25+
+        ~I.f[25] -> fd_I_f_25__O0_f_25-
+        I.f[25] -> fd_I_f_25__O1_f_25+
+        ~I.f[25] -> fd_I_f_25__O1_f_25-
+        I.f[26] -> fd_I_f_26__O0_f_26+
+        ~I.f[26] -> fd_I_f_26__O0_f_26-
+        I.f[26] -> fd_I_f_26__O1_f_26+
+        ~I.f[26] -> fd_I_f_26__O1_f_26-
+        I.f[27] -> fd_I_f_27__O0_f_27+
+        ~I.f[27] -> fd_I_f_27__O0_f_27-
+        I.f[27] -> fd_I_f_27__O1_f_27+
+        ~I.f[27] -> fd_I_f_27__O1_f_27-
+        I.f[28] -> fd_I_f_28__O0_f_28+
+        ~I.f[28] -> fd_I_f_28__O0_f_28-
+        I.f[28] -> fd_I_f_28__O1_f_28+
+        ~I.f[28] -> fd_I_f_28__O1_f_28-
+        I.f[29] -> fd_I_f_29__O0_f_29+
+        ~I.f[29] -> fd_I_f_29__O0_f_29-
+        I.f[29] -> fd_I_f_29__O1_f_29+
+        ~I.f[29] -> fd_I_f_29__O1_f_29-
+        I.f[2] -> fd_I_f_2__O0_f_2+
+        ~I.f[2] -> fd_I_f_2__O0_f_2-
+        I.f[2] -> fd_I_f_2__O1_f_2+
+        ~I.f[2] -> fd_I_f_2__O1_f_2-
+        I.f[30] -> fd_I_f_30__O0_f_30+
+        ~I.f[30] -> fd_I_f_30__O0_f_30-
+        I.f[30] -> fd_I_f_30__O1_f_30+
+        ~I.f[30] -> fd_I_f_30__O1_f_30-
+        I.f[31] -> fd_I_f_31__O0_f_31+
+        ~I.f[31] -> fd_I_f_31__O0_f_31-
+        I.f[31] -> fd_I_f_31__O1_f_31+
+        ~I.f[31] -> fd_I_f_31__O1_f_31-
+        I.f[3] -> fd_I_f_3__O0_f_3+
+        ~I.f[3] -> fd_I_f_3__O0_f_3-
+        I.f[3] -> fd_I_f_3__O1_f_3+
+        ~I.f[3] -> fd_I_f_3__O1_f_3-
+        I.f[4] -> fd_I_f_4__O0_f_4+
+        ~I.f[4] -> fd_I_f_4__O0_f_4-
+        I.f[4] -> fd_I_f_4__O1_f_4+
+        ~I.f[4] -> fd_I_f_4__O1_f_4-
+        I.f[5] -> fd_I_f_5__O0_f_5+
+        ~I.f[5] -> fd_I_f_5__O0_f_5-
+        I.f[5] -> fd_I_f_5__O1_f_5+
+        ~I.f[5] -> fd_I_f_5__O1_f_5-
+        I.f[6] -> fd_I_f_6__O0_f_6+
+        ~I.f[6] -> fd_I_f_6__O0_f_6-
+        I.f[6] -> fd_I_f_6__O1_f_6+
+        ~I.f[6] -> fd_I_f_6__O1_f_6-
+        I.f[7] -> fd_I_f_7__O0_f_7+
+        ~I.f[7] -> fd_I_f_7__O0_f_7-
+        I.f[7] -> fd_I_f_7__O1_f_7+
+        ~I.f[7] -> fd_I_f_7__O1_f_7-
+        I.f[8] -> fd_I_f_8__O0_f_8+
+        ~I.f[8] -> fd_I_f_8__O0_f_8-
+        I.f[8] -> fd_I_f_8__O1_f_8+
+        ~I.f[8] -> fd_I_f_8__O1_f_8-
+        I.f[9] -> fd_I_f_9__O0_f_9+
+        ~I.f[9] -> fd_I_f_9__O0_f_9-
+        I.f[9] -> fd_I_f_9__O1_f_9+
+        ~I.f[9] -> fd_I_f_9__O1_f_9-
+        I.t[0] -> fd_I_t_0__O0_t_0+
+        ~I.t[0] -> fd_I_t_0__O0_t_0-
+        I.t[0] -> fd_I_t_0__O1_t_0+
+        ~I.t[0] -> fd_I_t_0__O1_t_0-
+        I.t[0] -> fd_I_t_0__ws1+
+        ~I.t[0] -> fd_I_t_0__ws1-
+        I.t[10] -> fd_I_t_10__O0_t_10+
+        ~I.t[10] -> fd_I_t_10__O0_t_10-
+        I.t[10] -> fd_I_t_10__O1_t_10+
+        ~I.t[10] -> fd_I_t_10__O1_t_10-
+        I.t[11] -> fd_I_t_11__O0_t_11+
+        ~I.t[11] -> fd_I_t_11__O0_t_11-
+        I.t[11] -> fd_I_t_11__O1_t_11+
+        ~I.t[11] -> fd_I_t_11__O1_t_11-
+        I.t[12] -> fd_I_t_12__O0_t_12+
+        ~I.t[12] -> fd_I_t_12__O0_t_12-
+        I.t[12] -> fd_I_t_12__O1_t_12+
+        ~I.t[12] -> fd_I_t_12__O1_t_12-
+        I.t[13] -> fd_I_t_13__O0_t_13+
+        ~I.t[13] -> fd_I_t_13__O0_t_13-
+        I.t[13] -> fd_I_t_13__O1_t_13+
+        ~I.t[13] -> fd_I_t_13__O1_t_13-
+        I.t[14] -> fd_I_t_14__O0_t_14+
+        ~I.t[14] -> fd_I_t_14__O0_t_14-
+        I.t[14] -> fd_I_t_14__O1_t_14+
+        ~I.t[14] -> fd_I_t_14__O1_t_14-
+        I.t[15] -> fd_I_t_15__O0_t_15+
+        ~I.t[15] -> fd_I_t_15__O0_t_15-
+        I.t[15] -> fd_I_t_15__O1_t_15+
+        ~I.t[15] -> fd_I_t_15__O1_t_15-
+        I.t[16] -> fd_I_t_16__O0_t_16+
+        ~I.t[16] -> fd_I_t_16__O0_t_16-
+        I.t[16] -> fd_I_t_16__O1_t_16+
+        ~I.t[16] -> fd_I_t_16__O1_t_16-
+        I.t[17] -> fd_I_t_17__O0_t_17+
+        ~I.t[17] -> fd_I_t_17__O0_t_17-
+        I.t[17] -> fd_I_t_17__O1_t_17+
+        ~I.t[17] -> fd_I_t_17__O1_t_17-
+        I.t[18] -> fd_I_t_18__O0_t_18+
+        ~I.t[18] -> fd_I_t_18__O0_t_18-
+        I.t[18] -> fd_I_t_18__O1_t_18+
+        ~I.t[18] -> fd_I_t_18__O1_t_18-
+        I.t[19] -> fd_I_t_19__O0_t_19+
+        ~I.t[19] -> fd_I_t_19__O0_t_19-
+        I.t[19] -> fd_I_t_19__O1_t_19+
+        ~I.t[19] -> fd_I_t_19__O1_t_19-
+        I.t[1] -> fd_I_t_1__O0_t_1+
+        ~I.t[1] -> fd_I_t_1__O0_t_1-
+        I.t[1] -> fd_I_t_1__O1_t_1+
+        ~I.t[1] -> fd_I_t_1__O1_t_1-
+        I.t[1] -> fd_I_t_1__p+
+        ~I.t[1] -> fd_I_t_1__p-
+        I.t[1] -> fd_I_t_1__w_0i+
+        ~I.t[1] -> fd_I_t_1__w_0i-
+        I.t[20] -> fd_I_t_20__O0_t_20+
+        ~I.t[20] -> fd_I_t_20__O0_t_20-
+        I.t[20] -> fd_I_t_20__O1_t_20+
+        ~I.t[20] -> fd_I_t_20__O1_t_20-
+        I.t[21] -> fd_I_t_21__O0_t_21+
+        ~I.t[21] -> fd_I_t_21__O0_t_21-
+        I.t[21] -> fd_I_t_21__O1_t_21+
+        ~I.t[21] -> fd_I_t_21__O1_t_21-
+        I.t[22] -> fd_I_t_22__O0_t_22+
+        ~I.t[22] -> fd_I_t_22__O0_t_22-
+        I.t[22] -> fd_I_t_22__O1_t_22+
+        ~I.t[22] -> fd_I_t_22__O1_t_22-
+        I.t[23] -> fd_I_t_23__O0_t_23+
+        ~I.t[23] -> fd_I_t_23__O0_t_23-
+        I.t[23] -> fd_I_t_23__O1_t_23+
+        ~I.t[23] -> fd_I_t_23__O1_t_23-
+        I.t[24] -> fd_I_t_24__O0_t_24+
+        ~I.t[24] -> fd_I_t_24__O0_t_24-
+        I.t[24] -> fd_I_t_24__O1_t_24+
+        ~I.t[24] -> fd_I_t_24__O1_t_24-
+        I.t[25] -> fd_I_t_25__O0_t_25+
+        ~I.t[25] -> fd_I_t_25__O0_t_25-
+        I.t[25] -> fd_I_t_25__O1_t_25+
+        ~I.t[25] -> fd_I_t_25__O1_t_25-
+        I.t[26] -> fd_I_t_26__O0_t_26+
+        ~I.t[26] -> fd_I_t_26__O0_t_26-
+        I.t[26] -> fd_I_t_26__O1_t_26+
+        ~I.t[26] -> fd_I_t_26__O1_t_26-
+        I.t[27] -> fd_I_t_27__O0_t_27+
+        ~I.t[27] -> fd_I_t_27__O0_t_27-
+        I.t[27] -> fd_I_t_27__O1_t_27+
+        ~I.t[27] -> fd_I_t_27__O1_t_27-
+        I.t[28] -> fd_I_t_28__O0_t_28+
+        ~I.t[28] -> fd_I_t_28__O0_t_28-
+        I.t[28] -> fd_I_t_28__O1_t_28+
+        ~I.t[28] -> fd_I_t_28__O1_t_28-
+        I.t[29] -> fd_I_t_29__O0_t_29+
+        ~I.t[29] -> fd_I_t_29__O0_t_29-
+        I.t[29] -> fd_I_t_29__O1_t_29+
+        ~I.t[29] -> fd_I_t_29__O1_t_29-
+        I.t[2] -> fd_I_t_2__O0_t_2+
+        ~I.t[2] -> fd_I_t_2__O0_t_2-
+        I.t[2] -> fd_I_t_2__O1_t_2+
+        ~I.t[2] -> fd_I_t_2__O1_t_2-
+        I.t[30] -> fd_I_t_30__O0_t_30+
+        ~I.t[30] -> fd_I_t_30__O0_t_30-
+        I.t[30] -> fd_I_t_30__O1_t_30+
+        ~I.t[30] -> fd_I_t_30__O1_t_30-
+        I.t[31] -> fd_I_t_31__O0_t_31+
+        ~I.t[31] -> fd_I_t_31__O0_t_31-
+        I.t[31] -> fd_I_t_31__O1_t_31+
+        ~I.t[31] -> fd_I_t_31__O1_t_31-
+        I.t[3] -> fd_I_t_3__O0_t_3+
+        ~I.t[3] -> fd_I_t_3__O0_t_3-
+        I.t[3] -> fd_I_t_3__O1_t_3+
+        ~I.t[3] -> fd_I_t_3__O1_t_3-
+        I.t[4] -> fd_I_t_4__O0_t_4+
+        ~I.t[4] -> fd_I_t_4__O0_t_4-
+        I.t[4] -> fd_I_t_4__O1_t_4+
+        ~I.t[4] -> fd_I_t_4__O1_t_4-
+        I.t[5] -> fd_I_t_5__O0_t_5+
+        ~I.t[5] -> fd_I_t_5__O0_t_5-
+        I.t[5] -> fd_I_t_5__O1_t_5+
+        ~I.t[5] -> fd_I_t_5__O1_t_5-
+        I.t[6] -> fd_I_t_6__O0_t_6+
+        ~I.t[6] -> fd_I_t_6__O0_t_6-
+        I.t[6] -> fd_I_t_6__O1_t_6+
+        ~I.t[6] -> fd_I_t_6__O1_t_6-
+        I.t[7] -> fd_I_t_7__O0_t_7+
+        ~I.t[7] -> fd_I_t_7__O0_t_7-
+        I.t[7] -> fd_I_t_7__O1_t_7+
+        ~I.t[7] -> fd_I_t_7__O1_t_7-
+        I.t[8] -> fd_I_t_8__O0_t_8+
+        ~I.t[8] -> fd_I_t_8__O0_t_8-
+        I.t[8] -> fd_I_t_8__O1_t_8+
+        ~I.t[8] -> fd_I_t_8__O1_t_8-
+        I.t[9] -> fd_I_t_9__O0_t_9+
+        ~I.t[9] -> fd_I_t_9__O0_t_9-
+        I.t[9] -> fd_I_t_9__O1_t_9+
+        ~I.t[9] -> fd_I_t_9__O1_t_9-
+        O0.a -> fd_O0_a__I_a+
+        ~O0.a -> fd_O0_a__I_a-
+        O0.a -> fd_O0_a__w_0i+
+        ~O0.a -> fd_O0_a__w_0i-
+        O1.a -> fd_O1_a__I_a+
+        ~O1.a -> fd_O1_a__I_a-
+        O1.a -> fd_O1_a__w_0i+
+        ~O1.a -> fd_O1_a__w_0i-
+        p -> fd_p__O0_f_0+
+        ~p -> fd_p__O0_f_0-
+        s -> fd_s__O0_f_0+
+        ~s -> fd_s__O0_f_0-
+        s -> fd_s__p+
+        ~s -> fd_s__p-
+        s -> fd_s__w_0i+
+        ~s -> fd_s__w_0i-
+        w_0i -> fd_w_0i__I_a+
+        ~w_0i -> fd_w_0i__I_a-
+        w_0i -> fd_w_0i__s+
+        ~w_0i -> fd_w_0i__s-
+        ws0 -> fd_ws0__I_a+
+        ~ws0 -> fd_ws0__I_a-
+        ws1 -> fd_ws1__I_a+
+        ~ws1 -> fd_ws1__I_a-
+        ws1 -> fd_ws1__s+
+        ~ws1 -> fd_ws1__s-
+    }
+}

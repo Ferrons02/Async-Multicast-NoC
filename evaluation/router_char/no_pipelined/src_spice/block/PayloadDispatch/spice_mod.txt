@@ -1,0 +1,111 @@
+PayloadDispatch: targeted fanout sizing (measured W-only sizing)
+==============================================================
+Only MOS W parameters were changed. L, devices, topology and ports are identical.
+Keeper devices and their feedback inverters retain their generated dimensions.
+Units: widths and lengths below are micrometres. Technology: PTM65 TT, 1.1 V, 27 C.
+The largest trial widths are NMOS 1.56 um and PMOS 2.6 um (16x).
+PRS source was not regenerated or changed. A future prs2net build would lose this manual sizing.
+Original generated node reff comments describe the unsized baseline, not the new resistances.
+
+Method
+------
+Gate loads counted after recursive instance/port expansion; repeated instances are included.
+invEq is sum(W*L) / (0.26*0.065), a gate-area load proxy in minimum-inverter units, not extracted capacitance.
+Targets: high-fanout control drivers and limited support for their existing upstream stages.
+Width factors 2/4/8/16 are bounded trial choices; stronger drivers also increase upstream loading.
+Logical-effort reference: https://pages.hmc.edu/harris/class/e158/10/lect6.pdf
+No automatic timing optimum, layout/parasitic signoff or measured gain is implied by the sizing alone.
+
+Changed MOS: 23 in definitions; 92/4256 after instance expansion (2.16%).
+
+Driver groups (maximum load across the block library)
+----------------------------------------------------
+ChildDispatch.c: W x4; gate terminals=70; invEq=27.750; driver MOS=5
+ChildDispatch.I_aa: W x2; gate terminals=9; invEq=5.125; driver MOS=8
+ChildDispatch.__oa: W x2; gate terminals=5; invEq=2.125; driver MOS=2
+ChildDispatch.w0: W x2; gate terminals=5; invEq=3.375; driver MOS=6
+ChildDispatch.__cht: W x2; gate terminals=1; invEq=0.625; driver MOS=2
+
+Exact changed MOS
+-----------------
+Subcircuit Device Driver_node Old_W New_W L Factor
+ChildDispatch M16_ c 0.1625 0.65 0.065 4
+ChildDispatch M360_ c 0.0975 0.39 0.065 4
+ChildDispatch M361_ c 0.0975 0.39 0.065 4
+ChildDispatch M838_ c 0.0975 0.39 0.065 4
+ChildDispatch M841_ c 0.0975 0.39 0.065 4
+ChildDispatch M22_ I_aa 0.1625 0.325 0.065 2
+ChildDispatch M23_ I_aa 0.1625 0.325 0.065 2
+ChildDispatch M369_ I_aa 0.0975 0.195 0.065 2
+ChildDispatch M370_ I_aa 0.0975 0.195 0.065 2
+ChildDispatch M846_ I_aa 0.0975 0.195 0.065 2
+ChildDispatch M847_ I_aa 0.0975 0.195 0.065 2
+ChildDispatch M862_ I_aa 0.0975 0.195 0.065 2
+ChildDispatch M863_ I_aa 0.0975 0.195 0.065 2
+ChildDispatch M437_ __oa 0.0975 0.195 0.065 2
+ChildDispatch M90_ __oa 0.1625 0.325 0.065 2
+ChildDispatch M18_ w0 0.1625 0.325 0.065 2
+ChildDispatch M364_ w0 0.0975 0.195 0.065 2
+ChildDispatch M365_ w0 0.0975 0.195 0.065 2
+ChildDispatch M842_ w0 0.1625 0.325 0.065 2
+ChildDispatch M843_ w0 0.0975 0.195 0.065 2
+ChildDispatch M855_ w0 0.0975 0.195 0.065 2
+ChildDispatch M435_ __cht 0.0975 0.195 0.065 2
+ChildDispatch M88_ __cht 0.1625 0.325 0.065 2
+
+
+
+
+Validation status
+-----------------
+PASS: replacing only W tokens reconstructs the baseline byte-for-byte.
+PASS: instantiated MOS count, every L, ports and element connectivity are unchanged.
+PASS: HSPICE functional test and stable final idle leakage window.
+Campaign: /tmp/ferroma_analog_campaign_XQRtrlCf
+Testbench: tb/block/PayloadDispatch/PayloadDispatch_tb.sp
+Report: tb/block/results/PayloadDispatch/PayloadDispatch_perf.txt
+
+Before / after measured results
+-------------------------------
+Same baseline-selected input source, index, data and output ports in both simulations.
+Timing follows the existing extractor: observed external waits are subtracted.
+Counter forward denotes an input/output cycle; Serializer/Deserializer forward denotes batch latency.
+Input_cycle below is forward+recovery where defined. Energy is whole-DUT dynamic window energy.
+Arb windows include concurrent traffic: energy cannot be assigned uniquely to one input.
+Differences are (sized/original - 1)*100. Negative timing means faster.
+Metric / sample | Before | After | Change %
+Idle leakage (uW) | 26.427879 | 26.668083 | +0.91
+Sample initial:I->C: i[0] -> c0[0],c2[0] -> measured i[0] -> c0[0],c2[0]
+initial:I->C forward (ns) | 0.030757 | 0.030436 | -1.04
+initial:I->C recovery (ns) | 0.467325 | 0.412373 | -11.76
+initial:I->C dynamic_energy (pJ) | 0.657122 | 0.666551 | +1.43
+initial:I->C input_cycle (ns) | 0.498083 | 0.442809 | -11.10
+Sample payload:I->C: i[1] -> c0[1],c2[1] -> measured i[1] -> c0[1],c2[1]
+payload:I->C forward (ns) | 0.030695 | 0.030793 | +0.32
+payload:I->C recovery (ns) | 0.974143 | 0.936036 | -3.91
+payload:I->C dynamic_energy (pJ) | 0.837149 | 0.860592 | +2.80
+payload:I->C input_cycle (ns) | 1.004838 | 0.966829 | -3.78
+
+Coverage of every matched transaction
+-------------------------------------
+Input/outputs | Forward before/after ns | Recovery before/after ns | Dynamic energy before/after pJ
+i[0] -> c0[0],c2[0] | 0.030757/0.030436 | 0.467325/0.412373 | 0.657122/0.666551
+i[1] -> c0[1],c2[1] | 0.030695/0.030793 | 0.974143/0.936036 | 0.837149/0.860592
+i[2] -> c0[2],c2[2] | 0.030602/0.030880 | 0.651135/0.450911 | 0.789485/0.703070
+i[3] -> c0[3],c1[0],c2[3],c3[0] | 0.030673/0.030375 | 0.694450/0.494636 | 1.113089/1.090887
+
+Sizing refinement
+-----------------
+Candidate v1 scaled only the large control root by 8x and passed functionally,
+but increased handshake recovery. It is archived, not retained as the active netlist.
+The retained candidate reduces that root to 4x and scales a few existing preceding drivers by 2x.
+These support stages originally have modest fanout; their added gate load comes from the resized root.
+No stage, wire or device was inserted or removed. See candidate_v1/ in the archive for the rejected measurements.
+
+Scope and provenance
+--------------------
+These results validate the saved testbench and operating point; they are not an exhaustive sizing optimum.
+Subsystem/top netlists were not resized or regenerated in this task.
+Original and experimental results: /home/cad/archives/analog_sim/20260917_block_fanout_sizing
+Baseline netlist SHA256: 65789eae71dfdaac492f9007ee949a69e3472528e0408335fde2ed6d1c2af43f
+Sized netlist SHA256: 2423d4eecc2a9519194e1c97c6bed662fafe8c8cb694a734807288d0f616fd7b

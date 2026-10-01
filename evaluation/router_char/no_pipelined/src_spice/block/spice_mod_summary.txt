@@ -1,0 +1,407 @@
+Arb measurement correction — 18 September 2026
+---------------------------------------------
+Current Arb_perf.txt uses a new single-source characterization phase for
+header/payload latency and energy. The DUT netlist/sizing did not change.
+Historical Arb values in sizing archives used concurrent traffic: header
+response includes contention and overlapping supply integrals are not energy
+of individual source flits. The current report retains concurrent response
+separately and integrates the concurrent episode once. This correction is a
+measurement change, not a new sizing gain. Other block sizing results below
+are unchanged. See tb/block/results/Arb/Arb_perf.txt and the archive
+/home/cad/archives/analog_sim/20260918_arb_measurement/README.md.
+
+Recovery-oriented block sizing: accepted results
+=================================================
+Comparison baseline: previously accepted fanout sizing (17 September 2026).
+All accepted candidates completed HSPICE with functional PASS and stable idle leakage.
+PTM65 TT, VDD=1.1 V, 27 C. Stimuli, models, electrical loads and solver settings unchanged.
+Additional .probe commands only save non-loading observations of internal nodes.
+Only transistor W changed in each circuit; keepers, L, topology and device counts unchanged.
+Timing subtraction follows the existing extractor; exact windows are in *_perf.txt.
+Definitions shared across the block library have identical bodies.
+
+All matched external performance samples
+----------------------------------------
+Module | Sample | Metric | Previous | Current | Change %
+Serializer | word I[0] -> seven nibbles | forward (ns) | 4.614019 | 4.095463 | -11.24
+Serializer | word I[0] -> seven nibbles | dynamic_energy (pJ) | 0.985628 | 1.036650 | +5.18
+Serializer | word I[1] -> seven nibbles | forward (ns) | 4.672297 | 4.049351 | -13.33
+Serializer | word I[1] -> seven nibbles | dynamic_energy (pJ) | 0.922375 | 0.965201 | +4.64
+Serializer | stable idle | leakage (uW) | 17.599101 | 17.808401 | +1.19
+Deserializer | seven nonzero nibbles I[5:12] -> O[1] | forward (ns) | 14.116143 | 11.119672 | -21.23
+Deserializer | seven nonzero nibbles I[5:12] -> O[1] | dynamic_energy (pJ) | 1.661768 | 1.780589 | +7.15
+Deserializer | stable idle | leakage (uW) | 20.167518 | 20.290062 | +0.61
+QuadRouter | i[0] -> ch[0] | forward (ns) | 1.200312 | 1.222064 | +1.81
+QuadRouter | i[0] -> ch[0] | recovery (ns) | 1.322712 | 1.282059 | -3.07
+QuadRouter | i[0] -> ch[0] | dynamic_energy (pJ) | 1.073138 | 1.104864 | +2.96
+QuadRouter | i[14] -> ch[1] | forward (ns) | 1.167628 | 1.183021 | +1.32
+QuadRouter | i[14] -> ch[1] | recovery (ns) | 1.343503 | 1.295251 | -3.59
+QuadRouter | i[14] -> ch[1] | dynamic_energy (pJ) | 1.104092 | 1.141421 | +3.38
+QuadRouter | i[15] -> oc0[0] | forward (ns) | 1.836379 | 1.489577 | -18.89
+QuadRouter | i[15] -> oc0[0] | dynamic_energy (pJ) | 0.886811 | 0.863493 | -2.63
+QuadRouter | i[15] -> od0[3] | forward (ns) | 1.873603 | 1.527005 | -18.50
+QuadRouter | i[15] -> od0[3] | dynamic_energy (pJ) | 0.896014 | 0.877315 | -2.09
+QuadRouter | i[17] -> oc0[1] | forward (ns) | 8.297518 | 5.956567 | -28.21
+QuadRouter | i[17] -> oc0[1] | dynamic_energy (pJ) | 1.831275 | 1.955994 | +6.81
+QuadRouter | i[17] -> od0[4] | forward (ns) | 8.335935 | 5.995235 | -28.08
+QuadRouter | i[17] -> od0[4] | dynamic_energy (pJ) | 1.840327 | 1.972243 | +7.17
+QuadRouter | i[18] -> oc0[2] | forward (ns) | 4.301927 | 3.357039 | -21.96
+QuadRouter | i[18] -> oc0[2] | dynamic_energy (pJ) | 1.306839 | 1.452156 | +11.12
+QuadRouter | i[18] -> od0[5] | forward (ns) | 4.340187 | 3.395850 | -21.76
+QuadRouter | i[18] -> od0[5] | dynamic_energy (pJ) | 1.316200 | 1.465741 | +11.36
+QuadRouter | i[19] -> oc0[3] | forward (ns) | 4.387820 | 3.405340 | -22.39
+QuadRouter | i[19] -> oc0[3] | dynamic_energy (pJ) | 1.293700 | 1.431076 | +10.62
+QuadRouter | i[19] -> od0[6] | forward (ns) | 4.426818 | 3.444310 | -22.19
+QuadRouter | i[19] -> od0[6] | dynamic_energy (pJ) | 1.301120 | 1.447778 | +11.27
+QuadRouter | i[20] -> oc0[4] | forward (ns) | 4.386754 | 3.403140 | -22.42
+QuadRouter | i[20] -> oc0[4] | dynamic_energy (pJ) | 1.297079 | 1.431270 | +10.35
+QuadRouter | i[20] -> od0[7] | forward (ns) | 4.424993 | 3.441450 | -22.23
+QuadRouter | i[20] -> od0[7] | dynamic_energy (pJ) | 1.306455 | 1.442165 | +10.39
+QuadRouter | i[1] -> oc1[0] | forward (ns) | 5.065855 | 3.909936 | -22.82
+QuadRouter | i[1] -> oc1[0] | dynamic_energy (pJ) | 1.235635 | 1.225900 | -0.79
+QuadRouter | i[1] -> od1[0] | forward (ns) | 5.103118 | 3.947563 | -22.64
+QuadRouter | i[1] -> od1[0] | dynamic_energy (pJ) | 1.245025 | 1.239529 | -0.44
+QuadRouter | i[3] -> oc1[1] | forward (ns) | 14.690147 | 10.758610 | -26.76
+QuadRouter | i[3] -> oc1[1] | dynamic_energy (pJ) | 2.605066 | 2.762592 | +6.05
+QuadRouter | i[3] -> od1[1] | forward (ns) | 14.728825 | 10.796927 | -26.70
+QuadRouter | i[3] -> od1[1] | dynamic_energy (pJ) | 2.614697 | 2.778678 | +6.27
+QuadRouter | i[4] -> oc1[2] | forward (ns) | 4.315213 | 3.363563 | -22.05
+QuadRouter | i[4] -> oc1[2] | dynamic_energy (pJ) | 1.217802 | 1.356242 | +11.37
+QuadRouter | i[4] -> od1[2] | forward (ns) | 4.354037 | 3.402034 | -21.86
+QuadRouter | i[4] -> od1[2] | dynamic_energy (pJ) | 1.227025 | 1.369751 | +11.63
+QuadRouter | i[5] -> oc1[3] | forward (ns) | 4.400439 | 3.411733 | -22.47
+QuadRouter | i[5] -> oc1[3] | dynamic_energy (pJ) | 1.200058 | 1.333172 | +11.09
+QuadRouter | i[5] -> od1[3] | forward (ns) | 4.438590 | 3.450128 | -22.27
+QuadRouter | i[5] -> od1[3] | dynamic_energy (pJ) | 1.208713 | 1.349924 | +11.68
+QuadRouter | i[6] -> oc1[4] | forward (ns) | 4.387140 | 3.410839 | -22.25
+QuadRouter | i[6] -> oc1[4] | dynamic_energy (pJ) | 1.203810 | 1.332696 | +10.71
+QuadRouter | i[6] -> od1[4] | forward (ns) | 4.425434 | 3.449181 | -22.06
+QuadRouter | i[6] -> od1[4] | dynamic_energy (pJ) | 1.212804 | 1.343524 | +10.78
+QuadRouter | i[2] -> oc2[0] | forward (ns) | 7.485957 | 5.143964 | -31.29
+QuadRouter | i[2] -> oc2[0] | dynamic_energy (pJ) | 1.677988 | 1.794983 | +6.97
+QuadRouter | i[2] -> od2[0] | forward (ns) | 7.523624 | 5.181209 | -31.13
+QuadRouter | i[2] -> od2[0] | dynamic_energy (pJ) | 1.687352 | 1.808459 | +7.18
+QuadRouter | i[7] -> oc2[1] | forward (ns) | 7.261940 | 4.932857 | -32.07
+QuadRouter | i[7] -> oc2[1] | dynamic_energy (pJ) | 1.653324 | 1.778382 | +7.56
+QuadRouter | i[7] -> od2[1] | forward (ns) | 7.300429 | 4.971496 | -31.90
+QuadRouter | i[7] -> od2[1] | dynamic_energy (pJ) | 1.662629 | 1.794680 | +7.94
+QuadRouter | i[8] -> oc2[2] | forward (ns) | 4.331858 | 3.367097 | -22.27
+QuadRouter | i[8] -> oc2[2] | dynamic_energy (pJ) | 1.221806 | 1.358023 | +11.15
+QuadRouter | i[8] -> od2[2] | forward (ns) | 4.370694 | 3.405494 | -22.08
+QuadRouter | i[8] -> od2[2] | dynamic_energy (pJ) | 1.230947 | 1.371493 | +11.42
+QuadRouter | i[9] -> oc2[3] | forward (ns) | 4.416624 | 3.417554 | -22.62
+QuadRouter | i[9] -> oc2[3] | dynamic_energy (pJ) | 1.204304 | 1.336570 | +10.98
+QuadRouter | i[9] -> od2[3] | forward (ns) | 4.455542 | 3.456019 | -22.43
+QuadRouter | i[9] -> od2[3] | dynamic_energy (pJ) | 1.213164 | 1.353665 | +11.58
+QuadRouter | i[10] -> oc2[4] | forward (ns) | 4.405438 | 3.416163 | -22.46
+QuadRouter | i[10] -> oc2[4] | dynamic_energy (pJ) | 1.191711 | 1.331215 | +11.71
+QuadRouter | i[10] -> od2[4] | forward (ns) | 4.444315 | 3.454594 | -22.27
+QuadRouter | i[10] -> od2[4] | dynamic_energy (pJ) | 1.200698 | 1.342274 | +11.79
+QuadRouter | i[16] -> oc3[0] | forward (ns) | 13.909187 | 9.945653 | -28.50
+QuadRouter | i[16] -> oc3[0] | dynamic_energy (pJ) | 2.644693 | 2.796780 | +5.75
+QuadRouter | i[16] -> od3[3] | forward (ns) | 13.946492 | 9.982971 | -28.42
+QuadRouter | i[16] -> od3[3] | dynamic_energy (pJ) | 2.654101 | 2.810681 | +5.90
+QuadRouter | i[21] -> oc3[1] | forward (ns) | 13.692202 | 9.743679 | -28.84
+QuadRouter | i[21] -> oc3[1] | dynamic_energy (pJ) | 2.624815 | 2.790228 | +6.30
+QuadRouter | i[21] -> od3[4] | forward (ns) | 13.730603 | 9.782356 | -28.76
+QuadRouter | i[21] -> od3[4] | dynamic_energy (pJ) | 2.634067 | 2.806700 | +6.55
+QuadRouter | i[22] -> oc3[2] | forward (ns) | 4.356909 | 3.377447 | -22.48
+QuadRouter | i[22] -> oc3[2] | dynamic_energy (pJ) | 1.329626 | 1.462590 | +10.00
+QuadRouter | i[22] -> od3[5] | forward (ns) | 4.395298 | 3.415701 | -22.29
+QuadRouter | i[22] -> od3[5] | dynamic_energy (pJ) | 1.338806 | 1.476225 | +10.26
+QuadRouter | i[23] -> oc3[3] | forward (ns) | 4.442043 | 3.426497 | -22.86
+QuadRouter | i[23] -> oc3[3] | dynamic_energy (pJ) | 1.313789 | 1.439166 | +9.54
+QuadRouter | i[23] -> od3[6] | forward (ns) | 4.480491 | 3.464849 | -22.67
+QuadRouter | i[23] -> od3[6] | dynamic_energy (pJ) | 1.322654 | 1.456331 | +10.11
+QuadRouter | i[24] -> oc3[4] | forward (ns) | 4.431791 | 3.424946 | -22.72
+QuadRouter | i[24] -> oc3[4] | dynamic_energy (pJ) | 1.245373 | 1.369945 | +10.00
+QuadRouter | i[24] -> od3[7] | forward (ns) | 4.470145 | 3.463293 | -22.52
+QuadRouter | i[24] -> od3[7] | dynamic_energy (pJ) | 1.254269 | 1.381422 | +10.14
+QuadRouter | i[11] -> od0[0],od1[5],od2[5],od3[0] | forward (ns) | 9.214311 | 6.481151 | -29.66
+QuadRouter | i[11] -> od0[0],od1[5],od2[5],od3[0] | recovery (ns) | 1.562649 | 1.544894 | -1.14
+QuadRouter | i[11] -> od0[0],od1[5],od2[5],od3[0] | dynamic_energy (pJ) | 1.765965 | 1.866111 | +5.67
+QuadRouter | i[12] -> od0[1],od1[6],od2[6],od3[1] | forward (ns) | 0.319672 | 0.328618 | +2.80
+QuadRouter | i[12] -> od0[1],od1[6],od2[6],od3[1] | recovery (ns) | 1.289017 | 1.245206 | -3.40
+QuadRouter | i[12] -> od0[1],od1[6],od2[6],od3[1] | dynamic_energy (pJ) | 0.400721 | 0.402819 | +0.52
+QuadRouter | i[13] -> od0[2],od1[7],od2[7],od3[2] | forward (ns) | 0.347104 | 0.361409 | +4.12
+QuadRouter | i[13] -> od0[2],od1[7],od2[7],od3[2] | recovery (ns) | 1.289857 | 1.249969 | -3.09
+QuadRouter | i[13] -> od0[2],od1[7],od2[7],od3[2] | dynamic_energy (pJ) | 0.398183 | 0.398706 | +0.13
+QuadRouter | i[25] -> od0[8],od1[8],od2[8],od3[8] | forward (ns) | 6.008003 | 4.068217 | -32.29
+QuadRouter | i[25] -> od0[8],od1[8],od2[8],od3[8] | recovery (ns) | 1.565110 | 1.544481 | -1.32
+QuadRouter | i[25] -> od0[8],od1[8],od2[8],od3[8] | dynamic_energy (pJ) | 1.287591 | 1.358646 | +5.52
+QuadRouter | stable idle | leakage (uW) | 79.403150 | 80.621627 | +1.53
+
+Recovery observations with explicit boundaries
+-----------------------------------------------
+Serializer: last output nibble valid -> input acknowledge low, external waits removed.
+I[0]: 1.638425 -> 1.530971 ns (-6.56%).
+I[1]: 1.645850 -> 1.520276 ns (-7.63%).
+Output ack high -> output fully spacer, median over all 14 nibbles: 0.374946 -> 0.322797 ns (-13.91%).
+Deserializer: input fully spacer -> input acknowledge low, intermediate
+nonzero nibbles I[6]..I[10] of the same seven-nibble batch.
+This measures the input return component, not an input/output recovery matrix.
+I[6]: 0.282990 -> 0.204812 ns (-27.63%).
+I[7]: 0.283069 -> 0.204831 ns (-27.64%).
+I[8]: 0.282836 -> 0.204974 ns (-27.53%).
+I[9]: 0.282967 -> 0.204771 ns (-27.63%).
+I[10]: 0.285538 -> 0.204875 ns (-28.25%).
+
+QuadRouter: exact internal return path, Child1 decrementer
+All eight input/output dual-rail pairs must be spacer; crossings at VDD/2.
+The input-spacer -> write-ack-low path is internal and contains no testbench wait.
+Read restart refers to the first subsequent ChildServer read request.
+Word | Carry spacer propagation before/after ns | Input spacer -> write ack low before/after ns | Read restart before/after ns
+01 | 1.324343/0.584052 | 1.684949/0.945542 | 0.406231/0.067093
+04 | 1.271576/0.540514 | 1.633072/0.901686 | 0.404576/0.063695
+03 | 1.325222/0.582390 | 1.686265/0.944411 | 0.404795/0.064260
+02 | 1.298551/0.559253 | 1.659576/0.921675 | 0.404432/0.063999
+01 | 1.324181/0.583796 | 1.685346/0.946065 | 0.404845/0.064179
+OC/OD conventional recovery remains N/A where the input handshake completes
+before buffered output validity; the internal reset above is not substituted into that field.
+
+Accepted widths and evidence
+-----------------------------
+Serializer: ser_ack_balanced; /tmp/ferroma_analog_campaign_AenQQALV; additional changed MOS 111/2846; sum(W*L) +1.38%.
+Exact W changes, rationale and all handshake samples: Serializer/spice_mod.txt
+Deserializer: des_completion_strong; /tmp/ferroma_analog_campaign_hvz2YDl6; additional changed MOS 234/3301; sum(W*L) +7.43%.
+Exact W changes, rationale and all handshake samples: Deserializer/spice_mod.txt
+QuadRouter: quad_control_carry; /tmp/ferroma_analog_campaign_jvdOVQlm; additional changed MOS 637/10216; sum(W*L) +4.75%.
+Exact W changes, rationale and all handshake samples: QuadRouter/spice_mod.txt
+
+Scope / reproducibility
+------------------------
+Reference diagnostic runs reproduced prior external timing values within 0.017 ps;
+idle leakage was identical; the largest reference energy deviation was 0.327%.
+Probe/channel-discovery changes do not explain the measured gains.
+Production deck/netlist/environment hashes match the accepted completed jobs.
+All 15 block/subsystem/top prepared-file checks pass; no other circuit definitions changed.
+Subsystem/top embedded netlists retain their earlier widths. The old Router run was not interrupted.
+A fresh PRS-to-SPICE generation overwrites these manual W edits.
+These are measured trade-offs for the tested corner/cases, not exhaustive timing optimization.
+Source for sizing method (driver resistance versus added gate load):
+https://pages.hmc.edu/harris/class/e158/10/lect6.pdf
+Frozen baseline, candidates, scripts and evidence: /home/cad/archives/analog_sim/20260918_recovery_sizing
+
+
+HISTORICAL FIRST ROUND (superseded for the three modules above)
+====================================================================
+Targeted block SPICE sizing: final measured results
+=================================================
+12 netlists reorganized; 11 dedicated HSPICE testbenches PASS.
+ChildDispatch uses the identical modified subcircuit in PayloadDispatch (four instances).
+Only W changed. L, devices, topology, keepers and feedback inverters remain unchanged.
+Targets use factors 2x..16x; maximum changed W: nMOS 1.56 um, pMOS 2.6 um.
+Technology/conditions: PTM65 TT, VDD 1.1 V, temperature 27 C; same testbench stimuli.
+Every module folder contains spice_mod.txt with the exact devices and complete transaction comparisons.
+Standalone/embedded copies inside the block library use identical shared subcircuit sizing.
+InputRouter/ChildDispatch required one refinement after root-only sizing worsened recovery.
+Only block netlists were resized; existing subsystem/top simulations do not use these new widths.
+A fresh PRS-to-SPICE regeneration would overwrite this manual sizing.
+
+Files and modified transistor counts
+-----------------------------------
+Arb/Arb.sp | 75/6175 MOS changed (1.21%) | Arb/spice_mod.txt
+ChildDispatch/ChildDispatch.sp | 23/1056 MOS changed (2.18%) | ChildDispatch/spice_mod.txt
+ChildSel/ChildSel.sp | 69/6633 MOS changed (1.04%) | ChildSel/spice_mod.txt
+Counter/Counter.sp | 25/2347 MOS changed (1.07%) | Counter/spice_mod.txt
+Deserializer/Deserializer.sp | 71/3301 MOS changed (2.15%) | Deserializer/spice_mod.txt
+InputRouter/InputRouter.sp | 16/1491 MOS changed (1.07%) | InputRouter/spice_mod.txt
+MltcSel/MltcSel.sp | 13/1629 MOS changed (0.80%) | MltcSel/spice_mod.txt
+PayloadDispatch/PayloadDispatch.sp | 92/4256 MOS changed (2.16%) | PayloadDispatch/spice_mod.txt
+QuadRouter/QuadRouter.sp | 147/10216 MOS changed (1.44%) | QuadRouter/spice_mod.txt
+Serializer/Serializer.sp | 17/2846 MOS changed (0.60%) | Serializer/spice_mod.txt
+StopcodeSel/StopcodeSel.sp | 19/2123 MOS changed (0.89%) | StopcodeSel/spice_mod.txt
+UpdownSel/UpdownSel.sp | 23/2211 MOS changed (1.04%) | UpdownSel/spice_mod.txt
+
+Measured comparison follows. Improvements and regressions are both retained.
+Before/after scripts, baselines, raw listings, manifests: /home/cad/archives/analog_sim/20260917_block_fanout_sizing
+
+Width-only sizing comparison
+============================
+Changes (%) = (sized / original - 1) * 100. Negative timing is faster.
+The original SELECTED_AUDIT transactions are matched by input source/index/word and output ports.
+Counter reports cycles; Serializer/Deserializer report batch latency; others retain both initial and payload cases.
+No comparison substitutes a faster transaction or omits an observed regression.
+
+
+QuadRouter
+----------
+MOS changed: 147/10216; functional PASS.
+Metric / transaction | Original | Sized | Change %
+Leakage (uW) | 78.860872 | 79.403150 | +0.69
+initial:I->Ch forward (ns) | 1.608420 | 1.200312 | -25.37
+initial:I->Ch recovery (ns) | 2.282420 | 1.322712 | -42.05
+initial:I->Ch dynamic_energy (pJ) | 1.183080 | 1.073138 | -9.29
+initial:I->Ch forward+recovery (ns) | 3.890840 | 2.523024 | -35.15
+initial:I->OC forward (ns) | 5.061512 | 5.065855 | +0.09
+initial:I->OC dynamic_energy (pJ) | 1.039916 | 1.235635 | +18.82
+initial:I->OD forward (ns) | 5.099190 | 5.103118 | +0.08
+initial:I->OD dynamic_energy (pJ) | 1.056314 | 1.245025 | +17.87
+payload:I->OC forward (ns) | 5.264883 | 4.400439 | -16.42
+payload:I->OC dynamic_energy (pJ) | 1.290626 | 1.200058 | -7.02
+payload:I->OD forward (ns) | 5.303206 | 4.438590 | -16.30
+payload:I->OD dynamic_energy (pJ) | 1.309262 | 1.208713 | -7.68
+
+Arb
+---
+MOS changed: 75/6175; functional PASS.
+Metric / transaction | Original | Sized | Change %
+Leakage (uW) | 32.203090 | 33.209992 | +3.13
+initial:M->O forward (ns) | 1.911380 | 0.754726 | -60.51
+initial:M->O recovery (ns) | 1.673242 | 1.851672 | +10.66
+initial:M->O dynamic_energy (pJ) | 1.204522 | 1.170384 | -2.83
+initial:M->O forward+recovery (ns) | 3.584623 | 2.606397 | -27.29
+initial:C3->O forward (ns) | 7.391580 | 5.155238 | -30.26
+initial:C3->O recovery (ns) | 2.417719 | 2.805090 | +16.02
+initial:C3->O dynamic_energy (pJ) | 2.853239 | 2.638513 | -7.53
+initial:C3->O forward+recovery (ns) | 9.809299 | 7.960328 | -18.85
+initial:P->O forward (ns) | 13.080556 | 10.790540 | -17.51
+initial:P->O recovery (ns) | 1.639485 | 1.810347 | +10.42
+initial:P->O dynamic_energy (pJ) | 4.593880 | 4.404176 | -4.13
+initial:P->O forward+recovery (ns) | 14.720041 | 12.600887 | -14.40
+initial:C1->O forward (ns) | 18.442129 | 15.255693 | -17.28
+initial:C1->O recovery (ns) | 2.387093 | 2.789583 | +16.86
+initial:C1->O dynamic_energy (pJ) | 6.397492 | 5.712108 | -10.71
+initial:C1->O forward+recovery (ns) | 20.829222 | 18.045276 | -13.37
+initial:C2->O forward (ns) | 25.344098 | 21.865755 | -13.72
+initial:C2->O recovery (ns) | 2.438181 | 2.787285 | +14.32
+initial:C2->O dynamic_energy (pJ) | 8.489293 | 7.625501 | -10.18
+initial:C2->O forward+recovery (ns) | 27.782279 | 24.653040 | -11.26
+initial:C0->O forward (ns) | 33.020312 | 28.634791 | -13.28
+initial:C0->O recovery (ns) | 2.402068 | 2.792650 | +16.26
+initial:C0->O dynamic_energy (pJ) | 10.422287 | 9.359411 | -10.20
+initial:C0->O forward+recovery (ns) | 35.422380 | 31.427441 | -11.28
+payload:M->O forward (ns) | 0.128458 | 0.129092 | +0.49
+payload:M->O recovery (ns) | 1.819723 | 1.705840 | -6.26
+payload:M->O dynamic_energy (pJ) | 0.553966 | 0.736072 | +32.87
+payload:M->O forward+recovery (ns) | 1.948181 | 1.834932 | -5.81
+payload:C3->O forward (ns) | 0.205209 | 0.199088 | -2.98
+payload:C3->O recovery (ns) | 2.749172 | 2.624673 | -4.53
+payload:C3->O dynamic_energy (pJ) | 1.418594 | 1.505897 | +6.15
+payload:C3->O forward+recovery (ns) | 2.954381 | 2.823761 | -4.42
+payload:P->O forward (ns) | 0.133431 | 0.128251 | -3.88
+payload:P->O recovery (ns) | 1.818089 | 1.703798 | -6.29
+payload:P->O dynamic_energy (pJ) | 0.905699 | 0.763854 | -15.66
+payload:P->O forward+recovery (ns) | 1.951520 | 1.832050 | -6.12
+payload:C1->O forward (ns) | 0.213836 | 0.200629 | -6.18
+payload:C1->O recovery (ns) | 2.746439 | 2.613979 | -4.82
+payload:C1->O dynamic_energy (pJ) | 1.001277 | 1.182504 | +18.10
+payload:C1->O forward+recovery (ns) | 2.960275 | 2.814608 | -4.92
+payload:C2->O forward (ns) | 0.205636 | 0.201756 | -1.89
+payload:C2->O recovery (ns) | 2.761772 | 2.618516 | -5.19
+payload:C2->O dynamic_energy (pJ) | 0.975027 | 1.102418 | +13.07
+payload:C2->O forward+recovery (ns) | 2.967408 | 2.820272 | -4.96
+payload:C0->O forward (ns) | 0.222292 | 0.209859 | -5.59
+payload:C0->O recovery (ns) | 2.743152 | 2.605564 | -5.02
+payload:C0->O dynamic_energy (pJ) | 0.876728 | 0.865850 | -1.24
+payload:C0->O forward+recovery (ns) | 2.965443 | 2.815423 | -5.06
+
+ChildSel
+--------
+MOS changed: 69/6633; functional PASS.
+Metric / transaction | Original | Sized | Change %
+Leakage (uW) | 29.951289 | 30.559360 | +2.03
+initial:I->C forward (ns) | 1.123959 | 0.427225 | -61.99
+initial:I->C recovery (ns) | 3.204230 | 1.817549 | -43.28
+initial:I->C dynamic_energy (pJ) | 0.840820 | 0.863266 | +2.67
+initial:I->C forward+recovery (ns) | 4.328189 | 2.244775 | -48.14
+payload:I->C forward (ns) | 0.167459 | 0.157586 | -5.90
+payload:I->C recovery (ns) | 2.044509 | 1.997962 | -2.28
+payload:I->C dynamic_energy (pJ) | 0.601423 | 0.620312 | +3.14
+payload:I->C forward+recovery (ns) | 2.211968 | 2.155548 | -2.55
+
+StopcodeSel
+-----------
+MOS changed: 19/2123; functional PASS.
+Metric / transaction | Original | Sized | Change %
+Leakage (uW) | 16.294089 | 16.474692 | +1.11
+initial:I->C forward (ns) | 0.935165 | 0.377484 | -59.63
+initial:I->C recovery (ns) | 0.666645 | 0.732070 | +9.81
+initial:I->C dynamic_energy (pJ) | 0.419855 | 0.429699 | +2.34
+initial:I->C forward+recovery (ns) | 1.601810 | 1.109554 | -30.73
+payload:I->C forward (ns) | 0.096449 | 0.088746 | -7.99
+payload:I->C recovery (ns) | 1.487390 | 0.940147 | -36.79
+payload:I->C dynamic_energy (pJ) | 0.377179 | 0.360013 | -4.55
+payload:I->C forward+recovery (ns) | 1.583840 | 1.028893 | -35.04
+
+MltcSel
+-------
+MOS changed: 13/1629; functional PASS.
+Metric / transaction | Original | Sized | Change %
+Leakage (uW) | 11.341316 | 11.512283 | +1.51
+initial:I->C forward (ns) | 0.700870 | 0.317469 | -54.70
+initial:I->C recovery (ns) | 0.466886 | 0.514237 | +10.14
+initial:I->C dynamic_energy (pJ) | 0.269404 | 0.292941 | +8.74
+initial:I->C forward+recovery (ns) | 1.167756 | 0.831706 | -28.78
+payload:I->C forward (ns) | 0.088922 | 0.101083 | +13.68
+payload:I->C recovery (ns) | 1.297774 | 0.756209 | -41.73
+payload:I->C dynamic_energy (pJ) | 0.206833 | 0.223990 | +8.30
+payload:I->C forward+recovery (ns) | 1.386697 | 0.857292 | -38.18
+
+Serializer
+----------
+MOS changed: 17/2846; functional PASS.
+Metric / transaction | Original | Sized | Change %
+Leakage (uW) | 17.471150 | 17.599101 | +0.73
+batch forward (ns) | 4.753910 | 4.614019 | -2.94
+batch dynamic_energy (pJ) | 0.968362 | 0.985628 | +1.78
+
+UpdownSel
+---------
+MOS changed: 23/2211; functional PASS.
+Metric / transaction | Original | Sized | Change %
+Leakage (uW) | 9.995158 | 10.202689 | +2.08
+initial:I->C forward (ns) | 0.752692 | 0.219219 | -70.88
+initial:I->C recovery (ns) | 1.435149 | 0.822355 | -42.70
+initial:I->C dynamic_energy (pJ) | 0.419925 | 0.447849 | +6.65
+initial:I->C forward+recovery (ns) | 2.187841 | 1.041575 | -52.39
+payload:I->C forward (ns) | 0.073073 | 0.067333 | -7.86
+payload:I->C recovery (ns) | 0.910532 | 0.898074 | -1.37
+payload:I->C dynamic_energy (pJ) | 0.295043 | 0.295956 | +0.31
+payload:I->C forward+recovery (ns) | 0.983605 | 0.965408 | -1.85
+
+Counter
+-------
+MOS changed: 25/2347; functional PASS.
+Metric / transaction | Original | Sized | Change %
+Leakage (uW) | 16.017824 | 16.074745 | +0.36
+input cycle forward (ns) | 2.561353 | 2.410991 | -5.87
+input cycle dynamic_energy (pJ) | 0.657537 | 0.663666 | +0.93
+output cycle forward (ns) | 0.548693 | 0.416599 | -24.07
+output cycle dynamic_energy (pJ) | 0.136602 | 0.138876 | +1.66
+
+Deserializer
+------------
+MOS changed: 71/3301; functional PASS.
+Metric / transaction | Original | Sized | Change %
+Leakage (uW) | 20.044670 | 20.167518 | +0.61
+batch forward (ns) | 14.697170 | 14.116143 | -3.95
+batch dynamic_energy (pJ) | 1.613146 | 1.661768 | +3.01
+
+InputRouter
+-----------
+MOS changed: 16/1491; functional PASS.
+Metric / transaction | Original | Sized | Change %
+Leakage (uW) | 9.192392 | 9.206354 | +0.15
+initial:I->C forward (ns) | 0.030860 | 0.030749 | -0.36
+initial:I->C recovery (ns) | 0.458605 | 0.405757 | -11.52
+initial:I->C dynamic_energy (pJ) | 0.223013 | 0.230066 | +3.16
+initial:I->C forward+recovery (ns) | 0.489465 | 0.436506 | -10.82
+payload:I->C forward (ns) | 0.054663 | 0.051963 | -4.94
+payload:I->C recovery (ns) | 0.416817 | 0.367306 | -11.88
+payload:I->C dynamic_energy (pJ) | 0.194925 | 0.200241 | +2.73
+payload:I->C forward+recovery (ns) | 0.471481 | 0.419269 | -11.07
+
+PayloadDispatch
+---------------
+MOS changed: 92/4256; functional PASS.
+Metric / transaction | Original | Sized | Change %
+Leakage (uW) | 26.427879 | 26.668083 | +0.91
+initial:I->C forward (ns) | 0.030757 | 0.030436 | -1.04
+initial:I->C recovery (ns) | 0.467325 | 0.412373 | -11.76
+initial:I->C dynamic_energy (pJ) | 0.657122 | 0.666551 | +1.43
+initial:I->C forward+recovery (ns) | 0.498083 | 0.442809 | -11.10
+payload:I->C forward (ns) | 0.030695 | 0.030793 | +0.32
+payload:I->C recovery (ns) | 0.974143 | 0.936036 | -3.91
+payload:I->C dynamic_energy (pJ) | 0.837149 | 0.860592 | +2.80
+payload:I->C forward+recovery (ns) | 1.004838 | 0.966829 | -3.78

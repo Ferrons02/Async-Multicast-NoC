@@ -1,0 +1,16 @@
+import "no_forks/commons/Channels.act";
+
+export defproc QSlicer(bool? reset; ActiveDualRail4? I; Dataless? A; ActiveDualRail4! O)
+{
+    // Acknowledge follows the output handshake; the sequencer observes I.a.
+    prs {
+        O.a => I.a+
+        I.a => A.a+
+        (i:4:
+            I.t[i] & A.req -> O.t[i]+
+            ~I.t[i] -> O.t[i]-
+            I.f[i] & A.req -> O.f[i]+
+            ~I.f[i] -> O.f[i]-
+        )
+    }
+}

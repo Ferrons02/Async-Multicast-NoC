@@ -1,0 +1,3281 @@
+ ****** PrimeSim HSPICE -- R-2020.12-SP1 linux64 (Apr 10 2021 6983340) ******
+  Copyright (c) 1986 - 2026 by Synopsys, Inc. All Rights Reserved.
+  This software and the associated documentation are proprietary
+  to Synopsys, Inc. This software may only be used in accordance
+  with the terms and conditions of a written license agreement with
+  Synopsys, Inc. All other use, reproduction, or distribution of
+  this software is strictly prohibited.
+  Input File: tb/subsystem/ChildRouter/ChildRouter_tb.sp                        
+  Command line options: /cad/synopsys/hspice/R-2020.12-SP1/hspice/linux64/hspice -mt 2 -hpp -i tb/subsystem/ChildRouter/ChildRouter_tb.sp -o /tmp/ferroma_analog_campaign_Mtgms2wU/results/subsystem/ChildRouter/ChildRouter
+  Start time: Fri Sep 18 00:03:12 2026
+ lic:  
+ lic: FLEXlm: SDK_12.9.5 
+ lic: USER:   ferroma              HOSTNAME: caddy10.stanford.edu 
+ lic: HOSTID: 9611907472f9         PID:      3316244 
+ lic: Using FLEXlm license file: 
+ lic: 27000@cadlic0.stanford.edu 
+ lic: Checkout 1 hspice 
+ lic: License/Maintenance for hspice will expire on 06-nov-2026/2025.06 
+ lic: 7(in_use)/200(total) FLOATING license(s) on SERVER 27000@cadlic0.stanford.edu 
+ lic:   
+ 
+ ****** Advanced Analog Library - R-2020.12-SP1 (Apr 10 2021) ****** 
+ **info** *pvaI* current limit stacksize=8388608, set new limit stacksize=62914560
+
+ **info** *pvaI* Module (childrouter_environment): 458 unexpanded port, 27 init, 1153 behav, 72 contrib, 462/1037 expr(s)
+
+ **info** *pvaI*        Has DIS(AE TR ST SB), 2/7 afCount, 1 MT, 2 NP, dlg, IO(0/1/1/1)
+
+ **info** *pvaI*        0 gmdIsThreadSafe (AE TR ST SB)
+
+ **info** *pvaI*        0 const-G and 0 const-C, Has switchBranch, 0 bypassOpt, 0 bus2scalar, 0 vwb
+
+ **info** *pvaI*        set_va_exp = 80 [80.0, 704.0] set by default
+
+ **info** *pvaI*        generated 72 flow node(s) during compilation.
+
+ **info** *pvaI* #### Total 7956 line-size(s), 462/1037 expr(s), 72 contr(s), 27 init(s), 1153 behav(s), 458 port(s)
+
+ Loading pVA library /tmp/ferroma_analog_campaign_Mtgms2wU/results/subsystem/ChildRouter/ChildRouter.pvadir/pvaRTL_linux64.so...
+1****** PrimeSim HSPICE -- R-2020.12-SP1 linux64 (Apr 10 2021 6983340) ******
+ ******  
+ childrouter: one complete actsim reference round, ptm65 tt raw prs2net baseline
+
+ ****** circuit name directory
+ circuit number to circuit name directory
+   number circuitname                     definition         multiplier
+        0 main circuit
+        1 xdut.                           childrouter        1.00 
+        2 xenv.                           childrouter_environment(va)
+                                                                 1.00 
+        3 xdut.xcs.                       childsel           1.00 
+        4 xdut.xus.                       updownsel          1.00 
+        5 xdut.xss.                       stopcodesel        1.00 
+        6 xdut.xcs.xright.                updownsel          1.00 
+        7 xdut.xcs.xroot.                 updownsel          1.00 
+        8 xdut.xcs.xleft.                 updownsel          1.00 
+ ******  
+ childrouter: one complete actsim reference round, ptm65 tt raw prs2net baseline
+
+ ****** mos   model parameters tnom=  25.000 temp=  25.000 ******
+ Model file: /cad/cktbook/tech/ptm065/spice/65nm_NMOS_bulk_tt.pm
+ Model line:            3
+ Model Name: nmos  
+ BSIM4 Model (Level 54)
+    MOBMOD = 0
+    BINUNIT = 1
+    PARAMCHK = 1
+    CAPMOD = 2
+    DIOMOD = 1
+    RDSMOD = 0
+    TRNQSMOD = 0
+    ACNQSMOD = 0
+    RBODYMOD = 1
+    RGATEMOD = 1
+    PERMOD = 1
+    GEOMOD = 0
+    RGEOMOD = 0
+    FNOIMOD = 1
+    TNOIMOD = 0
+    IGCMOD = 1
+    IGBMOD = 1
+    STIMOD = 0
+    VERSION =      4 
+    TOXREF = 1.85e-09 
+    TOXE = 1.85e-09 
+    TOXP = 1.2e-09 
+    TOXM = 1.85e-09 
+    DTOX = 6.5e-10 
+    EPSROX =    3.9 
+    CDSC =      0 
+    CDSCB =      0 
+    CDSCD =      0 
+    CIT =      0 
+    NFACTOR =    1.9 
+    XJ = 1.96e-08 
+    VSAT = 1.243e+05 
+    A0 =      1 
+    AGS =  1e-20 
+    A1 =      0 
+    A2 =      1 
+    AT = 3.3e+04 
+    KETA =   0.04 
+    NSUB =  6e+16 
+    NDEP = 2.6e+18 
+    NSD =  2e+20 
+    NGATE =  2e+20 
+    GAMMA1 =      0 
+    GAMMA2 =      0 
+    VBX =      0 
+    VBM =     -3 
+    XT = 1.55e-07 
+    K1 =  0.497 
+    KT1 =  -0.11 
+    KT1L =      0 
+    KT2 =  0.022 
+    K2 =   0.01 
+    K3 =      0 
+    K3B =      0 
+    LPE0 =      0 
+    LPEB =      0 
+    DVTP0 =  1e-09 
+    DVTP1 =    0.1 
+    W0 = 2.5e-06 
+    DVT0 =      1 
+    DVT1 =      2 
+    DVT2 = -0.032 
+    DVT0W =      0 
+    DVT1W =      0 
+    DVT2W =      0 
+    DROUT =    0.5 
+    DSUB =    0.1 
+    VTH0 =  0.429 
+    EU =   1.67 
+    UA =  6e-10 
+    UA1 = 4.31e-09 
+    UB = 1.2e-18 
+    UB1 = 7.61e-18 
+    UC =      0 
+    UC1 = -5.6e-11 
+    U0 = 0.04861 
+    UTE =   -1.5 
+    VOFF =  -0.13 
+    VOFFL =      0 
+    MINV =   0.05 
+    FPROUT =    0.2 
+    PDITS =   0.08 
+    PDITSD =   0.23 
+    PDITSL = 2.3e+06 
+    DELTA =   0.01 
+    RDSW =    165 
+    RDSWMIN =      0 
+    RDWMIN =      0 
+    RSWMIN =      0 
+    RDW =     85 
+    RSW =     85 
+    PRWG =      0 
+    PRWB = 6.8e-11 
+    PRT =      0 
+    ETA0 = 0.0058 
+    ETAB =      0 
+    PCLM =   0.04 
+    PDIBLC1 =  0.001 
+    PDIBLC2 =  0.001 
+    PDIBLCB = -0.005 
+    PSCBE1 = 8.14e+08 
+    PSCBE2 =  1e-07 
+    PVAG =  1e-20 
+    WR =      1 
+    DWG =      0 
+    DWB =      0 
+    XW =      0 
+    XWREF =      0 
+    XL = -3e-08 
+    XLREF = -3e-08 
+    B0 =      0 
+    B1 =      0 
+    ALPHA0 =  0.074 
+    ALPHA1 =  0.005 
+    AGIDL = 0.0002 
+    BGIDL = 2.1e+09 
+    CGIDL = 0.0002 
+    PHIN =      0 
+    EGIDL =    0.8 
+    AIGC =  0.012 
+    BIGC = 0.0028 
+    CIGC =  0.002 
+    AIGSD =  0.012 
+    BIGSD = 0.0028 
+    CIGSD =  0.002 
+    AIGBACC =  0.012 
+    BIGBACC = 0.0028 
+    CIGBACC =  0.002 
+    AIGBINV =  0.014 
+    BIGBINV =  0.004 
+    CIGBINV =  0.004 
+    NIGC =      1 
+    NIGBINV =      3 
+    NIGBACC =      1 
+    NTOX =      1 
+    EIGBINV =    1.1 
+    PIGCD =      1 
+    POXEDGE =      1 
+    XRCRG1 =     12 
+    TNOIA =    1.5 
+    TNOIB =    3.5 
+    NTNOI =      1 
+    XRCRG2 =      5 
+    BETA0 =     30 
+    IJTHDFWD =   0.01 
+    IJTHSFWD =   0.01 
+    IJTHDREV =  0.001 
+    IJTHSREV =  0.001 
+    XJBVD =      1 
+    XJBVS =      1 
+    BVD =     10 
+    BVS =     10 
+    VFB =  -0.55 
+    GBMIN =  1e-10 
+    RBDB =     15 
+    RBPB =      5 
+    RBSB =     15 
+    RBPS =     15 
+    RBPD =     15 
+    CGSL = 2.653e-10 
+    CGDL = 2.653e-10 
+    CKAPPAS =   0.03 
+    CKAPPAD =   0.03 
+    CF = 1.183e-10 
+    CLC =  1e-07 
+    CLE =    0.6 
+    DWC =  5e-09 
+    DLC = 5.25e-09 
+    DLCIG = 5.25e-09 
+    DWJ =      0 
+    VFBCV =     -1 
+    ACDE =      1 
+    MOIN =     15 
+    NOFF =    0.9 
+    VOFFCV =   0.02 
+    DMCG = 9.75e-08 
+    DMCI = 6.5e-08 
+    DMDG = 4.875e-08 
+    DMCGT = 9.75e-08 
+    XGW = 1.3e-07 
+    XGL =      0 
+    RSHG =    0.4 
+    NGCON =      1 
+    TCJ =  0.001 
+    TPB =  0.005 
+    TCJSW =  0.001 
+    TPBSW =  0.005 
+    TCJSWG =  0.001 
+    TPBSWG =  0.005 
+    SK0 =      0 
+    SK1 =      0 
+    SK2 =      0 
+    SL =  2e-06 
+    SW =  2e-06 
+    K =      0 
+    TNOM =  300.1 
+    CGSO = 1.5e-10 
+    CGDO = 1.5e-10 
+    CGBO = 2.56e-11 
+    XPART =      0 
+    RSH =      5 
+    JSS = 0.0001 
+    JSWS =  1e-11 
+    JSWGS =  1e-10 
+    PBS =      1 
+    MJS =    0.5 
+    PBSWS =      1 
+    MJSWS =   0.33 
+    CJS = 0.0005 
+    CJSWS =  5e-10 
+    NJS =      1 
+    PBSWGS =      1 
+    MJSWGS =   0.33 
+    CJSWGS =  3e-10 
+    XTIS =      3 
+    JSD = 0.0001 
+    JSWD =  1e-11 
+    JSWGD =  1e-10 
+    PBD =      1 
+    MJD =    0.5 
+    PBSWD =      1 
+    MJSWD =   0.33 
+    CJD = 0.0005 
+    CJSWD =  5e-10 
+    NJD =      1 
+    PBSWGD =      1 
+    MJSWGD =   0.33 
+    CJSWGD =  5e-10 
+    XTID =      3 
+    LMLT =      1 
+    WMLT =      1 
+    LINT = 5.25e-09 
+    LL =      0 
+    LLC =      0 
+    LLN =      1 
+    LW =      0 
+    LWC =      0 
+    LWN =      1 
+    LWL =      0 
+    LWLC =      0 
+    LMIN =      0 
+    LMAX =      1 
+    WINT =  5e-09 
+    WL =      0 
+    WLC =      0 
+    WLN =      1 
+    WW =      0 
+    WWC =      0 
+    WWN =      1 
+    WWL =      0 
+    WWLC =      0 
+    WMIN =      0 
+    WMAX =      1 
+    NOIA = 6.25e+41 
+    NOIB = 3.125e+26 
+    NOIC = 8.75e+09 
+    EM = 4.1e+07 
+    EF =      1 
+    AF =      1 
+    KF =      0 
+    TRS =      0 
+    TRD =      0 
+ Model file: /cad/cktbook/tech/ptm065/spice/65nm_PMOS_bulk_tt.pm
+ Model line:            3
+ Model Name: pmos  
+ BSIM4 Model (Level 54)
+    MOBMOD = 0
+    BINUNIT = 1
+    PARAMCHK = 1
+    CAPMOD = 2
+    DIOMOD = 1
+    RDSMOD = 0
+    TRNQSMOD = 0
+    ACNQSMOD = 0
+    RBODYMOD = 1
+    RGATEMOD = 1
+    PERMOD = 1
+    GEOMOD = 0
+    RGEOMOD = 0
+    FNOIMOD = 1
+    TNOIMOD = 0
+    IGCMOD = 1
+    IGBMOD = 1
+    STIMOD = 0
+    VERSION =      4 
+    TOXREF = 1.95e-09 
+    TOXE = 1.95e-09 
+    TOXP = 1.2e-09 
+    TOXM = 1.95e-09 
+    DTOX = 7.5e-10 
+    EPSROX =    3.9 
+    CDSC =      0 
+    CDSCB =      0 
+    CDSCD =      0 
+    CIT =      0 
+    NFACTOR =    1.9 
+    XJ = 1.96e-08 
+    VSAT =  7e+04 
+    A0 =      1 
+    AGS =  1e-20 
+    A1 =      0 
+    A2 =      1 
+    AT = 3.3e+04 
+    KETA = -0.047 
+    NSUB =  6e+16 
+    NDEP = 1.97e+18 
+    NSD =  2e+20 
+    NGATE =  2e+20 
+    GAMMA1 =      0 
+    GAMMA2 =      0 
+    VBX =      0 
+    VBM =     -3 
+    XT = 1.55e-07 
+    K1 =  0.456 
+    KT1 =  -0.11 
+    KT1L =      0 
+    KT2 =  0.022 
+    K2 =  -0.01 
+    K3 =      0 
+    K3B =      0 
+    LPE0 =      0 
+    LPEB =      0 
+    DVTP0 =  1e-09 
+    DVTP1 =   0.05 
+    W0 = 2.5e-06 
+    DVT0 =      1 
+    DVT1 =      2 
+    DVT2 = -0.032 
+    DVT0W =      0 
+    DVT1W =      0 
+    DVT2W =      0 
+    DROUT =   0.56 
+    DSUB =    0.1 
+    VTH0 = -0.378 
+    EU =      1 
+    UA =  2e-09 
+    UA1 = 4.31e-09 
+    UB =  5e-19 
+    UB1 = 7.61e-18 
+    UC =      0 
+    UC1 = -5.6e-11 
+    U0 = 0.00548 
+    UTE =   -1.5 
+    VOFF = -0.126 
+    VOFFL =      0 
+    MINV =   0.05 
+    FPROUT =    0.2 
+    PDITS =   0.08 
+    PDITSD =   0.23 
+    PDITSL = 2.3e+06 
+    DELTA =   0.01 
+    RDSW =    165 
+    RDSWMIN =      0 
+    RDWMIN =      0 
+    RSWMIN =      0 
+    RDW =     85 
+    RSW =     85 
+    PRWG = 3.22e-08 
+    PRWB = 6.8e-11 
+    PRT =      0 
+    ETA0 = 0.0058 
+    ETAB =      0 
+    PCLM =   0.12 
+    PDIBLC1 =  0.001 
+    PDIBLC2 =  0.001 
+    PDIBLCB = 3.4e-08 
+    PSCBE1 = 8.14e+08 
+    PSCBE2 = 9.58e-07 
+    PVAG =  1e-20 
+    WR =      1 
+    DWG =      0 
+    DWB =      0 
+    XW =      0 
+    XWREF =      0 
+    XL = -3e-08 
+    XLREF = -3e-08 
+    B0 = -1e-20 
+    B1 =      0 
+    ALPHA0 =  0.074 
+    ALPHA1 =  0.005 
+    AGIDL = 0.0002 
+    BGIDL = 2.1e+09 
+    CGIDL = 0.0002 
+    PHIN =      0 
+    EGIDL =    0.8 
+    AIGC =   0.69 
+    BIGC = 0.0012 
+    CIGC = 0.0008 
+    AIGSD = 0.0087 
+    BIGSD = 0.0012 
+    CIGSD = 0.0008 
+    AIGBACC =  0.012 
+    BIGBACC = 0.0028 
+    CIGBACC =  0.002 
+    AIGBINV =  0.014 
+    BIGBINV =  0.004 
+    CIGBINV =  0.004 
+    NIGC =      1 
+    NIGBINV =      3 
+    NIGBACC =      1 
+    NTOX =      1 
+    EIGBINV =    1.1 
+    PIGCD =      1 
+    POXEDGE =      1 
+    XRCRG1 =     12 
+    TNOIA =    1.5 
+    TNOIB =    3.5 
+    NTNOI =      1 
+    XRCRG2 =      5 
+    BETA0 =     30 
+    IJTHDFWD =   0.01 
+    IJTHSFWD =   0.01 
+    IJTHDREV =  0.001 
+    IJTHSREV =  0.001 
+    XJBVD =      1 
+    XJBVS =      1 
+    BVD =     10 
+    BVS =     10 
+    VFB =   0.55 
+    GBMIN =  1e-10 
+    RBDB =     15 
+    RBPB =      5 
+    RBSB =     15 
+    RBPS =     15 
+    RBPD =     15 
+    CGSL = 2.653e-10 
+    CGDL = 2.653e-10 
+    CKAPPAS =   0.03 
+    CKAPPAD =   0.03 
+    CF = 1.171e-10 
+    CLC =  1e-07 
+    CLE =    0.6 
+    DWC =  5e-09 
+    DLC = 5.25e-09 
+    DLCIG = 5.25e-09 
+    DWJ =      0 
+    VFBCV =     -1 
+    ACDE =      1 
+    MOIN =     15 
+    NOFF =    0.9 
+    VOFFCV =   0.02 
+    DMCG = 9.75e-08 
+    DMCI = 6.5e-08 
+    DMDG = 4.875e-08 
+    DMCGT = 9.75e-08 
+    XGW = 1.3e-07 
+    XGL =      0 
+    RSHG =    0.4 
+    NGCON =      1 
+    TCJ =  0.001 
+    TPB =  0.005 
+    TCJSW =  0.001 
+    TPBSW =  0.005 
+    TCJSWG =  0.001 
+    TPBSWG =  0.005 
+    SK0 =      0 
+    SK1 =      0 
+    SK2 =      0 
+    SL =  2e-06 
+    SW =  2e-06 
+    K =      0 
+    TNOM =  300.1 
+    CGSO = 1.5e-10 
+    CGDO = 1.5e-10 
+    CGBO = 2.56e-11 
+    XPART =      0 
+    RSH =      5 
+    JSS = 0.0001 
+    JSWS =  1e-11 
+    JSWGS =  1e-10 
+    PBS =      1 
+    MJS =    0.5 
+    PBSWS =      1 
+    MJSWS =   0.33 
+    CJS = 0.0005 
+    CJSWS =  5e-10 
+    NJS =      1 
+    PBSWGS =      1 
+    MJSWGS =   0.33 
+    CJSWGS =  3e-10 
+    XTIS =      3 
+    JSD = 0.0001 
+    JSWD =  1e-11 
+    JSWGD =  1e-10 
+    PBD =      1 
+    MJD =    0.5 
+    PBSWD =      1 
+    MJSWD =   0.33 
+    CJD = 0.0005 
+    CJSWD =  5e-10 
+    NJD =      1 
+    PBSWGD =      1 
+    MJSWGD =   0.33 
+    CJSWGD =  5e-10 
+    XTID =      3 
+    LMLT =      1 
+    WMLT =      1 
+    LINT = 5.25e-09 
+    LL =      0 
+    LLC =      0 
+    LLN =      1 
+    LW =      0 
+    LWC =      0 
+    LWN =      1 
+    LWL =      0 
+    LWLC =      0 
+    LMIN =      0 
+    LMAX =      1 
+    WINT =  5e-09 
+    WL =      0 
+    WLC =      0 
+    WLN =      1 
+    WW =      0 
+    WWC =      0 
+    WWN =      1 
+    WWL =      0 
+    WWLC =      0 
+    WMIN =      0 
+    WMAX =      1 
+    NOIA = 6.188e+40 
+    NOIB = 1.5e+25 
+    NOIC = 8.75e+09 
+    EM = 4.1e+07 
+    EF =      1 
+    AF =      1 
+    KF =      0 
+    TRS =      0 
+    TRD =      0 
+  **info** (tb/subsystem/ChildRouter/ChildRouter_tb.sp:14) DC voltage reset to initial transient source value in source 0:vreset. new dc=0.1100D+01
+  **warning** (nmos:xdut.xus.m626_ (src_spice/subsystem/ChildRouter.sp:917)) Warning:  Acde = 0.296152 may be too small in BSIM4 model with w=3.9e-07 l=6.5e-08.
+ **info** *pvaI* Creating VA module (childrouter_environment) for instance XENV with gmd reduction
+
+ **info** *pvaI*        termCount=530 diwSize=818 probeSize=681 Qsize=0 Isize=144
+
+ End of GMD creation on Fri Sep 18 00:03:18 2026	GTM/In-use: 17.0000/9.5542 MB
+
+
+  
+      
+ **info** set option symb=1 internally to help for convergence.
+ *****************************************************************
+ ******  option summary
+ ******
+ runlvl  = 3         bypass  = 2.0000    
+  Opening plot unit= 15
+ file=/tmp/ferroma_analog_campaign_Mtgms2wU/results/subsystem/ChildRouter/ChildRouter.pa0
+
+ End of pVA setup    on Fri Sep 18 00:03:20 2026	GTM/In-use: 17.0000/9.6523 MB
+
+
+ Begin of pVA simulation on Fri Sep 18 00:03:20 2026	GTM/In-use: 17.0000/9.6523 MB
+
+
+ no convergence with standard algorithm,  trying damped pseudo-transient
+
+  *** pseudo tran succeeded *** 
+ ******  
+ childrouter: one complete actsim reference round, ptm65 tt raw prs2net baseline
+
+ ****** operating point information tnom=  25.000 temp=  27.000 ******
+ ****** operating point status is all       simulation time is     0.     
+    node    =voltage      node    =voltage      node    =voltage
+
+ +0:c0_aa   =   0.      0:c0_af_50=  14.3050u 0:c0_af_51=  14.3050u
+ +0:c0_af_51=  14.3050u 0:c0_af_51=  14.3050u 0:c0_af_51=  14.3043u
+ +0:c0_af_51=  14.3234u 0:c0_af_51=  14.3234u 0:c0_af_51=  14.3234u
+ +0:c0_af_51=  14.3234u 0:c0_af_51=  14.3234u 0:c0_af_51=  14.3234u
+ +0:c0_af_51=  14.3050u 0:c0_af_52=  14.3234u 0:c0_af_52=  14.3234u
+ +0:c0_af_52=  14.3234u 0:c0_af_52=  14.3234u 0:c0_af_52=  14.3234u
+ +0:c0_af_52=  14.3234u 0:c0_af_52=  14.3234u 0:c0_af_52=  14.3234u
+ +0:c0_af_52=  14.3234u 0:c0_af_52=  14.3234u 0:c0_af_52=  14.3050u
+ +0:c0_af_53=  14.3234u 0:c0_af_53=  14.3234u 0:c0_af_53=  14.3050u
+ +0:c0_af_54=  14.3050u 0:c0_af_55=  14.3050u 0:c0_af_56=  14.3050u
+ +0:c0_af_57=  14.3050u 0:c0_af_58=  14.3050u 0:c0_af_59=  14.3050u
+ +0:c0_at_50=  14.3050u 0:c0_at_51=  14.3050u 0:c0_at_51=  14.3050u
+ +0:c0_at_51=  14.3050u 0:c0_at_51=  14.3042u 0:c0_at_51=  14.3234u
+ +0:c0_at_51=  14.3234u 0:c0_at_51=  14.3234u 0:c0_at_51=  14.3234u
+ +0:c0_at_51=  14.3234u 0:c0_at_51=  14.3234u 0:c0_at_51=  14.3050u
+ +0:c0_at_52=  14.3234u 0:c0_at_52=  14.3234u 0:c0_at_52=  14.3234u
+ +0:c0_at_52=  14.3234u 0:c0_at_52=  14.3234u 0:c0_at_52=  14.3234u
+ +0:c0_at_52=  14.3234u 0:c0_at_52=  14.3234u 0:c0_at_52=  14.3234u
+ +0:c0_at_52=  14.3234u 0:c0_at_52=  14.3050u 0:c0_at_53=  14.3234u
+ +0:c0_at_53=  14.3234u 0:c0_at_53=  14.3050u 0:c0_at_54=  14.3050u
+ +0:c0_at_55=  14.3050u 0:c0_at_56=  14.3050u 0:c0_at_57=  14.3050u
+ +0:c0_at_58=  14.3050u 0:c0_at_59=  14.3050u 0:c1_aa   =   0.     
+ +0:c1_af_50=  14.3050u 0:c1_af_51=  14.3050u 0:c1_af_51=  14.3050u
+ +0:c1_af_51=  14.3050u 0:c1_af_51=  14.3078u 0:c1_af_51=  14.3239u
+ +0:c1_af_51=  14.3239u 0:c1_af_51=  14.3239u 0:c1_af_51=  14.3239u
+ +0:c1_af_51=  14.3239u 0:c1_af_51=  14.3239u 0:c1_af_51=  14.3050u
+ +0:c1_af_52=  14.3239u 0:c1_af_52=  14.3239u 0:c1_af_52=  14.3239u
+ +0:c1_af_52=  14.3239u 0:c1_af_52=  14.3239u 0:c1_af_52=  14.3239u
+ +0:c1_af_52=  14.3239u 0:c1_af_52=  14.3239u 0:c1_af_52=  14.3239u
+ +0:c1_af_52=  14.3239u 0:c1_af_52=  14.3050u 0:c1_af_53=  14.3239u
+ +0:c1_af_53=  14.3239u 0:c1_af_53=  14.3050u 0:c1_af_54=  14.3050u
+ +0:c1_af_55=  14.3050u 0:c1_af_56=  14.3050u 0:c1_af_57=  14.3050u
+ +0:c1_af_58=  14.3050u 0:c1_af_59=  14.3050u 0:c1_at_50=  14.3050u
+ +0:c1_at_51=  14.3050u 0:c1_at_51=  14.3050u 0:c1_at_51=  14.3050u
+ +0:c1_at_51=  14.3043u 0:c1_at_51=  14.3239u 0:c1_at_51=  14.3239u
+ +0:c1_at_51=  14.3239u 0:c1_at_51=  14.3239u 0:c1_at_51=  14.3239u
+ +0:c1_at_51=  14.3239u 0:c1_at_51=  14.3050u 0:c1_at_52=  14.3239u
+ +0:c1_at_52=  14.3239u 0:c1_at_52=  14.3239u 0:c1_at_52=  14.3239u
+ +0:c1_at_52=  14.3239u 0:c1_at_52=  14.3239u 0:c1_at_52=  14.3239u
+ +0:c1_at_52=  14.3239u 0:c1_at_52=  14.3239u 0:c1_at_52=  14.3239u
+ +0:c1_at_52=  14.3050u 0:c1_at_53=  14.3239u 0:c1_at_53=  14.3239u
+ +0:c1_at_53=  14.3050u 0:c1_at_54=  14.3050u 0:c1_at_55=  14.3050u
+ +0:c1_at_56=  14.3050u 0:c1_at_57=  14.3050u 0:c1_at_58=  14.3050u
+ +0:c1_at_59=  14.3050u 0:c2_aa   =   0.      0:c2_af_50=  14.3050u
+ +0:c2_af_51=  14.3050u 0:c2_af_51=  14.3050u 0:c2_af_51=  14.3050u
+ +0:c2_af_51=  14.3043u 0:c2_af_51=  14.3234u 0:c2_af_51=  14.3234u
+ +0:c2_af_51=  14.3234u 0:c2_af_51=  14.3234u 0:c2_af_51=  14.3234u
+ +0:c2_af_51=  14.3234u 0:c2_af_51=  14.3050u 0:c2_af_52=  14.3234u
+ +0:c2_af_52=  14.3234u 0:c2_af_52=  14.3234u 0:c2_af_52=  14.3234u
+ +0:c2_af_52=  14.3234u 0:c2_af_52=  14.3234u 0:c2_af_52=  14.3234u
+ +0:c2_af_52=  14.3234u 0:c2_af_52=  14.3234u 0:c2_af_52=  14.3234u
+ +0:c2_af_52=  14.3050u 0:c2_af_53=  14.3234u 0:c2_af_53=  14.3234u
+ +0:c2_af_53=  14.3050u 0:c2_af_54=  14.3050u 0:c2_af_55=  14.3050u
+ +0:c2_af_56=  14.3050u 0:c2_af_57=  14.3050u 0:c2_af_58=  14.3050u
+ +0:c2_af_59=  14.3050u 0:c2_at_50=  14.3050u 0:c2_at_51=  14.3050u
+ +0:c2_at_51=  14.3050u 0:c2_at_51=  14.3050u 0:c2_at_51=  14.3042u
+ +0:c2_at_51=  14.3234u 0:c2_at_51=  14.3234u 0:c2_at_51=  14.3234u
+ +0:c2_at_51=  14.3234u 0:c2_at_51=  14.3234u 0:c2_at_51=  14.3234u
+ +0:c2_at_51=  14.3050u 0:c2_at_52=  14.3234u 0:c2_at_52=  14.3234u
+ +0:c2_at_52=  14.3234u 0:c2_at_52=  14.3234u 0:c2_at_52=  14.3234u
+ +0:c2_at_52=  14.3234u 0:c2_at_52=  14.3234u 0:c2_at_52=  14.3234u
+ +0:c2_at_52=  14.3234u 0:c2_at_52=  14.3234u 0:c2_at_52=  14.3050u
+ +0:c2_at_53=  14.3234u 0:c2_at_53=  14.3234u 0:c2_at_53=  14.3050u
+ +0:c2_at_54=  14.3050u 0:c2_at_55=  14.3050u 0:c2_at_56=  14.3050u
+ +0:c2_at_57=  14.3050u 0:c2_at_58=  14.3050u 0:c2_at_59=  14.3050u
+ +0:c3_aa   =   0.      0:c3_af_50=  14.3050u 0:c3_af_51=  14.3050u
+ +0:c3_af_51=  14.3050u 0:c3_af_51=  14.3050u 0:c3_af_51=  14.3078u
+ +0:c3_af_51=  14.3239u 0:c3_af_51=  14.3239u 0:c3_af_51=  14.3239u
+ +0:c3_af_51=  14.3239u 0:c3_af_51=  14.3239u 0:c3_af_51=  14.3239u
+ +0:c3_af_51=  14.3050u 0:c3_af_52=  14.3239u 0:c3_af_52=  14.3239u
+ +0:c3_af_52=  14.3239u 0:c3_af_52=  14.3239u 0:c3_af_52=  14.3239u
+ +0:c3_af_52=  14.3239u 0:c3_af_52=  14.3239u 0:c3_af_52=  14.3239u
+ +0:c3_af_52=  14.3239u 0:c3_af_52=  14.3239u 0:c3_af_52=  14.3050u
+ +0:c3_af_53=  14.3239u 0:c3_af_53=  14.3239u 0:c3_af_53=  14.3050u
+ +0:c3_af_54=  14.3050u 0:c3_af_55=  14.3050u 0:c3_af_56=  14.3050u
+ +0:c3_af_57=  14.3050u 0:c3_af_58=  14.3050u 0:c3_af_59=  14.3050u
+ +0:c3_at_50=  14.3050u 0:c3_at_51=  14.3050u 0:c3_at_51=  14.3050u
+ +0:c3_at_51=  14.3050u 0:c3_at_51=  14.3043u 0:c3_at_51=  14.3239u
+ +0:c3_at_51=  14.3239u 0:c3_at_51=  14.3239u 0:c3_at_51=  14.3239u
+ +0:c3_at_51=  14.3239u 0:c3_at_51=  14.3239u 0:c3_at_51=  14.3050u
+ +0:c3_at_52=  14.3239u 0:c3_at_52=  14.3239u 0:c3_at_52=  14.3239u
+ +0:c3_at_52=  14.3239u 0:c3_at_52=  14.3239u 0:c3_at_52=  14.3239u
+ +0:c3_at_52=  14.3239u 0:c3_at_52=  14.3239u 0:c3_at_52=  14.3239u
+ +0:c3_at_52=  14.3239u 0:c3_at_52=  14.3050u 0:c3_at_53=  14.3239u
+ +0:c3_at_53=  14.3239u 0:c3_at_53=  14.3050u 0:c3_at_54=  14.3050u
+ +0:c3_at_55=  14.3050u 0:c3_at_56=  14.3050u 0:c3_at_57=  14.3050u
+ +0:c3_at_58=  14.3050u 0:c3_at_59=  14.3050u 0:i_aa    =  14.3003u
+ +0:i_af_50_=   0.      0:i_af_510=   0.      0:i_af_511=   0.     
+ +0:i_af_512=   0.      0:i_af_513=   0.      0:i_af_514=   0.     
+ +0:i_af_515=   0.      0:i_af_516=   0.      0:i_af_517=   0.     
+ +0:i_af_518=   0.      0:i_af_519=   0.      0:i_af_51_=   0.     
+ +0:i_af_520=   0.      0:i_af_521=   0.      0:i_af_522=   0.     
+ +0:i_af_523=   0.      0:i_af_524=   0.      0:i_af_525=   0.     
+ +0:i_af_526=   0.      0:i_af_527=   0.      0:i_af_528=   0.     
+ +0:i_af_529=   0.      0:i_af_52_=   0.      0:i_af_530=   0.     
+ +0:i_af_531=   0.      0:i_af_53_=   0.      0:i_af_54_=   0.     
+ +0:i_af_55_=   0.      0:i_af_56_=   0.      0:i_af_57_=   0.     
+ +0:i_af_58_=   0.      0:i_af_59_=   0.      0:i_at_50_=   0.     
+ +0:i_at_510=   0.      0:i_at_511=   0.      0:i_at_512=   0.     
+ +0:i_at_513=   0.      0:i_at_514=   0.      0:i_at_515=   0.     
+ +0:i_at_516=   0.      0:i_at_517=   0.      0:i_at_518=   0.     
+ +0:i_at_519=   0.      0:i_at_51_=   0.      0:i_at_520=   0.     
+ +0:i_at_521=   0.      0:i_at_522=   0.      0:i_at_523=   0.     
+ +0:i_at_524=   0.      0:i_at_525=   0.      0:i_at_526=   0.     
+ +0:i_at_527=   0.      0:i_at_528=   0.      0:i_at_529=   0.     
+ +0:i_at_52_=   0.      0:i_at_530=   0.      0:i_at_531=   0.     
+ +0:i_at_53_=   0.      0:i_at_54_=   0.      0:i_at_55_=   0.     
+ +0:i_at_56_=   0.      0:i_at_57_=   0.      0:i_at_58_=   0.     
+ +0:i_at_59_=   0.      0:m_aa    =   0.      0:m_af_50_=  14.3047u
+ +0:m_af_510=  14.3047u 0:m_af_511=  14.3047u 0:m_af_512=  14.3047u
+ +0:m_af_513=  14.3047u 0:m_af_514=  14.3047u 0:m_af_515=  14.3047u
+ +0:m_af_516=  14.3047u 0:m_af_517=  14.3047u 0:m_af_518=  14.3047u
+ +0:m_af_519=  14.3047u 0:m_af_51_=  14.3047u 0:m_af_520=  14.3047u
+ +0:m_af_521=  14.3047u 0:m_af_522=  14.3047u 0:m_af_523=  14.3047u
+ +0:m_af_524=  14.3047u 0:m_af_525=  14.3047u 0:m_af_526=  14.3047u
+ +0:m_af_527=  14.3047u 0:m_af_528=  14.3047u 0:m_af_529=  14.3047u
+ +0:m_af_52_=  14.3047u 0:m_af_530=  14.3047u 0:m_af_531=  14.3047u
+ +0:m_af_53_=  14.3047u 0:m_af_54_=  14.3047u 0:m_af_55_=  14.3047u
+ +0:m_af_56_=  14.3047u 0:m_af_57_=  14.3047u 0:m_af_58_=  14.3047u
+ +0:m_af_59_=  14.3047u 0:m_at_50_=  14.3047u 0:m_at_510=  14.3047u
+ +0:m_at_511=  14.3047u 0:m_at_512=  14.3047u 0:m_at_513=  14.3047u
+ +0:m_at_514=  14.3047u 0:m_at_515=  14.3047u 0:m_at_516=  14.3047u
+ +0:m_at_517=  14.3047u 0:m_at_518=  14.3047u 0:m_at_519=  14.3047u
+ +0:m_at_51_=  14.3047u 0:m_at_520=  14.3047u 0:m_at_521=  14.3047u
+ +0:m_at_522=  14.3047u 0:m_at_523=  14.3047u 0:m_at_524=  14.3047u
+ +0:m_at_525=  14.3047u 0:m_at_526=  14.3047u 0:m_at_527=  14.3047u
+ +0:m_at_528=  14.3047u 0:m_at_529=  14.3047u 0:m_at_52_=  14.3047u
+ +0:m_at_530=  14.3047u 0:m_at_531=  14.3047u 0:m_at_53_=  14.3047u
+ +0:m_at_54_=  14.3047u 0:m_at_55_=  14.3047u 0:m_at_56_=  14.3047u
+ +0:m_at_57_=  14.3047u 0:m_at_58_=  14.3047u 0:m_at_59_=  14.3047u
+ +0:p_aa    =   0.      0:p_af_50_=  14.3050u 0:p_af_510=  14.3050u
+ +0:p_af_511=  14.3050u 0:p_af_512=  14.3050u 0:p_af_513=  14.3078u
+ +0:p_af_514=  14.3239u 0:p_af_515=  14.3239u 0:p_af_516=  14.3239u
+ +0:p_af_517=  14.3239u 0:p_af_518=  14.3239u 0:p_af_519=  14.3239u
+ +0:p_af_51_=  14.3050u 0:p_af_520=  14.3239u 0:p_af_521=  14.3239u
+ +0:p_af_522=  14.3239u 0:p_af_523=  14.3239u 0:p_af_524=  14.3239u
+ +0:p_af_525=  14.3239u 0:p_af_526=  14.3239u 0:p_af_527=  14.3239u
+ +0:p_af_528=  14.3239u 0:p_af_529=  14.3239u 0:p_af_52_=  14.3050u
+ +0:p_af_530=  14.3239u 0:p_af_531=  14.3239u 0:p_af_53_=  14.3050u
+ +0:p_af_54_=  14.3050u 0:p_af_55_=  14.3050u 0:p_af_56_=  14.3050u
+ +0:p_af_57_=  14.3050u 0:p_af_58_=  14.3050u 0:p_af_59_=  14.3050u
+ +0:p_at_50_=  14.3050u 0:p_at_510=  14.3050u 0:p_at_511=  14.3050u
+ +0:p_at_512=  14.3050u 0:p_at_513=  14.3043u 0:p_at_514=  14.3239u
+ +0:p_at_515=  14.3239u 0:p_at_516=  14.3239u 0:p_at_517=  14.3239u
+ +0:p_at_518=  14.3239u 0:p_at_519=  14.3239u 0:p_at_51_=  14.3050u
+ +0:p_at_520=  14.3239u 0:p_at_521=  14.3239u 0:p_at_522=  14.3239u
+ +0:p_at_523=  14.3239u 0:p_at_524=  14.3239u 0:p_at_525=  14.3239u
+ +0:p_at_526=  14.3239u 0:p_at_527=  14.3239u 0:p_at_528=  14.3239u
+ +0:p_at_529=  14.3239u 0:p_at_52_=  14.3050u 0:p_at_530=  14.3239u
+ +0:p_at_531=  14.3239u 0:p_at_53_=  14.3050u 0:p_at_54_=  14.3050u
+ +0:p_at_55_=  14.3050u 0:p_at_56_=  14.3050u 0:p_at_57_=  14.3050u
+ +0:p_at_58_=  14.3050u 0:p_at_59_=  14.3050u 0:reset   =   1.1000 
+ +0:tb_done =   0.      0:tb_faile=   0.      0:vdd     =   1.1000 
+ +1:cs_ai_aa=  14.4776u 1:cs_ai_af=  15.3064u 1:cs_ai_af=  14.3620u
+ +1:cs_ai_af=  14.3620u 1:cs_ai_af=  14.3620u 1:cs_ai_af=  14.4147u
+ +1:cs_ai_af=  14.4310u 1:cs_ai_af=  14.4310u 1:cs_ai_af=  14.4310u
+ +1:cs_ai_af=  14.4310u 1:cs_ai_af=  14.4310u 1:cs_ai_af=  14.4310u
+ +1:cs_ai_af=  14.3620u 1:cs_ai_af=  14.4310u 1:cs_ai_af=  14.4310u
+ +1:cs_ai_af=  14.4310u 1:cs_ai_af=  14.4310u 1:cs_ai_af=  14.4310u
+ +1:cs_ai_af=  14.4310u 1:cs_ai_af=  14.4310u 1:cs_ai_af=  14.4310u
+ +1:cs_ai_af=  14.4310u 1:cs_ai_af=  14.4310u 1:cs_ai_af=  14.3620u
+ +1:cs_ai_af=  14.4310u 1:cs_ai_af=  16.0764u 1:cs_ai_af=  14.3620u
+ +1:cs_ai_af=  14.3620u 1:cs_ai_af=  14.3620u 1:cs_ai_af=  14.3620u
+ +1:cs_ai_af=  14.3620u 1:cs_ai_af=  14.3620u 1:cs_ai_af=  14.3620u
+ +1:cs_ai_at=  15.2822u 1:cs_ai_at=  14.3620u 1:cs_ai_at=  14.3620u
+ +1:cs_ai_at=  14.3620u 1:cs_ai_at=  14.4116u 1:cs_ai_at=  14.4310u
+ +1:cs_ai_at=  14.4310u 1:cs_ai_at=  14.4310u 1:cs_ai_at=  14.4310u
+ +1:cs_ai_at=  14.4310u 1:cs_ai_at=  14.4310u 1:cs_ai_at=  14.3620u
+ +1:cs_ai_at=  14.4310u 1:cs_ai_at=  14.4310u 1:cs_ai_at=  14.4310u
+ +1:cs_ai_at=  14.4310u 1:cs_ai_at=  14.4310u 1:cs_ai_at=  14.4310u
+ +1:cs_ai_at=  14.4310u 1:cs_ai_at=  14.4310u 1:cs_ai_at=  14.4310u
+ +1:cs_ai_at=  14.4310u 1:cs_ai_at=  14.3620u 1:cs_ai_at=  14.4310u
+ +1:cs_ai_at=  15.3164u 1:cs_ai_at=  14.3620u 1:cs_ai_at=  14.3620u
+ +1:cs_ai_at=  14.3620u 1:cs_ai_at=  14.3620u 1:cs_ai_at=  14.3620u
+ +1:cs_ai_at=  14.3620u 1:cs_ai_at=  14.3620u 1:ss_ao1_a=  15.5277u
+ +1:ss_ao1_a= 127.1608u 1:ss_ao1_a= 126.2465u 1:ss_ao1_a= 126.2465u
+ +1:ss_ao1_a= 126.2465u 1:ss_ao1_a= 126.2986u 1:ss_ao1_a= 126.2958u
+ +1:ss_ao1_a= 126.2958u 1:ss_ao1_a= 126.2958u 1:ss_ao1_a= 126.2958u
+ +1:ss_ao1_a= 126.2958u 1:ss_ao1_a= 126.2958u 1:ss_ao1_a= 126.2465u
+ +1:ss_ao1_a= 126.2958u 1:ss_ao1_a= 126.2958u 1:ss_ao1_a= 126.2958u
+ +1:ss_ao1_a= 126.2958u 1:ss_ao1_a= 126.2958u 1:ss_ao1_a= 126.2958u
+ +1:ss_ao1_a= 126.2958u 1:ss_ao1_a= 126.2958u 1:ss_ao1_a= 126.2958u
+ +1:ss_ao1_a= 126.2958u 1:ss_ao1_a= 126.2465u 1:ss_ao1_a= 126.2958u
+ +1:ss_ao1_a= 127.8884u 1:ss_ao1_a= 126.2465u 1:ss_ao1_a= 126.2465u
+ +1:ss_ao1_a= 126.2465u 1:ss_ao1_a= 126.2465u 1:ss_ao1_a= 126.2465u
+ +1:ss_ao1_a= 126.2465u 1:ss_ao1_a= 126.2465u 1:ss_ao1_a= 127.1374u
+ +1:ss_ao1_a= 126.2465u 1:ss_ao1_a= 126.2465u 1:ss_ao1_a= 126.2465u
+ +1:ss_ao1_a= 126.2957u 1:ss_ao1_a= 126.2958u 1:ss_ao1_a= 126.2958u
+ +1:ss_ao1_a= 126.2958u 1:ss_ao1_a= 126.2958u 1:ss_ao1_a= 126.2958u
+ +1:ss_ao1_a= 126.2958u 1:ss_ao1_a= 126.2465u 1:ss_ao1_a= 126.2958u
+ +1:ss_ao1_a= 126.2958u 1:ss_ao1_a= 126.2958u 1:ss_ao1_a= 126.2958u
+ +1:ss_ao1_a= 126.2958u 1:ss_ao1_a= 126.2958u 1:ss_ao1_a= 126.2958u
+ +1:ss_ao1_a= 126.2958u 1:ss_ao1_a= 126.2958u 1:ss_ao1_a= 126.2958u
+ +1:ss_ao1_a= 126.2465u 1:ss_ao1_a= 126.2958u 1:ss_ao1_a= 127.1530u
+ +1:ss_ao1_a= 126.2465u 1:ss_ao1_a= 126.2465u 1:ss_ao1_a= 126.2465u
+ +1:ss_ao1_a= 126.2465u 1:ss_ao1_a= 126.2465u 1:ss_ao1_a= 126.2465u
+ +1:ss_ao1_a= 126.2465u 3:left_ai_=  14.4776u 3:left_ai_=  15.3064u
+ +3:left_ai_=  14.3620u 3:left_ai_=  14.3620u 3:left_ai_=  14.3620u
+ +3:left_ai_=  14.4182u 3:left_ai_=  14.4315u 3:left_ai_=  14.4315u
+ +3:left_ai_=  14.4315u 3:left_ai_=  14.4315u 3:left_ai_=  14.4315u
+ +3:left_ai_=  14.4315u 3:left_ai_=  14.3620u 3:left_ai_=  14.4315u
+ +3:left_ai_=  14.4315u 3:left_ai_=  14.4315u 3:left_ai_=  14.4315u
+ +3:left_ai_=  14.4315u 3:left_ai_=  14.4315u 3:left_ai_=  14.4315u
+ +3:left_ai_=  14.4315u 3:left_ai_=  14.4315u 3:left_ai_=  14.4315u
+ +3:left_ai_=  14.3620u 3:left_ai_=  14.4315u 3:left_ai_=  16.0769u
+ +3:left_ai_=  14.3620u 3:left_ai_=  14.3620u 3:left_ai_=  14.3620u
+ +3:left_ai_=  14.3620u 3:left_ai_=  14.3620u 3:left_ai_=  14.3620u
+ +3:left_ai_=  14.3620u 3:left_ai_=  15.2822u 3:left_ai_=  14.3620u
+ +3:left_ai_=  14.3620u 3:left_ai_=  14.3620u 3:left_ai_=  14.4118u
+ +3:left_ai_=  14.4315u 3:left_ai_=  14.4315u 3:left_ai_=  14.4315u
+ +3:left_ai_=  14.4315u 3:left_ai_=  14.4315u 3:left_ai_=  14.4315u
+ +3:left_ai_=  14.3620u 3:left_ai_=  14.4315u 3:left_ai_=  14.4315u
+ +3:left_ai_=  14.4315u 3:left_ai_=  14.4315u 3:left_ai_=  14.4315u
+ +3:left_ai_=  14.4315u 3:left_ai_=  14.4315u 3:left_ai_=  14.4315u
+ +3:left_ai_=  14.4315u 3:left_ai_=  14.4315u 3:left_ai_=  14.3620u
+ +3:left_ai_=  14.4315u 3:left_ai_=  15.3169u 3:left_ai_=  14.3620u
+ +3:left_ai_=  14.3620u 3:left_ai_=  14.3620u 3:left_ai_=  14.3620u
+ +3:left_ai_=  14.3620u 3:left_ai_=  14.3620u 3:left_ai_=  14.3620u
+ +3:root_ao1=  14.4310u 3:root_ao1=  14.4310u 3:root_ao1=  14.4310u
+ +3:root_ao1=  14.4310u 3:root_ao1=  14.4310u 3:root_ao1=  14.4310u
+ +3:root_ao1=  16.0764u 3:root_ao1=  14.3620u 3:root_ao1=  14.3620u
+ +3:root_ao1=  14.3620u 3:root_ao1=  14.4116u 3:root_ao1=  14.4310u
+ +3:root_ao1=  14.4310u 3:root_ao1=  14.4310u 3:root_ao1=  14.4310u
+ +3:root_ao1=  14.4310u 3:root_ao1=  14.4310u 3:root_ao1=  14.4310u
+ +3:root_ao1=  14.4310u 3:root_ao1=  14.4310u 3:root_ao1=  14.4310u
+ +3:root_ao1=  14.4310u 3:root_ao1=  14.4310u 3:root_ao1=  14.4310u
+ +3:root_ao1=  14.4310u 3:root_ao1=  14.4310u 3:root_ao1=  14.4310u
+ +3:root_ao1=  14.4310u 3:root_ao1=  15.3164u 3:root_ao1=  14.3620u
+ +3:root_ao1=  14.3620u 3:root_ao1=  14.3620u 3:root_ao1=  14.4147u
+ +3:root_ao1=  14.4310u 3:root_ao1=  14.4310u 3:root_ao1=  14.4310u
+ +3:root_ao1=  14.4310u 3:root_ao1=  14.4310u 3:root_ao1=  14.4310u
+ +3:root_ao1=  14.4310u 3:root_ao1=  14.4310u 3:root_ao1=  14.4310u
+ +3:root_ao1=  14.4310u 3:root_ao1=  14.4310u 3:root_ao1=  14.4776u
+ +3:root_ao1=  15.3064u 3:root_ao1=  14.3620u 3:root_ao1=  14.3620u
+ +3:root_ao1=  14.3620u 3:root_ao1=  14.3620u 3:root_ao1=  14.3620u
+ +3:root_ao1=  14.3620u 3:root_ao1=  14.3620u 3:root_ao1=  14.3620u
+ +3:root_ao1=  14.3620u 3:root_ao1=  15.2822u 3:root_ao1=  14.3620u
+ +3:root_ao1=  14.3620u 3:root_ao1=  14.3620u 3:root_ao1=  14.3620u
+ +3:root_ao1=  14.3620u 3:root_ao1=  14.3620u 3:root_ao1=  14.3620u
+ +3:root_ao1=  14.3620u 3:root_ao1=  14.3620u 4:#100    =  43.9609m
+ +4:#1001   =   1.0999  4:#1002   =   1.7545m 4:#1004   =   1.0999 
+ +4:#1005   =   1.7545m 4:#1007   =   1.0999  4:#1008   =   1.7545m
+ +4:#101    = 126.7227m 4:#1010   =   1.0999  4:#1011   =   1.7545m
+ +4:#1013   =   1.0999  4:#1014   =   1.7545m 4:#1016   =   1.0999 
+ +4:#1017   =   1.7545m 4:#1019   =   1.0999  4:#102    = 407.4367m
+ +4:#1020   =   1.7545m 4:#1022   =   1.0999  4:#1023   =   1.7545m
+ +4:#1025   =   1.0999  4:#1026   =   1.7545m 4:#1028   =   1.0999 
+ +4:#1029   =   1.7545m 4:#103    = 407.4364m 4:#1031   =   1.0999 
+ +4:#1032   =   1.7545m 4:#1034   =   1.0999  4:#1035   =   1.7545m
+ +4:#1037   =   1.0999  4:#1038   =   1.7545m 4:#104    =   1.1000 
+ +4:#1040   =   1.0999  4:#1041   =   1.7545m 4:#1043   =   1.0999 
+ +4:#1044   =   1.7545m 4:#1046   =   1.0999  4:#1047   =   1.7545m
+ +4:#1049   =   1.0999  4:#105    =   1.0999  4:#1050   =   1.7545m
+ +4:#1052   =   1.0999  4:#1053   =   1.7545m 4:#1055   =   1.0999 
+ +4:#1056   =   1.7545m 4:#1058   =   1.0999  4:#1059   =   1.7545m
+ +4:#1061   =   1.0999  4:#1062   =   1.7545m 4:#1064   =   1.0999 
+ +4:#1065   =   1.7545m 4:#1067   =   1.0999  4:#1068   =   1.7545m
+ +4:#107    =  43.9609m 4:#1070   =   1.0999  4:#1071   =   1.7545m
+ +4:#1073   =   1.0999  4:#1074   =   1.7545m 4:#1076   =   1.0999 
+ +4:#1077   =   1.7545m 4:#1079   =   1.0999  4:#108    = 126.7227m
+ +4:#1080   =   1.7545m 4:#1082   =   1.0999  4:#1083   =   1.7545m
+ +4:#1085   =   1.0999  4:#1086   =   1.7545m 4:#1088   =   1.0999 
+ +4:#1089   =   1.7545m 4:#109    = 407.4367m 4:#1091   =   1.0999 
+ +4:#1092   =   1.7545m 4:#1094   =   1.0999  4:#1095   =   1.7545m
+ +4:#1097   =   1.0999  4:#1098   =   1.7545m 4:#11     =   1.1000 
+ +4:#110    = 407.4364m 4:#1100   =   1.0999  4:#1101   =   1.7545m
+ +4:#1103   =   1.0999  4:#1104   =   1.7545m 4:#1106   =   1.0999 
+ +4:#1107   =   1.7545m 4:#1109   =   1.0999  4:#111    =   1.1000 
+ +4:#1110   =   1.7545m 4:#1112   =   1.0999  4:#1113   =   1.7545m
+ +4:#1115   =   1.0999  4:#1116   =   1.7545m 4:#1118   =   1.0999 
+ +4:#1119   =   1.7545m 4:#112    =   1.0999  4:#1121   =   1.0999 
+ +4:#1122   =   1.7545m 4:#1124   =   1.0999  4:#1125   =   1.7545m
+ +4:#1127   =   1.0999  4:#1128   =   1.7545m 4:#1130   =   1.0999 
+ +4:#1131   =   1.7545m 4:#1133   =   1.0999  4:#1134   =   1.7545m
+ +4:#1136   =   1.0999  4:#1137   =   1.7545m 4:#1139   =   1.0999 
+ +4:#114    =   3.6169u 4:#1140   =   1.7545m 4:#1142   =   1.0999 
+ +4:#1143   =   1.7545m 4:#1145   =   1.0999  4:#1146   =   1.7545m
+ +4:#1148   =   1.0999  4:#1149   =   1.7545m 4:#115    =  86.3671m
+ +4:#1151   =   1.0999  4:#1152   =   1.7545m 4:#1154   =   1.0999 
+ +4:#1155   =   1.7545m 4:#1157   =   1.0999  4:#1158   =   1.7545m
+ +4:#1160   =   1.0999  4:#1161   =   1.7545m 4:#1163   =   1.0999 
+ +4:#1164   =   1.7545m 4:#1166   =   1.0999  4:#1167   =   1.7545m
+ +4:#1169   =   1.0999  4:#117    = 256.0283m 4:#1170   =   1.7545m
+ +4:#1172   =   1.0999  4:#1173   =   1.7545m 4:#1175   =   1.0999 
+ +4:#1176   =   1.7545m 4:#1178   =   1.0999  4:#1179   =   1.7545m
+ +4:#118    = 256.0277m 4:#1181   =   1.0999  4:#1182   =   1.7545m
+ +4:#1184   =   1.0999  4:#1185   =   1.7545m 4:#1187   =   1.0999 
+ +4:#1188   =   1.7545m 4:#119    =   1.1000  4:#1190   =   1.0999 
+ +4:#1191   =   1.7545m 4:#1193   =   1.0999  4:#1194   =   1.7545m
+ +4:#1196   =   1.0999  4:#1197   =   1.7545m 4:#1199   =   1.0999 
+ +4:#12     = 261.5900m 4:#120    =   1.0999  4:#1200   =   1.7545m
+ +4:#1202   =   1.0999  4:#1203   =   1.7545m 4:#1205   =   1.0999 
+ +4:#1206   =   1.7545m 4:#1208   =   1.0999  4:#1209   =   1.7545m
+ +4:#1211   =   1.0999  4:#1212   =   1.7545m 4:#1214   =   1.0999 
+ +4:#1215   =   1.7546m 4:#1217   =   1.0999  4:#1218   =   1.7546m
+ +4:#122    =   3.6169u 4:#1220   =   1.0999  4:#1221   =   1.7546m
+ +4:#1223   =   1.0999  4:#1224   =   1.7546m 4:#1226   =   1.0999 
+ +4:#1227   = 458.5834u 4:#1229   =   1.0999  4:#123    =  86.3671m
+ +4:#1230   = 458.5834u 4:#1232   =   1.0999  4:#1233   = 458.5834u
+ +4:#1235   =   1.0999  4:#1236   = 458.5834u 4:#1238   =   1.0999 
+ +4:#1239   = 458.5834u 4:#1241   =   1.0999  4:#1242   = 458.5834u
+ +4:#1244   =   1.0999  4:#1245   = 458.5834u 4:#1247   =   1.0999 
+ +4:#1248   = 458.5834u 4:#125    = 256.0283m 4:#1250   =   1.0999 
+ +4:#1251   = 458.5834u 4:#1253   =   1.0999  4:#1254   = 458.5834u
+ +4:#1256   =   1.0999  4:#1257   = 458.5834u 4:#1259   =   1.0999 
+ +4:#126    = 256.0277m 4:#1260   = 458.5834u 4:#1262   =   1.0999 
+ +4:#1263   = 458.5834u 4:#1265   =   1.0999  4:#1266   = 458.5834u
+ +4:#1268   =   1.0999  4:#1269   = 458.5834u 4:#127    =   1.1000 
+ +4:#1271   =   1.0999  4:#1272   = 458.5834u 4:#1274   =   1.0999 
+ +4:#1275   = 458.5834u 4:#1277   =   1.0999  4:#1278   = 458.5834u
+ +4:#128    =   1.0999  4:#1280   =   1.0999  4:#1281   = 458.5834u
+ +4:#1283   =   1.0999  4:#1284   = 458.5834u 4:#1286   =   1.0999 
+ +4:#1287   = 458.5834u 4:#1289   =   1.0999  4:#1290   = 458.5834u
+ +4:#1292   =   1.0999  4:#1293   = 458.5834u 4:#1295   =   1.0999 
+ +4:#1296   = 458.5834u 4:#1298   =   1.0999  4:#1299   = 458.5834u
+ +4:#130    =  43.9609m 4:#1301   =   1.0999  4:#1302   = 458.5834u
+ +4:#1304   =   1.0999  4:#1305   = 458.5834u 4:#1307   =   1.0999 
+ +4:#1308   = 458.5834u 4:#131    = 126.7227m 4:#1310   =   1.0999 
+ +4:#1311   = 458.5834u 4:#1313   =   1.0999  4:#1314   = 458.5834u
+ +4:#1316   =   1.0999  4:#1317   = 458.5834u 4:#1319   =   1.0999 
+ +4:#132    = 407.4367m 4:#1320   = 458.5834u 4:#1322   =   1.0999 
+ +4:#1323   = 458.5834u 4:#1325   =   1.0999  4:#1326   = 458.5834u
+ +4:#1328   =   1.0999  4:#1329   = 458.5834u 4:#133    = 407.4364m
+ +4:#1331   =   1.0999  4:#1332   = 458.5834u 4:#1334   =   1.0999 
+ +4:#1335   = 458.5834u 4:#1337   =   1.0999  4:#1338   = 458.5834u
+ +4:#134    =   1.1000  4:#1340   =   1.0999  4:#1341   = 458.5834u
+ +4:#1343   =   1.0999  4:#1344   = 458.5834u 4:#1346   =   1.0999 
+ +4:#1347   = 458.5834u 4:#1349   =   1.0999  4:#135    =   1.0999 
+ +4:#1350   = 458.5834u 4:#1352   =   1.0999  4:#1353   = 458.5834u
+ +4:#1355   =   1.0999  4:#1356   = 458.5834u 4:#1358   =   1.0999 
+ +4:#1359   = 458.5834u 4:#1361   =   1.0999  4:#1362   = 458.5834u
+ +4:#1364   =   1.0999  4:#1365   = 458.5834u 4:#1367   =   1.0999 
+ +4:#1368   = 458.5834u 4:#137    =  43.9609m 4:#1370   =   1.0999 
+ +4:#1371   = 458.5834u 4:#1373   =   1.0999  4:#1374   = 458.5834u
+ +4:#1376   =   1.0999  4:#1377   = 458.5834u 4:#1379   =   1.0999 
+ +4:#138    = 126.7227m 4:#1380   = 458.5834u 4:#139    = 407.4367m
+ +4:#14     = 993.7101m 4:#140    = 407.4364m 4:#141    =   1.1000 
+ +4:#142    =   1.0999  4:#144    =   3.6169u 4:#145    =  86.3671m
+ +4:#147    = 256.0283m 4:#148    = 256.0277m 4:#149    =   1.1000 
+ +4:#150    =   1.0999  4:#152    =   3.6169u 4:#153    =  86.3671m
+ +4:#155    = 256.0283m 4:#156    = 256.0277m 4:#157    =   1.1000 
+ +4:#158    =   1.0999  4:#16     =  24.4335u 4:#160    =  43.9609m
+ +4:#161    = 126.7227m 4:#162    = 407.4367m 4:#163    = 407.4364m
+ +4:#164    =   1.1000  4:#165    =   1.0999  4:#167    =  43.9609m
+ +4:#168    = 126.7227m 4:#169    = 407.4367m 4:#170    = 407.4364m
+ +4:#171    =   1.1000  4:#172    =   1.0999  4:#174    =   3.6169u
+ +4:#175    =  86.3671m 4:#177    = 256.0283m 4:#178    = 256.0277m
+ +4:#179    =   1.1000  4:#180    =   1.0999  4:#182    =   3.6169u
+ +4:#183    =  86.3671m 4:#185    = 256.0283m 4:#186    = 256.0277m
+ +4:#187    =   1.1000  4:#188    =   1.0999  4:#190    =  43.9609m
+ +4:#191    = 126.7227m 4:#192    = 407.4367m 4:#193    = 407.4364m
+ +4:#194    =   1.1000  4:#195    =   1.0999  4:#197    =  43.9609m
+ +4:#198    = 126.7227m 4:#199    = 407.4367m 4:#200    = 407.4364m
+ +4:#201    =   1.1000  4:#202    =   1.0999  4:#204    =   3.6169u
+ +4:#205    =  86.3671m 4:#207    = 256.0283m 4:#208    = 256.0277m
+ +4:#209    =   1.1000  4:#21     = 989.3321m 4:#210    =   1.0999 
+ +4:#212    =   3.6169u 4:#213    =  86.3671m 4:#215    = 256.0283m
+ +4:#216    = 256.0277m 4:#217    =   1.1000  4:#218    =   1.0999 
+ +4:#22     = 989.3334m 4:#220    =  43.9609m 4:#221    = 126.7227m
+ +4:#222    = 407.4367m 4:#223    = 407.4364m 4:#224    =   1.1000 
+ +4:#225    =   1.0999  4:#227    =  43.9609m 4:#228    = 126.7227m
+ +4:#229    = 407.4367m 4:#230    = 407.4364m 4:#231    =   1.1000 
+ +4:#232    =   1.0999  4:#234    =   3.6169u 4:#235    =  86.3671m
+ +4:#237    = 256.0283m 4:#238    = 256.0277m 4:#239    =   1.1000 
+ +4:#24     = 989.3327m 4:#240    =   1.0999  4:#242    =   3.6169u
+ +4:#243    =  86.3671m 4:#245    = 256.0283m 4:#246    = 256.0277m
+ +4:#247    =   1.1000  4:#248    =   1.0999  4:#25     = 989.3316m
+ +4:#250    =  43.9609m 4:#251    = 126.7227m 4:#252    = 407.4367m
+ +4:#253    = 407.4364m 4:#254    =   1.1000  4:#255    =   1.0999 
+ +4:#257    =  43.9609m 4:#258    = 126.7227m 4:#259    = 407.4367m
+ +4:#260    = 407.4364m 4:#261    =   1.1000  4:#262    =   1.0999 
+ +4:#264    =   3.6169u 4:#265    =  86.3671m 4:#267    = 256.0283m
+ +4:#268    = 256.0277m 4:#269    =   1.1000  4:#27     = 884.0404m
+ +4:#270    =   1.0999  4:#272    =   3.6169u 4:#273    =  86.3671m
+ +4:#275    = 256.0283m 4:#276    = 256.0277m 4:#277    =   1.1000 
+ +4:#278    =   1.0999  4:#280    =  43.9609m 4:#281    = 126.7227m
+ +4:#282    = 407.4367m 4:#283    = 407.4364m 4:#284    =   1.1000 
+ +4:#285    =   1.0999  4:#287    =  43.9609m 4:#288    = 126.7227m
+ +4:#289    = 407.4367m 4:#290    = 407.4364m 4:#291    =   1.1000 
+ +4:#292    =   1.0999  4:#294    =   3.6169u 4:#295    =  86.3671m
+ +4:#297    = 256.0283m 4:#298    = 256.0277m 4:#299    =   1.1000 
+ +4:#3      =   1.0998  4:#30     = 121.2274u 4:#300    =   1.0999 
+ +4:#302    =   3.6169u 4:#303    =  86.3671m 4:#305    = 256.0283m
+ +4:#306    = 256.0277m 4:#307    =   1.1000  4:#308    =   1.0999 
+ +4:#31     =  62.8336u 4:#310    =  43.9609m 4:#311    = 126.7227m
+ +4:#312    = 407.4367m 4:#313    = 407.4364m 4:#314    =   1.1000 
+ +4:#315    =   1.0999  4:#317    =  43.9609m 4:#318    = 126.7227m
+ +4:#319    = 407.4367m 4:#32     = 148.1626u 4:#320    = 407.4364m
+ +4:#321    =   1.1000  4:#322    =   1.0999  4:#324    =   3.6169u
+ +4:#325    =  86.3671m 4:#327    = 256.0283m 4:#328    = 256.0277m
+ +4:#329    =   1.1000  4:#330    =   1.0999  4:#332    =   3.6169u
+ +4:#333    =  86.3671m 4:#335    = 256.0283m 4:#336    = 256.0277m
+ +4:#337    =   1.1000  4:#338    =   1.0999  4:#34     = 993.8713m
+ +4:#340    =  43.9609m 4:#341    = 126.7227m 4:#342    = 407.4367m
+ +4:#343    = 407.4364m 4:#344    =   1.1000  4:#345    =   1.0999 
+ +4:#347    =  43.9609m 4:#348    = 126.7227m 4:#349    = 407.4367m
+ +4:#350    = 407.4364m 4:#351    =   1.1000  4:#352    =   1.0999 
+ +4:#354    =   3.6169u 4:#355    =  86.3671m 4:#357    = 256.0283m
+ +4:#358    = 256.0277m 4:#359    =   1.1000  4:#36     =  43.3862u
+ +4:#360    =   1.0999  4:#362    =   3.6169u 4:#363    =  86.3671m
+ +4:#365    = 256.0283m 4:#366    = 256.0277m 4:#367    =   1.1000 
+ +4:#368    =   1.0999  4:#37     =  86.4981m 4:#370    =  43.9609m
+ +4:#371    = 126.7227m 4:#372    = 407.4367m 4:#373    = 407.4364m
+ +4:#374    =   1.1000  4:#375    =   1.0999  4:#377    =  43.9609m
+ +4:#378    = 126.7227m 4:#379    = 407.4367m 4:#380    = 407.4364m
+ +4:#381    =   1.1000  4:#382    =   1.0999  4:#384    =   3.6169u
+ +4:#385    =  86.3671m 4:#387    = 256.0283m 4:#388    = 256.0277m
+ +4:#389    =   1.1000  4:#39     =   1.1000  4:#390    =   1.0999 
+ +4:#392    =   3.6169u 4:#393    =  86.3671m 4:#395    = 256.0283m
+ +4:#396    = 256.0277m 4:#397    =   1.1000  4:#398    =   1.0999 
+ +4:#400    =  43.9609m 4:#401    = 126.7227m 4:#402    = 407.4367m
+ +4:#403    = 407.4364m 4:#404    =   1.1000  4:#405    =   1.0999 
+ +4:#407    =  43.9609m 4:#408    = 126.7227m 4:#409    = 407.4367m
+ +4:#41     =   1.1000  4:#410    = 407.4364m 4:#411    =   1.1000 
+ +4:#412    =   1.0999  4:#414    =   3.6169u 4:#415    =  86.3671m
+ +4:#417    = 256.0283m 4:#418    = 256.0277m 4:#419    =   1.1000 
+ +4:#42     =  86.5388m 4:#420    =   1.0999  4:#422    =   3.6169u
+ +4:#423    =  86.3671m 4:#425    = 256.0283m 4:#426    = 256.0277m
+ +4:#427    =   1.1000  4:#428    =   1.0999  4:#43     = 802.8058m
+ +4:#430    =  43.9609m 4:#431    = 126.7227m 4:#432    = 407.4367m
+ +4:#433    = 407.4364m 4:#434    =   1.1000  4:#435    =   1.0999 
+ +4:#437    =  43.9609m 4:#438    = 126.7227m 4:#439    = 407.4367m
+ +4:#44     = 551.4742m 4:#440    = 407.4364m 4:#441    =   1.1000 
+ +4:#442    =   1.0999  4:#444    =   3.6169u 4:#445    =  86.3671m
+ +4:#447    = 256.0283m 4:#448    = 256.0277m 4:#449    =   1.1000 
+ +4:#45     = 551.4741m 4:#450    =   1.0999  4:#452    =   3.6169u
+ +4:#453    =  86.3671m 4:#455    = 256.0283m 4:#456    = 256.0277m
+ +4:#457    =   1.1000  4:#458    =   1.0999  4:#460    =  43.9609m
+ +4:#461    = 126.7227m 4:#462    = 407.4367m 4:#463    = 407.4364m
+ +4:#464    =   1.1000  4:#465    =   1.0999  4:#467    =  43.9609m
+ +4:#468    = 126.7227m 4:#469    = 407.4367m 4:#47     =   1.0999 
+ +4:#470    = 407.4364m 4:#471    =   1.1000  4:#472    =   1.0999 
+ +4:#474    =   3.6169u 4:#475    =  86.3671m 4:#477    = 256.0283m
+ +4:#478    = 256.0277m 4:#479    =   1.1000  4:#48     =   1.1000 
+ +4:#480    =   1.0999  4:#482    =   3.6169u 4:#483    =  86.3671m
+ +4:#485    = 256.0283m 4:#486    = 256.0277m 4:#487    =   1.1000 
+ +4:#488    =   1.0999  4:#49     =   1.1000  4:#490    =  43.9609m
+ +4:#491    = 126.7227m 4:#492    = 407.4367m 4:#493    = 407.4364m
+ +4:#494    =   1.1000  4:#495    =   1.0999  4:#497    =  43.9609m
+ +4:#498    = 126.7227m 4:#499    = 407.4367m 4:#50     =   1.0999 
+ +4:#500    = 407.4364m 4:#501    =   1.1000  4:#502    =   1.0999 
+ +4:#504    =   3.6169u 4:#505    =  86.3671m 4:#507    = 256.0283m
+ +4:#508    = 256.0277m 4:#509    =   1.1000  4:#510    =   1.0999 
+ +4:#512    =   3.6169u 4:#513    =  86.3671m 4:#515    = 256.0283m
+ +4:#516    = 256.0277m 4:#517    =   1.1000  4:#518    =   1.0999 
+ +4:#52     =   3.6169u 4:#520    =  43.9609m 4:#521    = 126.7227m
+ +4:#522    = 407.4367m 4:#523    = 407.4364m 4:#524    =   1.1000 
+ +4:#525    =   1.0999  4:#527    =  43.9609m 4:#528    = 126.7227m
+ +4:#529    = 407.4367m 4:#53     =  86.3671m 4:#530    = 407.4364m
+ +4:#531    =   1.1000  4:#532    =   1.0999  4:#534    =   3.6169u
+ +4:#535    =  86.3671m 4:#537    = 256.0283m 4:#538    = 256.0277m
+ +4:#539    =   1.1000  4:#540    =   1.0999  4:#542    =   3.6169u
+ +4:#543    =  86.3671m 4:#545    = 256.0283m 4:#546    = 256.0277m
+ +4:#547    =   1.1000  4:#548    =   1.0999  4:#55     = 256.0283m
+ +4:#550    =  43.9609m 4:#551    = 126.7227m 4:#552    = 407.4367m
+ +4:#553    = 407.4364m 4:#554    =   1.1000  4:#555    =   1.0999 
+ +4:#557    =  43.9609m 4:#558    = 126.7227m 4:#559    = 407.4367m
+ +4:#56     = 256.0277m 4:#560    = 407.4364m 4:#561    =   1.1000 
+ +4:#562    =   1.0999  4:#564    =   3.6169u 4:#565    =  86.3666m
+ +4:#567    = 256.0283m 4:#568    = 256.0277m 4:#569    =   1.1000 
+ +4:#570    =   1.0999  4:#572    =   3.6169u 4:#573    =  86.3661m
+ +4:#574    = 256.0283m 4:#575    = 256.0277m 4:#576    =   1.1000 
+ +4:#577    =   1.0999  4:#579    =  43.9611m 4:#58     =   1.1000 
+ +4:#580    = 126.7223m 4:#581    = 407.4371m 4:#582    = 407.4368m
+ +4:#583    =   1.1000  4:#584    =   1.0999  4:#586    =  43.9612m
+ +4:#587    = 126.7220m 4:#588    = 407.4375m 4:#589    = 407.4372m
+ +4:#59     =   1.0999  4:#590    =   1.1000  4:#591    =   1.0999 
+ +4:#593    =  86.3713m 4:#594    =   2.7228u 4:#595    =   1.1000 
+ +4:#597    =  12.2825u 4:#598    =  86.3792m 4:#599    = 820.5727m
+ +4:#600    =  19.6216u 4:#601    =   1.1000  4:#602    =   1.0999 
+ +4:#604    = 105.0988m 4:#605    =  20.3500m 4:#606    =   1.1000 
+ +4:#608    = 255.9121m 4:#609    = 218.3082m 4:#61     =   3.6169u
+ +4:#610    = 898.1022m 4:#611    = 255.9127m 4:#612    =   1.1000 
+ +4:#613    =   1.0999  4:#615    = 255.8236m 4:#616    =   3.1127u
+ +4:#617    = 255.8241m 4:#619    = 255.8235m 4:#62     =  86.3671m
+ +4:#620    =   3.1127u 4:#622    = 255.8241m 4:#624    = 378.3185m
+ +4:#625    =  35.4386m 4:#626    = 378.3188m 4:#628    = 378.3185m
+ +4:#629    =  35.4386m 4:#630    = 378.3188m 4:#632    = 255.8258m
+ +4:#633    =   3.1127u 4:#635    = 255.8264m 4:#637    = 255.8258m
+ +4:#638    =   3.1127u 4:#64     = 256.0283m 4:#640    = 255.8264m
+ +4:#642    = 378.3191m 4:#643    =  35.4382m 4:#644    = 378.3195m
+ +4:#646    = 378.3191m 4:#647    =  35.4382m 4:#648    = 378.3195m
+ +4:#65     = 256.0277m 4:#650    = 255.8258m 4:#651    =   3.1127u
+ +4:#653    = 255.8264m 4:#655    = 255.8258m 4:#656    =   3.1127u
+ +4:#658    = 255.8264m 4:#660    = 378.3191m 4:#661    =  35.4382m
+ +4:#662    = 378.3195m 4:#664    = 378.3191m 4:#665    =  35.4382m
+ +4:#666    = 378.3195m 4:#668    = 255.8258m 4:#669    =   3.1127u
+ +4:#67     =   1.1000  4:#671    = 255.8264m 4:#673    = 255.8258m
+ +4:#674    =   3.1127u 4:#676    = 255.8264m 4:#678    = 378.3191m
+ +4:#679    =  35.4382m 4:#68     =   1.0999  4:#680    = 378.3195m
+ +4:#682    = 378.3191m 4:#683    =  35.4382m 4:#684    = 378.3195m
+ +4:#686    = 255.8258m 4:#687    =   3.1127u 4:#689    = 255.8264m
+ +4:#691    = 255.8258m 4:#692    =   3.1127u 4:#694    = 255.8264m
+ +4:#696    = 378.3191m 4:#697    =  35.4382m 4:#698    = 378.3195m
+ +4:#7      = 820.5046m 4:#70     =  43.9609m 4:#700    = 378.3191m
+ +4:#701    =  35.4382m 4:#702    = 378.3195m 4:#704    = 255.8258m
+ +4:#705    =   3.1127u 4:#707    = 255.8264m 4:#709    = 255.8258m
+ +4:#71     = 126.7227m 4:#710    =   3.1127u 4:#712    = 255.8264m
+ +4:#714    = 378.3191m 4:#715    =  35.4382m 4:#716    = 378.3195m
+ +4:#718    = 378.3191m 4:#719    =  35.4382m 4:#72     = 407.4367m
+ +4:#720    = 378.3195m 4:#722    = 255.8258m 4:#723    =   3.1127u
+ +4:#725    = 255.8264m 4:#727    = 255.8258m 4:#728    =   3.1127u
+ +4:#73     = 407.4364m 4:#730    = 255.8264m 4:#732    = 378.3191m
+ +4:#733    =  35.4382m 4:#734    = 378.3195m 4:#736    = 378.3191m
+ +4:#737    =  35.4382m 4:#738    = 378.3195m 4:#74     =   1.1000 
+ +4:#740    = 255.8258m 4:#741    =   3.1127u 4:#743    = 255.8264m
+ +4:#745    = 255.8258m 4:#746    =   3.1127u 4:#748    = 255.8264m
+ +4:#75     =   1.0999  4:#750    = 378.3191m 4:#751    =  35.4382m
+ +4:#752    = 378.3195m 4:#754    = 378.3191m 4:#755    =  35.4382m
+ +4:#756    = 378.3195m 4:#758    = 255.8258m 4:#759    =   3.1127u
+ +4:#761    = 255.8264m 4:#763    = 255.8258m 4:#764    =   3.1127u
+ +4:#766    = 255.8264m 4:#768    = 378.3191m 4:#769    =  35.4382m
+ +4:#77     =  43.9609m 4:#770    = 378.3195m 4:#772    = 378.3191m
+ +4:#773    =  35.4382m 4:#774    = 378.3195m 4:#776    = 255.8258m
+ +4:#777    =   3.1127u 4:#779    = 255.8264m 4:#78     = 126.7227m
+ +4:#781    = 255.8258m 4:#782    =   3.1127u 4:#784    = 255.8264m
+ +4:#786    = 378.3191m 4:#787    =  35.4382m 4:#788    = 378.3195m
+ +4:#79     = 407.4366m 4:#790    = 378.3191m 4:#791    =  35.4382m
+ +4:#792    = 378.3195m 4:#794    = 255.8258m 4:#795    =   3.1127u
+ +4:#797    = 255.8264m 4:#799    = 255.8258m 4:#80     = 407.4364m
+ +4:#800    =   3.1127u 4:#802    = 255.8264m 4:#804    = 378.3191m
+ +4:#805    =  35.4382m 4:#806    = 378.3195m 4:#808    = 378.3191m
+ +4:#809    =  35.4382m 4:#81     =   1.1000  4:#810    = 378.3195m
+ +4:#812    = 255.8258m 4:#813    =   3.1127u 4:#815    = 255.8264m
+ +4:#817    = 255.8258m 4:#818    =   3.1127u 4:#82     =   1.0999 
+ +4:#820    = 255.8264m 4:#822    = 378.3191m 4:#823    =  35.4382m
+ +4:#824    = 378.3195m 4:#826    = 378.3191m 4:#827    =  35.4382m
+ +4:#828    = 378.3195m 4:#830    = 255.8258m 4:#831    =   3.1127u
+ +4:#833    = 255.8264m 4:#835    = 255.8258m 4:#836    =   3.1127u
+ +4:#838    = 255.8264m 4:#84     =   3.6169u 4:#840    = 378.3191m
+ +4:#841    =  35.4382m 4:#842    = 378.3195m 4:#844    = 378.3191m
+ +4:#845    =  35.4382m 4:#846    = 378.3195m 4:#85     =  86.3671m
+ +4:#87     = 256.0283m 4:#88     = 256.0277m 4:#89     =   1.1000 
+ +4:#90     =   1.0999  4:#92     =   3.6169u 4:#93     =  86.3671m
+ +4:#95     = 256.0283m 4:#96     = 256.0277m 4:#97     =   1.1000 
+ +4:#977    =   1.0998  4:#978    =   1.7545m 4:#98     =   1.0999 
+ +4:#980    =   1.1000  4:#981    =   1.7546m 4:#983    =   1.0995 
+ +4:#984    = 153.3794u 4:#986    =   1.0990  4:#987    = 372.5434u
+ +4:#989    =   1.0999  4:#990    =  10.6153m 4:#992    =   1.0999 
+ +4:#993    =   1.7546m 4:#995    =   1.0995  4:#996    = 158.9853u
+ +4:#998    =   1.0999  4:#999    =   1.7545m 4:#fb1000#=  12.3089u
+ +4:#fb1003#=  12.3090u 4:#fb1006#=  12.3090u 4:#fb1009#=  12.3089u
+ +4:#fb1012#=  12.3089u 4:#fb1015#=  12.3090u 4:#fb1018#=  12.3090u
+ +4:#fb1021#=  12.3089u 4:#fb1024#=  12.3089u 4:#fb1027#=  12.3090u
+ +4:#fb1030#=  12.3090u 4:#fb1033#=  12.3089u 4:#fb1036#=  12.3089u
+ +4:#fb1039#=  12.3090u 4:#fb1042#=  12.3090u 4:#fb1045#=  12.3089u
+ +4:#fb1048#=  12.3089u 4:#fb1051#=  12.3090u 4:#fb1054#=  12.3090u
+ +4:#fb1057#=  12.3089u 4:#fb1060#=  12.3089u 4:#fb1063#=  12.3090u
+ +4:#fb1066#=  12.3090u 4:#fb1069#=  12.3089u 4:#fb1072#=  12.3089u
+ +4:#fb1075#=  12.3090u 4:#fb1078#=  12.3090u 4:#fb1081#=  12.3089u
+ +4:#fb1084#=  12.3089u 4:#fb1087#=  12.3090u 4:#fb1090#=  12.3090u
+ +4:#fb1093#=  12.3089u 4:#fb1096#=  12.3089u 4:#fb1099#=  12.3090u
+ +4:#fb1102#=  12.3090u 4:#fb1105#=  12.3089u 4:#fb1108#=  12.3089u
+ +4:#fb1111#=  12.3090u 4:#fb1114#=  12.3090u 4:#fb1117#=  12.3089u
+ +4:#fb1120#=  12.3089u 4:#fb1123#=  12.3090u 4:#fb1126#=  12.3090u
+ +4:#fb1129#=  12.3089u 4:#fb1132#=  12.3089u 4:#fb1135#=  12.3090u
+ +4:#fb1138#=  12.3090u 4:#fb1141#=  12.3089u 4:#fb1144#=  12.3089u
+ +4:#fb1147#=  12.3090u 4:#fb1150#=  12.3090u 4:#fb1153#=  12.3089u
+ +4:#fb1156#=  12.3089u 4:#fb1159#=  12.3090u 4:#fb1162#=  12.3090u
+ +4:#fb1165#=  12.3089u 4:#fb1168#=  12.3089u 4:#fb1171#=  12.3090u
+ +4:#fb1174#=  12.3090u 4:#fb1177#=  12.3089u 4:#fb1180#=  12.3089u
+ +4:#fb1183#=  12.3090u 4:#fb1186#=  12.3090u 4:#fb1189#=  12.3089u
+ +4:#fb1192#=  12.3089u 4:#fb1195#=  12.3090u 4:#fb1198#=  12.3090u
+ +4:#fb1201#=  12.3089u 4:#fb1204#=  12.3089u 4:#fb1207#=  12.3090u
+ +4:#fb1210#=  12.3090u 4:#fb1213#=  12.3130u 4:#fb1216#=  12.3122u
+ +4:#fb1219#=  12.3130u 4:#fb1222#=  12.3130u 4:#fb1225#=  12.3128u
+ +4:#fb1228#=  12.3128u 4:#fb1231#=  12.3128u 4:#fb1234#=  12.3128u
+ +4:#fb1237#=  12.3128u 4:#fb1240#=  12.3128u 4:#fb1243#=  12.3128u
+ +4:#fb1246#=  12.3128u 4:#fb1249#=  12.3128u 4:#fb1252#=  12.3128u
+ +4:#fb1255#=  12.3128u 4:#fb1258#=  12.3128u 4:#fb1261#=  12.3128u
+ +4:#fb1264#=  12.3128u 4:#fb1267#=  12.3128u 4:#fb1270#=  12.3128u
+ +4:#fb1273#=  12.3128u 4:#fb1276#=  12.3128u 4:#fb1279#=  12.3128u
+ +4:#fb1282#=  12.3128u 4:#fb1285#=  12.3128u 4:#fb1288#=  12.3128u
+ +4:#fb1291#=  12.3128u 4:#fb1294#=  12.3128u 4:#fb1297#=  12.3128u
+ +4:#fb1300#=  12.3128u 4:#fb1303#=  12.3128u 4:#fb1306#=  12.3128u
+ +4:#fb1309#=  12.3128u 4:#fb1312#=  12.3128u 4:#fb1315#=  12.3128u
+ +4:#fb1318#=  12.3128u 4:#fb1321#=  12.3128u 4:#fb1324#=  12.3128u
+ +4:#fb1327#=  12.3128u 4:#fb1330#=  12.3128u 4:#fb1333#=  12.3128u
+ +4:#fb1336#=  12.3128u 4:#fb1339#=  12.3128u 4:#fb1342#=  12.3128u
+ +4:#fb1345#=  12.3128u 4:#fb1348#=  12.3128u 4:#fb1351#=  12.3128u
+ +4:#fb1354#=  12.3128u 4:#fb1357#=  12.3128u 4:#fb1360#=  12.3128u
+ +4:#fb1363#=  12.3128u 4:#fb1366#=  12.3128u 4:#fb1369#=  12.3128u
+ +4:#fb1372#=  12.3128u 4:#fb1375#=  12.3128u 4:#fb1378#=  12.3128u
+ +4:#fb976# =  12.3056u 4:#fb979# =  12.3152u 4:#fb982# =   1.1000 
+ +4:#fb985# =   1.1000  4:#fb988# =  12.3124u 4:#fb991# =  12.3124u
+ +4:#fb994# =   1.1000  4:#fb997# =  12.3089u 4:a       = 175.1823u
+ +4:inv__a  =   1.1000  4:inv__i__=   1.1000  4:inv__i__=   1.1000 
+ +4:inv__i__=   1.1000  4:inv__p  =  14.7339u 4:inv__res=  14.9399u
+ +4:inv__s  =  22.0650u 4:inv__w__=   1.1000  4:inv__w__=   1.1000 
+ +4:inv__w__=   1.0999  4:n__i__a =   1.0999  4:n__o0__f=   1.0999 
+ +4:n__o0__f=   1.0999  4:n__o0__f=   1.0999  4:n__o0__f=   1.0999 
+ +4:n__o0__f=   1.0999  4:n__o0__f=   1.0999  4:n__o0__f=   1.0999 
+ +4:n__o0__f=   1.0999  4:n__o0__f=   1.0999  4:n__o0__f=   1.0999 
+ +4:n__o0__f=   1.0999  4:n__o0__f=   1.0999  4:n__o0__f=   1.0999 
+ +4:n__o0__f=   1.0999  4:n__o0__f=   1.0999  4:n__o0__f=   1.0999 
+ +4:n__o0__f=   1.0999  4:n__o0__f=   1.0999  4:n__o0__f=   1.0999 
+ +4:n__o0__f=   1.0999  4:n__o0__f=   1.0999  4:n__o0__f=   1.0999 
+ +4:n__o0__f=   1.0999  4:n__o0__f=   1.0999  4:n__o0__f=   1.0999 
+ +4:n__o0__f=   1.0999  4:n__o0__f=   1.0999  4:n__o0__f=   1.0999 
+ +4:n__o0__f=   1.0999  4:n__o0__f=   1.0999  4:n__o0__f=   1.0999 
+ +4:n__o0__f=   1.0999  4:n__o0__t=   1.0999  4:n__o0__t=   1.0999 
+ +4:n__o0__t=   1.0999  4:n__o0__t=   1.0999  4:n__o0__t=   1.0999 
+ +4:n__o0__t=   1.0999  4:n__o0__t=   1.0999  4:n__o0__t=   1.0999 
+ +4:n__o0__t=   1.0999  4:n__o0__t=   1.0999  4:n__o0__t=   1.0999 
+ +4:n__o0__t=   1.0999  4:n__o0__t=   1.0999  4:n__o0__t=   1.0999 
+ +4:n__o0__t=   1.0999  4:n__o0__t=   1.0999  4:n__o0__t=   1.0999 
+ +4:n__o0__t=   1.0999  4:n__o0__t=   1.0999  4:n__o0__t=   1.0999 
+ +4:n__o0__t=   1.0999  4:n__o0__t=   1.0999  4:n__o0__t=   1.0999 
+ +4:n__o0__t=   1.0999  4:n__o0__t=   1.0999  4:n__o0__t=   1.0999 
+ +4:n__o0__t=   1.0999  4:n__o0__t=   1.0999  4:n__o0__t=   1.0999 
+ +4:n__o0__t=   1.0999  4:n__o0__t=   1.0999  4:n__o0__t=   1.0999 
+ +4:n__o1__f=   1.0999  4:n__o1__f=   1.0999  4:n__o1__f=   1.0999 
+ +4:n__o1__f=   1.0999  4:n__o1__f=   1.0999  4:n__o1__f=   1.0999 
+ +4:n__o1__f=   1.0999  4:n__o1__f=   1.0999  4:n__o1__f=   1.0999 
+ +4:n__o1__f=   1.0999  4:n__o1__f=   1.0999  4:n__o1__f=   1.0999 
+ +4:n__o1__f=   1.0999  4:n__o1__f=   1.0999  4:n__o1__f=   1.0999 
+ +4:n__o1__f=   1.0999  4:n__o1__f=   1.0999  4:n__o1__f=   1.0999 
+ +4:n__o1__f=   1.0999  4:n__o1__f=   1.0999  4:n__o1__f=   1.0999 
+ +4:n__o1__f=   1.0999  4:n__o1__f=   1.0999  4:n__o1__f=   1.0999 
+ +4:n__o1__f=   1.0999  4:n__o1__f=   1.0999  4:n__o1__f=   1.0999 
+ +4:n__o1__f=   1.0999  4:n__o1__f=   1.0999  4:n__o1__f=   1.0999 
+ +4:n__o1__f=   1.0999  4:n__o1__f=   1.0999  4:n__o1__t=   1.0999 
+ +4:n__o1__t=   1.0999  4:n__o1__t=   1.0999  4:n__o1__t=   1.0999 
+ +4:n__o1__t=   1.0999  4:n__o1__t=   1.0999  4:n__o1__t=   1.0999 
+ +4:n__o1__t=   1.0999  4:n__o1__t=   1.0999  4:n__o1__t=   1.0999 
+ +4:n__o1__t=   1.0999  4:n__o1__t=   1.0999  4:n__o1__t=   1.0999 
+ +4:n__o1__t=   1.0999  4:n__o1__t=   1.0999  4:n__o1__t=   1.0999 
+ +4:n__o1__t=   1.0999  4:n__o1__t=   1.0999  4:n__o1__t=   1.0999 
+ +4:n__o1__t=   1.0999  4:n__o1__t=   1.0999  4:n__o1__t=   1.0999 
+ +4:n__o1__t=   1.0999  4:n__o1__t=   1.0999  4:n__o1__t=   1.0999 
+ +4:n__o1__t=   1.0999  4:n__o1__t=   1.0999  4:n__o1__t=   1.0999 
+ +4:n__o1__t=   1.0999  4:n__o1__t=   1.0999  4:n__o1__t=   1.0999 
+ +4:n__o1__t=   1.0999  4:p       =   1.0998  4:s       =   1.1000 
+ +4:w__0    =  86.6801u 4:w__0i   =  36.6641u 4:w__1    =  15.2792u
+ +5:#100    =  11.9604m 5:#1001   =   1.0999  5:#1002   = 458.5839u
+ +5:#1004   =   1.0999  5:#1005   = 458.5839u 5:#1007   =   1.0998 
+ +5:#1008   = 240.0510u 5:#1010   =   1.0998  5:#1011   = 240.0510u
+ +5:#1013   =   1.0999  5:#1014   = 458.5839u 5:#1016   =   1.0999 
+ +5:#1017   = 458.5839u 5:#1019   =   1.0998  5:#1020   = 240.0510u
+ +5:#1022   =   1.0998  5:#1023   = 240.0510u 5:#1025   =   1.0999 
+ +5:#1026   = 458.5839u 5:#1028   =   1.0999  5:#1029   = 458.5839u
+ +5:#1031   =   1.0998  5:#1032   = 240.0510u 5:#1034   =   1.0998 
+ +5:#1035   = 240.0510u 5:#1037   =   1.0999  5:#1038   = 458.5839u
+ +5:#1040   =   1.0999  5:#1041   = 458.5839u 5:#1043   =   1.0998 
+ +5:#1044   = 240.0510u 5:#1046   =   1.0998  5:#1047   = 240.0510u
+ +5:#1049   =   1.0999  5:#1050   = 458.5839u 5:#1052   =   1.0999 
+ +5:#1053   = 458.5839u 5:#1055   =   1.0998  5:#1056   = 240.0510u
+ +5:#1058   =   1.0998  5:#1059   = 240.0510u 5:#1061   =   1.0999 
+ +5:#1062   = 458.5839u 5:#1064   =   1.0999  5:#1065   = 458.5839u
+ +5:#1067   =   1.0998  5:#1068   = 240.0510u 5:#1070   =   1.0998 
+ +5:#1071   = 240.0510u 5:#1073   =   1.0999  5:#1074   = 458.5839u
+ +5:#1076   =   1.0999  5:#1077   = 458.5839u 5:#1079   =   1.0998 
+ +5:#1080   = 240.0510u 5:#1082   =   1.0998  5:#1083   = 240.0510u
+ +5:#1085   =   1.0999  5:#1086   = 458.5839u 5:#1088   =   1.0999 
+ +5:#1089   = 458.5839u 5:#109    =   1.0997  5:#1091   =   1.0998 
+ +5:#1092   = 240.0510u 5:#1094   =   1.0998  5:#1095   = 240.0510u
+ +5:#1097   =   1.0999  5:#1098   = 458.5839u 5:#110    =   1.0998 
+ +5:#1100   =   1.0999  5:#1101   = 458.5839u 5:#1103   =   1.0998 
+ +5:#1104   = 240.0510u 5:#1106   =   1.0998  5:#1107   = 240.0510u
+ +5:#1109   =   1.0999  5:#111    =   1.0999  5:#1110   = 458.5839u
+ +5:#1112   =   1.0999  5:#1113   = 458.5839u 5:#1115   =   1.0998 
+ +5:#1116   = 240.0985u 5:#1118   =   1.0998  5:#1119   = 240.1013u
+ +5:#112    =   1.1000  5:#1121   =   1.0999  5:#1122   = 458.5839u
+ +5:#1124   =   1.0999  5:#1125   = 458.5839u 5:#1127   =   1.0998 
+ +5:#1128   = 240.0987u 5:#113    =   1.0999  5:#1130   =   1.0998 
+ +5:#1131   = 240.0987u 5:#1133   =   1.0999  5:#1134   = 458.5839u
+ +5:#1136   =   1.0999  5:#1137   = 458.5839u 5:#1139   =   1.0998 
+ +5:#114    =   1.0998  5:#1140   = 240.0987u 5:#1142   =   1.0998 
+ +5:#1143   = 240.0987u 5:#1145   =   1.0999  5:#1146   = 458.5839u
+ +5:#1148   =   1.0999  5:#1149   = 458.5839u 5:#115    =   1.0997 
+ +5:#1151   =   1.0998  5:#1152   = 240.0987u 5:#1154   =   1.0998 
+ +5:#1155   = 240.0987u 5:#1157   =   1.0999  5:#1158   = 458.5839u
+ +5:#1160   =   1.0999  5:#1161   = 458.5839u 5:#1163   =   1.0998 
+ +5:#1164   = 240.0987u 5:#1166   =   1.0998  5:#1167   = 240.0987u
+ +5:#1169   =   1.0999  5:#117    = 116.0013m 5:#1170   = 458.5839u
+ +5:#1172   =   1.0999  5:#1173   = 458.5839u 5:#1175   =   1.0998 
+ +5:#1176   = 240.0987u 5:#1178   =   1.0998  5:#1179   = 240.0987u
+ +5:#118    =  32.1840m 5:#1181   =   1.0999  5:#1182   = 458.5839u
+ +5:#1184   =   1.0999  5:#1185   = 458.5839u 5:#1187   =   1.0998 
+ +5:#1188   = 240.0987u 5:#119    =  11.9604m 5:#1190   =   1.0998 
+ +5:#1191   = 240.0987u 5:#1193   =   1.0999  5:#1194   = 458.5839u
+ +5:#1196   =   1.0999  5:#1197   = 458.5839u 5:#1199   =   1.0998 
+ +5:#1200   = 240.0987u 5:#1202   =   1.0998  5:#1203   = 240.0987u
+ +5:#1205   =   1.0999  5:#1206   = 458.5839u 5:#1208   =   1.0999 
+ +5:#1209   = 458.5839u 5:#1211   =   1.0998  5:#1212   = 240.0987u
+ +5:#1214   =   1.0998  5:#1215   = 240.0987u 5:#1217   =   1.0999 
+ +5:#1218   = 458.5839u 5:#1220   =   1.0999  5:#1221   = 458.5839u
+ +5:#1223   =   1.0998  5:#1224   = 240.0987u 5:#1226   =   1.0998 
+ +5:#1227   = 240.0987u 5:#1229   =   1.0999  5:#1230   = 458.5839u
+ +5:#1232   =   1.0999  5:#1233   = 458.5839u 5:#1235   =   1.0998 
+ +5:#1236   = 240.0987u 5:#1238   =   1.0998  5:#1239   = 240.0987u
+ +5:#1241   =   1.0999  5:#1242   = 458.5839u 5:#1244   =   1.0999 
+ +5:#1245   = 458.5839u 5:#1247   =   1.0998  5:#1248   = 240.0987u
+ +5:#1250   =   1.0998  5:#1251   = 240.0987u 5:#1253   =   1.0999 
+ +5:#1254   = 458.5839u 5:#1256   =   1.0999  5:#1257   = 458.5839u
+ +5:#1259   =   1.0998  5:#1260   = 240.0987u 5:#1262   =   1.0998 
+ +5:#1263   = 240.0987u 5:#1265   =   1.0999  5:#1266   = 458.5839u
+ +5:#1268   =   1.0999  5:#1269   = 458.5839u 5:#1271   =   1.0998 
+ +5:#1272   = 240.0987u 5:#1274   =   1.0998  5:#1275   = 240.0987u
+ +5:#1277   =   1.0999  5:#1278   = 458.5839u 5:#128    =   1.0997 
+ +5:#1280   =   1.0999  5:#1281   = 458.5839u 5:#1283   =   1.0998 
+ +5:#1284   = 240.0987u 5:#1286   =   1.0998  5:#1287   = 240.0987u
+ +5:#1289   =   1.0999  5:#129    =   1.0998  5:#1290   = 458.5839u
+ +5:#1292   =   1.0999  5:#1293   = 458.5839u 5:#1295   =   1.0998 
+ +5:#1296   = 240.0987u 5:#1298   =   1.0998  5:#1299   = 240.0987u
+ +5:#130    =   1.0999  5:#1301   =   1.0999  5:#1302   = 458.5839u
+ +5:#1304   =   1.0999  5:#1305   = 458.5839u 5:#1307   =   1.0998 
+ +5:#1308   = 240.0987u 5:#131    =   1.1000  5:#1310   =   1.0998 
+ +5:#1311   = 240.0987u 5:#1313   =   1.0999  5:#1314   = 458.5839u
+ +5:#1316   =   1.0999  5:#1317   = 458.5839u 5:#1319   =   1.0998 
+ +5:#132    =   1.0999  5:#1320   = 240.0987u 5:#1322   =   1.0998 
+ +5:#1323   = 240.0987u 5:#1325   =   1.0999  5:#1326   = 458.5839u
+ +5:#1328   =   1.0999  5:#1329   = 458.5839u 5:#133    =   1.0998 
+ +5:#1331   =   1.0998  5:#1332   = 240.9281u 5:#1334   =   1.0998 
+ +5:#1335   = 241.6395u 5:#134    =   1.0997  5:#136    = 116.0013m
+ +5:#137    =  32.1840m 5:#138    =  11.9604m 5:#14     =   1.0997 
+ +5:#147    =   1.0997  5:#148    =   1.0998  5:#149    =   1.0999 
+ +5:#15     =   1.0998  5:#150    =   1.1000  5:#151    =   1.0999 
+ +5:#152    =   1.0998  5:#153    =   1.0997  5:#155    = 993.8754m
+ +5:#156    =  86.1962u 5:#158    = 993.8752m 5:#159    =  85.3583u
+ +5:#16     =   1.0999  5:#161    = 993.8754m 5:#162    =  86.1962u
+ +5:#164    = 993.8752m 5:#165    =  85.3583u 5:#167    =  86.4311m
+ +5:#168    =   1.0999  5:#17     =   1.1000  5:#170    =  86.4312m
+ +5:#171    =   1.0999  5:#173    = 993.8787m 5:#174    =  85.3373u
+ +5:#176    = 261.7850m 5:#18     =   1.0999  5:#180    =   8.5030m
+ +5:#181    = 123.6822m 5:#182    =  40.5824m 5:#183    =  20.4273m
+ +5:#184    =   1.0997  5:#185    =   1.0998  5:#186    =   1.0998 
+ +5:#187    =   1.0999  5:#188    =   1.1000  5:#189    =   1.0999 
+ +5:#19     =   1.0998  5:#190    =   1.0998  5:#191    =   1.0997 
+ +5:#192    =   1.0996  5:#194    = 123.6822m 5:#195    =  40.5824m
+ +5:#196    =  20.4273m 5:#197    =   8.5030m 5:#198    =   1.0997 
+ +5:#199    =   1.0998  5:#20     =   1.0997  5:#200    =   1.0998 
+ +5:#201    =   1.0999  5:#202    =   1.1000  5:#203    =   1.0999 
+ +5:#204    =   1.0998  5:#205    =   1.0997  5:#206    =   1.0996 
+ +5:#208    = 123.6822m 5:#209    =  40.5824m 5:#210    =  20.4273m
+ +5:#211    =   8.5030m 5:#212    =   1.0997  5:#213    =   1.0998 
+ +5:#214    =   1.0998  5:#215    =   1.0999  5:#216    =   1.1000 
+ +5:#217    =   1.0999  5:#218    =   1.0998  5:#219    =   1.0997 
+ +5:#22     = 116.0013m 5:#220    =   1.0996  5:#222    = 116.0027m
+ +5:#223    =  32.1841m 5:#224    =  11.9605m 5:#225    =   1.0997 
+ +5:#226    =   1.0998  5:#227    =   1.0999  5:#228    =   1.1000 
+ +5:#229    =   1.0999  5:#23     =  32.1840m 5:#230    =   1.0998 
+ +5:#231    =   1.0997  5:#233    = 993.9071m 5:#234    =  86.1974u
+ +5:#236    = 993.8748m 5:#237    =  85.3582u 5:#239    =  86.4326m
+ +5:#24     =  11.9604m 5:#240    =   1.0999  5:#247    = 559.0781u
+ +5:#248    = 445.9016u 5:#249    = 315.0035u 5:#250    = 166.3735u
+ +5:#251    =  85.4055u 5:#253    = 242.9057u 5:#255    = 382.6683u
+ +5:#257    = 504.7044u 5:#259    = 609.0237u 5:#267    = 559.0781u
+ +5:#268    = 445.9015u 5:#269    = 315.0035u 5:#270    = 166.3735u
+ +5:#271    =  85.4055u 5:#273    = 242.9057u 5:#275    = 382.6683u
+ +5:#277    = 504.7044u 5:#279    = 609.0236u 5:#287    = 559.0781u
+ +5:#288    = 445.9016u 5:#289    = 315.0035u 5:#290    = 166.3735u
+ +5:#291    =  85.4055u 5:#293    = 242.9057u 5:#295    = 382.6683u
+ +5:#297    = 504.7044u 5:#299    = 609.0237u 5:#3      = 116.0013m
+ +5:#306    = 406.3723u 5:#307    = 288.6542u 5:#308    = 153.2004u
+ +5:#309    =  78.8192u 5:#311    = 223.1449u 5:#313    = 349.7296u
+ +5:#315    = 458.5834u 5:#318    =   1.0999  5:#320    =   1.0999 
+ +5:#322    =  32.4055u 5:#324    =   1.0999  5:#325    =   1.1000 
+ +5:#329    = 820.5664m 5:#33     =   1.0997  5:#330    =   7.8389u
+ +5:#332    =   1.1000  5:#333    = 261.6725m 5:#335    =   1.0103 
+ +5:#336    =  87.9751u 5:#34     =   1.0998  5:#340    =  86.4240m
+ +5:#341    =   1.0999  5:#342    =   1.1000  5:#344    =   1.0999 
+ +5:#346    =  86.4240m 5:#347    =   1.0999  5:#348    =   1.1000 
+ +5:#349    =   1.0999  5:#35     =   1.0999  5:#350    =   1.1000 
+ +5:#351    =   1.1000  5:#352    =   1.1000  5:#353    = 255.9657m
+ +5:#354    = 898.4329m 5:#355    = 255.9663m 5:#357    = 858.4673m
+ +5:#358    = 828.0259m 5:#359    =  66.1571m 5:#36     =   1.1000 
+ +5:#363    =   1.1000  5:#364    =   1.1000  5:#365    =   1.1000 
+ +5:#366    =  86.4342m 5:#368    = 823.1004m 5:#369    = 790.2037m
+ +5:#37     =   1.0999  5:#370    =   6.8999u 5:#371    =   1.1000 
+ +5:#372    =   1.1000  5:#374    =  86.4261m 5:#375    =   2.7226u
+ +5:#377    =  86.4261m 5:#378    =   2.7226u 5:#38     =   1.0998 
+ +5:#380    = 972.5026m 5:#381    =   1.0762  5:#384    = 972.5026m
+ +5:#385    =   1.0762  5:#388    =  86.4261m 5:#389    =   2.7226u
+ +5:#39     =   1.0997  5:#391    =  86.4261m 5:#392    =   2.7226u
+ +5:#394    = 972.5025m 5:#395    =   1.0762  5:#398    = 972.5025m
+ +5:#399    =   1.0762  5:#4      =  32.1840m 5:#402    =  86.4261m
+ +5:#403    =   2.7226u 5:#405    =  86.4261m 5:#406    =   2.7226u
+ +5:#408    = 972.5025m 5:#409    =   1.0762  5:#41     = 116.0013m
+ +5:#412    = 972.5025m 5:#413    =   1.0762  5:#416    =  86.4261m
+ +5:#417    =   2.7226u 5:#419    =  86.4261m 5:#42     =  32.1840m
+ +5:#420    =   2.7226u 5:#422    = 972.5025m 5:#423    =   1.0762 
+ +5:#426    = 972.5025m 5:#427    =   1.0762  5:#43     =  11.9604m
+ +5:#430    =  86.4261m 5:#431    =   2.7226u 5:#433    =  86.4261m
+ +5:#434    =   2.7226u 5:#436    = 972.5025m 5:#437    =   1.0762 
+ +5:#440    = 972.5025m 5:#441    =   1.0762  5:#444    =  86.4261m
+ +5:#445    =   2.7226u 5:#447    =  86.4261m 5:#448    =   2.7226u
+ +5:#450    = 972.5025m 5:#451    =   1.0762  5:#454    = 972.5025m
+ +5:#455    =   1.0762  5:#458    =  86.4261m 5:#459    =   2.7226u
+ +5:#461    =  86.4261m 5:#462    =   2.7226u 5:#464    = 972.5025m
+ +5:#465    =   1.0762  5:#468    = 972.5025m 5:#469    =   1.0762 
+ +5:#472    =  86.4261m 5:#473    =   2.7226u 5:#475    =  86.4261m
+ +5:#476    =   2.7226u 5:#478    = 972.5025m 5:#479    =   1.0762 
+ +5:#482    = 972.5025m 5:#483    =   1.0762  5:#486    =  86.4261m
+ +5:#487    =   2.7226u 5:#489    =  86.4261m 5:#490    =   2.7226u
+ +5:#492    = 972.5025m 5:#493    =   1.0762  5:#496    = 972.5025m
+ +5:#497    =   1.0762  5:#5      =  11.9604m 5:#500    =  86.4261m
+ +5:#501    =   2.7226u 5:#503    =  86.4261m 5:#504    =   2.7226u
+ +5:#506    = 972.5025m 5:#507    =   1.0762  5:#510    = 972.5025m
+ +5:#511    =   1.0762  5:#514    =  86.4261m 5:#515    =   2.7226u
+ +5:#517    =  86.4261m 5:#518    =   2.7226u 5:#52     =   1.0997 
+ +5:#520    = 972.5025m 5:#521    =   1.0762  5:#524    = 972.5025m
+ +5:#525    =   1.0762  5:#528    =  86.4261m 5:#529    =   2.7226u
+ +5:#53     =   1.0998  5:#531    =  86.4261m 5:#532    =   2.7226u
+ +5:#534    = 972.5025m 5:#535    =   1.0762  5:#538    = 972.5025m
+ +5:#539    =   1.0762  5:#54     =   1.0999  5:#542    =  86.4261m
+ +5:#543    =   2.7226u 5:#545    =  86.4261m 5:#546    =   2.7226u
+ +5:#548    = 972.5025m 5:#549    =   1.0762  5:#55     =   1.1000 
+ +5:#552    = 972.5025m 5:#553    =   1.0762  5:#556    =  86.4261m
+ +5:#557    =   2.7226u 5:#559    =  86.4261m 5:#56     =   1.0999 
+ +5:#560    =   2.7226u 5:#562    = 972.4959m 5:#563    =   1.0762 
+ +5:#565    = 972.4959m 5:#566    =   1.0762  5:#568    =  86.4261m
+ +5:#569    =   2.7226u 5:#57     =   1.0998  5:#571    =  86.4261m
+ +5:#572    =   2.7226u 5:#574    = 972.4959m 5:#575    =   1.0762 
+ +5:#577    = 972.4959m 5:#578    =   1.0762  5:#58     =   1.0997 
+ +5:#580    =  86.4261m 5:#581    =   2.7226u 5:#583    =  86.4261m
+ +5:#584    =   2.7226u 5:#586    = 972.4959m 5:#587    =   1.0762 
+ +5:#589    = 972.4959m 5:#590    =   1.0762  5:#592    =  86.4261m
+ +5:#593    =   2.7226u 5:#595    =  86.4261m 5:#596    =   2.7226u
+ +5:#598    = 972.4959m 5:#599    =   1.0762  5:#60     = 116.0013m
+ +5:#601    = 972.4959m 5:#602    =   1.0762  5:#604    =  86.4261m
+ +5:#605    =   2.7226u 5:#607    =  86.4261m 5:#608    =   2.7226u
+ +5:#61     =  32.1840m 5:#610    = 972.4959m 5:#611    =   1.0762 
+ +5:#613    = 972.4959m 5:#614    =   1.0762  5:#616    =  86.4261m
+ +5:#617    =   2.7226u 5:#619    =  86.4261m 5:#62     =  11.9604m
+ +5:#620    =   2.7226u 5:#622    = 972.4959m 5:#623    =   1.0762 
+ +5:#625    = 972.4959m 5:#626    =   1.0762  5:#628    =  86.4261m
+ +5:#629    =   2.7226u 5:#631    =  86.4261m 5:#632    =   2.7226u
+ +5:#634    = 972.4959m 5:#635    =   1.0762  5:#637    = 972.4959m
+ +5:#638    =   1.0762  5:#640    =  86.4261m 5:#641    =   2.7226u
+ +5:#643    =  86.4261m 5:#644    =   2.7226u 5:#646    = 972.4959m
+ +5:#647    =   1.0762  5:#649    = 972.4959m 5:#650    =   1.0762 
+ +5:#652    =  86.4261m 5:#653    =   2.7226u 5:#655    =  86.4261m
+ +5:#656    =   2.7226u 5:#658    = 972.4959m 5:#659    =   1.0762 
+ +5:#661    = 972.4959m 5:#662    =   1.0762  5:#664    =  86.4261m
+ +5:#665    =   2.7226u 5:#667    =  86.4261m 5:#668    =   2.7226u
+ +5:#670    = 972.4959m 5:#671    =   1.0762  5:#673    = 972.4959m
+ +5:#674    =   1.0762  5:#676    =  86.4261m 5:#677    =   2.7226u
+ +5:#679    =  86.4261m 5:#680    =   2.7226u 5:#682    = 972.4959m
+ +5:#683    =   1.0762  5:#685    = 972.4959m 5:#686    =   1.0762 
+ +5:#688    =  86.4261m 5:#689    =   2.7226u 5:#691    =  86.4261m
+ +5:#692    =   2.7226u 5:#694    = 972.4959m 5:#695    =   1.0762 
+ +5:#697    = 972.4959m 5:#698    =   1.0762  5:#700    =  86.4261m
+ +5:#701    =   2.7226u 5:#703    =  86.4261m 5:#704    =   2.7226u
+ +5:#706    = 972.4959m 5:#707    =   1.0762  5:#709    = 972.4959m
+ +5:#71     =   1.0997  5:#710    =   1.0762  5:#712    =  86.4261m
+ +5:#713    =   2.7226u 5:#715    =  86.4261m 5:#716    =   2.7226u
+ +5:#718    = 972.4959m 5:#719    =   1.0762  5:#72     =   1.0998 
+ +5:#721    = 972.4959m 5:#722    =   1.0762  5:#724    =  86.4261m
+ +5:#725    =   2.7226u 5:#727    =  86.4261m 5:#728    =   2.7226u
+ +5:#73     =   1.0999  5:#730    = 972.4959m 5:#731    =   1.0762 
+ +5:#733    = 972.4959m 5:#734    =   1.0762  5:#736    =  86.4261m
+ +5:#737    =   2.7226u 5:#739    =  86.4261m 5:#74     =   1.1000 
+ +5:#740    =   2.7226u 5:#742    = 972.4959m 5:#743    =   1.0762 
+ +5:#745    = 972.4959m 5:#746    =   1.0762  5:#748    =  86.4261m
+ +5:#749    =   2.7226u 5:#75     =   1.0999  5:#751    =  86.4261m
+ +5:#752    =   2.7226u 5:#754    = 972.4959m 5:#755    =   1.0762 
+ +5:#757    = 972.4959m 5:#758    =   1.0762  5:#76     =   1.0998 
+ +5:#760    =  86.4261m 5:#761    =   2.7226u 5:#763    =  86.4261m
+ +5:#764    =   2.7226u 5:#766    = 972.4959m 5:#767    =   1.0762 
+ +5:#769    = 972.4959m 5:#77     =   1.0997  5:#770    =   1.0762 
+ +5:#772    =  86.4261m 5:#773    =   2.7226u 5:#775    =  86.4261m
+ +5:#776    =   2.7226u 5:#778    = 972.4960m 5:#779    =   1.0762 
+ +5:#781    = 972.4960m 5:#782    =   1.0762  5:#79     = 116.0013m
+ +5:#80     =  32.1840m 5:#81     =  11.9604m 5:#851    =   1.0996 
+ +5:#852    =  26.9591m 5:#854    =   1.0996  5:#855    =  26.9591m
+ +5:#857    =   1.0996  5:#858    =  26.9591m 5:#860    =   1.0996 
+ +5:#861    =  26.9591m 5:#863    =   1.0996  5:#864    =  26.9591m
+ +5:#866    =   1.0996  5:#867    =  26.9591m 5:#869    =   1.0996 
+ +5:#870    =  26.9591m 5:#872    =   1.0996  5:#873    =  26.9591m
+ +5:#875    =   1.0995  5:#876    = 236.3228u 5:#878    =   1.0995 
+ +5:#879    = 234.7283u 5:#881    =   1.0995  5:#882    = 236.3228u
+ +5:#884    =   1.0995  5:#885    = 234.7283u 5:#887    =   1.0999 
+ +5:#888    =   1.7545m 5:#890    =   1.0999  5:#891    =   1.7545m
+ +5:#893    =   1.0995  5:#894    = 234.6825u 5:#896    =   1.0998 
+ +5:#897    = 122.4658u 5:#899    =   1.0996  5:#90     =   1.0997 
+ +5:#900    =  42.1484m 5:#902    =   1.0996  5:#903    =  42.1484m
+ +5:#905    =   1.0996  5:#906    =  42.1484m 5:#908    =   1.0997 
+ +5:#909    =  26.9591m 5:#91     =   1.0998  5:#911    =   1.0995 
+ +5:#912    = 236.3239u 5:#914    =   1.0995  5:#915    = 234.7289u
+ +5:#917    =   1.0999  5:#918    =   1.7545m 5:#92     =   1.0999 
+ +5:#920    =   1.0974  5:#921    = 627.1614u 5:#923    =   1.0974 
+ +5:#924    = 627.1614u 5:#926    =   1.0974  5:#927    = 627.1614u
+ +5:#929    =   1.0979  5:#93     =   1.1000  5:#930    = 493.1572u
+ +5:#932    =   1.0999  5:#933    =   3.8794m 5:#935    =   1.0995 
+ +5:#936    = 245.7152u 5:#938    =   1.1000  5:#939    =   6.8331m
+ +5:#94     =   1.0999  5:#941    =   1.0999  5:#942    =   6.8331m
+ +5:#944    =   1.1000  5:#945    =   1.7546m 5:#947    =   1.0999 
+ +5:#948    =   6.8331m 5:#95     =   1.0998  5:#950    =   1.1000 
+ +5:#951    =   6.8331m 5:#953    =   1.0999  5:#954    = 458.5839u
+ +5:#956    =   1.0999  5:#957    = 458.5839u 5:#959    =   1.0998 
+ +5:#96     =   1.0997  5:#960    = 240.9129u 5:#962    =   1.0998 
+ +5:#963    = 240.9356u 5:#965    =   1.0999  5:#966    = 458.5839u
+ +5:#968    =   1.0999  5:#969    = 458.5839u 5:#971    =   1.0998 
+ +5:#972    = 240.0510u 5:#974    =   1.0998  5:#975    = 240.0510u
+ +5:#977    =   1.0999  5:#978    = 458.5839u 5:#98     = 116.0013m
+ +5:#980    =   1.0999  5:#981    = 458.5839u 5:#983    =   1.0998 
+ +5:#984    = 240.0510u 5:#986    =   1.0998  5:#987    = 240.0510u
+ +5:#989    =   1.0999  5:#99     =  32.1840m 5:#990    = 458.5839u
+ +5:#992    =   1.0999  5:#993    = 458.5839u 5:#995    =   1.0998 
+ +5:#996    = 240.0510u 5:#998    =   1.0998  5:#999    = 240.0510u
+ +5:#fb1000#=  12.3129u 5:#fb1003#=  12.3129u 5:#fb1006#=   1.1000 
+ +5:#fb1009#=   1.1000  5:#fb1012#=  12.3129u 5:#fb1015#=  12.3129u
+ +5:#fb1018#=   1.1000  5:#fb1021#=   1.1000  5:#fb1024#=  12.3129u
+ +5:#fb1027#=  12.3129u 5:#fb1030#=   1.1000  5:#fb1033#=   1.1000 
+ +5:#fb1036#=  12.3129u 5:#fb1039#=  12.3129u 5:#fb1042#=   1.1000 
+ +5:#fb1045#=   1.1000  5:#fb1048#=  12.3129u 5:#fb1051#=  12.3129u
+ +5:#fb1054#=   1.1000  5:#fb1057#=   1.1000  5:#fb1060#=  12.3129u
+ +5:#fb1063#=  12.3129u 5:#fb1066#=   1.1000  5:#fb1069#=   1.1000 
+ +5:#fb1072#=  12.3129u 5:#fb1075#=  12.3129u 5:#fb1078#=   1.1000 
+ +5:#fb1081#=   1.1000  5:#fb1084#=  12.3129u 5:#fb1087#=  12.3129u
+ +5:#fb1090#=   1.1000  5:#fb1093#=   1.1000  5:#fb1096#=  12.3129u
+ +5:#fb1099#=  12.3129u 5:#fb1102#=   1.1000  5:#fb1105#=   1.1000 
+ +5:#fb1108#=  12.3129u 5:#fb1111#=  12.3129u 5:#fb1114#=   1.1000 
+ +5:#fb1117#=   1.1000  5:#fb1120#=  12.3129u 5:#fb1123#=  12.3129u
+ +5:#fb1126#=   1.1000  5:#fb1129#=   1.1000  5:#fb1132#=  12.3129u
+ +5:#fb1135#=  12.3129u 5:#fb1138#=   1.1000  5:#fb1141#=   1.1000 
+ +5:#fb1144#=  12.3129u 5:#fb1147#=  12.3129u 5:#fb1150#=   1.1000 
+ +5:#fb1153#=   1.1000  5:#fb1156#=  12.3129u 5:#fb1159#=  12.3129u
+ +5:#fb1162#=   1.1000  5:#fb1165#=   1.1000  5:#fb1168#=  12.3129u
+ +5:#fb1171#=  12.3129u 5:#fb1174#=   1.1000  5:#fb1177#=   1.1000 
+ +5:#fb1180#=  12.3129u 5:#fb1183#=  12.3129u 5:#fb1186#=   1.1000 
+ +5:#fb1189#=   1.1000  5:#fb1192#=  12.3129u 5:#fb1195#=  12.3129u
+ +5:#fb1198#=   1.1000  5:#fb1201#=   1.1000  5:#fb1204#=  12.3129u
+ +5:#fb1207#=  12.3129u 5:#fb1210#=   1.1000  5:#fb1213#=   1.1000 
+ +5:#fb1216#=  12.3129u 5:#fb1219#=  12.3129u 5:#fb1222#=   1.1000 
+ +5:#fb1225#=   1.1000  5:#fb1228#=  12.3129u 5:#fb1231#=  12.3129u
+ +5:#fb1234#=   1.1000  5:#fb1237#=   1.1000  5:#fb1240#=  12.3129u
+ +5:#fb1243#=  12.3129u 5:#fb1246#=   1.1000  5:#fb1249#=   1.1000 
+ +5:#fb1252#=  12.3129u 5:#fb1255#=  12.3129u 5:#fb1258#=   1.1000 
+ +5:#fb1261#=   1.1000  5:#fb1264#=  12.3129u 5:#fb1267#=  12.3129u
+ +5:#fb1270#=   1.1000  5:#fb1273#=   1.1000  5:#fb1276#=  12.3129u
+ +5:#fb1279#=  12.3129u 5:#fb1282#=   1.1000  5:#fb1285#=   1.1000 
+ +5:#fb1288#=  12.3129u 5:#fb1291#=  12.3129u 5:#fb1294#=   1.1000 
+ +5:#fb1297#=   1.1000  5:#fb1300#=  12.3129u 5:#fb1303#=  12.3129u
+ +5:#fb1306#=   1.1000  5:#fb1309#=   1.1000  5:#fb1312#=  12.3129u
+ +5:#fb1315#=  12.3129u 5:#fb1318#=   1.1000  5:#fb1321#=   1.1000 
+ +5:#fb1324#=  12.3129u 5:#fb1327#=  12.3129u 5:#fb1330#=   1.1000 
+ +5:#fb1333#=   1.1000  5:#fb850# =  12.2943u 5:#fb853# =  12.2943u
+ +5:#fb856# =  12.2943u 5:#fb859# =  12.2943u 5:#fb862# =  12.2943u
+ +5:#fb865# =  12.2943u 5:#fb868# =  12.2943u 5:#fb871# =  12.2943u
+ +5:#fb874# =   1.1000  5:#fb877# =   1.1000  5:#fb880# =   1.1000 
+ +5:#fb883# =   1.1000  5:#fb886# =  12.3094u 5:#fb889# =  12.3094u
+ +5:#fb892# =   1.1000  5:#fb895# =   1.1000  5:#fb898# =  12.2923u
+ +5:#fb901# =  12.2923u 5:#fb904# =  12.2923u 5:#fb907# =  12.2953u
+ +5:#fb910# =   1.1000  5:#fb913# =   1.1000  5:#fb916# =  12.3105u
+ +5:#fb919# =   1.1000  5:#fb922# =   1.1000  5:#fb925# =   1.1000 
+ +5:#fb928# =   1.1000  5:#fb931# =  12.3110u 5:#fb934# =   1.1000 
+ +5:#fb937# =  12.3156u 5:#fb940# =  12.3132u 5:#fb943# =  12.3138u
+ +5:#fb946# =  12.3132u 5:#fb949# =  12.3139u 5:#fb952# =  12.3129u
+ +5:#fb955# =  12.3129u 5:#fb958# =   1.1000  5:#fb961# =   1.1000 
+ +5:#fb964# =  12.3129u 5:#fb967# =  12.3129u 5:#fb970# =   1.1000 
+ +5:#fb973# =   1.1000  5:#fb976# =  12.3129u 5:#fb979# =  12.3129u
+ +5:#fb982# =   1.1000  5:#fb985# =   1.1000  5:#fb988# =  12.3129u
+ +5:#fb991# =  12.3129u 5:#fb994# =   1.1000  5:#fb997# =   1.1000 
+ +5:__c_50_6=   1.0996  5:__c_51_6=   1.0996  5:__c_52_6=   1.0996 
+ +5:__c_53_6=   1.0996  5:__c_54_6=   1.0996  5:__c_55_6=   1.0996 
+ +5:__c_56_6=   1.0996  5:__c_57_6=   1.0996  5:__e_50_6=   1.0999 
+ +5:__e_51_6=   1.0999  5:__g_50_6=   1.0996  5:__g_51_6=   1.0996 
+ +5:__g_52_6=   1.0996  5:__g_53_6=   1.0996  5:__x_50_6=   1.0999 
+ +5:__x_51_6=   1.0999  5:__z     =   1.0999  5:c       = 166.2389u
+ +5:d_50_6  = 167.9629u 5:d_51_6  = 166.2871u 5:d_52_6  = 167.9629u
+ +5:d_53_6  = 166.2871u 5:f       =  48.2975u 5:h_50_6  = 167.9641u
+ +5:h_51_6  = 166.2877u 5:inv__f  =   1.1000  5:inv__i__=   1.1000 
+ +5:inv__i__=   1.1000  5:inv__i__=   1.1000  5:inv__i__=   1.1000 
+ +5:inv__i__=   1.1000  5:inv__i__=   1.1000  5:inv__i__=   1.1000 
+ +5:inv__i__=   1.1000  5:inv__i__=   1.1000  5:inv__i__=   1.1000 
+ +5:inv__i__=   1.1000  5:inv__i__=   1.1000  5:inv__i__=   1.1000 
+ +5:inv__i__=   1.1000  5:inv__i__=   1.1000  5:inv__i__=   1.1000 
+ +5:inv__i__=   1.1000  5:inv__i__=   1.1000  5:inv__i__=   1.1000 
+ +5:inv__i__=   1.1000  5:inv__i__=   1.1000  5:inv__i__=   1.1000 
+ +5:inv__i__=   1.1000  5:inv__i__=   1.1000  5:inv__i__=   1.1000 
+ +5:inv__i__=   1.1000  5:inv__i__=   1.1000  5:inv__i__=   1.1000 
+ +5:inv__i__=   1.1000  5:inv__i__=   1.1000  5:inv__i__=   1.1000 
+ +5:inv__i__=   1.1000  5:inv__i__=   1.1000  5:inv__i__=   1.1000 
+ +5:inv__i__=   1.1000  5:inv__i__=   1.1000  5:inv__i__=   1.1000 
+ +5:inv__i__=   1.1000  5:inv__i__=   1.1000  5:inv__i__=   1.1000 
+ +5:inv__i__=   1.1000  5:inv__i__=   1.1000  5:inv__i__=   1.1000 
+ +5:inv__i__=   1.1000  5:inv__i__=   1.1000  5:inv__i__=   1.1000 
+ +5:inv__i__=   1.1000  5:inv__i__=   1.1000  5:inv__i__=   1.1000 
+ +5:inv__i__=   1.1000  5:inv__i__=   1.1000  5:inv__i__=   1.1000 
+ +5:inv__i__=   1.1000  5:inv__i__=   1.1000  5:inv__i__=   1.1000 
+ +5:inv__i__=   1.1000  5:inv__i__=   1.1000  5:inv__i__=   1.1000 
+ +5:inv__i__=   1.1000  5:inv__i__=   1.1000  5:inv__i__=   1.1000 
+ +5:inv__i__=   1.1000  5:inv__i__=   1.1000  5:inv__i__=   1.1000 
+ +5:inv__o0_=   1.1000  5:inv__o1_=   1.1000  5:inv__p  =  22.4304u
+ +5:inv__res=  14.7892u 5:inv__s  =  14.7854u 5:inv__w__=   1.0999 
+ +5:n__i__a =   1.0999  5:n__o0__f=   1.0999  5:n__o0__f=   1.0999 
+ +5:n__o0__f=   1.0999  5:n__o0__f=   1.0999  5:n__o0__f=   1.0999 
+ +5:n__o0__f=   1.0999  5:n__o0__f=   1.0999  5:n__o0__f=   1.0999 
+ +5:n__o0__f=   1.0999  5:n__o0__f=   1.0999  5:n__o0__f=   1.0999 
+ +5:n__o0__f=   1.0999  5:n__o0__f=   1.0999  5:n__o0__f=   1.0999 
+ +5:n__o0__f=   1.0999  5:n__o0__f=   1.0999  5:n__o0__f=   1.0999 
+ +5:n__o0__f=   1.0999  5:n__o0__f=   1.0999  5:n__o0__f=   1.0999 
+ +5:n__o0__f=   1.0999  5:n__o0__f=   1.0999  5:n__o0__f=   1.0999 
+ +5:n__o0__f=   1.0999  5:n__o0__f=   1.0999  5:n__o0__f=   1.0999 
+ +5:n__o0__f=   1.0999  5:n__o0__f=   1.0999  5:n__o0__f=   1.0999 
+ +5:n__o0__f=   1.0999  5:n__o0__f=   1.0999  5:n__o0__f=   1.0999 
+ +5:n__o0__t=   1.0999  5:n__o0__t=   1.0999  5:n__o0__t=   1.0999 
+ +5:n__o0__t=   1.0999  5:n__o0__t=   1.0999  5:n__o0__t=   1.0999 
+ +5:n__o0__t=   1.0999  5:n__o0__t=   1.0999  5:n__o0__t=   1.0999 
+ +5:n__o0__t=   1.0999  5:n__o0__t=   1.0999  5:n__o0__t=   1.0999 
+ +5:n__o0__t=   1.0999  5:n__o0__t=   1.0999  5:n__o0__t=   1.0999 
+ +5:n__o0__t=   1.0999  5:n__o0__t=   1.0999  5:n__o0__t=   1.0999 
+ +5:n__o0__t=   1.0999  5:n__o0__t=   1.0999  5:n__o0__t=   1.0999 
+ +5:n__o0__t=   1.0999  5:n__o0__t=   1.0999  5:n__o0__t=   1.0999 
+ +5:n__o0__t=   1.0999  5:n__o0__t=   1.0999  5:n__o0__t=   1.0999 
+ +5:n__o0__t=   1.0999  5:n__o0__t=   1.0999  5:n__o0__t=   1.0999 
+ +5:n__o0__t=   1.0999  5:n__o0__t=   1.0999  5:n__v    =   1.1000 
+ +5:n__w__0 =   1.0999  5:n__w__1 =   1.0999  5:p       =   1.0999 
+ +5:s       =   1.1000  5:u_50_6  = 506.3640u 5:u_51_6  = 654.5422u
+ +5:u_52_6  = 654.5421u 5:u_53_6  = 654.5421u 5:v       =  15.2441u
+ +5:w__0    =  14.5105u 5:w__0i   = 132.1010u 5:w__1    =  14.5105u
+ +5:y       =  60.3721u 6:#100    =  43.9038m 6:#1001   =   1.0999 
+ +6:#1002   =   1.7545m 6:#1004   =   1.0999  6:#1005   =   1.7545m
+ +6:#1007   =   1.0999  6:#1008   =   1.7545m 6:#101    = 126.7384m
+ +6:#1010   =   1.0999  6:#1011   =   1.7545m 6:#1013   =   1.0999 
+ +6:#1014   =   1.7545m 6:#1016   =   1.0999  6:#1017   =   1.7545m
+ +6:#1019   =   1.0999  6:#102    = 407.4963m 6:#1020   =   1.7545m
+ +6:#1022   =   1.0999  6:#1023   =   1.7545m 6:#1025   =   1.0999 
+ +6:#1026   =   1.7545m 6:#1028   =   1.0999  6:#1029   =   1.7545m
+ +6:#103    = 407.4960m 6:#1031   =   1.0999  6:#1032   =   1.7545m
+ +6:#1034   =   1.0999  6:#1035   =   1.7545m 6:#1037   =   1.0999 
+ +6:#1038   =   1.7545m 6:#104    =   1.1000  6:#1040   =   1.0999 
+ +6:#1041   =   1.7545m 6:#1043   =   1.0999  6:#1044   =   1.7545m
+ +6:#1046   =   1.0999  6:#1047   =   1.7545m 6:#1049   =   1.0999 
+ +6:#105    =   1.0999  6:#1050   =   1.7545m 6:#1052   =   1.0999 
+ +6:#1053   =   1.7545m 6:#1055   =   1.0999  6:#1056   =   1.7545m
+ +6:#1058   =   1.0999  6:#1059   =   1.7545m 6:#1061   =   1.0999 
+ +6:#1062   =   1.7545m 6:#1064   =   1.0999  6:#1065   =   1.7545m
+ +6:#1067   =   1.0999  6:#1068   =   1.7545m 6:#107    =  43.9038m
+ +6:#1070   =   1.0999  6:#1071   =   1.7545m 6:#1073   =   1.0999 
+ +6:#1074   =   1.7545m 6:#1076   =   1.0999  6:#1077   =   1.7545m
+ +6:#1079   =   1.0999  6:#108    = 126.7384m 6:#1080   =   1.7545m
+ +6:#1082   =   1.0999  6:#1083   =   1.7545m 6:#1085   =   1.0999 
+ +6:#1086   =   1.7545m 6:#1088   =   1.0999  6:#1089   =   1.7545m
+ +6:#109    = 407.4963m 6:#1091   =   1.0999  6:#1092   =   1.7545m
+ +6:#1094   =   1.0999  6:#1095   =   1.7545m 6:#1097   =   1.0999 
+ +6:#1098   =   1.7545m 6:#11     =   1.1000  6:#110    = 407.4960m
+ +6:#1100   =   1.0999  6:#1101   =   1.7545m 6:#1103   =   1.0999 
+ +6:#1104   =   1.7545m 6:#1106   =   1.0999  6:#1107   =   1.7545m
+ +6:#1109   =   1.0999  6:#111    =   1.1000  6:#1110   =   1.7545m
+ +6:#1112   =   1.0999  6:#1113   =   1.7545m 6:#1115   =   1.0999 
+ +6:#1116   =   1.7545m 6:#1118   =   1.0999  6:#1119   =   1.7545m
+ +6:#112    =   1.0999  6:#1121   =   1.0999  6:#1122   =   1.7545m
+ +6:#1124   =   1.0999  6:#1125   =   1.7545m 6:#1127   =   1.0999 
+ +6:#1128   =   1.7545m 6:#1130   =   1.0999  6:#1131   =   1.7545m
+ +6:#1133   =   1.0999  6:#1134   =   1.7545m 6:#1136   =   1.0999 
+ +6:#1137   =   1.7545m 6:#1139   =   1.0999  6:#114    =   3.6138u
+ +6:#1140   =   1.7545m 6:#1142   =   1.0999  6:#1143   =   1.7545m
+ +6:#1145   =   1.0999  6:#1146   =   1.7545m 6:#1148   =   1.0999 
+ +6:#1149   =   1.7545m 6:#115    =  86.4360m 6:#1151   =   1.0999 
+ +6:#1152   =   1.7545m 6:#1154   =   1.0999  6:#1155   =   1.7545m
+ +6:#1157   =   1.0999  6:#1158   =   1.7545m 6:#1160   =   1.0999 
+ +6:#1161   =   1.7545m 6:#1163   =   1.0999  6:#1164   =   1.7545m
+ +6:#1166   =   1.0999  6:#1167   =   1.7545m 6:#1169   =   1.0999 
+ +6:#117    = 256.3113m 6:#1170   =   1.7545m 6:#1172   =   1.0999 
+ +6:#1173   =   1.7545m 6:#1175   =   1.0999  6:#1176   =   1.7545m
+ +6:#1178   =   1.0999  6:#1179   =   1.7545m 6:#118    = 256.3107m
+ +6:#1181   =   1.0999  6:#1182   =   1.7545m 6:#1184   =   1.0999 
+ +6:#1185   =   1.7545m 6:#1187   =   1.0999  6:#1188   =   1.7545m
+ +6:#119    =   1.1000  6:#1190   =   1.0999  6:#1191   =   1.7545m
+ +6:#1193   =   1.0999  6:#1194   =   1.7545m 6:#1196   =   1.0999 
+ +6:#1197   =   1.7545m 6:#1199   =   1.0999  6:#12     = 261.5900m
+ +6:#120    =   1.0999  6:#1200   =   1.7545m 6:#1202   =   1.0999 
+ +6:#1203   =   1.7545m 6:#1205   =   1.0999  6:#1206   =   1.7545m
+ +6:#1208   =   1.0999  6:#1209   =   1.7545m 6:#1211   =   1.0999 
+ +6:#1212   =   1.7545m 6:#1214   =   1.0999  6:#1215   =   1.7546m
+ +6:#1217   =   1.0999  6:#1218   =   1.7546m 6:#122    =   3.6138u
+ +6:#1220   =   1.0999  6:#1221   =   1.7546m 6:#1223   =   1.0999 
+ +6:#1224   =   1.7546m 6:#1226   =   1.0999  6:#1227   = 458.5834u
+ +6:#1229   =   1.0999  6:#123    =  86.4360m 6:#1230   = 458.5834u
+ +6:#1232   =   1.0999  6:#1233   = 458.5834u 6:#1235   =   1.0999 
+ +6:#1236   = 458.5834u 6:#1238   =   1.0999  6:#1239   = 458.5834u
+ +6:#1241   =   1.0999  6:#1242   = 458.5834u 6:#1244   =   1.0999 
+ +6:#1245   = 458.5834u 6:#1247   =   1.0999  6:#1248   = 458.5834u
+ +6:#125    = 256.3113m 6:#1250   =   1.0999  6:#1251   = 458.5834u
+ +6:#1253   =   1.0999  6:#1254   = 458.5834u 6:#1256   =   1.0999 
+ +6:#1257   = 458.5834u 6:#1259   =   1.0999  6:#126    = 256.3107m
+ +6:#1260   = 458.5834u 6:#1262   =   1.0999  6:#1263   = 458.5834u
+ +6:#1265   =   1.0999  6:#1266   = 458.5834u 6:#1268   =   1.0999 
+ +6:#1269   = 458.5834u 6:#127    =   1.1000  6:#1271   =   1.0999 
+ +6:#1272   = 458.5834u 6:#1274   =   1.0999  6:#1275   = 458.5834u
+ +6:#1277   =   1.0999  6:#1278   = 458.5834u 6:#128    =   1.0999 
+ +6:#1280   =   1.0999  6:#1281   = 458.5834u 6:#1283   =   1.0999 
+ +6:#1284   = 458.5834u 6:#1286   =   1.0999  6:#1287   = 458.5834u
+ +6:#1289   =   1.0999  6:#1290   = 458.5834u 6:#1292   =   1.0999 
+ +6:#1293   = 458.5834u 6:#1295   =   1.0999  6:#1296   = 458.5834u
+ +6:#1298   =   1.0999  6:#1299   = 458.5834u 6:#130    =  43.9038m
+ +6:#1301   =   1.0999  6:#1302   = 458.5834u 6:#1304   =   1.0999 
+ +6:#1305   = 458.5834u 6:#1307   =   1.0999  6:#1308   = 458.5834u
+ +6:#131    = 126.7384m 6:#1310   =   1.0999  6:#1311   = 458.5834u
+ +6:#1313   =   1.0999  6:#1314   = 458.5834u 6:#1316   =   1.0999 
+ +6:#1317   = 458.5834u 6:#1319   =   1.0999  6:#132    = 407.4963m
+ +6:#1320   = 458.5834u 6:#1322   =   1.0999  6:#1323   = 458.5834u
+ +6:#1325   =   1.0999  6:#1326   = 458.5834u 6:#1328   =   1.0999 
+ +6:#1329   = 458.5834u 6:#133    = 407.4960m 6:#1331   =   1.0999 
+ +6:#1332   = 458.5834u 6:#1334   =   1.0999  6:#1335   = 458.5834u
+ +6:#1337   =   1.0999  6:#1338   = 458.5834u 6:#134    =   1.1000 
+ +6:#1340   =   1.0999  6:#1341   = 458.5834u 6:#1343   =   1.0999 
+ +6:#1344   = 458.5834u 6:#1346   =   1.0999  6:#1347   = 458.5834u
+ +6:#1349   =   1.0999  6:#135    =   1.0999  6:#1350   = 458.5834u
+ +6:#1352   =   1.0999  6:#1353   = 458.5834u 6:#1355   =   1.0999 
+ +6:#1356   = 458.5834u 6:#1358   =   1.0999  6:#1359   = 458.5834u
+ +6:#1361   =   1.0999  6:#1362   = 458.5834u 6:#1364   =   1.0999 
+ +6:#1365   = 458.5834u 6:#1367   =   1.0999  6:#1368   = 458.5834u
+ +6:#137    =  43.9038m 6:#1370   =   1.0999  6:#1371   = 458.5834u
+ +6:#1373   =   1.0999  6:#1374   = 458.5834u 6:#1376   =   1.0999 
+ +6:#1377   = 458.5834u 6:#1379   =   1.0999  6:#138    = 126.7384m
+ +6:#1380   = 458.5834u 6:#139    = 407.4963m 6:#14     = 993.7101m
+ +6:#140    = 407.4960m 6:#141    =   1.1000  6:#142    =   1.0999 
+ +6:#144    =   3.6138u 6:#145    =  86.4360m 6:#147    = 256.3113m
+ +6:#148    = 256.3107m 6:#149    =   1.1000  6:#150    =   1.0999 
+ +6:#152    =   3.6138u 6:#153    =  86.4360m 6:#155    = 256.3113m
+ +6:#156    = 256.3107m 6:#157    =   1.1000  6:#158    =   1.0999 
+ +6:#16     =  24.4320u 6:#160    =  43.9038m 6:#161    = 126.7384m
+ +6:#162    = 407.4963m 6:#163    = 407.4960m 6:#164    =   1.1000 
+ +6:#165    =   1.0999  6:#167    =  43.9038m 6:#168    = 126.7384m
+ +6:#169    = 407.4963m 6:#170    = 407.4960m 6:#171    =   1.1000 
+ +6:#172    =   1.0999  6:#174    =   3.6138u 6:#175    =  86.4360m
+ +6:#177    = 256.3113m 6:#178    = 256.3107m 6:#179    =   1.1000 
+ +6:#180    =   1.0999  6:#182    =   3.6138u 6:#183    =  86.4360m
+ +6:#185    = 256.3113m 6:#186    = 256.3107m 6:#187    =   1.1000 
+ +6:#188    =   1.0999  6:#190    =  43.9038m 6:#191    = 126.7384m
+ +6:#192    = 407.4963m 6:#193    = 407.4960m 6:#194    =   1.1000 
+ +6:#195    =   1.0999  6:#197    =  43.9038m 6:#198    = 126.7384m
+ +6:#199    = 407.4963m 6:#200    = 407.4960m 6:#201    =   1.1000 
+ +6:#202    =   1.0999  6:#204    =   3.6138u 6:#205    =  86.4360m
+ +6:#207    = 256.3113m 6:#208    = 256.3107m 6:#209    =   1.1000 
+ +6:#21     = 989.3320m 6:#210    =   1.0999  6:#212    =   3.6138u
+ +6:#213    =  86.4360m 6:#215    = 256.3113m 6:#216    = 256.3107m
+ +6:#217    =   1.1000  6:#218    =   1.0999  6:#22     = 989.3333m
+ +6:#220    =  43.9038m 6:#221    = 126.7384m 6:#222    = 407.4963m
+ +6:#223    = 407.4960m 6:#224    =   1.1000  6:#225    =   1.0999 
+ +6:#227    =  43.9038m 6:#228    = 126.7384m 6:#229    = 407.4963m
+ +6:#230    = 407.4960m 6:#231    =   1.1000  6:#232    =   1.0999 
+ +6:#234    =   3.6138u 6:#235    =  86.4360m 6:#237    = 256.3113m
+ +6:#238    = 256.3107m 6:#239    =   1.1000  6:#24     = 989.3326m
+ +6:#240    =   1.0999  6:#242    =   3.6138u 6:#243    =  86.4360m
+ +6:#245    = 256.3113m 6:#246    = 256.3107m 6:#247    =   1.1000 
+ +6:#248    =   1.0999  6:#25     = 989.3315m 6:#250    =  43.9038m
+ +6:#251    = 126.7384m 6:#252    = 407.4963m 6:#253    = 407.4960m
+ +6:#254    =   1.1000  6:#255    =   1.0999  6:#257    =  43.9038m
+ +6:#258    = 126.7384m 6:#259    = 407.4963m 6:#260    = 407.4960m
+ +6:#261    =   1.1000  6:#262    =   1.0999  6:#264    =   3.6138u
+ +6:#265    =  86.4360m 6:#267    = 256.3113m 6:#268    = 256.3107m
+ +6:#269    =   1.1000  6:#27     = 884.0403m 6:#270    =   1.0999 
+ +6:#272    =   3.6138u 6:#273    =  86.4360m 6:#275    = 256.3113m
+ +6:#276    = 256.3107m 6:#277    =   1.1000  6:#278    =   1.0999 
+ +6:#280    =  43.9038m 6:#281    = 126.7384m 6:#282    = 407.4963m
+ +6:#283    = 407.4960m 6:#284    =   1.1000  6:#285    =   1.0999 
+ +6:#287    =  43.9038m 6:#288    = 126.7384m 6:#289    = 407.4963m
+ +6:#290    = 407.4960m 6:#291    =   1.1000  6:#292    =   1.0999 
+ +6:#294    =   3.6138u 6:#295    =  86.4360m 6:#297    = 256.3113m
+ +6:#298    = 256.3107m 6:#299    =   1.1000  6:#3      =   1.0998 
+ +6:#30     = 121.2274u 6:#300    =   1.0999  6:#302    =   3.6138u
+ +6:#303    =  86.4360m 6:#305    = 256.3113m 6:#306    = 256.3107m
+ +6:#307    =   1.1000  6:#308    =   1.0999  6:#31     =  62.8336u
+ +6:#310    =  43.9038m 6:#311    = 126.7384m 6:#312    = 407.4963m
+ +6:#313    = 407.4960m 6:#314    =   1.1000  6:#315    =   1.0999 
+ +6:#317    =  43.9038m 6:#318    = 126.7384m 6:#319    = 407.4963m
+ +6:#32     = 148.1626u 6:#320    = 407.4960m 6:#321    =   1.1000 
+ +6:#322    =   1.0999  6:#324    =   3.6138u 6:#325    =  86.4360m
+ +6:#327    = 256.3113m 6:#328    = 256.3107m 6:#329    =   1.1000 
+ +6:#330    =   1.0999  6:#332    =   3.6138u 6:#333    =  86.4360m
+ +6:#335    = 256.3113m 6:#336    = 256.3107m 6:#337    =   1.1000 
+ +6:#338    =   1.0999  6:#34     = 993.8714m 6:#340    =  43.9038m
+ +6:#341    = 126.7384m 6:#342    = 407.4963m 6:#343    = 407.4960m
+ +6:#344    =   1.1000  6:#345    =   1.0999  6:#347    =  43.9038m
+ +6:#348    = 126.7384m 6:#349    = 407.4963m 6:#350    = 407.4960m
+ +6:#351    =   1.1000  6:#352    =   1.0999  6:#354    =   3.6138u
+ +6:#355    =  86.4360m 6:#357    = 256.3113m 6:#358    = 256.3107m
+ +6:#359    =   1.1000  6:#36     =  43.3862u 6:#360    =   1.0999 
+ +6:#362    =   3.6138u 6:#363    =  86.4360m 6:#365    = 256.3113m
+ +6:#366    = 256.3107m 6:#367    =   1.1000  6:#368    =   1.0999 
+ +6:#37     =  86.4281m 6:#370    =  43.9038m 6:#371    = 126.7384m
+ +6:#372    = 407.4963m 6:#373    = 407.4960m 6:#374    =   1.1000 
+ +6:#375    =   1.0999  6:#377    =  43.9038m 6:#378    = 126.7384m
+ +6:#379    = 407.4963m 6:#380    = 407.4960m 6:#381    =   1.1000 
+ +6:#382    =   1.0999  6:#384    =   3.6138u 6:#385    =  86.4360m
+ +6:#387    = 256.3113m 6:#388    = 256.3107m 6:#389    =   1.1000 
+ +6:#39     =   1.1000  6:#390    =   1.0999  6:#392    =   3.6138u
+ +6:#393    =  86.4360m 6:#395    = 256.3113m 6:#396    = 256.3107m
+ +6:#397    =   1.1000  6:#398    =   1.0999  6:#400    =  43.9038m
+ +6:#401    = 126.7384m 6:#402    = 407.4963m 6:#403    = 407.4960m
+ +6:#404    =   1.1000  6:#405    =   1.0999  6:#407    =  43.9038m
+ +6:#408    = 126.7384m 6:#409    = 407.4963m 6:#41     =   1.1000 
+ +6:#410    = 407.4960m 6:#411    =   1.1000  6:#412    =   1.0999 
+ +6:#414    =   3.6138u 6:#415    =  86.4360m 6:#417    = 256.3113m
+ +6:#418    = 256.3107m 6:#419    =   1.1000  6:#42     =  86.5388m
+ +6:#420    =   1.0999  6:#422    =   3.6138u 6:#423    =  86.4360m
+ +6:#425    = 256.3113m 6:#426    = 256.3107m 6:#427    =   1.1000 
+ +6:#428    =   1.0999  6:#43     = 802.8102m 6:#430    =  43.9038m
+ +6:#431    = 126.7384m 6:#432    = 407.4963m 6:#433    = 407.4960m
+ +6:#434    =   1.1000  6:#435    =   1.0999  6:#437    =  43.9038m
+ +6:#438    = 126.7384m 6:#439    = 407.4963m 6:#44     = 551.4742m
+ +6:#440    = 407.4960m 6:#441    =   1.1000  6:#442    =   1.0999 
+ +6:#444    =   3.6138u 6:#445    =  86.4360m 6:#447    = 256.3113m
+ +6:#448    = 256.3107m 6:#449    =   1.1000  6:#45     = 551.4741m
+ +6:#450    =   1.0999  6:#452    =   3.6138u 6:#453    =  86.4360m
+ +6:#455    = 256.3113m 6:#456    = 256.3107m 6:#457    =   1.1000 
+ +6:#458    =   1.0999  6:#460    =  43.9038m 6:#461    = 126.7384m
+ +6:#462    = 407.4963m 6:#463    = 407.4960m 6:#464    =   1.1000 
+ +6:#465    =   1.0999  6:#467    =  43.9038m 6:#468    = 126.7384m
+ +6:#469    = 407.4963m 6:#47     =   1.0999  6:#470    = 407.4960m
+ +6:#471    =   1.1000  6:#472    =   1.0999  6:#474    =   3.6138u
+ +6:#475    =  86.4360m 6:#477    = 256.3113m 6:#478    = 256.3107m
+ +6:#479    =   1.1000  6:#48     =   1.1000  6:#480    =   1.0999 
+ +6:#482    =   3.6138u 6:#483    =  86.4360m 6:#485    = 256.3113m
+ +6:#486    = 256.3107m 6:#487    =   1.1000  6:#488    =   1.0999 
+ +6:#49     =   1.1000  6:#490    =  43.9038m 6:#491    = 126.7384m
+ +6:#492    = 407.4963m 6:#493    = 407.4960m 6:#494    =   1.1000 
+ +6:#495    =   1.0999  6:#497    =  43.9038m 6:#498    = 126.7384m
+ +6:#499    = 407.4963m 6:#50     =   1.0999  6:#500    = 407.4960m
+ +6:#501    =   1.1000  6:#502    =   1.0999  6:#504    =   3.6138u
+ +6:#505    =  86.4360m 6:#507    = 256.3113m 6:#508    = 256.3107m
+ +6:#509    =   1.1000  6:#510    =   1.0999  6:#512    =   3.6138u
+ +6:#513    =  86.4360m 6:#515    = 256.3113m 6:#516    = 256.3107m
+ +6:#517    =   1.1000  6:#518    =   1.0999  6:#52     =   3.6138u
+ +6:#520    =  43.9038m 6:#521    = 126.7384m 6:#522    = 407.4963m
+ +6:#523    = 407.4960m 6:#524    =   1.1000  6:#525    =   1.0999 
+ +6:#527    =  43.9038m 6:#528    = 126.7384m 6:#529    = 407.4963m
+ +6:#53     =  86.4360m 6:#530    = 407.4960m 6:#531    =   1.1000 
+ +6:#532    =   1.0999  6:#534    =   3.6138u 6:#535    =  86.4360m
+ +6:#537    = 256.3113m 6:#538    = 256.3107m 6:#539    =   1.1000 
+ +6:#540    =   1.0999  6:#542    =   3.6138u 6:#543    =  86.4360m
+ +6:#545    = 256.3113m 6:#546    = 256.3107m 6:#547    =   1.1000 
+ +6:#548    =   1.0999  6:#55     = 256.3114m 6:#550    =  43.9038m
+ +6:#551    = 126.7384m 6:#552    = 407.4963m 6:#553    = 407.4960m
+ +6:#554    =   1.1000  6:#555    =   1.0999  6:#557    =  43.9038m
+ +6:#558    = 126.7384m 6:#559    = 407.4963m 6:#56     = 256.3108m
+ +6:#560    = 407.4960m 6:#561    =   1.1000  6:#562    =   1.0999 
+ +6:#564    =   3.6138u 6:#565    =  86.4354m 6:#567    = 256.3113m
+ +6:#568    = 256.3107m 6:#569    =   1.1000  6:#570    =   1.0999 
+ +6:#572    =   3.6138u 6:#573    =  86.4349m 6:#574    = 256.3113m
+ +6:#575    = 256.3107m 6:#576    =   1.1000  6:#577    =   1.0999 
+ +6:#579    =  43.9040m 6:#58     =   1.1000  6:#580    = 126.7380m
+ +6:#581    = 407.4968m 6:#582    = 407.4965m 6:#583    =   1.1000 
+ +6:#584    =   1.0999  6:#586    =  43.9041m 6:#587    = 126.7377m
+ +6:#588    = 407.4971m 6:#589    = 407.4969m 6:#59     =   1.0999 
+ +6:#590    =   1.1000  6:#591    =   1.0999  6:#593    =  86.4402m
+ +6:#594    =   2.7215u 6:#595    =   1.1000  6:#597    =  12.2812u
+ +6:#598    =  86.4481m 6:#599    = 820.5727m 6:#600    =  19.6203u
+ +6:#601    =   1.1000  6:#602    =   1.0999  6:#604    = 105.1333m
+ +6:#605    =  20.3129m 6:#606    =   1.1000  6:#608    = 255.9119m
+ +6:#609    = 218.2951m 6:#61     =   3.6138u 6:#610    = 898.1022m
+ +6:#611    = 255.9124m 6:#612    =   1.1000  6:#613    =   1.0999 
+ +6:#615    = 256.1044m 6:#616    =   3.1110u 6:#617    = 256.1050m
+ +6:#619    = 256.1044m 6:#62     =  86.4360m 6:#620    =   3.1110u
+ +6:#622    = 256.1049m 6:#624    = 378.4018m 6:#625    =  35.3883m
+ +6:#626    = 378.4022m 6:#628    = 378.4018m 6:#629    =  35.3883m
+ +6:#630    = 378.4021m 6:#632    = 256.1067m 6:#633    =   3.1110u
+ +6:#635    = 256.1073m 6:#637    = 256.1067m 6:#638    =   3.1110u
+ +6:#64     = 256.3114m 6:#640    = 256.1073m 6:#642    = 378.4025m
+ +6:#643    =  35.3879m 6:#644    = 378.4028m 6:#646    = 378.4025m
+ +6:#647    =  35.3879m 6:#648    = 378.4028m 6:#65     = 256.3108m
+ +6:#650    = 256.1067m 6:#651    =   3.1110u 6:#653    = 256.1073m
+ +6:#655    = 256.1067m 6:#656    =   3.1110u 6:#658    = 256.1073m
+ +6:#660    = 378.4025m 6:#661    =  35.3879m 6:#662    = 378.4028m
+ +6:#664    = 378.4025m 6:#665    =  35.3879m 6:#666    = 378.4028m
+ +6:#668    = 256.1067m 6:#669    =   3.1110u 6:#67     =   1.1000 
+ +6:#671    = 256.1073m 6:#673    = 256.1067m 6:#674    =   3.1110u
+ +6:#676    = 256.1073m 6:#678    = 378.4025m 6:#679    =  35.3879m
+ +6:#68     =   1.0999  6:#680    = 378.4028m 6:#682    = 378.4025m
+ +6:#683    =  35.3879m 6:#684    = 378.4028m 6:#686    = 256.1067m
+ +6:#687    =   3.1110u 6:#689    = 256.1073m 6:#691    = 256.1067m
+ +6:#692    =   3.1110u 6:#694    = 256.1073m 6:#696    = 378.4025m
+ +6:#697    =  35.3879m 6:#698    = 378.4028m 6:#7      = 820.5721m
+ +6:#70     =  43.9038m 6:#700    = 378.4025m 6:#701    =  35.3879m
+ +6:#702    = 378.4028m 6:#704    = 256.1067m 6:#705    =   3.1110u
+ +6:#707    = 256.1073m 6:#709    = 256.1067m 6:#71     = 126.7384m
+ +6:#710    =   3.1110u 6:#712    = 256.1073m 6:#714    = 378.4025m
+ +6:#715    =  35.3879m 6:#716    = 378.4028m 6:#718    = 378.4025m
+ +6:#719    =  35.3879m 6:#72     = 407.4963m 6:#720    = 378.4028m
+ +6:#722    = 256.1067m 6:#723    =   3.1110u 6:#725    = 256.1073m
+ +6:#727    = 256.1067m 6:#728    =   3.1110u 6:#73     = 407.4961m
+ +6:#730    = 256.1073m 6:#732    = 378.4025m 6:#733    =  35.3879m
+ +6:#734    = 378.4028m 6:#736    = 378.4025m 6:#737    =  35.3879m
+ +6:#738    = 378.4028m 6:#74     =   1.1000  6:#740    = 256.1067m
+ +6:#741    =   3.1110u 6:#743    = 256.1073m 6:#745    = 256.1067m
+ +6:#746    =   3.1110u 6:#748    = 256.1073m 6:#75     =   1.0999 
+ +6:#750    = 378.4025m 6:#751    =  35.3879m 6:#752    = 378.4028m
+ +6:#754    = 378.4025m 6:#755    =  35.3879m 6:#756    = 378.4028m
+ +6:#758    = 256.1067m 6:#759    =   3.1110u 6:#761    = 256.1073m
+ +6:#763    = 256.1067m 6:#764    =   3.1110u 6:#766    = 256.1073m
+ +6:#768    = 378.4025m 6:#769    =  35.3879m 6:#77     =  43.9038m
+ +6:#770    = 378.4028m 6:#772    = 378.4025m 6:#773    =  35.3879m
+ +6:#774    = 378.4028m 6:#776    = 256.1067m 6:#777    =   3.1110u
+ +6:#779    = 256.1073m 6:#78     = 126.7384m 6:#781    = 256.1067m
+ +6:#782    =   3.1110u 6:#784    = 256.1073m 6:#786    = 378.4025m
+ +6:#787    =  35.3879m 6:#788    = 378.4028m 6:#79     = 407.4963m
+ +6:#790    = 378.4025m 6:#791    =  35.3879m 6:#792    = 378.4028m
+ +6:#794    = 256.1067m 6:#795    =   3.1110u 6:#797    = 256.1073m
+ +6:#799    = 256.1067m 6:#80     = 407.4961m 6:#800    =   3.1110u
+ +6:#802    = 256.1073m 6:#804    = 378.4025m 6:#805    =  35.3879m
+ +6:#806    = 378.4028m 6:#808    = 378.4025m 6:#809    =  35.3879m
+ +6:#81     =   1.1000  6:#810    = 378.4028m 6:#812    = 256.1067m
+ +6:#813    =   3.1110u 6:#815    = 256.1073m 6:#817    = 256.1067m
+ +6:#818    =   3.1110u 6:#82     =   1.0999  6:#820    = 256.1073m
+ +6:#822    = 378.4025m 6:#823    =  35.3879m 6:#824    = 378.4028m
+ +6:#826    = 378.4025m 6:#827    =  35.3879m 6:#828    = 378.4028m
+ +6:#830    = 256.1067m 6:#831    =   3.1110u 6:#833    = 256.1073m
+ +6:#835    = 256.1067m 6:#836    =   3.1110u 6:#838    = 256.1073m
+ +6:#84     =   3.6138u 6:#840    = 378.4025m 6:#841    =  35.3879m
+ +6:#842    = 378.4028m 6:#844    = 378.4025m 6:#845    =  35.3879m
+ +6:#846    = 378.4028m 6:#85     =  86.4360m 6:#87     = 256.3113m
+ +6:#88     = 256.3107m 6:#89     =   1.1000  6:#90     =   1.0999 
+ +6:#92     =   3.6138u 6:#93     =  86.4360m 6:#95     = 256.3113m
+ +6:#96     = 256.3107m 6:#97     =   1.1000  6:#977    =   1.0998 
+ +6:#978    =   1.7545m 6:#98     =   1.0999  6:#980    =   1.1000 
+ +6:#981    =   1.7546m 6:#983    =   1.0995  6:#984    = 153.3795u
+ +6:#986    =   1.0990  6:#987    = 372.5434u 6:#989    =   1.0999 
+ +6:#990    =  10.6153m 6:#992    =   1.0999  6:#993    =   1.7546m
+ +6:#995    =   1.0995  6:#996    = 158.9853u 6:#998    =   1.0999 
+ +6:#999    =   1.7545m 6:#fb1000#=  12.3089u 6:#fb1003#=  12.3090u
+ +6:#fb1006#=  12.3090u 6:#fb1009#=  12.3089u 6:#fb1012#=  12.3089u
+ +6:#fb1015#=  12.3090u 6:#fb1018#=  12.3090u 6:#fb1021#=  12.3089u
+ +6:#fb1024#=  12.3089u 6:#fb1027#=  12.3090u 6:#fb1030#=  12.3090u
+ +6:#fb1033#=  12.3089u 6:#fb1036#=  12.3089u 6:#fb1039#=  12.3090u
+ +6:#fb1042#=  12.3090u 6:#fb1045#=  12.3089u 6:#fb1048#=  12.3089u
+ +6:#fb1051#=  12.3090u 6:#fb1054#=  12.3090u 6:#fb1057#=  12.3089u
+ +6:#fb1060#=  12.3089u 6:#fb1063#=  12.3090u 6:#fb1066#=  12.3090u
+ +6:#fb1069#=  12.3089u 6:#fb1072#=  12.3089u 6:#fb1075#=  12.3090u
+ +6:#fb1078#=  12.3090u 6:#fb1081#=  12.3089u 6:#fb1084#=  12.3089u
+ +6:#fb1087#=  12.3090u 6:#fb1090#=  12.3090u 6:#fb1093#=  12.3089u
+ +6:#fb1096#=  12.3089u 6:#fb1099#=  12.3090u 6:#fb1102#=  12.3090u
+ +6:#fb1105#=  12.3089u 6:#fb1108#=  12.3089u 6:#fb1111#=  12.3090u
+ +6:#fb1114#=  12.3090u 6:#fb1117#=  12.3089u 6:#fb1120#=  12.3089u
+ +6:#fb1123#=  12.3090u 6:#fb1126#=  12.3090u 6:#fb1129#=  12.3089u
+ +6:#fb1132#=  12.3089u 6:#fb1135#=  12.3090u 6:#fb1138#=  12.3090u
+ +6:#fb1141#=  12.3089u 6:#fb1144#=  12.3089u 6:#fb1147#=  12.3090u
+ +6:#fb1150#=  12.3090u 6:#fb1153#=  12.3089u 6:#fb1156#=  12.3089u
+ +6:#fb1159#=  12.3090u 6:#fb1162#=  12.3090u 6:#fb1165#=  12.3089u
+ +6:#fb1168#=  12.3089u 6:#fb1171#=  12.3090u 6:#fb1174#=  12.3090u
+ +6:#fb1177#=  12.3089u 6:#fb1180#=  12.3089u 6:#fb1183#=  12.3090u
+ +6:#fb1186#=  12.3090u 6:#fb1189#=  12.3089u 6:#fb1192#=  12.3089u
+ +6:#fb1195#=  12.3090u 6:#fb1198#=  12.3090u 6:#fb1201#=  12.3089u
+ +6:#fb1204#=  12.3089u 6:#fb1207#=  12.3090u 6:#fb1210#=  12.3090u
+ +6:#fb1213#=  12.3130u 6:#fb1216#=  12.3122u 6:#fb1219#=  12.3130u
+ +6:#fb1222#=  12.3130u 6:#fb1225#=  12.3128u 6:#fb1228#=  12.3128u
+ +6:#fb1231#=  12.3128u 6:#fb1234#=  12.3128u 6:#fb1237#=  12.3128u
+ +6:#fb1240#=  12.3128u 6:#fb1243#=  12.3128u 6:#fb1246#=  12.3128u
+ +6:#fb1249#=  12.3128u 6:#fb1252#=  12.3128u 6:#fb1255#=  12.3128u
+ +6:#fb1258#=  12.3128u 6:#fb1261#=  12.3128u 6:#fb1264#=  12.3128u
+ +6:#fb1267#=  12.3128u 6:#fb1270#=  12.3128u 6:#fb1273#=  12.3128u
+ +6:#fb1276#=  12.3128u 6:#fb1279#=  12.3128u 6:#fb1282#=  12.3128u
+ +6:#fb1285#=  12.3128u 6:#fb1288#=  12.3128u 6:#fb1291#=  12.3128u
+ +6:#fb1294#=  12.3128u 6:#fb1297#=  12.3128u 6:#fb1300#=  12.3128u
+ +6:#fb1303#=  12.3128u 6:#fb1306#=  12.3128u 6:#fb1309#=  12.3128u
+ +6:#fb1312#=  12.3128u 6:#fb1315#=  12.3128u 6:#fb1318#=  12.3128u
+ +6:#fb1321#=  12.3128u 6:#fb1324#=  12.3128u 6:#fb1327#=  12.3128u
+ +6:#fb1330#=  12.3128u 6:#fb1333#=  12.3128u 6:#fb1336#=  12.3128u
+ +6:#fb1339#=  12.3128u 6:#fb1342#=  12.3128u 6:#fb1345#=  12.3128u
+ +6:#fb1348#=  12.3128u 6:#fb1351#=  12.3128u 6:#fb1354#=  12.3128u
+ +6:#fb1357#=  12.3128u 6:#fb1360#=  12.3128u 6:#fb1363#=  12.3128u
+ +6:#fb1366#=  12.3128u 6:#fb1369#=  12.3128u 6:#fb1372#=  12.3128u
+ +6:#fb1375#=  12.3128u 6:#fb1378#=  12.3128u 6:#fb976# =  12.3056u
+ +6:#fb979# =  12.3152u 6:#fb982# =   1.1000  6:#fb985# =   1.1000 
+ +6:#fb988# =  12.3124u 6:#fb991# =  12.3124u 6:#fb994# =   1.1000 
+ +6:#fb997# =  12.3089u 6:a       = 175.1823u 6:inv__a  =   1.1000 
+ +6:inv__i__=   1.1000  6:inv__i__=   1.1000  6:inv__i__=   1.1000 
+ +6:inv__p  =  14.7339u 6:inv__res=  14.9399u 6:inv__s  =  22.0650u
+ +6:inv__w__=   1.1000  6:inv__w__=   1.1000  6:inv__w__=   1.0999 
+ +6:n__i__a =   1.0999  6:n__o0__f=   1.0999  6:n__o0__f=   1.0999 
+ +6:n__o0__f=   1.0999  6:n__o0__f=   1.0999  6:n__o0__f=   1.0999 
+ +6:n__o0__f=   1.0999  6:n__o0__f=   1.0999  6:n__o0__f=   1.0999 
+ +6:n__o0__f=   1.0999  6:n__o0__f=   1.0999  6:n__o0__f=   1.0999 
+ +6:n__o0__f=   1.0999  6:n__o0__f=   1.0999  6:n__o0__f=   1.0999 
+ +6:n__o0__f=   1.0999  6:n__o0__f=   1.0999  6:n__o0__f=   1.0999 
+ +6:n__o0__f=   1.0999  6:n__o0__f=   1.0999  6:n__o0__f=   1.0999 
+ +6:n__o0__f=   1.0999  6:n__o0__f=   1.0999  6:n__o0__f=   1.0999 
+ +6:n__o0__f=   1.0999  6:n__o0__f=   1.0999  6:n__o0__f=   1.0999 
+ +6:n__o0__f=   1.0999  6:n__o0__f=   1.0999  6:n__o0__f=   1.0999 
+ +6:n__o0__f=   1.0999  6:n__o0__f=   1.0999  6:n__o0__f=   1.0999 
+ +6:n__o0__t=   1.0999  6:n__o0__t=   1.0999  6:n__o0__t=   1.0999 
+ +6:n__o0__t=   1.0999  6:n__o0__t=   1.0999  6:n__o0__t=   1.0999 
+ +6:n__o0__t=   1.0999  6:n__o0__t=   1.0999  6:n__o0__t=   1.0999 
+ +6:n__o0__t=   1.0999  6:n__o0__t=   1.0999  6:n__o0__t=   1.0999 
+ +6:n__o0__t=   1.0999  6:n__o0__t=   1.0999  6:n__o0__t=   1.0999 
+ +6:n__o0__t=   1.0999  6:n__o0__t=   1.0999  6:n__o0__t=   1.0999 
+ +6:n__o0__t=   1.0999  6:n__o0__t=   1.0999  6:n__o0__t=   1.0999 
+ +6:n__o0__t=   1.0999  6:n__o0__t=   1.0999  6:n__o0__t=   1.0999 
+ +6:n__o0__t=   1.0999  6:n__o0__t=   1.0999  6:n__o0__t=   1.0999 
+ +6:n__o0__t=   1.0999  6:n__o0__t=   1.0999  6:n__o0__t=   1.0999 
+ +6:n__o0__t=   1.0999  6:n__o0__t=   1.0999  6:n__o1__f=   1.0999 
+ +6:n__o1__f=   1.0999  6:n__o1__f=   1.0999  6:n__o1__f=   1.0999 
+ +6:n__o1__f=   1.0999  6:n__o1__f=   1.0999  6:n__o1__f=   1.0999 
+ +6:n__o1__f=   1.0999  6:n__o1__f=   1.0999  6:n__o1__f=   1.0999 
+ +6:n__o1__f=   1.0999  6:n__o1__f=   1.0999  6:n__o1__f=   1.0999 
+ +6:n__o1__f=   1.0999  6:n__o1__f=   1.0999  6:n__o1__f=   1.0999 
+ +6:n__o1__f=   1.0999  6:n__o1__f=   1.0999  6:n__o1__f=   1.0999 
+ +6:n__o1__f=   1.0999  6:n__o1__f=   1.0999  6:n__o1__f=   1.0999 
+ +6:n__o1__f=   1.0999  6:n__o1__f=   1.0999  6:n__o1__f=   1.0999 
+ +6:n__o1__f=   1.0999  6:n__o1__f=   1.0999  6:n__o1__f=   1.0999 
+ +6:n__o1__f=   1.0999  6:n__o1__f=   1.0999  6:n__o1__f=   1.0999 
+ +6:n__o1__f=   1.0999  6:n__o1__t=   1.0999  6:n__o1__t=   1.0999 
+ +6:n__o1__t=   1.0999  6:n__o1__t=   1.0999  6:n__o1__t=   1.0999 
+ +6:n__o1__t=   1.0999  6:n__o1__t=   1.0999  6:n__o1__t=   1.0999 
+ +6:n__o1__t=   1.0999  6:n__o1__t=   1.0999  6:n__o1__t=   1.0999 
+ +6:n__o1__t=   1.0999  6:n__o1__t=   1.0999  6:n__o1__t=   1.0999 
+ +6:n__o1__t=   1.0999  6:n__o1__t=   1.0999  6:n__o1__t=   1.0999 
+ +6:n__o1__t=   1.0999  6:n__o1__t=   1.0999  6:n__o1__t=   1.0999 
+ +6:n__o1__t=   1.0999  6:n__o1__t=   1.0999  6:n__o1__t=   1.0999 
+ +6:n__o1__t=   1.0999  6:n__o1__t=   1.0999  6:n__o1__t=   1.0999 
+ +6:n__o1__t=   1.0999  6:n__o1__t=   1.0999  6:n__o1__t=   1.0999 
+ +6:n__o1__t=   1.0999  6:n__o1__t=   1.0999  6:n__o1__t=   1.0999 
+ +6:p       =   1.0998  6:s       =   1.1000  6:w__0    =  86.6801u
+ +6:w__0i   =  36.6641u 6:w__1    =  15.2792u 7:#100    =  43.9038m
+ +7:#1001   =   1.0999  7:#1002   =   1.7545m 7:#1004   =   1.0999 
+ +7:#1005   =   1.7545m 7:#1007   =   1.0999  7:#1008   =   1.7545m
+ +7:#101    = 126.7384m 7:#1010   =   1.0999  7:#1011   =   1.7545m
+ +7:#1013   =   1.0999  7:#1014   =   1.7545m 7:#1016   =   1.0999 
+ +7:#1017   =   1.7545m 7:#1019   =   1.0999  7:#102    = 407.4963m
+ +7:#1020   =   1.7545m 7:#1022   =   1.0999  7:#1023   =   1.7545m
+ +7:#1025   =   1.0999  7:#1026   =   1.7545m 7:#1028   =   1.0999 
+ +7:#1029   =   1.7545m 7:#103    = 407.4960m 7:#1031   =   1.0999 
+ +7:#1032   =   1.7545m 7:#1034   =   1.0999  7:#1035   =   1.7545m
+ +7:#1037   =   1.0999  7:#1038   =   1.7545m 7:#104    =   1.1000 
+ +7:#1040   =   1.0999  7:#1041   =   1.7545m 7:#1043   =   1.0999 
+ +7:#1044   =   1.7545m 7:#1046   =   1.0999  7:#1047   =   1.7545m
+ +7:#1049   =   1.0999  7:#105    =   1.0999  7:#1050   =   1.7545m
+ +7:#1052   =   1.0999  7:#1053   =   1.7545m 7:#1055   =   1.0999 
+ +7:#1056   =   1.7545m 7:#1058   =   1.0999  7:#1059   =   1.7545m
+ +7:#1061   =   1.0999  7:#1062   =   1.7545m 7:#1064   =   1.0999 
+ +7:#1065   =   1.7545m 7:#1067   =   1.0999  7:#1068   =   1.7545m
+ +7:#107    =  43.9038m 7:#1070   =   1.0999  7:#1071   =   1.7545m
+ +7:#1073   =   1.0999  7:#1074   =   1.7545m 7:#1076   =   1.0999 
+ +7:#1077   =   1.7545m 7:#1079   =   1.0999  7:#108    = 126.7384m
+ +7:#1080   =   1.7545m 7:#1082   =   1.0999  7:#1083   =   1.7545m
+ +7:#1085   =   1.0999  7:#1086   =   1.7545m 7:#1088   =   1.0999 
+ +7:#1089   =   1.7545m 7:#109    = 407.4963m 7:#1091   =   1.0999 
+ +7:#1092   =   1.7545m 7:#1094   =   1.0999  7:#1095   =   1.7545m
+ +7:#1097   =   1.0999  7:#1098   =   1.7545m 7:#11     =   1.1000 
+ +7:#110    = 407.4960m 7:#1100   =   1.0999  7:#1101   =   1.7545m
+ +7:#1103   =   1.0999  7:#1104   =   1.7545m 7:#1106   =   1.0999 
+ +7:#1107   =   1.7545m 7:#1109   =   1.0999  7:#111    =   1.1000 
+ +7:#1110   =   1.7545m 7:#1112   =   1.0999  7:#1113   =   1.7545m
+ +7:#1115   =   1.0999  7:#1116   =   1.7545m 7:#1118   =   1.0999 
+ +7:#1119   =   1.7545m 7:#112    =   1.0999  7:#1121   =   1.0999 
+ +7:#1122   =   1.7545m 7:#1124   =   1.0999  7:#1125   =   1.7545m
+ +7:#1127   =   1.0999  7:#1128   =   1.7545m 7:#1130   =   1.0999 
+ +7:#1131   =   1.7545m 7:#1133   =   1.0999  7:#1134   =   1.7545m
+ +7:#1136   =   1.0999  7:#1137   =   1.7545m 7:#1139   =   1.0999 
+ +7:#114    =   3.6138u 7:#1140   =   1.7545m 7:#1142   =   1.0999 
+ +7:#1143   =   1.7545m 7:#1145   =   1.0999  7:#1146   =   1.7545m
+ +7:#1148   =   1.0999  7:#1149   =   1.7545m 7:#115    =  86.4360m
+ +7:#1151   =   1.0999  7:#1152   =   1.7545m 7:#1154   =   1.0999 
+ +7:#1155   =   1.7545m 7:#1157   =   1.0999  7:#1158   =   1.7545m
+ +7:#1160   =   1.0999  7:#1161   =   1.7545m 7:#1163   =   1.0999 
+ +7:#1164   =   1.7545m 7:#1166   =   1.0999  7:#1167   =   1.7545m
+ +7:#1169   =   1.0999  7:#117    = 256.3113m 7:#1170   =   1.7545m
+ +7:#1172   =   1.0999  7:#1173   =   1.7545m 7:#1175   =   1.0999 
+ +7:#1176   =   1.7545m 7:#1178   =   1.0999  7:#1179   =   1.7545m
+ +7:#118    = 256.3107m 7:#1181   =   1.0999  7:#1182   =   1.7545m
+ +7:#1184   =   1.0999  7:#1185   =   1.7545m 7:#1187   =   1.0999 
+ +7:#1188   =   1.7545m 7:#119    =   1.1000  7:#1190   =   1.0999 
+ +7:#1191   =   1.7545m 7:#1193   =   1.0999  7:#1194   =   1.7545m
+ +7:#1196   =   1.0999  7:#1197   =   1.7545m 7:#1199   =   1.0999 
+ +7:#12     = 261.5900m 7:#120    =   1.0999  7:#1200   =   1.7545m
+ +7:#1202   =   1.0999  7:#1203   =   1.7545m 7:#1205   =   1.0999 
+ +7:#1206   =   1.7545m 7:#1208   =   1.0999  7:#1209   =   1.7545m
+ +7:#1211   =   1.0999  7:#1212   =   1.7545m 7:#1214   =   1.0999 
+ +7:#1215   =   1.7546m 7:#1217   =   1.0999  7:#1218   =   1.7546m
+ +7:#122    =   3.6138u 7:#1220   =   1.0999  7:#1221   =   1.7546m
+ +7:#1223   =   1.0999  7:#1224   =   1.7546m 7:#1226   =   1.0999 
+ +7:#1227   = 458.5834u 7:#1229   =   1.0999  7:#123    =  86.4360m
+ +7:#1230   = 458.5834u 7:#1232   =   1.0999  7:#1233   = 458.5834u
+ +7:#1235   =   1.0999  7:#1236   = 458.5834u 7:#1238   =   1.0999 
+ +7:#1239   = 458.5834u 7:#1241   =   1.0999  7:#1242   = 458.5834u
+ +7:#1244   =   1.0999  7:#1245   = 458.5834u 7:#1247   =   1.0999 
+ +7:#1248   = 458.5834u 7:#125    = 256.3113m 7:#1250   =   1.0999 
+ +7:#1251   = 458.5834u 7:#1253   =   1.0999  7:#1254   = 458.5834u
+ +7:#1256   =   1.0999  7:#1257   = 458.5834u 7:#1259   =   1.0999 
+ +7:#126    = 256.3107m 7:#1260   = 458.5834u 7:#1262   =   1.0999 
+ +7:#1263   = 458.5834u 7:#1265   =   1.0999  7:#1266   = 458.5834u
+ +7:#1268   =   1.0999  7:#1269   = 458.5834u 7:#127    =   1.1000 
+ +7:#1271   =   1.0999  7:#1272   = 458.5834u 7:#1274   =   1.0999 
+ +7:#1275   = 458.5834u 7:#1277   =   1.0999  7:#1278   = 458.5834u
+ +7:#128    =   1.0999  7:#1280   =   1.0999  7:#1281   = 458.5834u
+ +7:#1283   =   1.0999  7:#1284   = 458.5834u 7:#1286   =   1.0999 
+ +7:#1287   = 458.5834u 7:#1289   =   1.0999  7:#1290   = 458.5834u
+ +7:#1292   =   1.0999  7:#1293   = 458.5834u 7:#1295   =   1.0999 
+ +7:#1296   = 458.5834u 7:#1298   =   1.0999  7:#1299   = 458.5834u
+ +7:#130    =  43.9038m 7:#1301   =   1.0999  7:#1302   = 458.5834u
+ +7:#1304   =   1.0999  7:#1305   = 458.5834u 7:#1307   =   1.0999 
+ +7:#1308   = 458.5834u 7:#131    = 126.7384m 7:#1310   =   1.0999 
+ +7:#1311   = 458.5834u 7:#1313   =   1.0999  7:#1314   = 458.5834u
+ +7:#1316   =   1.0999  7:#1317   = 458.5834u 7:#1319   =   1.0999 
+ +7:#132    = 407.4963m 7:#1320   = 458.5834u 7:#1322   =   1.0999 
+ +7:#1323   = 458.5834u 7:#1325   =   1.0999  7:#1326   = 458.5834u
+ +7:#1328   =   1.0999  7:#1329   = 458.5834u 7:#133    = 407.4960m
+ +7:#1331   =   1.0999  7:#1332   = 458.5834u 7:#1334   =   1.0999 
+ +7:#1335   = 458.5834u 7:#1337   =   1.0999  7:#1338   = 458.5834u
+ +7:#134    =   1.1000  7:#1340   =   1.0999  7:#1341   = 458.5834u
+ +7:#1343   =   1.0999  7:#1344   = 458.5834u 7:#1346   =   1.0999 
+ +7:#1347   = 458.5834u 7:#1349   =   1.0999  7:#135    =   1.0999 
+ +7:#1350   = 458.5834u 7:#1352   =   1.0999  7:#1353   = 458.5834u
+ +7:#1355   =   1.0999  7:#1356   = 458.5834u 7:#1358   =   1.0999 
+ +7:#1359   = 458.5834u 7:#1361   =   1.0999  7:#1362   = 458.5834u
+ +7:#1364   =   1.0999  7:#1365   = 458.5834u 7:#1367   =   1.0999 
+ +7:#1368   = 458.5834u 7:#137    =  43.9038m 7:#1370   =   1.0999 
+ +7:#1371   = 458.5834u 7:#1373   =   1.0999  7:#1374   = 458.5834u
+ +7:#1376   =   1.0999  7:#1377   = 458.5834u 7:#1379   =   1.0999 
+ +7:#138    = 126.7384m 7:#1380   = 458.5834u 7:#139    = 407.4963m
+ +7:#14     = 993.7101m 7:#140    = 407.4960m 7:#141    =   1.1000 
+ +7:#142    =   1.0999  7:#144    =   3.6138u 7:#145    =  86.4360m
+ +7:#147    = 256.3113m 7:#148    = 256.3107m 7:#149    =   1.1000 
+ +7:#150    =   1.0999  7:#152    =   3.6138u 7:#153    =  86.4360m
+ +7:#155    = 256.3113m 7:#156    = 256.3107m 7:#157    =   1.1000 
+ +7:#158    =   1.0999  7:#16     =  24.4351u 7:#160    =  43.9038m
+ +7:#161    = 126.7384m 7:#162    = 407.4963m 7:#163    = 407.4960m
+ +7:#164    =   1.1000  7:#165    =   1.0999  7:#167    =  43.9038m
+ +7:#168    = 126.7384m 7:#169    = 407.4963m 7:#170    = 407.4960m
+ +7:#171    =   1.1000  7:#172    =   1.0999  7:#174    =   3.6138u
+ +7:#175    =  86.4360m 7:#177    = 256.3113m 7:#178    = 256.3107m
+ +7:#179    =   1.1000  7:#180    =   1.0999  7:#182    =   3.6138u
+ +7:#183    =  86.4360m 7:#185    = 256.3113m 7:#186    = 256.3107m
+ +7:#187    =   1.1000  7:#188    =   1.0999  7:#190    =  43.9038m
+ +7:#191    = 126.7384m 7:#192    = 407.4963m 7:#193    = 407.4960m
+ +7:#194    =   1.1000  7:#195    =   1.0999  7:#197    =  43.9038m
+ +7:#198    = 126.7384m 7:#199    = 407.4963m 7:#200    = 407.4960m
+ +7:#201    =   1.1000  7:#202    =   1.0999  7:#204    =   3.6138u
+ +7:#205    =  86.4360m 7:#207    = 256.3113m 7:#208    = 256.3107m
+ +7:#209    =   1.1000  7:#21     = 989.3322m 7:#210    =   1.0999 
+ +7:#212    =   3.6138u 7:#213    =  86.4360m 7:#215    = 256.3113m
+ +7:#216    = 256.3107m 7:#217    =   1.1000  7:#218    =   1.0999 
+ +7:#22     = 989.3335m 7:#220    =  43.9038m 7:#221    = 126.7384m
+ +7:#222    = 407.4963m 7:#223    = 407.4960m 7:#224    =   1.1000 
+ +7:#225    =   1.0999  7:#227    =  43.9038m 7:#228    = 126.7384m
+ +7:#229    = 407.4963m 7:#230    = 407.4960m 7:#231    =   1.1000 
+ +7:#232    =   1.0999  7:#234    =   3.6138u 7:#235    =  86.4360m
+ +7:#237    = 256.3113m 7:#238    = 256.3107m 7:#239    =   1.1000 
+ +7:#24     = 989.3328m 7:#240    =   1.0999  7:#242    =   3.6138u
+ +7:#243    =  86.4360m 7:#245    = 256.3113m 7:#246    = 256.3107m
+ +7:#247    =   1.1000  7:#248    =   1.0999  7:#25     = 989.3317m
+ +7:#250    =  43.9038m 7:#251    = 126.7384m 7:#252    = 407.4963m
+ +7:#253    = 407.4960m 7:#254    =   1.1000  7:#255    =   1.0999 
+ +7:#257    =  43.9038m 7:#258    = 126.7384m 7:#259    = 407.4963m
+ +7:#260    = 407.4960m 7:#261    =   1.1000  7:#262    =   1.0999 
+ +7:#264    =   3.6138u 7:#265    =  86.4360m 7:#267    = 256.3113m
+ +7:#268    = 256.3107m 7:#269    =   1.1000  7:#27     = 884.0404m
+ +7:#270    =   1.0999  7:#272    =   3.6138u 7:#273    =  86.4360m
+ +7:#275    = 256.3113m 7:#276    = 256.3107m 7:#277    =   1.1000 
+ +7:#278    =   1.0999  7:#280    =  43.9038m 7:#281    = 126.7384m
+ +7:#282    = 407.4963m 7:#283    = 407.4960m 7:#284    =   1.1000 
+ +7:#285    =   1.0999  7:#287    =  43.9038m 7:#288    = 126.7384m
+ +7:#289    = 407.4963m 7:#290    = 407.4960m 7:#291    =   1.1000 
+ +7:#292    =   1.0999  7:#294    =   3.6138u 7:#295    =  86.4360m
+ +7:#297    = 256.3113m 7:#298    = 256.3107m 7:#299    =   1.1000 
+ +7:#3      =   1.0998  7:#30     = 121.2274u 7:#300    =   1.0999 
+ +7:#302    =   3.6138u 7:#303    =  86.4360m 7:#305    = 256.3113m
+ +7:#306    = 256.3107m 7:#307    =   1.1000  7:#308    =   1.0999 
+ +7:#31     =  62.8336u 7:#310    =  43.9038m 7:#311    = 126.7384m
+ +7:#312    = 407.4963m 7:#313    = 407.4960m 7:#314    =   1.1000 
+ +7:#315    =   1.0999  7:#317    =  43.9038m 7:#318    = 126.7384m
+ +7:#319    = 407.4963m 7:#32     = 148.1626u 7:#320    = 407.4960m
+ +7:#321    =   1.1000  7:#322    =   1.0999  7:#324    =   3.6138u
+ +7:#325    =  86.4360m 7:#327    = 256.3113m 7:#328    = 256.3107m
+ +7:#329    =   1.1000  7:#330    =   1.0999  7:#332    =   3.6138u
+ +7:#333    =  86.4360m 7:#335    = 256.3113m 7:#336    = 256.3107m
+ +7:#337    =   1.1000  7:#338    =   1.0999  7:#34     = 993.8714m
+ +7:#340    =  43.9038m 7:#341    = 126.7384m 7:#342    = 407.4963m
+ +7:#343    = 407.4960m 7:#344    =   1.1000  7:#345    =   1.0999 
+ +7:#347    =  43.9038m 7:#348    = 126.7384m 7:#349    = 407.4963m
+ +7:#350    = 407.4960m 7:#351    =   1.1000  7:#352    =   1.0999 
+ +7:#354    =   3.6138u 7:#355    =  86.4360m 7:#357    = 256.3113m
+ +7:#358    = 256.3107m 7:#359    =   1.1000  7:#36     =  43.3862u
+ +7:#360    =   1.0999  7:#362    =   3.6138u 7:#363    =  86.4360m
+ +7:#365    = 256.3113m 7:#366    = 256.3107m 7:#367    =   1.1000 
+ +7:#368    =   1.0999  7:#37     =  86.4281m 7:#370    =  43.9038m
+ +7:#371    = 126.7384m 7:#372    = 407.4963m 7:#373    = 407.4960m
+ +7:#374    =   1.1000  7:#375    =   1.0999  7:#377    =  43.9038m
+ +7:#378    = 126.7384m 7:#379    = 407.4963m 7:#380    = 407.4960m
+ +7:#381    =   1.1000  7:#382    =   1.0999  7:#384    =   3.6138u
+ +7:#385    =  86.4360m 7:#387    = 256.3113m 7:#388    = 256.3107m
+ +7:#389    =   1.1000  7:#39     =   1.1000  7:#390    =   1.0999 
+ +7:#392    =   3.6138u 7:#393    =  86.4360m 7:#395    = 256.3113m
+ +7:#396    = 256.3107m 7:#397    =   1.1000  7:#398    =   1.0999 
+ +7:#400    =  43.9038m 7:#401    = 126.7384m 7:#402    = 407.4963m
+ +7:#403    = 407.4960m 7:#404    =   1.1000  7:#405    =   1.0999 
+ +7:#407    =  43.9038m 7:#408    = 126.7384m 7:#409    = 407.4963m
+ +7:#41     =   1.1000  7:#410    = 407.4960m 7:#411    =   1.1000 
+ +7:#412    =   1.0999  7:#414    =   3.6138u 7:#415    =  86.4360m
+ +7:#417    = 256.3113m 7:#418    = 256.3107m 7:#419    =   1.1000 
+ +7:#42     =  86.5388m 7:#420    =   1.0999  7:#422    =   3.6138u
+ +7:#423    =  86.4360m 7:#425    = 256.3113m 7:#426    = 256.3107m
+ +7:#427    =   1.1000  7:#428    =   1.0999  7:#43     = 802.8015m
+ +7:#430    =  43.9038m 7:#431    = 126.7384m 7:#432    = 407.4963m
+ +7:#433    = 407.4960m 7:#434    =   1.1000  7:#435    =   1.0999 
+ +7:#437    =  43.9038m 7:#438    = 126.7384m 7:#439    = 407.4963m
+ +7:#44     = 551.4742m 7:#440    = 407.4960m 7:#441    =   1.1000 
+ +7:#442    =   1.0999  7:#444    =   3.6138u 7:#445    =  86.4360m
+ +7:#447    = 256.3113m 7:#448    = 256.3107m 7:#449    =   1.1000 
+ +7:#45     = 551.4741m 7:#450    =   1.0999  7:#452    =   3.6138u
+ +7:#453    =  86.4360m 7:#455    = 256.3113m 7:#456    = 256.3107m
+ +7:#457    =   1.1000  7:#458    =   1.0999  7:#460    =  43.9038m
+ +7:#461    = 126.7384m 7:#462    = 407.4963m 7:#463    = 407.4960m
+ +7:#464    =   1.1000  7:#465    =   1.0999  7:#467    =  43.9038m
+ +7:#468    = 126.7384m 7:#469    = 407.4963m 7:#47     =   1.0999 
+ +7:#470    = 407.4960m 7:#471    =   1.1000  7:#472    =   1.0999 
+ +7:#474    =   3.6138u 7:#475    =  86.4360m 7:#477    = 256.3113m
+ +7:#478    = 256.3107m 7:#479    =   1.1000  7:#48     =   1.1000 
+ +7:#480    =   1.0999  7:#482    =   3.6138u 7:#483    =  86.4360m
+ +7:#485    = 256.3113m 7:#486    = 256.3107m 7:#487    =   1.1000 
+ +7:#488    =   1.0999  7:#49     =   1.1000  7:#490    =  43.9038m
+ +7:#491    = 126.7384m 7:#492    = 407.4963m 7:#493    = 407.4960m
+ +7:#494    =   1.1000  7:#495    =   1.0999  7:#497    =  43.9038m
+ +7:#498    = 126.7384m 7:#499    = 407.4963m 7:#50     =   1.0999 
+ +7:#500    = 407.4960m 7:#501    =   1.1000  7:#502    =   1.0999 
+ +7:#504    =   3.6138u 7:#505    =  86.4360m 7:#507    = 256.3113m
+ +7:#508    = 256.3107m 7:#509    =   1.1000  7:#510    =   1.0999 
+ +7:#512    =   3.6138u 7:#513    =  86.4360m 7:#515    = 256.3113m
+ +7:#516    = 256.3107m 7:#517    =   1.1000  7:#518    =   1.0999 
+ +7:#52     =   3.6138u 7:#520    =  43.9038m 7:#521    = 126.7384m
+ +7:#522    = 407.4963m 7:#523    = 407.4960m 7:#524    =   1.1000 
+ +7:#525    =   1.0999  7:#527    =  43.9038m 7:#528    = 126.7384m
+ +7:#529    = 407.4963m 7:#53     =  86.4360m 7:#530    = 407.4960m
+ +7:#531    =   1.1000  7:#532    =   1.0999  7:#534    =   3.6138u
+ +7:#535    =  86.4360m 7:#537    = 256.3113m 7:#538    = 256.3107m
+ +7:#539    =   1.1000  7:#540    =   1.0999  7:#542    =   3.6138u
+ +7:#543    =  86.4360m 7:#545    = 256.3113m 7:#546    = 256.3107m
+ +7:#547    =   1.1000  7:#548    =   1.0999  7:#55     = 256.3114m
+ +7:#550    =  43.9038m 7:#551    = 126.7384m 7:#552    = 407.4963m
+ +7:#553    = 407.4960m 7:#554    =   1.1000  7:#555    =   1.0999 
+ +7:#557    =  43.9038m 7:#558    = 126.7384m 7:#559    = 407.4963m
+ +7:#56     = 256.3108m 7:#560    = 407.4960m 7:#561    =   1.1000 
+ +7:#562    =   1.0999  7:#564    =   3.6138u 7:#565    =  86.4354m
+ +7:#567    = 256.3113m 7:#568    = 256.3107m 7:#569    =   1.1000 
+ +7:#570    =   1.0999  7:#572    =   3.6138u 7:#573    =  86.4349m
+ +7:#574    = 256.3113m 7:#575    = 256.3107m 7:#576    =   1.1000 
+ +7:#577    =   1.0999  7:#579    =  43.9040m 7:#58     =   1.1000 
+ +7:#580    = 126.7380m 7:#581    = 407.4968m 7:#582    = 407.4965m
+ +7:#583    =   1.1000  7:#584    =   1.0999  7:#586    =  43.9041m
+ +7:#587    = 126.7377m 7:#588    = 407.4971m 7:#589    = 407.4969m
+ +7:#59     =   1.0999  7:#590    =   1.1000  7:#591    =   1.0999 
+ +7:#593    =  86.4402m 7:#594    =   2.7215u 7:#595    =   1.1000 
+ +7:#597    =  12.2812u 7:#598    =  86.4481m 7:#599    = 820.5727m
+ +7:#600    =  19.6203u 7:#601    =   1.1000  7:#602    =   1.0999 
+ +7:#604    = 105.1333m 7:#605    =  20.3129m 7:#606    =   1.1000 
+ +7:#608    = 255.9119m 7:#609    = 218.2951m 7:#61     =   3.6138u
+ +7:#610    = 898.1022m 7:#611    = 255.9124m 7:#612    =   1.1000 
+ +7:#613    =   1.0999  7:#615    = 256.1044m 7:#616    =   3.1110u
+ +7:#617    = 256.1050m 7:#619    = 256.1044m 7:#62     =  86.4360m
+ +7:#620    =   3.1110u 7:#622    = 256.1049m 7:#624    = 378.4018m
+ +7:#625    =  35.3883m 7:#626    = 378.4022m 7:#628    = 378.4018m
+ +7:#629    =  35.3883m 7:#630    = 378.4021m 7:#632    = 256.1067m
+ +7:#633    =   3.1110u 7:#635    = 256.1073m 7:#637    = 256.1067m
+ +7:#638    =   3.1110u 7:#64     = 256.3114m 7:#640    = 256.1073m
+ +7:#642    = 378.4025m 7:#643    =  35.3879m 7:#644    = 378.4028m
+ +7:#646    = 378.4025m 7:#647    =  35.3879m 7:#648    = 378.4028m
+ +7:#65     = 256.3108m 7:#650    = 256.1067m 7:#651    =   3.1110u
+ +7:#653    = 256.1073m 7:#655    = 256.1067m 7:#656    =   3.1110u
+ +7:#658    = 256.1073m 7:#660    = 378.4025m 7:#661    =  35.3879m
+ +7:#662    = 378.4028m 7:#664    = 378.4025m 7:#665    =  35.3879m
+ +7:#666    = 378.4028m 7:#668    = 256.1067m 7:#669    =   3.1110u
+ +7:#67     =   1.1000  7:#671    = 256.1073m 7:#673    = 256.1067m
+ +7:#674    =   3.1110u 7:#676    = 256.1073m 7:#678    = 378.4025m
+ +7:#679    =  35.3879m 7:#68     =   1.0999  7:#680    = 378.4028m
+ +7:#682    = 378.4025m 7:#683    =  35.3879m 7:#684    = 378.4028m
+ +7:#686    = 256.1067m 7:#687    =   3.1110u 7:#689    = 256.1073m
+ +7:#691    = 256.1067m 7:#692    =   3.1110u 7:#694    = 256.1073m
+ +7:#696    = 378.4025m 7:#697    =  35.3879m 7:#698    = 378.4028m
+ +7:#7      = 820.5721m 7:#70     =  43.9038m 7:#700    = 378.4025m
+ +7:#701    =  35.3879m 7:#702    = 378.4028m 7:#704    = 256.1067m
+ +7:#705    =   3.1110u 7:#707    = 256.1073m 7:#709    = 256.1067m
+ +7:#71     = 126.7384m 7:#710    =   3.1110u 7:#712    = 256.1073m
+ +7:#714    = 378.4025m 7:#715    =  35.3879m 7:#716    = 378.4028m
+ +7:#718    = 378.4025m 7:#719    =  35.3879m 7:#72     = 407.4963m
+ +7:#720    = 378.4028m 7:#722    = 256.1067m 7:#723    =   3.1110u
+ +7:#725    = 256.1073m 7:#727    = 256.1067m 7:#728    =   3.1110u
+ +7:#73     = 407.4961m 7:#730    = 256.1073m 7:#732    = 378.4025m
+ +7:#733    =  35.3879m 7:#734    = 378.4028m 7:#736    = 378.4025m
+ +7:#737    =  35.3879m 7:#738    = 378.4028m 7:#74     =   1.1000 
+ +7:#740    = 256.1067m 7:#741    =   3.1110u 7:#743    = 256.1073m
+ +7:#745    = 256.1067m 7:#746    =   3.1110u 7:#748    = 256.1073m
+ +7:#75     =   1.0999  7:#750    = 378.4025m 7:#751    =  35.3879m
+ +7:#752    = 378.4028m 7:#754    = 378.4025m 7:#755    =  35.3879m
+ +7:#756    = 378.4028m 7:#758    = 256.1067m 7:#759    =   3.1110u
+ +7:#761    = 256.1073m 7:#763    = 256.1067m 7:#764    =   3.1110u
+ +7:#766    = 256.1073m 7:#768    = 378.4025m 7:#769    =  35.3879m
+ +7:#77     =  43.9038m 7:#770    = 378.4028m 7:#772    = 378.4025m
+ +7:#773    =  35.3879m 7:#774    = 378.4028m 7:#776    = 256.1067m
+ +7:#777    =   3.1110u 7:#779    = 256.1073m 7:#78     = 126.7384m
+ +7:#781    = 256.1067m 7:#782    =   3.1110u 7:#784    = 256.1073m
+ +7:#786    = 378.4025m 7:#787    =  35.3879m 7:#788    = 378.4028m
+ +7:#79     = 407.4963m 7:#790    = 378.4025m 7:#791    =  35.3879m
+ +7:#792    = 378.4028m 7:#794    = 256.1067m 7:#795    =   3.1110u
+ +7:#797    = 256.1073m 7:#799    = 256.1067m 7:#80     = 407.4961m
+ +7:#800    =   3.1110u 7:#802    = 256.1073m 7:#804    = 378.4025m
+ +7:#805    =  35.3879m 7:#806    = 378.4028m 7:#808    = 378.4025m
+ +7:#809    =  35.3879m 7:#81     =   1.1000  7:#810    = 378.4028m
+ +7:#812    = 256.1067m 7:#813    =   3.1110u 7:#815    = 256.1073m
+ +7:#817    = 256.1067m 7:#818    =   3.1110u 7:#82     =   1.0999 
+ +7:#820    = 256.1073m 7:#822    = 378.4025m 7:#823    =  35.3879m
+ +7:#824    = 378.4028m 7:#826    = 378.4025m 7:#827    =  35.3879m
+ +7:#828    = 378.4028m 7:#830    = 256.1067m 7:#831    =   3.1110u
+ +7:#833    = 256.1073m 7:#835    = 256.1067m 7:#836    =   3.1110u
+ +7:#838    = 256.1073m 7:#84     =   3.6138u 7:#840    = 378.4025m
+ +7:#841    =  35.3879m 7:#842    = 378.4028m 7:#844    = 378.4025m
+ +7:#845    =  35.3879m 7:#846    = 378.4028m 7:#85     =  86.4360m
+ +7:#87     = 256.3113m 7:#88     = 256.3107m 7:#89     =   1.1000 
+ +7:#90     =   1.0999  7:#92     =   3.6138u 7:#93     =  86.4360m
+ +7:#95     = 256.3113m 7:#96     = 256.3107m 7:#97     =   1.1000 
+ +7:#977    =   1.0998  7:#978    =   1.7545m 7:#98     =   1.0999 
+ +7:#980    =   1.1000  7:#981    =   1.7546m 7:#983    =   1.0995 
+ +7:#984    = 153.3795u 7:#986    =   1.0990  7:#987    = 372.5434u
+ +7:#989    =   1.0999  7:#990    =  10.6153m 7:#992    =   1.0999 
+ +7:#993    =   1.7546m 7:#995    =   1.0995  7:#996    = 158.9853u
+ +7:#998    =   1.0999  7:#999    =   1.7545m 7:#fb1000#=  12.3089u
+ +7:#fb1003#=  12.3090u 7:#fb1006#=  12.3090u 7:#fb1009#=  12.3089u
+ +7:#fb1012#=  12.3089u 7:#fb1015#=  12.3090u 7:#fb1018#=  12.3090u
+ +7:#fb1021#=  12.3089u 7:#fb1024#=  12.3089u 7:#fb1027#=  12.3090u
+ +7:#fb1030#=  12.3090u 7:#fb1033#=  12.3089u 7:#fb1036#=  12.3089u
+ +7:#fb1039#=  12.3090u 7:#fb1042#=  12.3090u 7:#fb1045#=  12.3089u
+ +7:#fb1048#=  12.3089u 7:#fb1051#=  12.3090u 7:#fb1054#=  12.3090u
+ +7:#fb1057#=  12.3089u 7:#fb1060#=  12.3089u 7:#fb1063#=  12.3090u
+ +7:#fb1066#=  12.3090u 7:#fb1069#=  12.3089u 7:#fb1072#=  12.3089u
+ +7:#fb1075#=  12.3090u 7:#fb1078#=  12.3090u 7:#fb1081#=  12.3089u
+ +7:#fb1084#=  12.3089u 7:#fb1087#=  12.3090u 7:#fb1090#=  12.3090u
+ +7:#fb1093#=  12.3089u 7:#fb1096#=  12.3089u 7:#fb1099#=  12.3090u
+ +7:#fb1102#=  12.3090u 7:#fb1105#=  12.3089u 7:#fb1108#=  12.3089u
+ +7:#fb1111#=  12.3090u 7:#fb1114#=  12.3090u 7:#fb1117#=  12.3089u
+ +7:#fb1120#=  12.3089u 7:#fb1123#=  12.3090u 7:#fb1126#=  12.3090u
+ +7:#fb1129#=  12.3089u 7:#fb1132#=  12.3089u 7:#fb1135#=  12.3090u
+ +7:#fb1138#=  12.3090u 7:#fb1141#=  12.3089u 7:#fb1144#=  12.3089u
+ +7:#fb1147#=  12.3090u 7:#fb1150#=  12.3090u 7:#fb1153#=  12.3089u
+ +7:#fb1156#=  12.3089u 7:#fb1159#=  12.3090u 7:#fb1162#=  12.3090u
+ +7:#fb1165#=  12.3089u 7:#fb1168#=  12.3089u 7:#fb1171#=  12.3090u
+ +7:#fb1174#=  12.3090u 7:#fb1177#=  12.3089u 7:#fb1180#=  12.3089u
+ +7:#fb1183#=  12.3090u 7:#fb1186#=  12.3090u 7:#fb1189#=  12.3089u
+ +7:#fb1192#=  12.3089u 7:#fb1195#=  12.3090u 7:#fb1198#=  12.3090u
+ +7:#fb1201#=  12.3089u 7:#fb1204#=  12.3089u 7:#fb1207#=  12.3090u
+ +7:#fb1210#=  12.3090u 7:#fb1213#=  12.3130u 7:#fb1216#=  12.3122u
+ +7:#fb1219#=  12.3130u 7:#fb1222#=  12.3130u 7:#fb1225#=  12.3128u
+ +7:#fb1228#=  12.3128u 7:#fb1231#=  12.3128u 7:#fb1234#=  12.3128u
+ +7:#fb1237#=  12.3128u 7:#fb1240#=  12.3128u 7:#fb1243#=  12.3128u
+ +7:#fb1246#=  12.3128u 7:#fb1249#=  12.3128u 7:#fb1252#=  12.3128u
+ +7:#fb1255#=  12.3128u 7:#fb1258#=  12.3128u 7:#fb1261#=  12.3128u
+ +7:#fb1264#=  12.3128u 7:#fb1267#=  12.3128u 7:#fb1270#=  12.3128u
+ +7:#fb1273#=  12.3128u 7:#fb1276#=  12.3128u 7:#fb1279#=  12.3128u
+ +7:#fb1282#=  12.3128u 7:#fb1285#=  12.3128u 7:#fb1288#=  12.3128u
+ +7:#fb1291#=  12.3128u 7:#fb1294#=  12.3128u 7:#fb1297#=  12.3128u
+ +7:#fb1300#=  12.3128u 7:#fb1303#=  12.3128u 7:#fb1306#=  12.3128u
+ +7:#fb1309#=  12.3128u 7:#fb1312#=  12.3128u 7:#fb1315#=  12.3128u
+ +7:#fb1318#=  12.3128u 7:#fb1321#=  12.3128u 7:#fb1324#=  12.3128u
+ +7:#fb1327#=  12.3128u 7:#fb1330#=  12.3128u 7:#fb1333#=  12.3128u
+ +7:#fb1336#=  12.3128u 7:#fb1339#=  12.3128u 7:#fb1342#=  12.3128u
+ +7:#fb1345#=  12.3128u 7:#fb1348#=  12.3128u 7:#fb1351#=  12.3128u
+ +7:#fb1354#=  12.3128u 7:#fb1357#=  12.3128u 7:#fb1360#=  12.3128u
+ +7:#fb1363#=  12.3128u 7:#fb1366#=  12.3128u 7:#fb1369#=  12.3128u
+ +7:#fb1372#=  12.3128u 7:#fb1375#=  12.3128u 7:#fb1378#=  12.3128u
+ +7:#fb976# =  12.3056u 7:#fb979# =  12.3152u 7:#fb982# =   1.1000 
+ +7:#fb985# =   1.1000  7:#fb988# =  12.3124u 7:#fb991# =  12.3124u
+ +7:#fb994# =   1.1000  7:#fb997# =  12.3089u 7:a       = 175.1823u
+ +7:inv__a  =   1.1000  7:inv__i__=   1.1000  7:inv__i__=   1.1000 
+ +7:inv__i__=   1.1000  7:inv__p  =  14.7339u 7:inv__res=  14.9399u
+ +7:inv__s  =  22.0650u 7:inv__w__=   1.1000  7:inv__w__=   1.1000 
+ +7:inv__w__=   1.0999  7:n__i__a =   1.0999  7:n__o0__f=   1.0999 
+ +7:n__o0__f=   1.0999  7:n__o0__f=   1.0999  7:n__o0__f=   1.0999 
+ +7:n__o0__f=   1.0999  7:n__o0__f=   1.0999  7:n__o0__f=   1.0999 
+ +7:n__o0__f=   1.0999  7:n__o0__f=   1.0999  7:n__o0__f=   1.0999 
+ +7:n__o0__f=   1.0999  7:n__o0__f=   1.0999  7:n__o0__f=   1.0999 
+ +7:n__o0__f=   1.0999  7:n__o0__f=   1.0999  7:n__o0__f=   1.0999 
+ +7:n__o0__f=   1.0999  7:n__o0__f=   1.0999  7:n__o0__f=   1.0999 
+ +7:n__o0__f=   1.0999  7:n__o0__f=   1.0999  7:n__o0__f=   1.0999 
+ +7:n__o0__f=   1.0999  7:n__o0__f=   1.0999  7:n__o0__f=   1.0999 
+ +7:n__o0__f=   1.0999  7:n__o0__f=   1.0999  7:n__o0__f=   1.0999 
+ +7:n__o0__f=   1.0999  7:n__o0__f=   1.0999  7:n__o0__f=   1.0999 
+ +7:n__o0__f=   1.0999  7:n__o0__t=   1.0999  7:n__o0__t=   1.0999 
+ +7:n__o0__t=   1.0999  7:n__o0__t=   1.0999  7:n__o0__t=   1.0999 
+ +7:n__o0__t=   1.0999  7:n__o0__t=   1.0999  7:n__o0__t=   1.0999 
+ +7:n__o0__t=   1.0999  7:n__o0__t=   1.0999  7:n__o0__t=   1.0999 
+ +7:n__o0__t=   1.0999  7:n__o0__t=   1.0999  7:n__o0__t=   1.0999 
+ +7:n__o0__t=   1.0999  7:n__o0__t=   1.0999  7:n__o0__t=   1.0999 
+ +7:n__o0__t=   1.0999  7:n__o0__t=   1.0999  7:n__o0__t=   1.0999 
+ +7:n__o0__t=   1.0999  7:n__o0__t=   1.0999  7:n__o0__t=   1.0999 
+ +7:n__o0__t=   1.0999  7:n__o0__t=   1.0999  7:n__o0__t=   1.0999 
+ +7:n__o0__t=   1.0999  7:n__o0__t=   1.0999  7:n__o0__t=   1.0999 
+ +7:n__o0__t=   1.0999  7:n__o0__t=   1.0999  7:n__o0__t=   1.0999 
+ +7:n__o1__f=   1.0999  7:n__o1__f=   1.0999  7:n__o1__f=   1.0999 
+ +7:n__o1__f=   1.0999  7:n__o1__f=   1.0999  7:n__o1__f=   1.0999 
+ +7:n__o1__f=   1.0999  7:n__o1__f=   1.0999  7:n__o1__f=   1.0999 
+ +7:n__o1__f=   1.0999  7:n__o1__f=   1.0999  7:n__o1__f=   1.0999 
+ +7:n__o1__f=   1.0999  7:n__o1__f=   1.0999  7:n__o1__f=   1.0999 
+ +7:n__o1__f=   1.0999  7:n__o1__f=   1.0999  7:n__o1__f=   1.0999 
+ +7:n__o1__f=   1.0999  7:n__o1__f=   1.0999  7:n__o1__f=   1.0999 
+ +7:n__o1__f=   1.0999  7:n__o1__f=   1.0999  7:n__o1__f=   1.0999 
+ +7:n__o1__f=   1.0999  7:n__o1__f=   1.0999  7:n__o1__f=   1.0999 
+ +7:n__o1__f=   1.0999  7:n__o1__f=   1.0999  7:n__o1__f=   1.0999 
+ +7:n__o1__f=   1.0999  7:n__o1__f=   1.0999  7:n__o1__t=   1.0999 
+ +7:n__o1__t=   1.0999  7:n__o1__t=   1.0999  7:n__o1__t=   1.0999 
+ +7:n__o1__t=   1.0999  7:n__o1__t=   1.0999  7:n__o1__t=   1.0999 
+ +7:n__o1__t=   1.0999  7:n__o1__t=   1.0999  7:n__o1__t=   1.0999 
+ +7:n__o1__t=   1.0999  7:n__o1__t=   1.0999  7:n__o1__t=   1.0999 
+ +7:n__o1__t=   1.0999  7:n__o1__t=   1.0999  7:n__o1__t=   1.0999 
+ +7:n__o1__t=   1.0999  7:n__o1__t=   1.0999  7:n__o1__t=   1.0999 
+ +7:n__o1__t=   1.0999  7:n__o1__t=   1.0999  7:n__o1__t=   1.0999 
+ +7:n__o1__t=   1.0999  7:n__o1__t=   1.0999  7:n__o1__t=   1.0999 
+ +7:n__o1__t=   1.0999  7:n__o1__t=   1.0999  7:n__o1__t=   1.0999 
+ +7:n__o1__t=   1.0999  7:n__o1__t=   1.0999  7:n__o1__t=   1.0999 
+ +7:n__o1__t=   1.0999  7:p       =   1.0998  7:s       =   1.1000 
+ +7:w__0    =  86.6801u 7:w__0i   =  36.6641u 7:w__1    =  15.2792u
+ +8:#100    =  43.9038m 8:#1001   =   1.0999  8:#1002   =   1.7545m
+ +8:#1004   =   1.0999  8:#1005   =   1.7545m 8:#1007   =   1.0999 
+ +8:#1008   =   1.7545m 8:#101    = 126.7384m 8:#1010   =   1.0999 
+ +8:#1011   =   1.7545m 8:#1013   =   1.0999  8:#1014   =   1.7545m
+ +8:#1016   =   1.0999  8:#1017   =   1.7545m 8:#1019   =   1.0999 
+ +8:#102    = 407.4963m 8:#1020   =   1.7545m 8:#1022   =   1.0999 
+ +8:#1023   =   1.7545m 8:#1025   =   1.0999  8:#1026   =   1.7545m
+ +8:#1028   =   1.0999  8:#1029   =   1.7545m 8:#103    = 407.4960m
+ +8:#1031   =   1.0999  8:#1032   =   1.7545m 8:#1034   =   1.0999 
+ +8:#1035   =   1.7545m 8:#1037   =   1.0999  8:#1038   =   1.7545m
+ +8:#104    =   1.1000  8:#1040   =   1.0999  8:#1041   =   1.7545m
+ +8:#1043   =   1.0999  8:#1044   =   1.7545m 8:#1046   =   1.0999 
+ +8:#1047   =   1.7545m 8:#1049   =   1.0999  8:#105    =   1.0999 
+ +8:#1050   =   1.7545m 8:#1052   =   1.0999  8:#1053   =   1.7545m
+ +8:#1055   =   1.0999  8:#1056   =   1.7545m 8:#1058   =   1.0999 
+ +8:#1059   =   1.7545m 8:#1061   =   1.0999  8:#1062   =   1.7545m
+ +8:#1064   =   1.0999  8:#1065   =   1.7545m 8:#1067   =   1.0999 
+ +8:#1068   =   1.7545m 8:#107    =  43.9038m 8:#1070   =   1.0999 
+ +8:#1071   =   1.7545m 8:#1073   =   1.0999  8:#1074   =   1.7545m
+ +8:#1076   =   1.0999  8:#1077   =   1.7545m 8:#1079   =   1.0999 
+ +8:#108    = 126.7384m 8:#1080   =   1.7545m 8:#1082   =   1.0999 
+ +8:#1083   =   1.7545m 8:#1085   =   1.0999  8:#1086   =   1.7545m
+ +8:#1088   =   1.0999  8:#1089   =   1.7545m 8:#109    = 407.4963m
+ +8:#1091   =   1.0999  8:#1092   =   1.7545m 8:#1094   =   1.0999 
+ +8:#1095   =   1.7545m 8:#1097   =   1.0999  8:#1098   =   1.7545m
+ +8:#11     =   1.1000  8:#110    = 407.4960m 8:#1100   =   1.0999 
+ +8:#1101   =   1.7545m 8:#1103   =   1.0999  8:#1104   =   1.7545m
+ +8:#1106   =   1.0999  8:#1107   =   1.7545m 8:#1109   =   1.0999 
+ +8:#111    =   1.1000  8:#1110   =   1.7545m 8:#1112   =   1.0999 
+ +8:#1113   =   1.7545m 8:#1115   =   1.0999  8:#1116   =   1.7545m
+ +8:#1118   =   1.0999  8:#1119   =   1.7545m 8:#112    =   1.0999 
+ +8:#1121   =   1.0999  8:#1122   =   1.7545m 8:#1124   =   1.0999 
+ +8:#1125   =   1.7545m 8:#1127   =   1.0999  8:#1128   =   1.7545m
+ +8:#1130   =   1.0999  8:#1131   =   1.7545m 8:#1133   =   1.0999 
+ +8:#1134   =   1.7545m 8:#1136   =   1.0999  8:#1137   =   1.7545m
+ +8:#1139   =   1.0999  8:#114    =   3.6138u 8:#1140   =   1.7545m
+ +8:#1142   =   1.0999  8:#1143   =   1.7545m 8:#1145   =   1.0999 
+ +8:#1146   =   1.7545m 8:#1148   =   1.0999  8:#1149   =   1.7545m
+ +8:#115    =  86.4360m 8:#1151   =   1.0999  8:#1152   =   1.7545m
+ +8:#1154   =   1.0999  8:#1155   =   1.7545m 8:#1157   =   1.0999 
+ +8:#1158   =   1.7545m 8:#1160   =   1.0999  8:#1161   =   1.7545m
+ +8:#1163   =   1.0999  8:#1164   =   1.7545m 8:#1166   =   1.0999 
+ +8:#1167   =   1.7545m 8:#1169   =   1.0999  8:#117    = 256.3113m
+ +8:#1170   =   1.7545m 8:#1172   =   1.0999  8:#1173   =   1.7545m
+ +8:#1175   =   1.0999  8:#1176   =   1.7545m 8:#1178   =   1.0999 
+ +8:#1179   =   1.7545m 8:#118    = 256.3107m 8:#1181   =   1.0999 
+ +8:#1182   =   1.7545m 8:#1184   =   1.0999  8:#1185   =   1.7545m
+ +8:#1187   =   1.0999  8:#1188   =   1.7545m 8:#119    =   1.1000 
+ +8:#1190   =   1.0999  8:#1191   =   1.7545m 8:#1193   =   1.0999 
+ +8:#1194   =   1.7545m 8:#1196   =   1.0999  8:#1197   =   1.7545m
+ +8:#1199   =   1.0999  8:#12     = 261.5900m 8:#120    =   1.0999 
+ +8:#1200   =   1.7545m 8:#1202   =   1.0999  8:#1203   =   1.7545m
+ +8:#1205   =   1.0999  8:#1206   =   1.7545m 8:#1208   =   1.0999 
+ +8:#1209   =   1.7545m 8:#1211   =   1.0999  8:#1212   =   1.7545m
+ +8:#1214   =   1.0999  8:#1215   =   1.7546m 8:#1217   =   1.0999 
+ +8:#1218   =   1.7546m 8:#122    =   3.6138u 8:#1220   =   1.0999 
+ +8:#1221   =   1.7546m 8:#1223   =   1.0999  8:#1224   =   1.7546m
+ +8:#1226   =   1.0999  8:#1227   = 458.5834u 8:#1229   =   1.0999 
+ +8:#123    =  86.4360m 8:#1230   = 458.5834u 8:#1232   =   1.0999 
+ +8:#1233   = 458.5834u 8:#1235   =   1.0999  8:#1236   = 458.5834u
+ +8:#1238   =   1.0999  8:#1239   = 458.5834u 8:#1241   =   1.0999 
+ +8:#1242   = 458.5834u 8:#1244   =   1.0999  8:#1245   = 458.5834u
+ +8:#1247   =   1.0999  8:#1248   = 458.5834u 8:#125    = 256.3113m
+ +8:#1250   =   1.0999  8:#1251   = 458.5834u 8:#1253   =   1.0999 
+ +8:#1254   = 458.5834u 8:#1256   =   1.0999  8:#1257   = 458.5834u
+ +8:#1259   =   1.0999  8:#126    = 256.3107m 8:#1260   = 458.5834u
+ +8:#1262   =   1.0999  8:#1263   = 458.5834u 8:#1265   =   1.0999 
+ +8:#1266   = 458.5834u 8:#1268   =   1.0999  8:#1269   = 458.5834u
+ +8:#127    =   1.1000  8:#1271   =   1.0999  8:#1272   = 458.5834u
+ +8:#1274   =   1.0999  8:#1275   = 458.5834u 8:#1277   =   1.0999 
+ +8:#1278   = 458.5834u 8:#128    =   1.0999  8:#1280   =   1.0999 
+ +8:#1281   = 458.5834u 8:#1283   =   1.0999  8:#1284   = 458.5834u
+ +8:#1286   =   1.0999  8:#1287   = 458.5834u 8:#1289   =   1.0999 
+ +8:#1290   = 458.5834u 8:#1292   =   1.0999  8:#1293   = 458.5834u
+ +8:#1295   =   1.0999  8:#1296   = 458.5834u 8:#1298   =   1.0999 
+ +8:#1299   = 458.5834u 8:#130    =  43.9038m 8:#1301   =   1.0999 
+ +8:#1302   = 458.5834u 8:#1304   =   1.0999  8:#1305   = 458.5834u
+ +8:#1307   =   1.0999  8:#1308   = 458.5834u 8:#131    = 126.7384m
+ +8:#1310   =   1.0999  8:#1311   = 458.5834u 8:#1313   =   1.0999 
+ +8:#1314   = 458.5834u 8:#1316   =   1.0999  8:#1317   = 458.5834u
+ +8:#1319   =   1.0999  8:#132    = 407.4963m 8:#1320   = 458.5834u
+ +8:#1322   =   1.0999  8:#1323   = 458.5834u 8:#1325   =   1.0999 
+ +8:#1326   = 458.5834u 8:#1328   =   1.0999  8:#1329   = 458.5834u
+ +8:#133    = 407.4960m 8:#1331   =   1.0999  8:#1332   = 458.5834u
+ +8:#1334   =   1.0999  8:#1335   = 458.5834u 8:#1337   =   1.0999 
+ +8:#1338   = 458.5834u 8:#134    =   1.1000  8:#1340   =   1.0999 
+ +8:#1341   = 458.5834u 8:#1343   =   1.0999  8:#1344   = 458.5834u
+ +8:#1346   =   1.0999  8:#1347   = 458.5834u 8:#1349   =   1.0999 
+ +8:#135    =   1.0999  8:#1350   = 458.5834u 8:#1352   =   1.0999 
+ +8:#1353   = 458.5834u 8:#1355   =   1.0999  8:#1356   = 458.5834u
+ +8:#1358   =   1.0999  8:#1359   = 458.5834u 8:#1361   =   1.0999 
+ +8:#1362   = 458.5834u 8:#1364   =   1.0999  8:#1365   = 458.5834u
+ +8:#1367   =   1.0999  8:#1368   = 458.5834u 8:#137    =  43.9038m
+ +8:#1370   =   1.0999  8:#1371   = 458.5834u 8:#1373   =   1.0999 
+ +8:#1374   = 458.5834u 8:#1376   =   1.0999  8:#1377   = 458.5834u
+ +8:#1379   =   1.0999  8:#138    = 126.7384m 8:#1380   = 458.5834u
+ +8:#139    = 407.4963m 8:#14     = 993.7101m 8:#140    = 407.4960m
+ +8:#141    =   1.1000  8:#142    =   1.0999  8:#144    =   3.6138u
+ +8:#145    =  86.4360m 8:#147    = 256.3113m 8:#148    = 256.3107m
+ +8:#149    =   1.1000  8:#150    =   1.0999  8:#152    =   3.6138u
+ +8:#153    =  86.4360m 8:#155    = 256.3113m 8:#156    = 256.3107m
+ +8:#157    =   1.1000  8:#158    =   1.0999  8:#16     =  24.4320u
+ +8:#160    =  43.9038m 8:#161    = 126.7384m 8:#162    = 407.4963m
+ +8:#163    = 407.4960m 8:#164    =   1.1000  8:#165    =   1.0999 
+ +8:#167    =  43.9038m 8:#168    = 126.7384m 8:#169    = 407.4963m
+ +8:#170    = 407.4960m 8:#171    =   1.1000  8:#172    =   1.0999 
+ +8:#174    =   3.6138u 8:#175    =  86.4360m 8:#177    = 256.3113m
+ +8:#178    = 256.3107m 8:#179    =   1.1000  8:#180    =   1.0999 
+ +8:#182    =   3.6138u 8:#183    =  86.4360m 8:#185    = 256.3113m
+ +8:#186    = 256.3107m 8:#187    =   1.1000  8:#188    =   1.0999 
+ +8:#190    =  43.9038m 8:#191    = 126.7384m 8:#192    = 407.4963m
+ +8:#193    = 407.4960m 8:#194    =   1.1000  8:#195    =   1.0999 
+ +8:#197    =  43.9038m 8:#198    = 126.7384m 8:#199    = 407.4963m
+ +8:#200    = 407.4960m 8:#201    =   1.1000  8:#202    =   1.0999 
+ +8:#204    =   3.6138u 8:#205    =  86.4360m 8:#207    = 256.3113m
+ +8:#208    = 256.3107m 8:#209    =   1.1000  8:#21     = 989.3320m
+ +8:#210    =   1.0999  8:#212    =   3.6138u 8:#213    =  86.4360m
+ +8:#215    = 256.3113m 8:#216    = 256.3107m 8:#217    =   1.1000 
+ +8:#218    =   1.0999  8:#22     = 989.3333m 8:#220    =  43.9038m
+ +8:#221    = 126.7384m 8:#222    = 407.4963m 8:#223    = 407.4960m
+ +8:#224    =   1.1000  8:#225    =   1.0999  8:#227    =  43.9038m
+ +8:#228    = 126.7384m 8:#229    = 407.4963m 8:#230    = 407.4960m
+ +8:#231    =   1.1000  8:#232    =   1.0999  8:#234    =   3.6138u
+ +8:#235    =  86.4360m 8:#237    = 256.3113m 8:#238    = 256.3107m
+ +8:#239    =   1.1000  8:#24     = 989.3326m 8:#240    =   1.0999 
+ +8:#242    =   3.6138u 8:#243    =  86.4360m 8:#245    = 256.3113m
+ +8:#246    = 256.3107m 8:#247    =   1.1000  8:#248    =   1.0999 
+ +8:#25     = 989.3315m 8:#250    =  43.9038m 8:#251    = 126.7384m
+ +8:#252    = 407.4963m 8:#253    = 407.4960m 8:#254    =   1.1000 
+ +8:#255    =   1.0999  8:#257    =  43.9038m 8:#258    = 126.7384m
+ +8:#259    = 407.4963m 8:#260    = 407.4960m 8:#261    =   1.1000 
+ +8:#262    =   1.0999  8:#264    =   3.6138u 8:#265    =  86.4360m
+ +8:#267    = 256.3113m 8:#268    = 256.3107m 8:#269    =   1.1000 
+ +8:#27     = 884.0403m 8:#270    =   1.0999  8:#272    =   3.6138u
+ +8:#273    =  86.4360m 8:#275    = 256.3113m 8:#276    = 256.3107m
+ +8:#277    =   1.1000  8:#278    =   1.0999  8:#280    =  43.9038m
+ +8:#281    = 126.7384m 8:#282    = 407.4963m 8:#283    = 407.4960m
+ +8:#284    =   1.1000  8:#285    =   1.0999  8:#287    =  43.9038m
+ +8:#288    = 126.7384m 8:#289    = 407.4963m 8:#290    = 407.4960m
+ +8:#291    =   1.1000  8:#292    =   1.0999  8:#294    =   3.6138u
+ +8:#295    =  86.4360m 8:#297    = 256.3113m 8:#298    = 256.3107m
+ +8:#299    =   1.1000  8:#3      =   1.0998  8:#30     = 121.2274u
+ +8:#300    =   1.0999  8:#302    =   3.6138u 8:#303    =  86.4360m
+ +8:#305    = 256.3113m 8:#306    = 256.3107m 8:#307    =   1.1000 
+ +8:#308    =   1.0999  8:#31     =  62.8336u 8:#310    =  43.9038m
+ +8:#311    = 126.7384m 8:#312    = 407.4963m 8:#313    = 407.4960m
+ +8:#314    =   1.1000  8:#315    =   1.0999  8:#317    =  43.9038m
+ +8:#318    = 126.7384m 8:#319    = 407.4963m 8:#32     = 148.1626u
+ +8:#320    = 407.4960m 8:#321    =   1.1000  8:#322    =   1.0999 
+ +8:#324    =   3.6138u 8:#325    =  86.4360m 8:#327    = 256.3113m
+ +8:#328    = 256.3107m 8:#329    =   1.1000  8:#330    =   1.0999 
+ +8:#332    =   3.6138u 8:#333    =  86.4360m 8:#335    = 256.3113m
+ +8:#336    = 256.3107m 8:#337    =   1.1000  8:#338    =   1.0999 
+ +8:#34     = 993.8714m 8:#340    =  43.9038m 8:#341    = 126.7384m
+ +8:#342    = 407.4963m 8:#343    = 407.4960m 8:#344    =   1.1000 
+ +8:#345    =   1.0999  8:#347    =  43.9038m 8:#348    = 126.7384m
+ +8:#349    = 407.4963m 8:#350    = 407.4960m 8:#351    =   1.1000 
+ +8:#352    =   1.0999  8:#354    =   3.6138u 8:#355    =  86.4360m
+ +8:#357    = 256.3113m 8:#358    = 256.3107m 8:#359    =   1.1000 
+ +8:#36     =  43.3862u 8:#360    =   1.0999  8:#362    =   3.6138u
+ +8:#363    =  86.4360m 8:#365    = 256.3113m 8:#366    = 256.3107m
+ +8:#367    =   1.1000  8:#368    =   1.0999  8:#37     =  86.4281m
+ +8:#370    =  43.9038m 8:#371    = 126.7384m 8:#372    = 407.4963m
+ +8:#373    = 407.4960m 8:#374    =   1.1000  8:#375    =   1.0999 
+ +8:#377    =  43.9038m 8:#378    = 126.7384m 8:#379    = 407.4963m
+ +8:#380    = 407.4960m 8:#381    =   1.1000  8:#382    =   1.0999 
+ +8:#384    =   3.6138u 8:#385    =  86.4360m 8:#387    = 256.3113m
+ +8:#388    = 256.3107m 8:#389    =   1.1000  8:#39     =   1.1000 
+ +8:#390    =   1.0999  8:#392    =   3.6138u 8:#393    =  86.4360m
+ +8:#395    = 256.3113m 8:#396    = 256.3107m 8:#397    =   1.1000 
+ +8:#398    =   1.0999  8:#400    =  43.9038m 8:#401    = 126.7384m
+ +8:#402    = 407.4963m 8:#403    = 407.4960m 8:#404    =   1.1000 
+ +8:#405    =   1.0999  8:#407    =  43.9038m 8:#408    = 126.7384m
+ +8:#409    = 407.4963m 8:#41     =   1.1000  8:#410    = 407.4960m
+ +8:#411    =   1.1000  8:#412    =   1.0999  8:#414    =   3.6138u
+ +8:#415    =  86.4360m 8:#417    = 256.3113m 8:#418    = 256.3107m
+ +8:#419    =   1.1000  8:#42     =  86.5388m 8:#420    =   1.0999 
+ +8:#422    =   3.6138u 8:#423    =  86.4360m 8:#425    = 256.3113m
+ +8:#426    = 256.3107m 8:#427    =   1.1000  8:#428    =   1.0999 
+ +8:#43     = 802.8102m 8:#430    =  43.9038m 8:#431    = 126.7384m
+ +8:#432    = 407.4963m 8:#433    = 407.4960m 8:#434    =   1.1000 
+ +8:#435    =   1.0999  8:#437    =  43.9038m 8:#438    = 126.7384m
+ +8:#439    = 407.4963m 8:#44     = 551.4742m 8:#440    = 407.4960m
+ +8:#441    =   1.1000  8:#442    =   1.0999  8:#444    =   3.6138u
+ +8:#445    =  86.4360m 8:#447    = 256.3113m 8:#448    = 256.3107m
+ +8:#449    =   1.1000  8:#45     = 551.4741m 8:#450    =   1.0999 
+ +8:#452    =   3.6138u 8:#453    =  86.4360m 8:#455    = 256.3113m
+ +8:#456    = 256.3107m 8:#457    =   1.1000  8:#458    =   1.0999 
+ +8:#460    =  43.9038m 8:#461    = 126.7384m 8:#462    = 407.4963m
+ +8:#463    = 407.4960m 8:#464    =   1.1000  8:#465    =   1.0999 
+ +8:#467    =  43.9038m 8:#468    = 126.7384m 8:#469    = 407.4963m
+ +8:#47     =   1.0999  8:#470    = 407.4960m 8:#471    =   1.1000 
+ +8:#472    =   1.0999  8:#474    =   3.6138u 8:#475    =  86.4360m
+ +8:#477    = 256.3113m 8:#478    = 256.3107m 8:#479    =   1.1000 
+ +8:#48     =   1.1000  8:#480    =   1.0999  8:#482    =   3.6138u
+ +8:#483    =  86.4360m 8:#485    = 256.3113m 8:#486    = 256.3107m
+ +8:#487    =   1.1000  8:#488    =   1.0999  8:#49     =   1.1000 
+ +8:#490    =  43.9038m 8:#491    = 126.7384m 8:#492    = 407.4963m
+ +8:#493    = 407.4960m 8:#494    =   1.1000  8:#495    =   1.0999 
+ +8:#497    =  43.9038m 8:#498    = 126.7384m 8:#499    = 407.4963m
+ +8:#50     =   1.0999  8:#500    = 407.4960m 8:#501    =   1.1000 
+ +8:#502    =   1.0999  8:#504    =   3.6138u 8:#505    =  86.4360m
+ +8:#507    = 256.3113m 8:#508    = 256.3107m 8:#509    =   1.1000 
+ +8:#510    =   1.0999  8:#512    =   3.6138u 8:#513    =  86.4360m
+ +8:#515    = 256.3113m 8:#516    = 256.3107m 8:#517    =   1.1000 
+ +8:#518    =   1.0999  8:#52     =   3.6138u 8:#520    =  43.9038m
+ +8:#521    = 126.7384m 8:#522    = 407.4963m 8:#523    = 407.4960m
+ +8:#524    =   1.1000  8:#525    =   1.0999  8:#527    =  43.9038m
+ +8:#528    = 126.7384m 8:#529    = 407.4963m 8:#53     =  86.4360m
+ +8:#530    = 407.4960m 8:#531    =   1.1000  8:#532    =   1.0999 
+ +8:#534    =   3.6138u 8:#535    =  86.4360m 8:#537    = 256.3113m
+ +8:#538    = 256.3107m 8:#539    =   1.1000  8:#540    =   1.0999 
+ +8:#542    =   3.6138u 8:#543    =  86.4360m 8:#545    = 256.3113m
+ +8:#546    = 256.3107m 8:#547    =   1.1000  8:#548    =   1.0999 
+ +8:#55     = 256.3114m 8:#550    =  43.9038m 8:#551    = 126.7384m
+ +8:#552    = 407.4963m 8:#553    = 407.4960m 8:#554    =   1.1000 
+ +8:#555    =   1.0999  8:#557    =  43.9038m 8:#558    = 126.7384m
+ +8:#559    = 407.4963m 8:#56     = 256.3108m 8:#560    = 407.4960m
+ +8:#561    =   1.1000  8:#562    =   1.0999  8:#564    =   3.6138u
+ +8:#565    =  86.4354m 8:#567    = 256.3113m 8:#568    = 256.3107m
+ +8:#569    =   1.1000  8:#570    =   1.0999  8:#572    =   3.6138u
+ +8:#573    =  86.4349m 8:#574    = 256.3113m 8:#575    = 256.3107m
+ +8:#576    =   1.1000  8:#577    =   1.0999  8:#579    =  43.9040m
+ +8:#58     =   1.1000  8:#580    = 126.7380m 8:#581    = 407.4968m
+ +8:#582    = 407.4965m 8:#583    =   1.1000  8:#584    =   1.0999 
+ +8:#586    =  43.9041m 8:#587    = 126.7377m 8:#588    = 407.4971m
+ +8:#589    = 407.4969m 8:#59     =   1.0999  8:#590    =   1.1000 
+ +8:#591    =   1.0999  8:#593    =  86.4402m 8:#594    =   2.7215u
+ +8:#595    =   1.1000  8:#597    =  12.2812u 8:#598    =  86.4481m
+ +8:#599    = 820.5727m 8:#600    =  19.6203u 8:#601    =   1.1000 
+ +8:#602    =   1.0999  8:#604    = 105.1333m 8:#605    =  20.3129m
+ +8:#606    =   1.1000  8:#608    = 255.9119m 8:#609    = 218.2951m
+ +8:#61     =   3.6138u 8:#610    = 898.1022m 8:#611    = 255.9124m
+ +8:#612    =   1.1000  8:#613    =   1.0999  8:#615    = 256.1044m
+ +8:#616    =   3.1110u 8:#617    = 256.1050m 8:#619    = 256.1044m
+ +8:#62     =  86.4360m 8:#620    =   3.1110u 8:#622    = 256.1049m
+ +8:#624    = 378.4018m 8:#625    =  35.3883m 8:#626    = 378.4022m
+ +8:#628    = 378.4018m 8:#629    =  35.3883m 8:#630    = 378.4021m
+ +8:#632    = 256.1067m 8:#633    =   3.1110u 8:#635    = 256.1073m
+ +8:#637    = 256.1067m 8:#638    =   3.1110u 8:#64     = 256.3113m
+ +8:#640    = 256.1073m 8:#642    = 378.4025m 8:#643    =  35.3879m
+ +8:#644    = 378.4028m 8:#646    = 378.4025m 8:#647    =  35.3879m
+ +8:#648    = 378.4028m 8:#65     = 256.3108m 8:#650    = 256.1067m
+ +8:#651    =   3.1110u 8:#653    = 256.1073m 8:#655    = 256.1067m
+ +8:#656    =   3.1110u 8:#658    = 256.1073m 8:#660    = 378.4025m
+ +8:#661    =  35.3879m 8:#662    = 378.4028m 8:#664    = 378.4025m
+ +8:#665    =  35.3879m 8:#666    = 378.4028m 8:#668    = 256.1067m
+ +8:#669    =   3.1110u 8:#67     =   1.1000  8:#671    = 256.1073m
+ +8:#673    = 256.1067m 8:#674    =   3.1110u 8:#676    = 256.1073m
+ +8:#678    = 378.4025m 8:#679    =  35.3879m 8:#68     =   1.0999 
+ +8:#680    = 378.4028m 8:#682    = 378.4025m 8:#683    =  35.3879m
+ +8:#684    = 378.4028m 8:#686    = 256.1067m 8:#687    =   3.1110u
+ +8:#689    = 256.1073m 8:#691    = 256.1067m 8:#692    =   3.1110u
+ +8:#694    = 256.1073m 8:#696    = 378.4025m 8:#697    =  35.3879m
+ +8:#698    = 378.4028m 8:#7      = 820.5721m 8:#70     =  43.9038m
+ +8:#700    = 378.4025m 8:#701    =  35.3879m 8:#702    = 378.4028m
+ +8:#704    = 256.1067m 8:#705    =   3.1110u 8:#707    = 256.1073m
+ +8:#709    = 256.1067m 8:#71     = 126.7384m 8:#710    =   3.1110u
+ +8:#712    = 256.1073m 8:#714    = 378.4025m 8:#715    =  35.3879m
+ +8:#716    = 378.4028m 8:#718    = 378.4025m 8:#719    =  35.3879m
+ +8:#72     = 407.4963m 8:#720    = 378.4028m 8:#722    = 256.1067m
+ +8:#723    =   3.1110u 8:#725    = 256.1073m 8:#727    = 256.1067m
+ +8:#728    =   3.1110u 8:#73     = 407.4961m 8:#730    = 256.1073m
+ +8:#732    = 378.4025m 8:#733    =  35.3879m 8:#734    = 378.4028m
+ +8:#736    = 378.4025m 8:#737    =  35.3879m 8:#738    = 378.4028m
+ +8:#74     =   1.1000  8:#740    = 256.1067m 8:#741    =   3.1110u
+ +8:#743    = 256.1073m 8:#745    = 256.1067m 8:#746    =   3.1110u
+ +8:#748    = 256.1073m 8:#75     =   1.0999  8:#750    = 378.4025m
+ +8:#751    =  35.3879m 8:#752    = 378.4028m 8:#754    = 378.4025m
+ +8:#755    =  35.3879m 8:#756    = 378.4028m 8:#758    = 256.1067m
+ +8:#759    =   3.1110u 8:#761    = 256.1073m 8:#763    = 256.1067m
+ +8:#764    =   3.1110u 8:#766    = 256.1073m 8:#768    = 378.4025m
+ +8:#769    =  35.3879m 8:#77     =  43.9038m 8:#770    = 378.4028m
+ +8:#772    = 378.4025m 8:#773    =  35.3879m 8:#774    = 378.4028m
+ +8:#776    = 256.1067m 8:#777    =   3.1110u 8:#779    = 256.1073m
+ +8:#78     = 126.7384m 8:#781    = 256.1067m 8:#782    =   3.1110u
+ +8:#784    = 256.1073m 8:#786    = 378.4025m 8:#787    =  35.3879m
+ +8:#788    = 378.4028m 8:#79     = 407.4963m 8:#790    = 378.4025m
+ +8:#791    =  35.3879m 8:#792    = 378.4028m 8:#794    = 256.1067m
+ +8:#795    =   3.1110u 8:#797    = 256.1073m 8:#799    = 256.1067m
+ +8:#80     = 407.4960m 8:#800    =   3.1110u 8:#802    = 256.1073m
+ +8:#804    = 378.4025m 8:#805    =  35.3879m 8:#806    = 378.4028m
+ +8:#808    = 378.4025m 8:#809    =  35.3879m 8:#81     =   1.1000 
+ +8:#810    = 378.4028m 8:#812    = 256.1067m 8:#813    =   3.1110u
+ +8:#815    = 256.1073m 8:#817    = 256.1067m 8:#818    =   3.1110u
+ +8:#82     =   1.0999  8:#820    = 256.1073m 8:#822    = 378.4025m
+ +8:#823    =  35.3879m 8:#824    = 378.4028m 8:#826    = 378.4025m
+ +8:#827    =  35.3879m 8:#828    = 378.4028m 8:#830    = 256.1067m
+ +8:#831    =   3.1110u 8:#833    = 256.1073m 8:#835    = 256.1067m
+ +8:#836    =   3.1110u 8:#838    = 256.1073m 8:#84     =   3.6138u
+ +8:#840    = 378.4025m 8:#841    =  35.3879m 8:#842    = 378.4028m
+ +8:#844    = 378.4025m 8:#845    =  35.3879m 8:#846    = 378.4028m
+ +8:#85     =  86.4360m 8:#87     = 256.3113m 8:#88     = 256.3107m
+ +8:#89     =   1.1000  8:#90     =   1.0999  8:#92     =   3.6138u
+ +8:#93     =  86.4360m 8:#95     = 256.3113m 8:#96     = 256.3107m
+ +8:#97     =   1.1000  8:#977    =   1.0998  8:#978    =   1.7545m
+ +8:#98     =   1.0999  8:#980    =   1.1000  8:#981    =   1.7546m
+ +8:#983    =   1.0995  8:#984    = 153.3795u 8:#986    =   1.0990 
+ +8:#987    = 372.5434u 8:#989    =   1.0999  8:#990    =  10.6153m
+ +8:#992    =   1.0999  8:#993    =   1.7546m 8:#995    =   1.0995 
+ +8:#996    = 158.9853u 8:#998    =   1.0999  8:#999    =   1.7545m
+ +8:#fb1000#=  12.3089u 8:#fb1003#=  12.3090u 8:#fb1006#=  12.3090u
+ +8:#fb1009#=  12.3089u 8:#fb1012#=  12.3089u 8:#fb1015#=  12.3090u
+ +8:#fb1018#=  12.3090u 8:#fb1021#=  12.3089u 8:#fb1024#=  12.3089u
+ +8:#fb1027#=  12.3090u 8:#fb1030#=  12.3090u 8:#fb1033#=  12.3089u
+ +8:#fb1036#=  12.3089u 8:#fb1039#=  12.3090u 8:#fb1042#=  12.3090u
+ +8:#fb1045#=  12.3089u 8:#fb1048#=  12.3089u 8:#fb1051#=  12.3090u
+ +8:#fb1054#=  12.3090u 8:#fb1057#=  12.3089u 8:#fb1060#=  12.3089u
+ +8:#fb1063#=  12.3090u 8:#fb1066#=  12.3090u 8:#fb1069#=  12.3089u
+ +8:#fb1072#=  12.3089u 8:#fb1075#=  12.3090u 8:#fb1078#=  12.3090u
+ +8:#fb1081#=  12.3089u 8:#fb1084#=  12.3089u 8:#fb1087#=  12.3090u
+ +8:#fb1090#=  12.3090u 8:#fb1093#=  12.3089u 8:#fb1096#=  12.3089u
+ +8:#fb1099#=  12.3090u 8:#fb1102#=  12.3090u 8:#fb1105#=  12.3089u
+ +8:#fb1108#=  12.3089u 8:#fb1111#=  12.3090u 8:#fb1114#=  12.3090u
+ +8:#fb1117#=  12.3089u 8:#fb1120#=  12.3089u 8:#fb1123#=  12.3090u
+ +8:#fb1126#=  12.3090u 8:#fb1129#=  12.3089u 8:#fb1132#=  12.3089u
+ +8:#fb1135#=  12.3090u 8:#fb1138#=  12.3090u 8:#fb1141#=  12.3089u
+ +8:#fb1144#=  12.3089u 8:#fb1147#=  12.3090u 8:#fb1150#=  12.3090u
+ +8:#fb1153#=  12.3089u 8:#fb1156#=  12.3089u 8:#fb1159#=  12.3090u
+ +8:#fb1162#=  12.3090u 8:#fb1165#=  12.3089u 8:#fb1168#=  12.3089u
+ +8:#fb1171#=  12.3090u 8:#fb1174#=  12.3090u 8:#fb1177#=  12.3089u
+ +8:#fb1180#=  12.3089u 8:#fb1183#=  12.3090u 8:#fb1186#=  12.3090u
+ +8:#fb1189#=  12.3089u 8:#fb1192#=  12.3089u 8:#fb1195#=  12.3090u
+ +8:#fb1198#=  12.3090u 8:#fb1201#=  12.3089u 8:#fb1204#=  12.3089u
+ +8:#fb1207#=  12.3090u 8:#fb1210#=  12.3090u 8:#fb1213#=  12.3130u
+ +8:#fb1216#=  12.3122u 8:#fb1219#=  12.3130u 8:#fb1222#=  12.3130u
+ +8:#fb1225#=  12.3128u 8:#fb1228#=  12.3128u 8:#fb1231#=  12.3128u
+ +8:#fb1234#=  12.3128u 8:#fb1237#=  12.3128u 8:#fb1240#=  12.3128u
+ +8:#fb1243#=  12.3128u 8:#fb1246#=  12.3128u 8:#fb1249#=  12.3128u
+ +8:#fb1252#=  12.3128u 8:#fb1255#=  12.3128u 8:#fb1258#=  12.3128u
+ +8:#fb1261#=  12.3128u 8:#fb1264#=  12.3128u 8:#fb1267#=  12.3128u
+ +8:#fb1270#=  12.3128u 8:#fb1273#=  12.3128u 8:#fb1276#=  12.3128u
+ +8:#fb1279#=  12.3128u 8:#fb1282#=  12.3128u 8:#fb1285#=  12.3128u
+ +8:#fb1288#=  12.3128u 8:#fb1291#=  12.3128u 8:#fb1294#=  12.3128u
+ +8:#fb1297#=  12.3128u 8:#fb1300#=  12.3128u 8:#fb1303#=  12.3128u
+ +8:#fb1306#=  12.3128u 8:#fb1309#=  12.3128u 8:#fb1312#=  12.3128u
+ +8:#fb1315#=  12.3128u 8:#fb1318#=  12.3128u 8:#fb1321#=  12.3128u
+ +8:#fb1324#=  12.3128u 8:#fb1327#=  12.3128u 8:#fb1330#=  12.3128u
+ +8:#fb1333#=  12.3128u 8:#fb1336#=  12.3128u 8:#fb1339#=  12.3128u
+ +8:#fb1342#=  12.3128u 8:#fb1345#=  12.3128u 8:#fb1348#=  12.3128u
+ +8:#fb1351#=  12.3128u 8:#fb1354#=  12.3128u 8:#fb1357#=  12.3128u
+ +8:#fb1360#=  12.3128u 8:#fb1363#=  12.3128u 8:#fb1366#=  12.3128u
+ +8:#fb1369#=  12.3128u 8:#fb1372#=  12.3128u 8:#fb1375#=  12.3128u
+ +8:#fb1378#=  12.3128u 8:#fb976# =  12.3056u 8:#fb979# =  12.3152u
+ +8:#fb982# =   1.1000  8:#fb985# =   1.1000  8:#fb988# =  12.3124u
+ +8:#fb991# =  12.3124u 8:#fb994# =   1.1000  8:#fb997# =  12.3089u
+ +8:a       = 175.1823u 8:inv__a  =   1.1000  8:inv__i__=   1.1000 
+ +8:inv__i__=   1.1000  8:inv__i__=   1.1000  8:inv__p  =  14.7339u
+ +8:inv__res=  14.9399u 8:inv__s  =  22.0650u 8:inv__w__=   1.1000 
+ +8:inv__w__=   1.1000  8:inv__w__=   1.0999  8:n__i__a =   1.0999 
+ +8:n__o0__f=   1.0999  8:n__o0__f=   1.0999  8:n__o0__f=   1.0999 
+ +8:n__o0__f=   1.0999  8:n__o0__f=   1.0999  8:n__o0__f=   1.0999 
+ +8:n__o0__f=   1.0999  8:n__o0__f=   1.0999  8:n__o0__f=   1.0999 
+ +8:n__o0__f=   1.0999  8:n__o0__f=   1.0999  8:n__o0__f=   1.0999 
+ +8:n__o0__f=   1.0999  8:n__o0__f=   1.0999  8:n__o0__f=   1.0999 
+ +8:n__o0__f=   1.0999  8:n__o0__f=   1.0999  8:n__o0__f=   1.0999 
+ +8:n__o0__f=   1.0999  8:n__o0__f=   1.0999  8:n__o0__f=   1.0999 
+ +8:n__o0__f=   1.0999  8:n__o0__f=   1.0999  8:n__o0__f=   1.0999 
+ +8:n__o0__f=   1.0999  8:n__o0__f=   1.0999  8:n__o0__f=   1.0999 
+ +8:n__o0__f=   1.0999  8:n__o0__f=   1.0999  8:n__o0__f=   1.0999 
+ +8:n__o0__f=   1.0999  8:n__o0__f=   1.0999  8:n__o0__t=   1.0999 
+ +8:n__o0__t=   1.0999  8:n__o0__t=   1.0999  8:n__o0__t=   1.0999 
+ +8:n__o0__t=   1.0999  8:n__o0__t=   1.0999  8:n__o0__t=   1.0999 
+ +8:n__o0__t=   1.0999  8:n__o0__t=   1.0999  8:n__o0__t=   1.0999 
+ +8:n__o0__t=   1.0999  8:n__o0__t=   1.0999  8:n__o0__t=   1.0999 
+ +8:n__o0__t=   1.0999  8:n__o0__t=   1.0999  8:n__o0__t=   1.0999 
+ +8:n__o0__t=   1.0999  8:n__o0__t=   1.0999  8:n__o0__t=   1.0999 
+ +8:n__o0__t=   1.0999  8:n__o0__t=   1.0999  8:n__o0__t=   1.0999 
+ +8:n__o0__t=   1.0999  8:n__o0__t=   1.0999  8:n__o0__t=   1.0999 
+ +8:n__o0__t=   1.0999  8:n__o0__t=   1.0999  8:n__o0__t=   1.0999 
+ +8:n__o0__t=   1.0999  8:n__o0__t=   1.0999  8:n__o0__t=   1.0999 
+ +8:n__o0__t=   1.0999  8:n__o1__f=   1.0999  8:n__o1__f=   1.0999 
+ +8:n__o1__f=   1.0999  8:n__o1__f=   1.0999  8:n__o1__f=   1.0999 
+ +8:n__o1__f=   1.0999  8:n__o1__f=   1.0999  8:n__o1__f=   1.0999 
+ +8:n__o1__f=   1.0999  8:n__o1__f=   1.0999  8:n__o1__f=   1.0999 
+ +8:n__o1__f=   1.0999  8:n__o1__f=   1.0999  8:n__o1__f=   1.0999 
+ +8:n__o1__f=   1.0999  8:n__o1__f=   1.0999  8:n__o1__f=   1.0999 
+ +8:n__o1__f=   1.0999  8:n__o1__f=   1.0999  8:n__o1__f=   1.0999 
+ +8:n__o1__f=   1.0999  8:n__o1__f=   1.0999  8:n__o1__f=   1.0999 
+ +8:n__o1__f=   1.0999  8:n__o1__f=   1.0999  8:n__o1__f=   1.0999 
+ +8:n__o1__f=   1.0999  8:n__o1__f=   1.0999  8:n__o1__f=   1.0999 
+ +8:n__o1__f=   1.0999  8:n__o1__f=   1.0999  8:n__o1__f=   1.0999 
+ +8:n__o1__t=   1.0999  8:n__o1__t=   1.0999  8:n__o1__t=   1.0999 
+ +8:n__o1__t=   1.0999  8:n__o1__t=   1.0999  8:n__o1__t=   1.0999 
+ +8:n__o1__t=   1.0999  8:n__o1__t=   1.0999  8:n__o1__t=   1.0999 
+ +8:n__o1__t=   1.0999  8:n__o1__t=   1.0999  8:n__o1__t=   1.0999 
+ +8:n__o1__t=   1.0999  8:n__o1__t=   1.0999  8:n__o1__t=   1.0999 
+ +8:n__o1__t=   1.0999  8:n__o1__t=   1.0999  8:n__o1__t=   1.0999 
+ +8:n__o1__t=   1.0999  8:n__o1__t=   1.0999  8:n__o1__t=   1.0999 
+ +8:n__o1__t=   1.0999  8:n__o1__t=   1.0999  8:n__o1__t=   1.0999 
+ +8:n__o1__t=   1.0999  8:n__o1__t=   1.0999  8:n__o1__t=   1.0999 
+ +8:n__o1__t=   1.0999  8:n__o1__t=   1.0999  8:n__o1__t=   1.0999 
+ +8:n__o1__t=   1.0999  8:n__o1__t=   1.0999  8:p       =   1.0998 
+ +8:s       =   1.1000  8:w__0    =  86.6801u 8:w__0i   =  36.6641u
+ +8:w__1    =  15.2792u
+
+ 
+runlvl= 3 sets ".opt sim_accuracy= 1"  
+ **info** *pvaI* Creating VA module (childrouter_environment) for instance XENV with gmd reduction
+
+ **info** *pvaI*        termCount=530 diwSize=818 probeSize=681 Qsize=0 Isize=144
+
+ End of GMD creation on Fri Sep 18 00:03:29 2026	GTM/In-use: 17.0000/10.0764 MB
+
+
+ 
+  ******  Summary of Possible Problems in Netlist  *************** 
+  Negative resistor              0   
+  Negative capacitor             0   
+  Negative inductor              0   
+  Unconnected node               0   
+  Dangling terminal              2   
+  Non-rail bulk terminal         0   
+  Floating MOS gate              0   
+  Floating MOS bulk              0   
+  Floating BJT substrate         0   
+  Floating controlled input      0   
+  Floating current source nodes  0   
+  Source loop                    0   
+ 
+Warning: 2 dangling terminals are found. 
+ 
+The following instances have a terminal that is not connected to any other element.
+ 
+Location                                         Subckt       Instance  Net/node   
+ 
+(tb/subsystem/ChildRouter/ChildRouter_tb.sp:66)   top level   "XENV"    "TB_DONE"  
+ 
+ 
+No Shorted elements  
+HSolve ...  
+  
+ **info** *pvaI* minimum timestep = 1e-15
+
+NDD 100 
+Running 2 threads. 
+  
+   
+Running HSPICE Precision Parallel (HPP) 
+Auto-select transient simulation algorithm 
+.   
+0.1% time = 2.010000 ns ( etc = 1:01:47, ett = 1:01:50 ) 
+( wall = 3.7 sec cpu = 6.4 sec s=1.71394 ) 
+0.2% time = 4.000000 ns ( etc = 53:20, ett = 53:26 ) 
+( wall = 6.4 sec cpu = 11.7 sec s=1.82288 ) 
+0.3% time = 6.010000 ns ( etc = 50:50, ett = 50:59 ) 
+( wall = 9.2 sec cpu = 17.1 sec s=1.86214 ) 
+0.4% time = 8.010000 ns ( etc = 49:25, ett = 49:37 ) 
+( wall = 11.9 sec cpu = 22.5 sec s=1.88584 ) 
+0.5% time = 10.010000 ns ( etc = 48:31, ett = 48:45 ) 
+( wall = 14.6 sec cpu = 27.8 sec s=1.90108 ) 
+0.6% time = 12.010000 ns ( etc = 47:55, ett = 48:13 ) 
+( wall = 17.4 sec cpu = 33.2 sec s=1.91196 ) 
+0.7% time = 14.010000 ns ( etc = 47:30, ett = 47:51 ) 
+( wall = 20.1 sec cpu = 38.6 sec s=1.92018 ) 
+0.8% time = 16.010000 ns ( etc = 47:11, ett = 47:33 ) 
+( wall = 22.8 sec cpu = 44.0 sec s=1.92585 ) 
+0.9% time = 18.010000 ns ( etc = 46:52, ett = 47:18 ) 
+( wall = 25.5 sec cpu = 49.3 sec s=1.93007 ) 
+1.0% time = 20.010000 ns ( etc = 46:36, ett = 47:04 ) 
+( wall = 28.2 sec cpu = 54.6 sec s=1.93357 ) 
+1.1% time = 22.010000 ns ( etc = 46:23, ett = 46:54 ) 
+( wall = 31.0 sec cpu = 60.0 sec s=1.93696 ) 
+1.2% time = 24.010000 ns ( etc = 46:12, ett = 46:46 ) 
+( wall = 33.7 sec cpu = 1:05 s=1.93984 ) 
+1.3% time = 26.010000 ns ( etc = 46:02, ett = 46:39 ) 
+( wall = 36.4 sec cpu = 1:10 s=1.94194 ) 
+1.4% time = 28.010000 ns ( etc = 45:53, ett = 46:32 ) 
+( wall = 39.1 sec cpu = 1:15 s=1.94381 ) 
+1.5% time = 30.010000 ns ( etc = 45:39, ett = 46:21 ) 
+( wall = 41.7 sec cpu = 1:21 s=1.94448 ) 
+1.6% time = 32.010000 ns ( etc = 45:24, ett = 46:09 ) 
+( wall = 44.3 sec cpu = 1:26 s=1.94591 ) 
+1.7% time = 34.010000 ns ( etc = 45:12, ett = 45:59 ) 
+( wall = 46.9 sec cpu = 1:31 s=1.94717 ) 
+1.8% time = 36.010000 ns ( etc = 44:59, ett = 45:49 ) 
+( wall = 49.5 sec cpu = 1:36 s=1.94858 ) 
+1.9% time = 38.010000 ns ( etc = 44:47, ett = 45:39 ) 
+( wall = 52.1 sec cpu = 1:41 s=1.9499 ) 
+2.0% time = 40.010000 ns ( etc = 44:36, ett = 45:31 ) 
+( wall = 54.6 sec cpu = 1:46 s=1.95079 ) 
+2.1% time = 42.010000 ns ( etc = 44:25, ett = 45:23 ) 
+( wall = 57.2 sec cpu = 1:51 s=1.9518 ) 
+2.2% time = 44.010000 ns ( etc = 44:16, ett = 45:15 ) 
+( wall = 59.7 sec cpu = 1:56 s=1.95256 ) 
+2.3% time = 46.010000 ns ( etc = 44:06, ett = 45:09 ) 
+( wall = 1:02 cpu = 2:01 s=1.95318 ) 
+2.4% time = 48.010000 ns ( etc = 44:02, ett = 45:07 ) 
+( wall = 1:04 cpu = 2:06 s=1.95361 ) 
+2.5% time = 50.010000 ns ( etc = 43:57, ett = 45:05 ) 
+( wall = 1:07 cpu = 2:12 s=1.95399 ) 
+2.6% time = 52.010000 ns ( etc = 43:54, ett = 45:04 ) 
+( wall = 1:10 cpu = 2:17 s=1.95387 ) 
+2.7% time = 54.010000 ns ( etc = 43:49, ett = 45:02 ) 
+( wall = 1:12 cpu = 2:22 s=1.95436 ) 
+2.8% time = 56.010000 ns ( etc = 43:44, ett = 45:00 ) 
+( wall = 1:15 cpu = 2:27 s=1.955 ) 
+2.9% time = 58.010000 ns ( etc = 43:39, ett = 44:57 ) 
+( wall = 1:18 cpu = 2:33 s=1.95567 ) 
+3.0% time = 60.010000 ns ( etc = 43:35, ett = 44:56 ) 
+( wall = 1:20 cpu = 2:38 s=1.95589 ) 
+3.1% time = 62.010000 ns ( etc = 43:31, ett = 44:55 ) 
+( wall = 1:23 cpu = 2:43 s=1.95594 ) 
+3.2% time = 64.010000 ns ( etc = 43:27, ett = 44:54 ) 
+( wall = 1:26 cpu = 2:48 s=1.95588 ) 
+3.3% time = 66.010000 ns ( etc = 43:25, ett = 44:54 ) 
+( wall = 1:28 cpu = 2:53 s=1.95577 ) 
+3.4% time = 68.010000 ns ( etc = 43:21, ett = 44:53 ) 
+( wall = 1:31 cpu = 2:59 s=1.95622 ) 
+3.5% time = 70.010000 ns ( etc = 43:17, ett = 44:52 ) 
+( wall = 1:34 cpu = 3:04 s=1.95673 ) 
+3.6% time = 72.010000 ns ( etc = 43:14, ett = 44:50 ) 
+( wall = 1:36 cpu = 3:09 s=1.95697 ) 
+3.7% time = 74.010000 ns ( etc = 43:10, ett = 44:50 ) 
+( wall = 1:39 cpu = 3:14 s=1.95719 ) 
+3.8% time = 76.010000 ns ( etc = 43:07, ett = 44:49 ) 
+( wall = 1:42 cpu = 3:20 s=1.95694 ) 
+3.9% time = 78.010000 ns ( etc = 43:03, ett = 44:47 ) 
+( wall = 1:44 cpu = 3:25 s=1.95706 ) 
+4.0% time = 80.010000 ns ( etc = 42:58, ett = 44:46 ) 
+( wall = 1:47 cpu = 3:30 s=1.95725 ) 
+4.1% time = 82.010000 ns ( etc = 42:54, ett = 44:44 ) 
+( wall = 1:50 cpu = 3:35 s=1.95753 ) 
+4.2% time = 84.010000 ns ( etc = 42:50, ett = 44:43 ) 
+( wall = 1:52 cpu = 3:40 s=1.95795 ) 
+4.3% time = 86.010000 ns ( etc = 42:48, ett = 44:43 ) 
+( wall = 1:55 cpu = 3:46 s=1.95826 ) 
+4.4% time = 88.010000 ns ( etc = 42:46, ett = 44:44 ) 
+( wall = 1:58 cpu = 3:51 s=1.95816 ) 
+4.5% time = 90.010000 ns ( etc = 42:42, ett = 44:43 ) 
+( wall = 2:00 cpu = 3:56 s=1.95829 ) 
+4.6% time = 92.010000 ns ( etc = 42:39, ett = 44:42 ) 
+( wall = 2:03 cpu = 4:01 s=1.95851 ) 
+4.7% time = 94.010000 ns ( etc = 42:36, ett = 44:42 ) 
+( wall = 2:06 cpu = 4:06 s=1.95857 ) 
+4.8% time = 96.010000 ns ( etc = 42:32, ett = 44:41 ) 
+( wall = 2:08 cpu = 4:12 s=1.95875 ) 
+4.9% time = 98.010000 ns ( etc = 42:29, ett = 44:41 ) 
+( wall = 2:11 cpu = 4:17 s=1.95866 ) 
+5.0% time = 100.000000 ns ( etc = 42:25, ett = 44:39 ) 
+( wall = 2:13 cpu = 4:22 s=1.95885 ) 
+ SIM_RESET t=1.000100e-07
+SIM_TX t=1.000100e-07 channel=I index=0 word=7fffff3e
+
+ SIM_RX t=1.012700e-07 channel=C3 index=0 expected=ffff1f3e actual=ffff1f3e PASS
+
+ SIM_IACK_HIGH t=1.018500e-07 channel=I index=0
+
+5.1% time = 102.001114 ns ( etc = 47:43, ett = 50:14 ) 
+( wall = 2:31 cpu = 4:57 s=1.96017 ) 
+ SIM_SPACER t=1.023100e-07 channel=C3 index=0
+
+ SIM_ACK_LOW t=1.024200e-07 channel=C3 index=0
+
+5.2% time = 104.004038 ns ( etc = 50:32, ett = 53:15 ) 
+( wall = 2:43 cpu = 5:19 s=1.9608 ) 
+ SIM_IACK_LOW t=1.052700e-07 channel=I index=0
+SIM_TX t=1.052700e-07 channel=I index=1 word=ffffff3f
+
+ SIM_RX t=1.057800e-07 channel=C3 index=1 expected=ffffff3f actual=ffffff3f PASS
+
+5.3% time = 106.004622 ns ( etc = 53:39, ett = 56:34 ) 
+( wall = 2:55 cpu = 5:44 s=1.96169 ) 
+ SIM_IACK_HIGH t=1.066400e-07 channel=I index=1
+
+ SIM_SPACER t=1.070900e-07 channel=C3 index=1
+
+ SIM_ACK_LOW t=1.072000e-07 channel=C3 index=1
+
+5.4% time = 108.010000 ns ( etc = 57:16, ett = 1:00:25 ) 
+( wall = 3:09 cpu = 6:12 s=1.96228 ) 
+5.5% time = 110.003881 ns ( etc = 59:02, ett = 1:02:21 ) 
+( wall = 3:18 cpu = 6:29 s=1.96251 ) 
+ SIM_IACK_LOW t=1.111300e-07 channel=I index=1
+SIM_TX t=1.111300e-07 channel=I index=2 word=5fffff2e
+
+5.6% time = 112.001512 ns ( etc = 1:02:02, ett = 1:05:33 ) 
+( wall = 3:30 cpu = 6:53 s=1.96285 ) 
+ SIM_RX t=1.123100e-07 channel=C2 index=0 expected=ffff1f2e actual=ffff1f2e PASS
+
+ SIM_IACK_HIGH t=1.129000e-07 channel=I index=2
+
+ SIM_SPACER t=1.133600e-07 channel=C2 index=0
+
+ SIM_ACK_LOW t=1.134700e-07 channel=C2 index=0
+
+5.7% time = 114.006409 ns ( etc = 1:06:17, ett = 1:10:04 ) 
+( wall = 3:46 cpu = 7:25 s=1.96319 ) 
+5.8% time = 116.009696 ns ( etc = 1:07:54, ett = 1:11:48 ) 
+( wall = 3:54 cpu = 7:40 s=1.9636 ) 
+ SIM_IACK_LOW t=1.163000e-07 channel=I index=2
+SIM_TX t=1.163000e-07 channel=I index=3 word=ffffff2f
+
+ SIM_RX t=1.168100e-07 channel=C2 index=1 expected=ffffff2f actual=ffffff2f PASS
+
+ SIM_IACK_HIGH t=1.176500e-07 channel=I index=3
+
+5.9% time = 118.002614 ns ( etc = 1:12:11, ett = 1:16:22 ) 
+( wall = 4:11 cpu = 8:13 s=1.96385 ) 
+ SIM_SPACER t=1.181000e-07 channel=C2 index=1
+
+ SIM_ACK_LOW t=1.182100e-07 channel=C2 index=1
+
+6.0% time = 120.007322 ns ( etc = 1:14:29, ett = 1:18:50 ) 
+( wall = 4:21 cpu = 8:33 s=1.96409 ) 
+6.1% time = 122.000567 ns ( etc = 1:16:19, ett = 1:20:49 ) 
+( wall = 4:29 cpu = 8:50 s=1.9643 ) 
+ SIM_IACK_LOW t=1.221400e-07 channel=I index=3
+SIM_TX t=1.221400e-07 channel=I index=4 word=3fffff1e
+
+ SIM_RX t=1.233200e-07 channel=C1 index=0 expected=ffff1f1e actual=ffff1f1e PASS
+
+ SIM_IACK_HIGH t=1.239000e-07 channel=I index=4
+
+6.2% time = 124.000625 ns ( etc = 1:20:25, ett = 1:25:11 ) 
+( wall = 4:45 cpu = 9:21 s=1.96461 ) 
+ SIM_SPACER t=1.243600e-07 channel=C1 index=0
+
+ SIM_ACK_LOW t=1.244700e-07 channel=C1 index=0
+
+6.3% time = 126.005456 ns ( etc = 1:23:22, ett = 1:28:20 ) 
+( wall = 4:58 cpu = 9:45 s=1.965 ) 
+ SIM_IACK_LOW t=1.273000e-07 channel=I index=4
+SIM_TX t=1.273000e-07 channel=I index=5 word=ffffff1f
+
+ SIM_RX t=1.278100e-07 channel=C1 index=1 expected=ffffff1f actual=ffffff1f PASS
+
+6.4% time = 128.002472 ns ( etc = 1:26:25, ett = 1:31:36 ) 
+( wall = 5:10 cpu = 10:10 s=1.96507 ) 
+ SIM_IACK_HIGH t=1.286500e-07 channel=I index=5
+
+ SIM_SPACER t=1.291000e-07 channel=C1 index=1
+
+ SIM_ACK_LOW t=1.292100e-07 channel=C1 index=1
+
+6.5% time = 130.010000 ns ( etc = 1:29:56, ett = 1:35:20 ) 
+( wall = 5:24 cpu = 10:37 s=1.9653 ) 
+6.6% time = 132.010000 ns ( etc = 1:31:44, ett = 1:37:17 ) 
+( wall = 5:33 cpu = 10:54 s=1.96545 ) 
+ SIM_IACK_LOW t=1.331300e-07 channel=I index=5
+SIM_TX t=1.331300e-07 channel=I index=6 word=1fffff0e
+
+6.7% time = 134.000000 ns ( etc = 1:34:47, ett = 1:40:33 ) 
+( wall = 5:45 cpu = 11:19 s=1.96552 ) 
+ SIM_RX t=1.343100e-07 channel=C0 index=0 expected=ffff1f0e actual=ffff1f0e PASS
+
+ SIM_IACK_HIGH t=1.349000e-07 channel=I index=6
+
+ SIM_SPACER t=1.353600e-07 channel=C0 index=0
+
+ SIM_ACK_LOW t=1.354700e-07 channel=C0 index=0
+
+6.8% time = 136.000000 ns ( etc = 1:39:09, ett = 1:45:11 ) 
+( wall = 6:02 cpu = 11:52 s=1.96576 ) 
+6.9% time = 138.000000 ns ( etc = 1:40:53, ett = 1:47:04 ) 
+( wall = 6:10 cpu = 12:08 s=1.96594 ) 
+ SIM_IACK_LOW t=1.382900e-07 channel=I index=6
+SIM_TX t=1.382900e-07 channel=I index=7 word=ffffff0f
+
+ SIM_RX t=1.388000e-07 channel=C0 index=1 expected=ffffff0f actual=ffffff0f PASS
+
+ SIM_IACK_HIGH t=1.396300e-07 channel=I index=7
+
+7.0% time = 140.000000 ns ( etc = 1:45:13, ett = 1:51:40 ) 
+( wall = 6:27 cpu = 12:41 s=1.96602 ) 
+ SIM_SPACER t=1.400800e-07 channel=C0 index=1
+
+ SIM_ACK_LOW t=1.401900e-07 channel=C0 index=1
+
+7.1% time = 142.000000 ns ( etc = 1:47:35, ett = 1:54:13 ) 
+( wall = 6:37 cpu = 13:01 s=1.96589 ) 
+7.2% time = 144.000000 ns ( etc = 1:49:26, ett = 1:56:13 ) 
+( wall = 6:46 cpu = 13:19 s=1.96575 ) 
+ SIM_IACK_LOW t=1.441000e-07 channel=I index=7
+SIM_TX t=1.441000e-07 channel=I index=8 word=ffffff4e
+
+ SIM_RX t=1.449100e-07 channel=P index=0 expected=ffffdf4e actual=ffffdf4e PASS
+
+ SIM_IACK_HIGH t=1.453400e-07 channel=I index=8
+
+ SIM_SPACER t=1.455800e-07 channel=P index=0
+
+ SIM_ACK_LOW t=1.456900e-07 channel=P index=0
+
+7.3% time = 146.000000 ns ( etc = 1:53:22, ett = 2:00:24 ) 
+( wall = 7:01 cpu = 13:49 s=1.96598 ) 
+ SIM_IACK_LOW t=1.469200e-07 channel=I index=8
+SIM_TX t=1.469200e-07 channel=I index=9 word=ffffff4e
+
+ SIM_RX t=1.472500e-07 channel=P index=1 expected=ffffff4e actual=ffffff4e PASS
+
+ SIM_IACK_HIGH t=1.477100e-07 channel=I index=9
+
+ SIM_SPACER t=1.479500e-07 channel=P index=1
+
+7.4% time = 148.000000 ns ( etc = 1:56:48, ett = 2:04:03 ) 
+( wall = 7:15 cpu = 14:16 s=1.9661 ) 
+ SIM_ACK_LOW t=1.480600e-07 channel=P index=1
+
+ SIM_IACK_LOW t=1.492700e-07 channel=I index=9
+SIM_TX t=1.492700e-07 channel=I index=10 word=ffffff4f
+
+ SIM_RX t=1.496000e-07 channel=P index=2 expected=ffffff4f actual=ffffff4f PASS
+
+7.5% time = 150.000000 ns ( etc = 1:59:45, ett = 2:07:13 ) 
+( wall = 7:28 cpu = 14:41 s=1.96615 ) 
+ SIM_IACK_HIGH t=1.500100e-07 channel=I index=10
+
+ SIM_SPACER t=1.502400e-07 channel=P index=2
+
+ SIM_ACK_LOW t=1.503500e-07 channel=P index=2
+
+7.6% time = 152.000000 ns ( etc = 2:02:20, ett = 2:10:00 ) 
+( wall = 7:39 cpu = 15:03 s=1.96628 ) 
+ SIM_IACK_LOW t=1.521200e-07 channel=I index=10
+SIM_TX t=1.521200e-07 channel=I index=11 word=80001f5e
+
+ SIM_IACK_HIGH t=1.529500e-07 channel=I index=11
+
+ SIM_IACK_LOW t=1.538900e-07 channel=I index=11
+SIM_TX t=1.538900e-07 channel=I index=12 word=ffffff5e
+
+7.7% time = 154.000000 ns ( etc = 2:04:53, ett = 2:12:44 ) 
+( wall = 7:50 cpu = 15:25 s=1.96626 ) 
+ SIM_RX t=1.540600e-07 channel=M index=0 expected=ffffff5e actual=ffffff5e PASS
+
+ SIM_IACK_HIGH t=1.544500e-07 channel=I index=12
+
+ SIM_SPACER t=1.545900e-07 channel=M index=0
+
+ SIM_ACK_LOW t=1.547000e-07 channel=M index=0
+
+ SIM_IACK_LOW t=1.552000e-07 channel=I index=12
+SIM_TX t=1.552000e-07 channel=I index=13 word=ffffff5f
+
+ SIM_RX t=1.553500e-07 channel=M index=1 expected=ffffff5f actual=ffffff5f PASS
+
+ SIM_IACK_HIGH t=1.556200e-07 channel=I index=13
+
+ SIM_SPACER t=1.557600e-07 channel=M index=1
+
+ SIM_ACK_LOW t=1.558700e-07 channel=M index=1
+
+7.8% time = 156.000000 ns ( etc = 2:08:36, ett = 2:16:42 ) 
+( wall = 8:05 cpu = 15:55 s=1.96637 ) 
+ SIM_IACK_LOW t=1.566100e-07 channel=I index=13
+SIM_ROUND t=1.566100e-07 inputs=14 outputs=13
+
+7.9% time = 158.000000 ns ( etc = 2:09:50, ett = 2:18:03 ) 
+( wall = 8:12 cpu = 16:08 s=1.96647 ) 
+8.0% time = 160.000000 ns ( etc = 2:10:19, ett = 2:18:36 ) 
+( wall = 8:17 cpu = 16:17 s=1.96636 ) 
+8.1% time = 162.000000 ns ( etc = 2:10:43, ett = 2:19:05 ) 
+( wall = 8:21 cpu = 16:26 s=1.9664 ) 
+8.2% time = 164.000000 ns ( etc = 2:11:07, ett = 2:19:33 ) 
+( wall = 8:26 cpu = 16:35 s=1.96642 ) 
+8.3% time = 166.000000 ns ( etc = 2:11:26, ett = 2:19:56 ) 
+( wall = 8:30 cpu = 16:43 s=1.9665 ) 
+8.4% time = 168.000000 ns ( etc = 2:11:46, ett = 2:20:20 ) 
+( wall = 8:34 cpu = 16:51 s=1.96657 ) 
+8.5% time = 170.000000 ns ( etc = 2:12:05, ett = 2:20:43 ) 
+( wall = 8:38 cpu = 16:59 s=1.96663 ) 
+8.6% time = 172.000000 ns ( etc = 2:12:23, ett = 2:21:06 ) 
+( wall = 8:42 cpu = 17:08 s=1.96669 ) 
+8.7% time = 174.000000 ns ( etc = 2:12:41, ett = 2:21:27 ) 
+( wall = 8:46 cpu = 17:16 s=1.96672 ) 
+8.8% time = 176.010000 ns ( etc = 2:12:58, ett = 2:21:49 ) 
+( wall = 8:50 cpu = 17:24 s=1.96676 ) 
+ SIM_IDLE_BEGIN t=1.766200e-07 reset=-0.000000e+00
+
+8.9% time = 178.010000 ns ( etc = 2:13:15, ett = 2:22:10 ) 
+( wall = 8:54 cpu = 17:32 s=1.96682 ) 
+9.0% time = 180.010000 ns ( etc = 2:13:33, ett = 2:22:31 ) 
+( wall = 8:58 cpu = 17:39 s=1.96685 ) 
+9.1% time = 182.010000 ns ( etc = 2:13:49, ett = 2:22:52 ) 
+( wall = 9:02 cpu = 17:47 s=1.96687 ) 
+9.2% time = 184.010000 ns ( etc = 2:14:06, ett = 2:23:13 ) 
+( wall = 9:06 cpu = 17:55 s=1.96692 ) 
+9.3% time = 186.010000 ns ( etc = 2:14:21, ett = 2:23:32 ) 
+( wall = 9:10 cpu = 18:03 s=1.96696 ) 
+9.4% time = 188.010000 ns ( etc = 2:14:36, ett = 2:23:51 ) 
+( wall = 9:14 cpu = 18:11 s=1.96701 ) 
+9.5% time = 190.010000 ns ( etc = 2:14:52, ett = 2:24:11 ) 
+( wall = 9:18 cpu = 18:19 s=1.96708 ) 
+9.6% time = 192.010000 ns ( etc = 2:15:07, ett = 2:24:30 ) 
+( wall = 9:22 cpu = 18:27 s=1.96714 ) 
+9.7% time = 194.010000 ns ( etc = 2:15:22, ett = 2:24:49 ) 
+( wall = 9:26 cpu = 18:35 s=1.96718 ) 
+9.8% time = 196.010000 ns ( etc = 2:15:37, ett = 2:25:08 ) 
+( wall = 9:30 cpu = 18:42 s=1.96723 ) 
+ SIM_IDLE_END t=1.966200e-07 reset=-0.000000e+00
+
+ SIM_PASS t=1.976200e-07 rounds=1 inputs=14 outputs=13
+
+Warning: (PVA) Finished simulation at time=1.9762e-07 by $finish(0) 
+
+          ***** job concluded
+ ******  
+ childrouter: one complete actsim reference round, ptm65 tt raw prs2net baseline
+
+ ****** job statistics summary tnom=  25.000 temp=  27.000 ******
+  
+ ******  Machine Information  ******
+ CPU:
+ model name	: QEMU Virtual CPU version 2.5+
+ cpu MHz	: 2294.608
+ CPU(s)		: 16
+  
+ OS:
+ Linux version 4.18.0-553.129.1.el8_10.x86_64 (mockbuild@iad1-prod-build001.bld.equ.rockylinux.org) (gcc version 8.5.0 20210514 (Red Hat 8.5.0-28) (GCC)) #1 SMP Tue Jun 9 16:05:10 UTC 2026
+
+ System loadavg : 14.78 14.72 12.44 14/424 3320159
+
+
+  ******  HSPICE Threads Information  ******
+
+  Command Line Threads Count :     2
+  Available CPU Count        :    16
+  Actual Threads Count       :     2
+
+
+  ******  Circuit Statistics  ******
+  # nodes       =   50458 # elements   =   10970
+  # resistors   =       0 # capacitors =       0 # inductors   =       0
+  # mutual_inds =       0 # vccs       =       0 # vcvs        =       0
+  # cccs        =       0 # ccvs       =       0 # volt_srcs   =       2
+  # curr_srcs   =       0 # diodes     =       0 # bjts        =       0
+  # jfets       =       0 # mosfets    =   10967 # U elements  =       0
+  # T elements  =       0 # W elements =       0 # B elements  =       0
+  # S elements  =       0 # P elements =       0 # va device   =       1
+  # vector_srcs =       0 # N elements =       0
+
+
+  ******  Runtime Statistics (seconds)  ******
+
+  analysis           time    # points   tot. iter  conv.iter
+  op point           9.16           1         354
+            0.00  0           0           0  rev= 0 
+  readin             6.39
+  errchk             0.57
+  setup              1.40
+  output             0.00
+           peak memory used        865.63 megabytes 
+           total cpu time          595.32 seconds
+           total elapsed time      595.37 seconds
+           job started at     00:03:12 09/18/2026
+           job ended   at     00:13:07 09/18/2026
+           job total runtime       595.37 seconds
+
+
+ lic: Release hspice token(s) 
+ lic: total license checkout elapse time:        0.05(s)

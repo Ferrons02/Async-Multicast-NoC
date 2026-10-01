@@ -1,0 +1,100 @@
+import "../../../src/block/forks/Arb/Arb.act";
+import "../testbench_support.act";
+
+/* Recovered from Backup09062026/{NoForks,Forks}/Arb.prs:
+ * six concurrent leaves each send FFFFFFFE,FFFFFFFF repeatedly. Arbitration
+ * preserves each two-word packet; identical packets need no assumed winner. */
+/* Global controls avoid an actsim state-offset bug for parent-owned CHP
+ * Boolean ports beside the PRS hierarchy. The command file uses these names. */
+bool reset, stop, fail, done, ready;
+int<32> rounds;
+Initialize { actions { ready- } }
+bool bad[1];
+TbPush<32> C0;
+TbPush<32> C1;
+TbPush<32> C2;
+TbPush<32> C3;
+TbPush<32> P;
+TbPush<32> M;
+TbPush<32> O;
+
+defproc ArbDriver(
+    bool bad_O;
+    TbPush!<32> C0;
+    TbPush!<32> C1;
+    TbPush!<32> C2;
+    TbPush!<32> C3;
+    TbPush!<32> P;
+    TbPush!<32> M;
+    TbPush?<32> O
+)
+{
+    /* ACT disallows nonlocal ports directly in loop guards. Sample the
+     * external stop/fail flags at each completed sequence boundary. */
+    bool running;
+    int<32> out_O;
+    chp {
+        ready := false; stop := false; done := false; rounds := 0;
+        bad_O := false;
+        ready := true; running := true;
+        [~reset];
+        *[running ->
+            ((
+            C0!0xFFFFFFFE;
+            C0!0xFFFFFFFF
+            ),(
+            C1!0xFFFFFFFE;
+            C1!0xFFFFFFFF
+            ),(
+            C2!0xFFFFFFFE;
+            C2!0xFFFFFFFF
+            ),(
+            C3!0xFFFFFFFE;
+            C3!0xFFFFFFFF
+            ),(
+            P!0xFFFFFFFE;
+            P!0xFFFFFFFF
+            ),(
+            M!0xFFFFFFFE;
+            M!0xFFFFFFFF
+            ),(
+            (;i:6:
+            O?out_O;
+            [out_O != 0xFFFFFFFE ->
+                bad_O := true;
+                log("FAILED: O expected ", 0xFFFFFFFE, ", got ", out_O, ", round ", rounds);
+                assert(out_O = 0xFFFFFFFE, "O golden mismatch");
+                [reset]
+            [] else -> skip];
+            O?out_O;
+            [out_O != 0xFFFFFFFF ->
+                bad_O := true;
+                log("FAILED: O expected ", 0xFFFFFFFF, ", got ", out_O, ", round ", rounds);
+                assert(out_O = 0xFFFFFFFF, "O golden mismatch");
+                [reset]
+            [] else -> skip]
+            )
+            ));
+            rounds := rounds + 1;
+            [stop | fail -> running := false [] else -> skip]
+        ];
+        done := true;
+        [fail -> log("FAILED")
+        [] else -> log("PASSED: rounds=", rounds)]
+    }
+}
+
+defproc tb_Arb()
+{
+    Arb dut;
+    dut.reset = reset;
+    TbPushSender<32> wire_C0(C0, dut.C0.t, dut.C0.f, dut.C0.a);
+    TbPushSender<32> wire_C1(C1, dut.C1.t, dut.C1.f, dut.C1.a);
+    TbPushSender<32> wire_C2(C2, dut.C2.t, dut.C2.f, dut.C2.a);
+    TbPushSender<32> wire_C3(C3, dut.C3.t, dut.C3.f, dut.C3.a);
+    TbPushSender<32> wire_P(P, dut.P.t, dut.P.f, dut.P.a);
+    TbPushSender<32> wire_M(M, dut.M.t, dut.M.f, dut.M.a);
+    TbPushReceiver<32> wire_O(O, dut.O.t, dut.O.f, dut.O.a);
+    TbFailure<1> failure(ready, bad, fail);
+    ArbDriver driver(bad[0], C0, C1, C2, C3, P, M, O);
+}

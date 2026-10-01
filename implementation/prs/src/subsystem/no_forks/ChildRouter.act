@@ -1,0 +1,50 @@
+import "no_forks/StopcodeSel/StopcodeSel.act";
+import "no_forks/UpdownSel/UpdownSel.act";
+import "no_forks/ChildSel/ChildSel.act";
+
+/*
+ * Topology and instance names follow src/ChildRouter.png.
+ * CS.O0..O3 connect to C0..C3 by index; ChildSel leaves are O3,O2,O1,O0.
+ * ACT_PATH must include src/block. Reset is shared directly, as in the blocks.
+ */
+export defproc ChildRouter(
+    bool? reset;
+    ActiveDualRail32? I;
+    ActiveDualRail32! M, P, C0, C1, C2, C3
+)
+{
+    StopcodeSel SS;
+    UpdownSel US;
+    ChildSel CS;
+
+    SS.reset = reset;
+    US.reset = reset;
+    CS.reset = reset;
+
+    // Input to stopcode selector.
+    SS.I = I;
+
+    // Stopcode detected: multicast output.
+    M = SS.O0;
+
+    // No stopcode: select up or down.
+    US.I = SS.O1;
+
+    // Up: parent output.
+    P = US.O0;
+
+    // Down: select a child.
+    CS.I = US.O1;
+
+    // Child 0.
+    C0 = CS.O0;
+
+    // Child 1.
+    C1 = CS.O1;
+
+    // Child 2.
+    C2 = CS.O2;
+
+    // Child 3.
+    C3 = CS.O3;
+}

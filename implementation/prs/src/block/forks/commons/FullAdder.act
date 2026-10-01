@@ -1,0 +1,87 @@
+import "forks/commons/Channels.act";
+
+export defproc FullAdder(DualRailBit? a; DualRailBit? b; DualRailBit? c; DualRailBit! d; DualRailBit! s)
+{
+    bool fd_a_f__d_f;
+    bool fd_a_f__d_t;
+    bool fd_a_f__s_f;
+    bool fd_a_f__s_t;
+    bool fd_a_t__d_f;
+    bool fd_a_t__d_t;
+    bool fd_a_t__s_f;
+    bool fd_a_t__s_t;
+    bool fd_b_f__d_f;
+    bool fd_b_f__d_t;
+    bool fd_b_f__s_f;
+    bool fd_b_f__s_t;
+    bool fd_b_t__d_f;
+    bool fd_b_t__d_t;
+    bool fd_b_t__s_f;
+    bool fd_b_t__s_t;
+    bool fd_c_f__d_f;
+    bool fd_c_f__s_f;
+    bool fd_c_f__s_t;
+    bool fd_c_t__d_t;
+    bool fd_c_t__s_f;
+    bool fd_c_t__s_t;
+
+    // Original non-bubble PRS, PDF pp. 57.
+    // Reset is common; each guard pair uses one source view.
+    // Only the documented fork groups share views across targets.
+    prs {
+        (fd_a_t__d_t & fd_b_t__d_t) | ((fd_a_t__d_t | fd_b_t__d_t) & fd_c_t__d_t) -> d.t+
+        ~fd_a_t__d_t & ~fd_a_f__d_t & ~fd_b_t__d_t & ~fd_b_f__d_t -> d.t-
+        (fd_a_f__d_f & fd_b_f__d_f) | ((fd_a_f__d_f | fd_b_f__d_f) & fd_c_f__d_f) -> d.f+
+        ~fd_a_t__d_f & ~fd_a_f__d_f & ~fd_b_t__d_f & ~fd_b_f__d_f -> d.f-
+        (fd_c_t__s_t & ((fd_a_t__s_t & fd_b_t__s_t) | (fd_a_f__s_t & fd_b_f__s_t))) | (fd_c_f__s_t & ((fd_a_t__s_t & fd_b_f__s_t) | (fd_a_f__s_t & fd_b_t__s_t))) -> s.t+
+        ~fd_c_t__s_t & ~fd_c_f__s_t -> s.t-
+        (fd_c_f__s_f & ((fd_a_t__s_f & fd_b_t__s_f) | (fd_a_f__s_f & fd_b_f__s_f))) | (fd_c_t__s_f & ((fd_a_t__s_f & fd_b_f__s_f) | (fd_a_f__s_f & fd_b_t__s_f))) -> s.f+
+        ~fd_c_t__s_f & ~fd_c_f__s_f -> s.f-
+
+        // Non-inverting wire delays.
+        a.f -> fd_a_f__d_f+
+        ~a.f -> fd_a_f__d_f-
+        a.f -> fd_a_f__d_t+
+        ~a.f -> fd_a_f__d_t-
+        a.f -> fd_a_f__s_f+
+        ~a.f -> fd_a_f__s_f-
+        a.f -> fd_a_f__s_t+
+        ~a.f -> fd_a_f__s_t-
+        a.t -> fd_a_t__d_f+
+        ~a.t -> fd_a_t__d_f-
+        a.t -> fd_a_t__d_t+
+        ~a.t -> fd_a_t__d_t-
+        a.t -> fd_a_t__s_f+
+        ~a.t -> fd_a_t__s_f-
+        a.t -> fd_a_t__s_t+
+        ~a.t -> fd_a_t__s_t-
+        b.f -> fd_b_f__d_f+
+        ~b.f -> fd_b_f__d_f-
+        b.f -> fd_b_f__d_t+
+        ~b.f -> fd_b_f__d_t-
+        b.f -> fd_b_f__s_f+
+        ~b.f -> fd_b_f__s_f-
+        b.f -> fd_b_f__s_t+
+        ~b.f -> fd_b_f__s_t-
+        b.t -> fd_b_t__d_f+
+        ~b.t -> fd_b_t__d_f-
+        b.t -> fd_b_t__d_t+
+        ~b.t -> fd_b_t__d_t-
+        b.t -> fd_b_t__s_f+
+        ~b.t -> fd_b_t__s_f-
+        b.t -> fd_b_t__s_t+
+        ~b.t -> fd_b_t__s_t-
+        c.f -> fd_c_f__d_f+
+        ~c.f -> fd_c_f__d_f-
+        c.f -> fd_c_f__s_f+
+        ~c.f -> fd_c_f__s_f-
+        c.f -> fd_c_f__s_t+
+        ~c.f -> fd_c_f__s_t-
+        c.t -> fd_c_t__d_t+
+        ~c.t -> fd_c_t__d_t-
+        c.t -> fd_c_t__s_f+
+        ~c.t -> fd_c_t__s_f-
+        c.t -> fd_c_t__s_t+
+        ~c.t -> fd_c_t__s_t-
+    }
+}

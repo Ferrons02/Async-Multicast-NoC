@@ -1,0 +1,761 @@
+import "subsystem/forks/ChildRouter.act";
+import "subsystem/forks/ParentRouter.act";
+import "subsystem/forks/MltcUnit.act";
+import "forks/Arb/Arb.act";
+
+/* RouterArch.png: sources select destinations; each physical output has one Arb.
+ * ParentRouter has no P output. ARM.M, ARP.P and ARP.M stay in spacer.
+ * Fork mode implements each ordinary PRS wire as two CMOS inverters on every top-level channel;
+ * ACTsim random delays apply to both transitions, as in the subsystems. */
+export defproc Router(bool? reset;
+    ActiveDualRail32? C0i, C1i, C2i, C3i, Pi;
+    ActiveDualRail32! C0o, C1o, C2o, C3o, Po)
+{
+    /* Logical holding-state senses are unchanged.
+     * Channel restoring inverters retain the public active-high encoding.
+     * inv_* nodes are combinational complements, not additional HSE state. */
+    bool inv_ARC0_C0_a;
+    bool inv_ARC0_C1_a;
+    bool inv_ARC0_C2_a;
+    bool inv_ARC0_C3_a;
+    bool inv_ARC0_M_a;
+    bool inv_ARC0_O_f[32];
+    bool inv_ARC0_O_t[32];
+    bool inv_ARC0_P_a;
+    bool inv_ARC1_C0_a;
+    bool inv_ARC1_C1_a;
+    bool inv_ARC1_C2_a;
+    bool inv_ARC1_C3_a;
+    bool inv_ARC1_M_a;
+    bool inv_ARC1_O_f[32];
+    bool inv_ARC1_O_t[32];
+    bool inv_ARC1_P_a;
+    bool inv_ARC2_C0_a;
+    bool inv_ARC2_C1_a;
+    bool inv_ARC2_C2_a;
+    bool inv_ARC2_C3_a;
+    bool inv_ARC2_M_a;
+    bool inv_ARC2_O_f[32];
+    bool inv_ARC2_O_t[32];
+    bool inv_ARC2_P_a;
+    bool inv_ARC3_C0_a;
+    bool inv_ARC3_C1_a;
+    bool inv_ARC3_C2_a;
+    bool inv_ARC3_C3_a;
+    bool inv_ARC3_M_a;
+    bool inv_ARC3_O_f[32];
+    bool inv_ARC3_O_t[32];
+    bool inv_ARC3_P_a;
+    bool inv_ARM_C0_a;
+    bool inv_ARM_C1_a;
+    bool inv_ARM_C2_a;
+    bool inv_ARM_C3_a;
+    bool inv_ARM_O_f[32];
+    bool inv_ARM_O_t[32];
+    bool inv_ARM_P_a;
+    bool inv_ARP_C0_a;
+    bool inv_ARP_C1_a;
+    bool inv_ARP_C2_a;
+    bool inv_ARP_C3_a;
+    bool inv_ARP_O_f[32];
+    bool inv_ARP_O_t[32];
+    bool inv_C0i_f[32];
+    bool inv_C0i_t[32];
+    bool inv_C0o_a;
+    bool inv_C1i_f[32];
+    bool inv_C1i_t[32];
+    bool inv_C1o_a;
+    bool inv_C2i_f[32];
+    bool inv_C2i_t[32];
+    bool inv_C2o_a;
+    bool inv_C3i_f[32];
+    bool inv_C3i_t[32];
+    bool inv_C3o_a;
+    bool inv_CRT0_C0_f[32];
+    bool inv_CRT0_C0_t[32];
+    bool inv_CRT0_C1_f[32];
+    bool inv_CRT0_C1_t[32];
+    bool inv_CRT0_C2_f[32];
+    bool inv_CRT0_C2_t[32];
+    bool inv_CRT0_C3_f[32];
+    bool inv_CRT0_C3_t[32];
+    bool inv_CRT0_I_a;
+    bool inv_CRT0_M_f[32];
+    bool inv_CRT0_M_t[32];
+    bool inv_CRT0_P_f[32];
+    bool inv_CRT0_P_t[32];
+    bool inv_CRT1_C0_f[32];
+    bool inv_CRT1_C0_t[32];
+    bool inv_CRT1_C1_f[32];
+    bool inv_CRT1_C1_t[32];
+    bool inv_CRT1_C2_f[32];
+    bool inv_CRT1_C2_t[32];
+    bool inv_CRT1_C3_f[32];
+    bool inv_CRT1_C3_t[32];
+    bool inv_CRT1_I_a;
+    bool inv_CRT1_M_f[32];
+    bool inv_CRT1_M_t[32];
+    bool inv_CRT1_P_f[32];
+    bool inv_CRT1_P_t[32];
+    bool inv_CRT2_C0_f[32];
+    bool inv_CRT2_C0_t[32];
+    bool inv_CRT2_C1_f[32];
+    bool inv_CRT2_C1_t[32];
+    bool inv_CRT2_C2_f[32];
+    bool inv_CRT2_C2_t[32];
+    bool inv_CRT2_C3_f[32];
+    bool inv_CRT2_C3_t[32];
+    bool inv_CRT2_I_a;
+    bool inv_CRT2_M_f[32];
+    bool inv_CRT2_M_t[32];
+    bool inv_CRT2_P_f[32];
+    bool inv_CRT2_P_t[32];
+    bool inv_CRT3_C0_f[32];
+    bool inv_CRT3_C0_t[32];
+    bool inv_CRT3_C1_f[32];
+    bool inv_CRT3_C1_t[32];
+    bool inv_CRT3_C2_f[32];
+    bool inv_CRT3_C2_t[32];
+    bool inv_CRT3_C3_f[32];
+    bool inv_CRT3_C3_t[32];
+    bool inv_CRT3_I_a;
+    bool inv_CRT3_M_f[32];
+    bool inv_CRT3_M_t[32];
+    bool inv_CRT3_P_f[32];
+    bool inv_CRT3_P_t[32];
+    bool inv_MU_C0_f[32];
+    bool inv_MU_C0_t[32];
+    bool inv_MU_C1_f[32];
+    bool inv_MU_C1_t[32];
+    bool inv_MU_C2_f[32];
+    bool inv_MU_C2_t[32];
+    bool inv_MU_C3_f[32];
+    bool inv_MU_C3_t[32];
+    bool inv_MU_I_a;
+    bool inv_PRT_C0_f[32];
+    bool inv_PRT_C0_t[32];
+    bool inv_PRT_C1_f[32];
+    bool inv_PRT_C1_t[32];
+    bool inv_PRT_C2_f[32];
+    bool inv_PRT_C2_t[32];
+    bool inv_PRT_C3_f[32];
+    bool inv_PRT_C3_t[32];
+    bool inv_PRT_I_a;
+    bool inv_PRT_M_f[32];
+    bool inv_PRT_M_t[32];
+    bool inv_Pi_f[32];
+    bool inv_Pi_t[32];
+    bool inv_Po_a;
+
+    ChildRouter CRT0, CRT1, CRT2, CRT3;
+    ParentRouter PRT;
+    Arb ARC0, ARC1, ARC2, ARC3, ARP, ARM;
+    MltcUnit MU;
+
+    CRT0.reset = reset;
+    CRT1.reset = reset;
+    CRT2.reset = reset;
+    CRT3.reset = reset;
+    PRT.reset = reset;
+    ARC0.reset = reset;
+    ARC1.reset = reset;
+    ARC2.reset = reset;
+    ARC3.reset = reset;
+    ARP.reset = reset;
+    ARM.reset = reset;
+    MU.reset = reset;
+
+    prs {
+        // C0i -> CRT0.I
+        (i:32:
+            ~inv_C0i_t[i] -> CRT0.I.t[i]+
+            inv_C0i_t[i] -> CRT0.I.t[i]-
+            ~inv_C0i_f[i] -> CRT0.I.f[i]+
+            inv_C0i_f[i] -> CRT0.I.f[i]-
+        )
+        ~inv_CRT0_I_a -> C0i.a+
+        inv_CRT0_I_a -> C0i.a-
+
+        // C1i -> CRT1.I
+        (i:32:
+            ~inv_C1i_t[i] -> CRT1.I.t[i]+
+            inv_C1i_t[i] -> CRT1.I.t[i]-
+            ~inv_C1i_f[i] -> CRT1.I.f[i]+
+            inv_C1i_f[i] -> CRT1.I.f[i]-
+        )
+        ~inv_CRT1_I_a -> C1i.a+
+        inv_CRT1_I_a -> C1i.a-
+
+        // C2i -> CRT2.I
+        (i:32:
+            ~inv_C2i_t[i] -> CRT2.I.t[i]+
+            inv_C2i_t[i] -> CRT2.I.t[i]-
+            ~inv_C2i_f[i] -> CRT2.I.f[i]+
+            inv_C2i_f[i] -> CRT2.I.f[i]-
+        )
+        ~inv_CRT2_I_a -> C2i.a+
+        inv_CRT2_I_a -> C2i.a-
+
+        // C3i -> CRT3.I
+        (i:32:
+            ~inv_C3i_t[i] -> CRT3.I.t[i]+
+            inv_C3i_t[i] -> CRT3.I.t[i]-
+            ~inv_C3i_f[i] -> CRT3.I.f[i]+
+            inv_C3i_f[i] -> CRT3.I.f[i]-
+        )
+        ~inv_CRT3_I_a -> C3i.a+
+        inv_CRT3_I_a -> C3i.a-
+
+        // Pi -> PRT.I
+        (i:32:
+            ~inv_Pi_t[i] -> PRT.I.t[i]+
+            inv_Pi_t[i] -> PRT.I.t[i]-
+            ~inv_Pi_f[i] -> PRT.I.f[i]+
+            inv_Pi_f[i] -> PRT.I.f[i]-
+        )
+        ~inv_PRT_I_a -> Pi.a+
+        inv_PRT_I_a -> Pi.a-
+
+        // CRT0.C0 -> ARC0.C0
+        (i:32:
+            ~inv_CRT0_C0_t[i] -> ARC0.C0.t[i]+
+            inv_CRT0_C0_t[i] -> ARC0.C0.t[i]-
+            ~inv_CRT0_C0_f[i] -> ARC0.C0.f[i]+
+            inv_CRT0_C0_f[i] -> ARC0.C0.f[i]-
+        )
+        ~inv_ARC0_C0_a -> CRT0.C0.a+
+        inv_ARC0_C0_a -> CRT0.C0.a-
+
+        // CRT0.C1 -> ARC1.C0
+        (i:32:
+            ~inv_CRT0_C1_t[i] -> ARC1.C0.t[i]+
+            inv_CRT0_C1_t[i] -> ARC1.C0.t[i]-
+            ~inv_CRT0_C1_f[i] -> ARC1.C0.f[i]+
+            inv_CRT0_C1_f[i] -> ARC1.C0.f[i]-
+        )
+        ~inv_ARC1_C0_a -> CRT0.C1.a+
+        inv_ARC1_C0_a -> CRT0.C1.a-
+
+        // CRT0.C2 -> ARC2.C0
+        (i:32:
+            ~inv_CRT0_C2_t[i] -> ARC2.C0.t[i]+
+            inv_CRT0_C2_t[i] -> ARC2.C0.t[i]-
+            ~inv_CRT0_C2_f[i] -> ARC2.C0.f[i]+
+            inv_CRT0_C2_f[i] -> ARC2.C0.f[i]-
+        )
+        ~inv_ARC2_C0_a -> CRT0.C2.a+
+        inv_ARC2_C0_a -> CRT0.C2.a-
+
+        // CRT0.C3 -> ARC3.C0
+        (i:32:
+            ~inv_CRT0_C3_t[i] -> ARC3.C0.t[i]+
+            inv_CRT0_C3_t[i] -> ARC3.C0.t[i]-
+            ~inv_CRT0_C3_f[i] -> ARC3.C0.f[i]+
+            inv_CRT0_C3_f[i] -> ARC3.C0.f[i]-
+        )
+        ~inv_ARC3_C0_a -> CRT0.C3.a+
+        inv_ARC3_C0_a -> CRT0.C3.a-
+
+        // CRT0.P -> ARP.C0
+        (i:32:
+            ~inv_CRT0_P_t[i] -> ARP.C0.t[i]+
+            inv_CRT0_P_t[i] -> ARP.C0.t[i]-
+            ~inv_CRT0_P_f[i] -> ARP.C0.f[i]+
+            inv_CRT0_P_f[i] -> ARP.C0.f[i]-
+        )
+        ~inv_ARP_C0_a -> CRT0.P.a+
+        inv_ARP_C0_a -> CRT0.P.a-
+
+        // CRT0.M -> ARM.C0
+        (i:32:
+            ~inv_CRT0_M_t[i] -> ARM.C0.t[i]+
+            inv_CRT0_M_t[i] -> ARM.C0.t[i]-
+            ~inv_CRT0_M_f[i] -> ARM.C0.f[i]+
+            inv_CRT0_M_f[i] -> ARM.C0.f[i]-
+        )
+        ~inv_ARM_C0_a -> CRT0.M.a+
+        inv_ARM_C0_a -> CRT0.M.a-
+
+        // CRT1.C0 -> ARC0.C1
+        (i:32:
+            ~inv_CRT1_C0_t[i] -> ARC0.C1.t[i]+
+            inv_CRT1_C0_t[i] -> ARC0.C1.t[i]-
+            ~inv_CRT1_C0_f[i] -> ARC0.C1.f[i]+
+            inv_CRT1_C0_f[i] -> ARC0.C1.f[i]-
+        )
+        ~inv_ARC0_C1_a -> CRT1.C0.a+
+        inv_ARC0_C1_a -> CRT1.C0.a-
+
+        // CRT1.C1 -> ARC1.C1
+        (i:32:
+            ~inv_CRT1_C1_t[i] -> ARC1.C1.t[i]+
+            inv_CRT1_C1_t[i] -> ARC1.C1.t[i]-
+            ~inv_CRT1_C1_f[i] -> ARC1.C1.f[i]+
+            inv_CRT1_C1_f[i] -> ARC1.C1.f[i]-
+        )
+        ~inv_ARC1_C1_a -> CRT1.C1.a+
+        inv_ARC1_C1_a -> CRT1.C1.a-
+
+        // CRT1.C2 -> ARC2.C1
+        (i:32:
+            ~inv_CRT1_C2_t[i] -> ARC2.C1.t[i]+
+            inv_CRT1_C2_t[i] -> ARC2.C1.t[i]-
+            ~inv_CRT1_C2_f[i] -> ARC2.C1.f[i]+
+            inv_CRT1_C2_f[i] -> ARC2.C1.f[i]-
+        )
+        ~inv_ARC2_C1_a -> CRT1.C2.a+
+        inv_ARC2_C1_a -> CRT1.C2.a-
+
+        // CRT1.C3 -> ARC3.C1
+        (i:32:
+            ~inv_CRT1_C3_t[i] -> ARC3.C1.t[i]+
+            inv_CRT1_C3_t[i] -> ARC3.C1.t[i]-
+            ~inv_CRT1_C3_f[i] -> ARC3.C1.f[i]+
+            inv_CRT1_C3_f[i] -> ARC3.C1.f[i]-
+        )
+        ~inv_ARC3_C1_a -> CRT1.C3.a+
+        inv_ARC3_C1_a -> CRT1.C3.a-
+
+        // CRT1.P -> ARP.C1
+        (i:32:
+            ~inv_CRT1_P_t[i] -> ARP.C1.t[i]+
+            inv_CRT1_P_t[i] -> ARP.C1.t[i]-
+            ~inv_CRT1_P_f[i] -> ARP.C1.f[i]+
+            inv_CRT1_P_f[i] -> ARP.C1.f[i]-
+        )
+        ~inv_ARP_C1_a -> CRT1.P.a+
+        inv_ARP_C1_a -> CRT1.P.a-
+
+        // CRT1.M -> ARM.C1
+        (i:32:
+            ~inv_CRT1_M_t[i] -> ARM.C1.t[i]+
+            inv_CRT1_M_t[i] -> ARM.C1.t[i]-
+            ~inv_CRT1_M_f[i] -> ARM.C1.f[i]+
+            inv_CRT1_M_f[i] -> ARM.C1.f[i]-
+        )
+        ~inv_ARM_C1_a -> CRT1.M.a+
+        inv_ARM_C1_a -> CRT1.M.a-
+
+        // CRT2.C0 -> ARC0.C2
+        (i:32:
+            ~inv_CRT2_C0_t[i] -> ARC0.C2.t[i]+
+            inv_CRT2_C0_t[i] -> ARC0.C2.t[i]-
+            ~inv_CRT2_C0_f[i] -> ARC0.C2.f[i]+
+            inv_CRT2_C0_f[i] -> ARC0.C2.f[i]-
+        )
+        ~inv_ARC0_C2_a -> CRT2.C0.a+
+        inv_ARC0_C2_a -> CRT2.C0.a-
+
+        // CRT2.C1 -> ARC1.C2
+        (i:32:
+            ~inv_CRT2_C1_t[i] -> ARC1.C2.t[i]+
+            inv_CRT2_C1_t[i] -> ARC1.C2.t[i]-
+            ~inv_CRT2_C1_f[i] -> ARC1.C2.f[i]+
+            inv_CRT2_C1_f[i] -> ARC1.C2.f[i]-
+        )
+        ~inv_ARC1_C2_a -> CRT2.C1.a+
+        inv_ARC1_C2_a -> CRT2.C1.a-
+
+        // CRT2.C2 -> ARC2.C2
+        (i:32:
+            ~inv_CRT2_C2_t[i] -> ARC2.C2.t[i]+
+            inv_CRT2_C2_t[i] -> ARC2.C2.t[i]-
+            ~inv_CRT2_C2_f[i] -> ARC2.C2.f[i]+
+            inv_CRT2_C2_f[i] -> ARC2.C2.f[i]-
+        )
+        ~inv_ARC2_C2_a -> CRT2.C2.a+
+        inv_ARC2_C2_a -> CRT2.C2.a-
+
+        // CRT2.C3 -> ARC3.C2
+        (i:32:
+            ~inv_CRT2_C3_t[i] -> ARC3.C2.t[i]+
+            inv_CRT2_C3_t[i] -> ARC3.C2.t[i]-
+            ~inv_CRT2_C3_f[i] -> ARC3.C2.f[i]+
+            inv_CRT2_C3_f[i] -> ARC3.C2.f[i]-
+        )
+        ~inv_ARC3_C2_a -> CRT2.C3.a+
+        inv_ARC3_C2_a -> CRT2.C3.a-
+
+        // CRT2.P -> ARP.C2
+        (i:32:
+            ~inv_CRT2_P_t[i] -> ARP.C2.t[i]+
+            inv_CRT2_P_t[i] -> ARP.C2.t[i]-
+            ~inv_CRT2_P_f[i] -> ARP.C2.f[i]+
+            inv_CRT2_P_f[i] -> ARP.C2.f[i]-
+        )
+        ~inv_ARP_C2_a -> CRT2.P.a+
+        inv_ARP_C2_a -> CRT2.P.a-
+
+        // CRT2.M -> ARM.C2
+        (i:32:
+            ~inv_CRT2_M_t[i] -> ARM.C2.t[i]+
+            inv_CRT2_M_t[i] -> ARM.C2.t[i]-
+            ~inv_CRT2_M_f[i] -> ARM.C2.f[i]+
+            inv_CRT2_M_f[i] -> ARM.C2.f[i]-
+        )
+        ~inv_ARM_C2_a -> CRT2.M.a+
+        inv_ARM_C2_a -> CRT2.M.a-
+
+        // CRT3.C0 -> ARC0.C3
+        (i:32:
+            ~inv_CRT3_C0_t[i] -> ARC0.C3.t[i]+
+            inv_CRT3_C0_t[i] -> ARC0.C3.t[i]-
+            ~inv_CRT3_C0_f[i] -> ARC0.C3.f[i]+
+            inv_CRT3_C0_f[i] -> ARC0.C3.f[i]-
+        )
+        ~inv_ARC0_C3_a -> CRT3.C0.a+
+        inv_ARC0_C3_a -> CRT3.C0.a-
+
+        // CRT3.C1 -> ARC1.C3
+        (i:32:
+            ~inv_CRT3_C1_t[i] -> ARC1.C3.t[i]+
+            inv_CRT3_C1_t[i] -> ARC1.C3.t[i]-
+            ~inv_CRT3_C1_f[i] -> ARC1.C3.f[i]+
+            inv_CRT3_C1_f[i] -> ARC1.C3.f[i]-
+        )
+        ~inv_ARC1_C3_a -> CRT3.C1.a+
+        inv_ARC1_C3_a -> CRT3.C1.a-
+
+        // CRT3.C2 -> ARC2.C3
+        (i:32:
+            ~inv_CRT3_C2_t[i] -> ARC2.C3.t[i]+
+            inv_CRT3_C2_t[i] -> ARC2.C3.t[i]-
+            ~inv_CRT3_C2_f[i] -> ARC2.C3.f[i]+
+            inv_CRT3_C2_f[i] -> ARC2.C3.f[i]-
+        )
+        ~inv_ARC2_C3_a -> CRT3.C2.a+
+        inv_ARC2_C3_a -> CRT3.C2.a-
+
+        // CRT3.C3 -> ARC3.C3
+        (i:32:
+            ~inv_CRT3_C3_t[i] -> ARC3.C3.t[i]+
+            inv_CRT3_C3_t[i] -> ARC3.C3.t[i]-
+            ~inv_CRT3_C3_f[i] -> ARC3.C3.f[i]+
+            inv_CRT3_C3_f[i] -> ARC3.C3.f[i]-
+        )
+        ~inv_ARC3_C3_a -> CRT3.C3.a+
+        inv_ARC3_C3_a -> CRT3.C3.a-
+
+        // CRT3.P -> ARP.C3
+        (i:32:
+            ~inv_CRT3_P_t[i] -> ARP.C3.t[i]+
+            inv_CRT3_P_t[i] -> ARP.C3.t[i]-
+            ~inv_CRT3_P_f[i] -> ARP.C3.f[i]+
+            inv_CRT3_P_f[i] -> ARP.C3.f[i]-
+        )
+        ~inv_ARP_C3_a -> CRT3.P.a+
+        inv_ARP_C3_a -> CRT3.P.a-
+
+        // CRT3.M -> ARM.C3
+        (i:32:
+            ~inv_CRT3_M_t[i] -> ARM.C3.t[i]+
+            inv_CRT3_M_t[i] -> ARM.C3.t[i]-
+            ~inv_CRT3_M_f[i] -> ARM.C3.f[i]+
+            inv_CRT3_M_f[i] -> ARM.C3.f[i]-
+        )
+        ~inv_ARM_C3_a -> CRT3.M.a+
+        inv_ARM_C3_a -> CRT3.M.a-
+
+        // PRT.C0 -> ARC0.P
+        (i:32:
+            ~inv_PRT_C0_t[i] -> ARC0.P.t[i]+
+            inv_PRT_C0_t[i] -> ARC0.P.t[i]-
+            ~inv_PRT_C0_f[i] -> ARC0.P.f[i]+
+            inv_PRT_C0_f[i] -> ARC0.P.f[i]-
+        )
+        ~inv_ARC0_P_a -> PRT.C0.a+
+        inv_ARC0_P_a -> PRT.C0.a-
+
+        // PRT.C1 -> ARC1.P
+        (i:32:
+            ~inv_PRT_C1_t[i] -> ARC1.P.t[i]+
+            inv_PRT_C1_t[i] -> ARC1.P.t[i]-
+            ~inv_PRT_C1_f[i] -> ARC1.P.f[i]+
+            inv_PRT_C1_f[i] -> ARC1.P.f[i]-
+        )
+        ~inv_ARC1_P_a -> PRT.C1.a+
+        inv_ARC1_P_a -> PRT.C1.a-
+
+        // PRT.C2 -> ARC2.P
+        (i:32:
+            ~inv_PRT_C2_t[i] -> ARC2.P.t[i]+
+            inv_PRT_C2_t[i] -> ARC2.P.t[i]-
+            ~inv_PRT_C2_f[i] -> ARC2.P.f[i]+
+            inv_PRT_C2_f[i] -> ARC2.P.f[i]-
+        )
+        ~inv_ARC2_P_a -> PRT.C2.a+
+        inv_ARC2_P_a -> PRT.C2.a-
+
+        // PRT.C3 -> ARC3.P
+        (i:32:
+            ~inv_PRT_C3_t[i] -> ARC3.P.t[i]+
+            inv_PRT_C3_t[i] -> ARC3.P.t[i]-
+            ~inv_PRT_C3_f[i] -> ARC3.P.f[i]+
+            inv_PRT_C3_f[i] -> ARC3.P.f[i]-
+        )
+        ~inv_ARC3_P_a -> PRT.C3.a+
+        inv_ARC3_P_a -> PRT.C3.a-
+
+        // PRT.M -> ARM.P
+        (i:32:
+            ~inv_PRT_M_t[i] -> ARM.P.t[i]+
+            inv_PRT_M_t[i] -> ARM.P.t[i]-
+            ~inv_PRT_M_f[i] -> ARM.P.f[i]+
+            inv_PRT_M_f[i] -> ARM.P.f[i]-
+        )
+        ~inv_ARM_P_a -> PRT.M.a+
+        inv_ARM_P_a -> PRT.M.a-
+
+        // ARM.O -> MU.I
+        (i:32:
+            ~inv_ARM_O_t[i] -> MU.I.t[i]+
+            inv_ARM_O_t[i] -> MU.I.t[i]-
+            ~inv_ARM_O_f[i] -> MU.I.f[i]+
+            inv_ARM_O_f[i] -> MU.I.f[i]-
+        )
+        ~inv_MU_I_a -> ARM.O.a+
+        inv_MU_I_a -> ARM.O.a-
+
+        // MU.C0 -> ARC0.M
+        (i:32:
+            ~inv_MU_C0_t[i] -> ARC0.M.t[i]+
+            inv_MU_C0_t[i] -> ARC0.M.t[i]-
+            ~inv_MU_C0_f[i] -> ARC0.M.f[i]+
+            inv_MU_C0_f[i] -> ARC0.M.f[i]-
+        )
+        ~inv_ARC0_M_a -> MU.C0.a+
+        inv_ARC0_M_a -> MU.C0.a-
+
+        // MU.C1 -> ARC1.M
+        (i:32:
+            ~inv_MU_C1_t[i] -> ARC1.M.t[i]+
+            inv_MU_C1_t[i] -> ARC1.M.t[i]-
+            ~inv_MU_C1_f[i] -> ARC1.M.f[i]+
+            inv_MU_C1_f[i] -> ARC1.M.f[i]-
+        )
+        ~inv_ARC1_M_a -> MU.C1.a+
+        inv_ARC1_M_a -> MU.C1.a-
+
+        // MU.C2 -> ARC2.M
+        (i:32:
+            ~inv_MU_C2_t[i] -> ARC2.M.t[i]+
+            inv_MU_C2_t[i] -> ARC2.M.t[i]-
+            ~inv_MU_C2_f[i] -> ARC2.M.f[i]+
+            inv_MU_C2_f[i] -> ARC2.M.f[i]-
+        )
+        ~inv_ARC2_M_a -> MU.C2.a+
+        inv_ARC2_M_a -> MU.C2.a-
+
+        // MU.C3 -> ARC3.M
+        (i:32:
+            ~inv_MU_C3_t[i] -> ARC3.M.t[i]+
+            inv_MU_C3_t[i] -> ARC3.M.t[i]-
+            ~inv_MU_C3_f[i] -> ARC3.M.f[i]+
+            inv_MU_C3_f[i] -> ARC3.M.f[i]-
+        )
+        ~inv_ARC3_M_a -> MU.C3.a+
+        inv_ARC3_M_a -> MU.C3.a-
+
+        // ARC0.O -> C0o
+        (i:32:
+            ~inv_ARC0_O_t[i] -> C0o.t[i]+
+            inv_ARC0_O_t[i] -> C0o.t[i]-
+            ~inv_ARC0_O_f[i] -> C0o.f[i]+
+            inv_ARC0_O_f[i] -> C0o.f[i]-
+        )
+        ~inv_C0o_a -> ARC0.O.a+
+        inv_C0o_a -> ARC0.O.a-
+
+        // ARC1.O -> C1o
+        (i:32:
+            ~inv_ARC1_O_t[i] -> C1o.t[i]+
+            inv_ARC1_O_t[i] -> C1o.t[i]-
+            ~inv_ARC1_O_f[i] -> C1o.f[i]+
+            inv_ARC1_O_f[i] -> C1o.f[i]-
+        )
+        ~inv_C1o_a -> ARC1.O.a+
+        inv_C1o_a -> ARC1.O.a-
+
+        // ARC2.O -> C2o
+        (i:32:
+            ~inv_ARC2_O_t[i] -> C2o.t[i]+
+            inv_ARC2_O_t[i] -> C2o.t[i]-
+            ~inv_ARC2_O_f[i] -> C2o.f[i]+
+            inv_ARC2_O_f[i] -> C2o.f[i]-
+        )
+        ~inv_C2o_a -> ARC2.O.a+
+        inv_C2o_a -> ARC2.O.a-
+
+        // ARC3.O -> C3o
+        (i:32:
+            ~inv_ARC3_O_t[i] -> C3o.t[i]+
+            inv_ARC3_O_t[i] -> C3o.t[i]-
+            ~inv_ARC3_O_f[i] -> C3o.f[i]+
+            inv_ARC3_O_f[i] -> C3o.f[i]-
+        )
+        ~inv_C3o_a -> ARC3.O.a+
+        inv_C3o_a -> ARC3.O.a-
+
+        // ARP.O -> Po
+        (i:32:
+            ~inv_ARP_O_t[i] -> Po.t[i]+
+            inv_ARP_O_t[i] -> Po.t[i]-
+            ~inv_ARP_O_f[i] -> Po.f[i]+
+            inv_ARP_O_f[i] -> Po.f[i]-
+        )
+        ~inv_Po_a -> ARP.O.a+
+        inv_Po_a -> ARP.O.a-
+
+        // No source: dual-rail spacer, never a valid zero token.
+        (i:32:
+            true -> ARM.M.t[i]-
+            true -> ARM.M.f[i]-
+        )
+        // No source: dual-rail spacer, never a valid zero token.
+        (i:32:
+            true -> ARP.P.t[i]-
+            true -> ARP.P.f[i]-
+        )
+        // No source: dual-rail spacer, never a valid zero token.
+        (i:32:
+            true -> ARP.M.t[i]-
+            true -> ARP.M.f[i]-
+        )
+    }
+
+    // Residual CMOS inverters; no independent HSE sequencing state.
+    prs {
+        ~ARC0.C0.a => inv_ARC0_C0_a+
+        ~ARC0.C1.a => inv_ARC0_C1_a+
+        ~ARC0.C2.a => inv_ARC0_C2_a+
+        ~ARC0.C3.a => inv_ARC0_C3_a+
+        ~ARC0.M.a => inv_ARC0_M_a+
+        (bi:32: ~ARC0.O.f[bi] => inv_ARC0_O_f[bi]+)
+        (bi:32: ~ARC0.O.t[bi] => inv_ARC0_O_t[bi]+)
+        ~ARC0.P.a => inv_ARC0_P_a+
+        ~ARC1.C0.a => inv_ARC1_C0_a+
+        ~ARC1.C1.a => inv_ARC1_C1_a+
+        ~ARC1.C2.a => inv_ARC1_C2_a+
+        ~ARC1.C3.a => inv_ARC1_C3_a+
+        ~ARC1.M.a => inv_ARC1_M_a+
+        (bi:32: ~ARC1.O.f[bi] => inv_ARC1_O_f[bi]+)
+        (bi:32: ~ARC1.O.t[bi] => inv_ARC1_O_t[bi]+)
+        ~ARC1.P.a => inv_ARC1_P_a+
+        ~ARC2.C0.a => inv_ARC2_C0_a+
+        ~ARC2.C1.a => inv_ARC2_C1_a+
+        ~ARC2.C2.a => inv_ARC2_C2_a+
+        ~ARC2.C3.a => inv_ARC2_C3_a+
+        ~ARC2.M.a => inv_ARC2_M_a+
+        (bi:32: ~ARC2.O.f[bi] => inv_ARC2_O_f[bi]+)
+        (bi:32: ~ARC2.O.t[bi] => inv_ARC2_O_t[bi]+)
+        ~ARC2.P.a => inv_ARC2_P_a+
+        ~ARC3.C0.a => inv_ARC3_C0_a+
+        ~ARC3.C1.a => inv_ARC3_C1_a+
+        ~ARC3.C2.a => inv_ARC3_C2_a+
+        ~ARC3.C3.a => inv_ARC3_C3_a+
+        ~ARC3.M.a => inv_ARC3_M_a+
+        (bi:32: ~ARC3.O.f[bi] => inv_ARC3_O_f[bi]+)
+        (bi:32: ~ARC3.O.t[bi] => inv_ARC3_O_t[bi]+)
+        ~ARC3.P.a => inv_ARC3_P_a+
+        ~ARM.C0.a => inv_ARM_C0_a+
+        ~ARM.C1.a => inv_ARM_C1_a+
+        ~ARM.C2.a => inv_ARM_C2_a+
+        ~ARM.C3.a => inv_ARM_C3_a+
+        (bi:32: ~ARM.O.f[bi] => inv_ARM_O_f[bi]+)
+        (bi:32: ~ARM.O.t[bi] => inv_ARM_O_t[bi]+)
+        ~ARM.P.a => inv_ARM_P_a+
+        ~ARP.C0.a => inv_ARP_C0_a+
+        ~ARP.C1.a => inv_ARP_C1_a+
+        ~ARP.C2.a => inv_ARP_C2_a+
+        ~ARP.C3.a => inv_ARP_C3_a+
+        (bi:32: ~ARP.O.f[bi] => inv_ARP_O_f[bi]+)
+        (bi:32: ~ARP.O.t[bi] => inv_ARP_O_t[bi]+)
+        (bi:32: ~C0i.f[bi] => inv_C0i_f[bi]+)
+        (bi:32: ~C0i.t[bi] => inv_C0i_t[bi]+)
+        ~C0o.a => inv_C0o_a+
+        (bi:32: ~C1i.f[bi] => inv_C1i_f[bi]+)
+        (bi:32: ~C1i.t[bi] => inv_C1i_t[bi]+)
+        ~C1o.a => inv_C1o_a+
+        (bi:32: ~C2i.f[bi] => inv_C2i_f[bi]+)
+        (bi:32: ~C2i.t[bi] => inv_C2i_t[bi]+)
+        ~C2o.a => inv_C2o_a+
+        (bi:32: ~C3i.f[bi] => inv_C3i_f[bi]+)
+        (bi:32: ~C3i.t[bi] => inv_C3i_t[bi]+)
+        ~C3o.a => inv_C3o_a+
+        (bi:32: ~CRT0.C0.f[bi] => inv_CRT0_C0_f[bi]+)
+        (bi:32: ~CRT0.C0.t[bi] => inv_CRT0_C0_t[bi]+)
+        (bi:32: ~CRT0.C1.f[bi] => inv_CRT0_C1_f[bi]+)
+        (bi:32: ~CRT0.C1.t[bi] => inv_CRT0_C1_t[bi]+)
+        (bi:32: ~CRT0.C2.f[bi] => inv_CRT0_C2_f[bi]+)
+        (bi:32: ~CRT0.C2.t[bi] => inv_CRT0_C2_t[bi]+)
+        (bi:32: ~CRT0.C3.f[bi] => inv_CRT0_C3_f[bi]+)
+        (bi:32: ~CRT0.C3.t[bi] => inv_CRT0_C3_t[bi]+)
+        ~CRT0.I.a => inv_CRT0_I_a+
+        (bi:32: ~CRT0.M.f[bi] => inv_CRT0_M_f[bi]+)
+        (bi:32: ~CRT0.M.t[bi] => inv_CRT0_M_t[bi]+)
+        (bi:32: ~CRT0.P.f[bi] => inv_CRT0_P_f[bi]+)
+        (bi:32: ~CRT0.P.t[bi] => inv_CRT0_P_t[bi]+)
+        (bi:32: ~CRT1.C0.f[bi] => inv_CRT1_C0_f[bi]+)
+        (bi:32: ~CRT1.C0.t[bi] => inv_CRT1_C0_t[bi]+)
+        (bi:32: ~CRT1.C1.f[bi] => inv_CRT1_C1_f[bi]+)
+        (bi:32: ~CRT1.C1.t[bi] => inv_CRT1_C1_t[bi]+)
+        (bi:32: ~CRT1.C2.f[bi] => inv_CRT1_C2_f[bi]+)
+        (bi:32: ~CRT1.C2.t[bi] => inv_CRT1_C2_t[bi]+)
+        (bi:32: ~CRT1.C3.f[bi] => inv_CRT1_C3_f[bi]+)
+        (bi:32: ~CRT1.C3.t[bi] => inv_CRT1_C3_t[bi]+)
+        ~CRT1.I.a => inv_CRT1_I_a+
+        (bi:32: ~CRT1.M.f[bi] => inv_CRT1_M_f[bi]+)
+        (bi:32: ~CRT1.M.t[bi] => inv_CRT1_M_t[bi]+)
+        (bi:32: ~CRT1.P.f[bi] => inv_CRT1_P_f[bi]+)
+        (bi:32: ~CRT1.P.t[bi] => inv_CRT1_P_t[bi]+)
+        (bi:32: ~CRT2.C0.f[bi] => inv_CRT2_C0_f[bi]+)
+        (bi:32: ~CRT2.C0.t[bi] => inv_CRT2_C0_t[bi]+)
+        (bi:32: ~CRT2.C1.f[bi] => inv_CRT2_C1_f[bi]+)
+        (bi:32: ~CRT2.C1.t[bi] => inv_CRT2_C1_t[bi]+)
+        (bi:32: ~CRT2.C2.f[bi] => inv_CRT2_C2_f[bi]+)
+        (bi:32: ~CRT2.C2.t[bi] => inv_CRT2_C2_t[bi]+)
+        (bi:32: ~CRT2.C3.f[bi] => inv_CRT2_C3_f[bi]+)
+        (bi:32: ~CRT2.C3.t[bi] => inv_CRT2_C3_t[bi]+)
+        ~CRT2.I.a => inv_CRT2_I_a+
+        (bi:32: ~CRT2.M.f[bi] => inv_CRT2_M_f[bi]+)
+        (bi:32: ~CRT2.M.t[bi] => inv_CRT2_M_t[bi]+)
+        (bi:32: ~CRT2.P.f[bi] => inv_CRT2_P_f[bi]+)
+        (bi:32: ~CRT2.P.t[bi] => inv_CRT2_P_t[bi]+)
+        (bi:32: ~CRT3.C0.f[bi] => inv_CRT3_C0_f[bi]+)
+        (bi:32: ~CRT3.C0.t[bi] => inv_CRT3_C0_t[bi]+)
+        (bi:32: ~CRT3.C1.f[bi] => inv_CRT3_C1_f[bi]+)
+        (bi:32: ~CRT3.C1.t[bi] => inv_CRT3_C1_t[bi]+)
+        (bi:32: ~CRT3.C2.f[bi] => inv_CRT3_C2_f[bi]+)
+        (bi:32: ~CRT3.C2.t[bi] => inv_CRT3_C2_t[bi]+)
+        (bi:32: ~CRT3.C3.f[bi] => inv_CRT3_C3_f[bi]+)
+        (bi:32: ~CRT3.C3.t[bi] => inv_CRT3_C3_t[bi]+)
+        ~CRT3.I.a => inv_CRT3_I_a+
+        (bi:32: ~CRT3.M.f[bi] => inv_CRT3_M_f[bi]+)
+        (bi:32: ~CRT3.M.t[bi] => inv_CRT3_M_t[bi]+)
+        (bi:32: ~CRT3.P.f[bi] => inv_CRT3_P_f[bi]+)
+        (bi:32: ~CRT3.P.t[bi] => inv_CRT3_P_t[bi]+)
+        (bi:32: ~MU.C0.f[bi] => inv_MU_C0_f[bi]+)
+        (bi:32: ~MU.C0.t[bi] => inv_MU_C0_t[bi]+)
+        (bi:32: ~MU.C1.f[bi] => inv_MU_C1_f[bi]+)
+        (bi:32: ~MU.C1.t[bi] => inv_MU_C1_t[bi]+)
+        (bi:32: ~MU.C2.f[bi] => inv_MU_C2_f[bi]+)
+        (bi:32: ~MU.C2.t[bi] => inv_MU_C2_t[bi]+)
+        (bi:32: ~MU.C3.f[bi] => inv_MU_C3_f[bi]+)
+        (bi:32: ~MU.C3.t[bi] => inv_MU_C3_t[bi]+)
+        ~MU.I.a => inv_MU_I_a+
+        (bi:32: ~PRT.C0.f[bi] => inv_PRT_C0_f[bi]+)
+        (bi:32: ~PRT.C0.t[bi] => inv_PRT_C0_t[bi]+)
+        (bi:32: ~PRT.C1.f[bi] => inv_PRT_C1_f[bi]+)
+        (bi:32: ~PRT.C1.t[bi] => inv_PRT_C1_t[bi]+)
+        (bi:32: ~PRT.C2.f[bi] => inv_PRT_C2_f[bi]+)
+        (bi:32: ~PRT.C2.t[bi] => inv_PRT_C2_t[bi]+)
+        (bi:32: ~PRT.C3.f[bi] => inv_PRT_C3_f[bi]+)
+        (bi:32: ~PRT.C3.t[bi] => inv_PRT_C3_t[bi]+)
+        ~PRT.I.a => inv_PRT_I_a+
+        (bi:32: ~PRT.M.f[bi] => inv_PRT_M_f[bi]+)
+        (bi:32: ~PRT.M.t[bi] => inv_PRT_M_t[bi]+)
+        (bi:32: ~Pi.f[bi] => inv_Pi_f[bi]+)
+        (bi:32: ~Pi.t[bi] => inv_Pi_t[bi]+)
+        ~Po.a => inv_Po_a+
+    }
+}

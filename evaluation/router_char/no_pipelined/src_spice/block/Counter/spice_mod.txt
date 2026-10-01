@@ -1,0 +1,106 @@
+Counter: targeted fanout sizing (measured W-only sizing)
+==============================================================
+Only MOS W parameters were changed. L, devices, topology and ports are identical.
+Keeper devices and their feedback inverters retain their generated dimensions.
+Units: widths and lengths below are micrometres. Technology: PTM65 TT, 1.1 V, 27 C.
+The largest trial widths are NMOS 1.56 um and PMOS 2.6 um (16x).
+PRS source was not regenerated or changed. A future prs2net build would lose this manual sizing.
+Original generated node reff comments describe the unsized baseline, not the new resistances.
+
+Method
+------
+Gate loads counted after recursive instance/port expansion; repeated instances are included.
+invEq is sum(W*L) / (0.26*0.065), a gate-area load proxy in minimum-inverter units, not extracted capacitance.
+Targets: high-fanout control drivers and limited support for their existing upstream stages.
+Width factors 2/4/8/16 are bounded trial choices; stronger drivers also increase upstream loading.
+Logical-effort reference: https://pages.hmc.edu/harris/class/e158/10/lect6.pdf
+No automatic timing optimum, layout/parasitic signoff or measured gain is implied by the sizing alone.
+
+Changed MOS: 25 in definitions; 25/2347 after instance expansion (1.07%).
+
+Driver groups (maximum load across the block library)
+----------------------------------------------------
+Reg8.__qr: W x4; gate terminals=32; invEq=16.000; driver MOS=2
+CounterLogic.__k: W x4; gate terminals=28; invEq=18.000; driver MOS=7
+CounterLogic.__cr: W x2; gate terminals=17; invEq=10.625; driver MOS=2
+CounterLogic.w: W x2; gate terminals=18; invEq=10.000; driver MOS=4
+CounterLogic.__qr: W x2; gate terminals=20; invEq=9.000; driver MOS=10
+
+Exact changed MOS
+-----------------
+Subcircuit Device Driver_node Old_W New_W L Factor
+Reg8 M194_ __qr 0.0975 0.39 0.065 4
+Reg8 M41_ __qr 0.1625 0.65 0.065 4
+CounterLogic M359_ __k 0.0975 0.39 0.065 4
+CounterLogic M360_ __k 0.0975 0.39 0.065 4
+CounterLogic M44_ __k 0.1625 0.65 0.065 4
+CounterLogic M45_ __k 0.1625 0.65 0.065 4
+CounterLogic M798_ __k 0.0975 0.39 0.065 4
+CounterLogic M799_ __k 0.1625 0.65 0.065 4
+CounterLogic M802_ __k 0.0975 0.39 0.065 4
+CounterLogic M105_ __cr 0.1625 0.325 0.065 2
+CounterLogic M445_ __cr 0.0975 0.195 0.065 2
+CounterLogic M318_ w 0.0975 0.195 0.065 2
+CounterLogic M3_ w 0.1625 0.325 0.065 2
+CounterLogic M672_ w 0.1625 0.325 0.065 2
+CounterLogic M675_ w 0.1625 0.325 0.065 2
+CounterLogic M0_ __qr 0.1625 0.325 0.065 2
+CounterLogic M1_ __qr 0.1625 0.325 0.065 2
+CounterLogic M2_ __qr 0.1625 0.325 0.065 2
+CounterLogic M316_ __qr 0.0975 0.195 0.065 2
+CounterLogic M317_ __qr 0.0975 0.195 0.065 2
+CounterLogic M656_ __qr 0.0975 0.195 0.065 2
+CounterLogic M657_ __qr 0.0975 0.195 0.065 2
+CounterLogic M658_ __qr 0.1625 0.325 0.065 2
+CounterLogic M663_ __qr 0.0975 0.195 0.065 2
+CounterLogic M664_ __qr 0.0975 0.195 0.065 2
+
+
+
+
+
+Validation status
+-----------------
+PASS: replacing only W tokens reconstructs the baseline byte-for-byte.
+PASS: instantiated MOS count, every L, ports and element connectivity are unchanged.
+PASS: HSPICE functional test and stable final idle leakage window.
+Campaign: /tmp/ferroma_analog_campaign_yveSTbeK
+Testbench: tb/block/Counter/Counter_tb.sp
+Report: tb/block/results/Counter/Counter_perf.txt
+
+Before / after measured results
+-------------------------------
+Same baseline-selected input source, index, data and output ports in both simulations.
+Timing follows the existing extractor: observed external waits are subtracted.
+Counter forward denotes an input/output cycle; Serializer/Deserializer forward denotes batch latency.
+Input_cycle below is forward+recovery where defined. Energy is whole-DUT dynamic window energy.
+Arb windows include concurrent traffic: energy cannot be assigned uniquely to one input.
+Differences are (sized/original - 1)*100. Negative timing means faster.
+Metric / sample | Before | After | Change %
+Idle leakage (uW) | 16.017824 | 16.074745 | +0.36
+Sample input cycle: input cycle I[0] -> measured input cycle I[0]
+input cycle forward (ns) | 2.561353 | 2.410991 | -5.87
+input cycle dynamic_energy (pJ) | 0.657537 | 0.663666 | +0.93
+Sample output cycle: output cycle Cnt[0] -> measured output cycle Cnt[0]
+output cycle forward (ns) | 0.548693 | 0.416599 | -24.07
+output cycle dynamic_energy (pJ) | 0.136602 | 0.138876 | +1.66
+
+Coverage of every matched transaction
+-------------------------------------
+Input/outputs | Forward before/after ns | Recovery before/after ns | Dynamic energy before/after pJ
+input cycle I[0] | 2.561353/2.410991 | N/A | 0.657537/0.663666
+input cycle I[1] | 2.526183/2.415624 | N/A | 0.654218/0.661516
+input cycle I[2] | 2.531409/2.418091 | N/A | 0.652042/0.658520
+input cycle I[3] | 3.460864/3.223717 | N/A | 0.828815/0.830100
+input cycle I[4] | 2.496497/2.370386 | N/A | 0.645086/0.650694
+input cycle I[5] | 2.492054/2.369312 | N/A | 0.644721/0.650992
+output cycle Cnt[0] | 0.548693/0.416599 | N/A | 0.136602/0.138876
+output cycle Cnt[1] | 0.547220/0.413844 | N/A | 0.135490/0.137911
+
+Scope and provenance
+--------------------
+These results validate the saved testbench and operating point; they are not an exhaustive sizing optimum.
+Subsystem/top netlists were not resized or regenerated in this task.
+Original and experimental results: /home/cad/archives/analog_sim/20260917_block_fanout_sizing
+Baseline netlist SHA256: 56b8a1c62f0e8a3cd9a351fa7d38b7a41851ce43c7478c3942f684658bbb2d4b
+Sized netlist SHA256: 7fa4ca01eb12ff60d04f570e4081162ccf837ff6a8439690377a7d7626743ff5

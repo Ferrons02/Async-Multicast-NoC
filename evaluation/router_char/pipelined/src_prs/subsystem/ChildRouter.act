@@ -1,0 +1,77 @@
+import "commons/PCFB32.act";
+import "StopcodeSel/StopcodeSel.act";
+import "UpdownSel/UpdownSel.act";
+import "ChildSel/ChildSel.act";
+
+/*
+ * Topology and instance names follow src/ChildRouter.png.
+ * CS.O0..O3 connect to C0..C3 by index; ChildSel leaves are O3,O2,O1,O0.
+ * ACT_PATH must include src/block. Reset is shared directly, as in the blocks.
+ */
+export defproc ChildRouter(
+    bool? reset;
+    ActiveDualRail32? I;
+    ActiveDualRail32! M, P, C0, C1, C2, C3
+)
+{
+    // Pipeline stages at the red bars in CRouterPipelined.png.
+    PCFB32 BM;
+    BM.reset = reset;
+    PCFB32 BSU;
+    BSU.reset = reset;
+    PCFB32 BP;
+    BP.reset = reset;
+    PCFB32 BUC;
+    BUC.reset = reset;
+    PCFB32 BC0;
+    BC0.reset = reset;
+    PCFB32 BC1;
+    BC1.reset = reset;
+    PCFB32 BC2;
+    BC2.reset = reset;
+    PCFB32 BC3;
+    BC3.reset = reset;
+
+    StopcodeSel SS;
+    UpdownSel US;
+    ChildSel CS;
+
+    SS.reset = reset;
+    US.reset = reset;
+    CS.reset = reset;
+
+    // Input to stopcode selector.
+    SS.I = I;
+
+    // Stopcode detected: multicast output.
+    BM.L = SS.O0;
+    BM.R = M;
+
+    // No stopcode: select up or down.
+    BSU.L = SS.O1;
+    BSU.R = US.I;
+
+    // Up: parent output.
+    BP.L = US.O0;
+    BP.R = P;
+
+    // Down: select a child.
+    BUC.L = US.O1;
+    BUC.R = CS.I;
+
+    // Child 0.
+    BC0.L = CS.O0;
+    BC0.R = C0;
+
+    // Child 1.
+    BC1.L = CS.O1;
+    BC1.R = C1;
+
+    // Child 2.
+    BC2.L = CS.O2;
+    BC2.R = C2;
+
+    // Child 3.
+    BC3.L = CS.O3;
+    BC3.R = C3;
+}

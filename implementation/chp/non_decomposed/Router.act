@@ -1,0 +1,382 @@
+import "Arb.act";
+
+pint BW = 32;
+pint SCAST_ADDR_LEN = 19;
+
+defproc Router(
+  chan(int<BW>)? c0i,c1i,c2i,c3i,pi,cli;
+  chan(int<BW>)! c0o,c1o,c2o,c3o,po,clo
+) {
+
+    int<BW> bufin_c0,bufin_c1,bufin_c2,bufin_c3,bufin_p,bufin_cl;
+    int<4> children_c0,children_c1,children_c2,children_c3,children_p,children_cl;
+
+    int<BW> bufout_c0[4];
+    int cnt_c0[4];
+    int cnt_next_c0[4];
+    int pntr_c0[4], bufin_pntr_c0;
+
+    int<BW> bufout_c1[4];
+    int cnt_c1[4];
+    int cnt_next_c1[4];
+    int pntr_c1[4], bufin_pntr_c1;
+
+    int<BW> bufout_c2[4];
+    int cnt_c2[4];
+    int cnt_next_c2[4];
+    int pntr_c2[4], bufin_pntr_c2;
+
+    int<BW> bufout_c3[4];
+    int cnt_c3[4];
+    int cnt_next_c3[4];
+    int pntr_c3[4], bufin_pntr_c3;
+
+    int<BW> bufout_p[4];
+    int cnt_p[4];
+    int cnt_next_p[4];
+    int pntr_p[4], bufin_pntr_p;
+
+    int<BW> bufout_cl[4];
+    int cnt_cl[4];
+    int cnt_next_cl[4];
+    int pntr_cl[4], bufin_pntr_cl;
+
+    chan(int<BW>)! c0_c0,c1_c0,c2_c0,c3_c0,p_c0,cl_c0;
+    chan(int<BW>)! c0_c1,c1_c1,c2_c1,c3_c1,p_c1,cl_c1;
+    chan(int<BW>)! c0_c2,c1_c2,c2_c2,c3_c2,p_c2,cl_c2;
+    chan(int<BW>)! c0_c3,c1_c3,c2_c3,c3_c3,p_c3,cl_c3;
+    chan(int<BW>)! c0_p,c1_p,c2_p,c3_p,p_p,cl_p;
+    chan(int<BW>)! c0_cl,c1_cl,c2_cl,c3_cl,p_cl,cl_cl;
+    Arb<BW> c0_arb(c0_c0,c1_c0,c2_c0,c3_c0,p_c0,cl_c0,c0o);
+    Arb<BW> c1_arb(c0_c1,c1_c1,c2_c1,c3_c1,p_c1,cl_c1,c1o);
+    Arb<BW> c2_arb(c0_c2,c1_c2,c2_c2,c3_c2,p_c2,cl_c2,c2o);
+    Arb<BW> c3_arb(c0_c3,c1_c3,c2_c3,c3_c3,p_c3,cl_c3,c3o);
+    Arb<BW> p_arb(c0_p,c1_p,c2_p,c3_p,p_p,cl_p,po);
+    Arb<BW> cl_arb(c0_cl,c1_cl,c2_cl,c3_cl,p_cl,cl_cl,clo);
+
+    chp {
+
+        cnt_c0[3] := 0, cnt_c0[2] := 0, cnt_c0[1] := 0, cnt_c0[0] := 0,
+        cnt_next_c0[3] := 0, cnt_next_c0[2] := 0, cnt_next_c0[1] := 0, cnt_next_c0[0] := 0, 
+        pntr_c0[3] := 0, pntr_c0[2] := 0, pntr_c0[1] := 0, pntr_c0[0] := 0, bufin_pntr_c0:=0,
+
+        cnt_c1[3] := 0, cnt_c1[2] := 0, cnt_c1[1] := 0, cnt_c1[0] := 0,
+        cnt_next_c1[3] := 0, cnt_next_c1[2] := 0, cnt_next_c1[1] := 0, cnt_next_c1[0] := 0, 
+        pntr_c1[3] := 0, pntr_c1[2] := 0, pntr_c1[1] := 0, pntr_c1[0] := 0, bufin_pntr_c1:=0,
+
+        cnt_c2[3] := 0, cnt_c2[2] := 0, cnt_c2[1] := 0, cnt_c2[0] := 0,
+        cnt_next_c2[3] := 0, cnt_next_c2[2] := 0, cnt_next_c2[1] := 0, cnt_next_c2[0] := 0, 
+        pntr_c2[3] := 0, pntr_c2[2] := 0, pntr_c2[1] := 0, pntr_c2[0] := 0, bufin_pntr_c2:=0,
+
+        cnt_c3[3] := 0, cnt_c3[2] := 0, cnt_c3[1] := 0, cnt_c3[0] := 0,
+        cnt_next_c3[3] := 0, cnt_next_c3[2] := 0, cnt_next_c3[1] := 0, cnt_next_c3[0] := 0, 
+        pntr_c3[3] := 0, pntr_c3[2] := 0, pntr_c3[1] := 0, pntr_c3[0] := 0, bufin_pntr_c3:=0,
+
+        cnt_p[3] := 0, cnt_p[2] := 0, cnt_p[1] := 0, cnt_p[0] := 0,
+        cnt_next_p[3] := 0, cnt_next_p[2] := 0, cnt_next_p[1] := 0, cnt_next_p[0] := 0, 
+        pntr_p[3] := 0, pntr_p[2] := 0, pntr_p[1] := 0, pntr_p[0] := 0, bufin_pntr_p:=0,
+
+        cnt_cl[3] := 0, cnt_cl[2] := 0, cnt_cl[1] := 0, cnt_cl[0] := 0,
+        cnt_next_cl[3] := 0, cnt_next_cl[2] := 0, cnt_next_cl[1] := 0, cnt_next_cl[0] := 0, 
+        pntr_cl[3] := 0, pntr_cl[2] := 0, pntr_cl[1] := 0, pntr_cl[0] := 0, bufin_pntr_cl:=0;
+
+        *[
+
+            *[[#c0i-> c0i?bufin_c0; [
+                bufin_c0{BW-1 .. BW-SCAST_ADDR_LEN} != 1<<(SCAST_ADDR_LEN-1) -> [ 
+                    bufin_c0{BW-1} = 0 -> children_c0:= bufin_c0{BW-2 .. BW-3};
+                    bufin_c0{BW-1 .. BW-1-SCAST_ADDR_LEN+3}:= bufin_c0{BW-4 .. BW-4-SCAST_ADDR_LEN+3};
+                    bufin_c0{BW-1-SCAST_ADDR_LEN + 2 .. BW-1-SCAST_ADDR_LEN}:= 0; [
+                        children_c0 = 0 -> *[bufin_c0{0}=0 -> c0_c0!bufin_c0; c0i?bufin_c0]; c0_c0!bufin_c0
+                        [] children_c0 = 1 -> *[bufin_c0{0}=0 -> c0_c1!bufin_c0; c0i?bufin_c0]; c0_c1!bufin_c0
+                        [] children_c0 = 2 -> *[bufin_c0{0}=0 -> c0_c2!bufin_c0; c0i?bufin_c0]; c0_c2!bufin_c0
+                        [] children_c0 = 3 -> *[bufin_c0{0}=0 -> c0_c3!bufin_c0; c0i?bufin_c0]; c0_c3!bufin_c0
+                    ]
+                    [] bufin_c0{BW-1} = 1 -> bufin_c0{BW-1 .. BW-1-SCAST_ADDR_LEN+1}:= bufin_c0{BW-2 .. BW-2-SCAST_ADDR_LEN+1};bufin_c0{BW-1-SCAST_ADDR_LEN}:= 0; 
+                    *[bufin_c0{0}=0 -> c0_p!bufin_c0; c0i?bufin_c0]; c0_p!bufin_c0
+                    ]
+                [] bufin_c0{BW-1 .. BW-SCAST_ADDR_LEN} = 1<<(SCAST_ADDR_LEN-1) & bufin_c0{2}= 0 -> 
+                    *[bufin_c0{0}=0 -> c0_cl!bufin_c0; c0i?bufin_c0]; c0_cl!bufin_c0
+                [] bufin_c0{BW-1 .. BW-SCAST_ADDR_LEN} = 1<<(SCAST_ADDR_LEN-1) & bufin_c0{2}= 1 -> 
+                    c0i?bufin_c0; children_c0 := bufin_c0{BW-1 .. BW-4};
+                    bufout_c0[3]:=0, bufout_c0[2]:=0, bufout_c0[1]:=0, bufout_c0[0]:=0, bufin_pntr_c0:=4,
+                    cnt_c0[3] := children_c0{3}, cnt_c0[2] := children_c0{2}, cnt_c0[1] := children_c0{1}, cnt_c0[0] := children_c0{0}, 
+                    bufin_c0 := (bufin_c0 << 4) | bufin_c0{3..0};
+                    *[bufin_c0{BW-1..BW-4} != 0 -> 
+                        (; i : 4 :  
+                        *[children_c0{3-i} = 1 & cnt_c0[3-i] != 0 & bufin_c0{BW-1..BW-4} != 0 -> 
+                            bufout_c0[3-i] := bufout_c0[3-i] | (bufin_c0{BW-1 .. BW-4} << (BW -4- pntr_c0[3-i]));
+                            cnt_c0[3-i]:= cnt_c0[3-i]-1, pntr_c0[3-i]:=pntr_c0[3-i]+4, bufin_pntr_c0:=bufin_pntr_c0+4, 
+                            cnt_next_c0[3-i] := cnt_next_c0[3-i] + bufin_c0{BW-1} + bufin_c0{BW-2} + bufin_c0{BW-3} + bufin_c0{BW-4};
+                            bufin_c0 := (bufin_c0 << 4) | bufin_c0{3..0};
+                            [pntr_c0[3-i]=BW-4 -> pntr_c0[3-i]:=0, bufout_c0[3-i]{3..0}:= bufin_c0{3..0};[
+                                i=0-> c0_c0!bufout_c0[3]; bufout_c0[3]:=0
+                                [] i=1->c0_c1!bufout_c0[2]; bufout_c0[2]:=0
+                                [] i=2->c0_c2!bufout_c0[1]; bufout_c0[1]:=0
+                                [] i=3->c0_c3!bufout_c0[0]; bufout_c0[0]:=0
+                                ]
+                            []pntr_c0[3-i]!=BW-4->skip
+                            ];
+                            [bufin_pntr_c0=BW-4 -> bufin_pntr_c0:=0, c0i?bufin_c0 [] bufin_pntr_c0!=BW-4 ->skip]
+                        ]; cnt_c0[3-i] := cnt_next_c0[3-i]; cnt_next_c0[3-i]:=0
+                        )
+                    ]; [ children_c0{3} = 1 -> bufout_c0[3]{3..0}:= bufin_c0{3..0}; c0_c0!bufout_c0[3], pntr_c0[3]:= 0 [] children_c0{3} = 0 -> skip],
+                        [ children_c0{2} = 1 -> bufout_c0[2]{3..0}:= bufin_c0{3..0}; c0_c1!bufout_c0[2], pntr_c0[2]:= 0 [] children_c0{2} = 0 -> skip],
+                        [ children_c0{1} = 1 -> bufout_c0[1]{3..0}:= bufin_c0{3..0}; c0_c2!bufout_c0[1], pntr_c0[1]:= 0 [] children_c0{1} = 0 -> skip],
+                        [ children_c0{0} = 1 -> bufout_c0[0]{3..0}:= bufin_c0{3..0}; c0_c3!bufout_c0[0], pntr_c0[0]:= 0 [] children_c0{0} = 0 -> skip];
+                    *[ bufin_c0{0}!= 1 -> c0i?bufin_c0;
+                        [ children_c0{3} = 1 -> c0_c0!bufin_c0 [] children_c0{3} = 0 -> skip],
+                        [ children_c0{2} = 1 -> c0_c1!bufin_c0 [] children_c0{2} = 0 -> skip],
+                        [ children_c0{1} = 1 -> c0_c2!bufin_c0 [] children_c0{1} = 0 -> skip],
+                        [ children_c0{0} = 1 -> c0_c3!bufin_c0 [] children_c0{0} = 0 -> skip]
+                    ]
+                ]
+            ]],
+
+            *[[#c1i-> c1i?bufin_c1; [
+                bufin_c1{BW-1 .. BW-SCAST_ADDR_LEN} != 1<<(SCAST_ADDR_LEN-1) -> [ 
+                    bufin_c1{BW-1} = 0 -> children_c1:= bufin_c1{BW-2 .. BW-3};
+                    bufin_c1{BW-1 .. BW-1-SCAST_ADDR_LEN+3}:= bufin_c1{BW-4 .. BW-4-SCAST_ADDR_LEN+3}; bufin_c1{BW-1-SCAST_ADDR_LEN + 2 .. BW-1-SCAST_ADDR_LEN}:= 0; [
+                        children_c1 = 0 -> *[bufin_c1{0}=0 -> c1_c0!bufin_c1; c1i?bufin_c1]; c1_c0!bufin_c1
+                        [] children_c1 = 1 -> *[bufin_c1{0}=0 -> c1_c1!bufin_c1; c1i?bufin_c1]; c1_c1!bufin_c1
+                        [] children_c1 = 2 -> *[bufin_c1{0}=0 -> c1_c2!bufin_c1; c1i?bufin_c1]; c1_c2!bufin_c1
+                        [] children_c1 = 3 -> *[bufin_c1{0}=0 -> c1_c3!bufin_c1; c1i?bufin_c1]; c1_c3!bufin_c1
+                    ]
+                    [] bufin_c1{BW-1} = 1 -> bufin_c1{BW-1 .. BW-1-SCAST_ADDR_LEN+1}:= bufin_c1{BW-2 .. BW-2-SCAST_ADDR_LEN+1};bufin_c1{BW-1-SCAST_ADDR_LEN}:= 0; 
+                    *[bufin_c1{0}=0 -> c1_p!bufin_c1; c1i?bufin_c1]; c1_p!bufin_c1
+                    ]
+                [] bufin_c1{BW-1 .. BW-SCAST_ADDR_LEN} = 1<<(SCAST_ADDR_LEN-1) & bufin_c1{2}= 0 -> 
+                    *[bufin_c1{0}=0 -> c1_cl!bufin_c1; c1i?bufin_c1]; c1_cl!bufin_c1
+                [] bufin_c1{BW-1 .. BW-SCAST_ADDR_LEN} = 1<<(SCAST_ADDR_LEN-1) & bufin_c1{2}= 1 -> 
+                    c1i?bufin_c1; children_c1 := bufin_c1{BW-1 .. BW-4};
+                    bufout_c1[3]:=0, bufout_c1[2]:=0, bufout_c1[1]:=0, bufout_c1[0]:=0, bufin_pntr_c1:=4,
+                    cnt_c1[3] := children_c1{3}, cnt_c1[2] := children_c1{2}, cnt_c1[1] := children_c1{1}, cnt_c1[0] := children_c1{0}, 
+                    bufin_c1 := (bufin_c1 << 4) | bufin_c1{3..0};
+                    *[bufin_c1{BW-1..BW-4} != 0 -> 
+                        (; i : 4 :  
+                        *[children_c1{3-i} = 1 & cnt_c1[3-i] != 0 & bufin_c1{BW-1..BW-4} != 0 -> 
+                            bufout_c1[3-i] := bufout_c1[3-i] | (bufin_c1{BW-1 .. BW-4} << (BW -4- pntr_c1[3-i]));
+                            cnt_c1[3-i]:= cnt_c1[3-i]-1, pntr_c1[3-i]:=pntr_c1[3-i]+4, bufin_pntr_c1:=bufin_pntr_c1+4, 
+                            cnt_next_c1[3-i] := cnt_next_c1[3-i] + bufin_c1{BW-1} + bufin_c1{BW-2} + bufin_c1{BW-3} + bufin_c1{BW-4};
+                            bufin_c1 := (bufin_c1 << 4) | bufin_c1{3..0};
+                            [pntr_c1[3-i]=BW-4 -> pntr_c1[3-i]:=0, bufout_c1[3-i]{3..0}:= bufin_c1{3..0};[
+                                i=0-> c1_c0!bufout_c1[3]; bufout_c1[3]:=0
+                                [] i=1->c1_c1!bufout_c1[2]; bufout_c1[2]:=0
+                                [] i=2->c1_c2!bufout_c1[1]; bufout_c1[1]:=0
+                                [] i=3->c1_c3!bufout_c1[0]; bufout_c1[0]:=0
+                                ]
+                            []pntr_c1[3-i]!=BW-4->skip
+                            ];
+                            [bufin_pntr_c1=BW-4 -> bufin_pntr_c1:=0, c1i?bufin_c1 [] bufin_pntr_c1!=BW-4 ->skip]
+                        ]; cnt_c1[3-i] := cnt_next_c1[3-i]; cnt_next_c1[3-i]:=0
+                        )
+                    ]; [ children_c1{3} = 1 -> bufout_c1[3]{3..0}:= bufin_c1{3..0}; c1_c0!bufout_c1[3], pntr_c1[3]:= 0 [] children_c1{3} = 0 -> skip],
+                        [ children_c1{2} = 1 -> bufout_c1[2]{3..0}:= bufin_c1{3..0}; c1_c1!bufout_c1[2], pntr_c1[2]:= 0 [] children_c1{2} = 0 -> skip],
+                        [ children_c1{1} = 1 -> bufout_c1[1]{3..0}:= bufin_c1{3..0}; c1_c2!bufout_c1[1], pntr_c1[1]:= 0 [] children_c1{1} = 0 -> skip],
+                        [ children_c1{0} = 1 -> bufout_c1[0]{3..0}:= bufin_c1{3..0}; c1_c3!bufout_c1[0], pntr_c1[0]:= 0 [] children_c1{0} = 0 -> skip];
+                    *[ bufin_c1{0}!= 1 -> c1i?bufin_c1;
+                        [ children_c1{3} = 1 -> c1_c0!bufin_c1 [] children_c1{3} = 0 -> skip],
+                        [ children_c1{2} = 1 -> c1_c1!bufin_c1 [] children_c1{2} = 0 -> skip],
+                        [ children_c1{1} = 1 -> c1_c2!bufin_c1 [] children_c1{1} = 0 -> skip],
+                        [ children_c1{0} = 1 -> c1_c3!bufin_c1 [] children_c1{0} = 0 -> skip]
+                    ]
+                ]
+            ]],
+            
+            *[[#c2i-> c2i?bufin_c2; [
+                bufin_c2{BW-1 .. BW-SCAST_ADDR_LEN} != 1<<(SCAST_ADDR_LEN-1) -> [ 
+                    bufin_c2{BW-1} = 0 -> children_c2:= bufin_c2{BW-2 .. BW-3};
+                    bufin_c2{BW-1 .. BW-1-SCAST_ADDR_LEN+3}:= bufin_c2{BW-4 .. BW-4-SCAST_ADDR_LEN+3};bufin_c2{BW-1-SCAST_ADDR_LEN + 2 .. BW-1-SCAST_ADDR_LEN}:= 0; [
+                        children_c2 = 0 -> *[bufin_c2{0}=0 -> c2_c0!bufin_c2; c2i?bufin_c2]; c2_c0!bufin_c2
+                        [] children_c2 = 1 -> *[bufin_c2{0}=0 -> c2_c1!bufin_c2; c2i?bufin_c2]; c2_c1!bufin_c2
+                        [] children_c2 = 2 -> *[bufin_c2{0}=0 -> c2_c2!bufin_c2; c2i?bufin_c2]; c2_c2!bufin_c2
+                        [] children_c2 = 3 -> *[bufin_c2{0}=0 -> c2_c3!bufin_c2; c2i?bufin_c2]; c2_c3!bufin_c2
+                    ]
+                    [] bufin_c2{BW-1} = 1 -> bufin_c2{BW-1 .. BW-1-SCAST_ADDR_LEN+1}:= bufin_c2{BW-2 .. BW-2-SCAST_ADDR_LEN+1};bufin_c2{BW-1-SCAST_ADDR_LEN}:= 0;
+                    *[bufin_c2{0}=0 -> c2_p!bufin_c2; c2i?bufin_c2]; c2_p!bufin_c2
+                    ]
+                [] bufin_c2{BW-1 .. BW-SCAST_ADDR_LEN} = 1<<(SCAST_ADDR_LEN-1) & bufin_c2{2}= 0 -> 
+                    *[bufin_c2{0}=0 -> c2_cl!bufin_c2; c2i?bufin_c2]; c2_cl!bufin_c2
+                [] bufin_c2{BW-1 .. BW-SCAST_ADDR_LEN} = 1<<(SCAST_ADDR_LEN-1) & bufin_c2{2}= 1 -> 
+                    c2i?bufin_c2; children_c2 := bufin_c2{BW-1 .. BW-4};
+                    bufout_c2[3]:=0, bufout_c2[2]:=0, bufout_c2[1]:=0, bufout_c2[0]:=0, bufin_pntr_c2:=4,
+                    cnt_c2[3] := children_c2{3}, cnt_c2[2] := children_c2{2}, cnt_c2[1] := children_c2{1}, cnt_c2[0] := children_c2{0}, 
+                    bufin_c2 := (bufin_c2 << 4) | bufin_c2{3..0};
+                    *[bufin_c2{BW-1..BW-4} != 0 -> 
+                        (; i : 4 :  
+                        *[children_c2{3-i} = 1 & cnt_c2[3-i] != 0 & bufin_c2{BW-1..BW-4} != 0 -> 
+                            bufout_c2[3-i] := bufout_c2[3-i] | (bufin_c2{BW-1 .. BW-4} << (BW -4- pntr_c2[3-i]));
+                            cnt_c2[3-i]:= cnt_c2[3-i]-1, pntr_c2[3-i]:=pntr_c2[3-i]+4, bufin_pntr_c2:=bufin_pntr_c2+4, 
+                            cnt_next_c2[3-i] := cnt_next_c2[3-i] + bufin_c2{BW-1} + bufin_c2{BW-2} + bufin_c2{BW-3} + bufin_c2{BW-4};
+                            bufin_c2 := (bufin_c2 << 4) | bufin_c2{3..0};
+                            [pntr_c2[3-i]=BW-4 -> pntr_c2[3-i]:=0, bufout_c2[3-i]{3..0}:= bufin_c2{3..0};[
+                                i=0-> c2_c0!bufout_c2[3]; bufout_c2[3]:=0
+                                [] i=1->c2_c1!bufout_c2[2]; bufout_c2[2]:=0
+                                [] i=2->c2_c2!bufout_c2[1]; bufout_c2[1]:=0
+                                [] i=3->c2_c3!bufout_c2[0]; bufout_c2[0]:=0
+                                ]
+                            []pntr_c2[3-i]!=BW-4->skip
+                            ];
+                            [bufin_pntr_c2=BW-4 -> bufin_pntr_c2:=0, c2i?bufin_c2 [] bufin_pntr_c2!=BW-4 ->skip]
+                        ]; cnt_c2[3-i] := cnt_next_c2[3-i]; cnt_next_c2[3-i]:=0
+                        )
+                    ]; [ children_c2{3} = 1 -> bufout_c2[3]{3..0}:= bufin_c2{3..0}; c2_c0!bufout_c2[3], pntr_c2[3]:= 0 [] children_c2{3} = 0 -> skip],
+                        [ children_c2{2} = 1 -> bufout_c2[2]{3..0}:= bufin_c2{3..0}; c2_c1!bufout_c2[2], pntr_c2[2]:= 0 [] children_c2{2} = 0 -> skip],
+                        [ children_c2{1} = 1 -> bufout_c2[1]{3..0}:= bufin_c2{3..0}; c2_c2!bufout_c2[1], pntr_c2[1]:= 0 [] children_c2{1} = 0 -> skip],
+                        [ children_c2{0} = 1 -> bufout_c2[0]{3..0}:= bufin_c2{3..0}; c2_c3!bufout_c2[0], pntr_c2[0]:= 0 [] children_c2{0} = 0 -> skip];
+                    *[ bufin_c2{0}!= 1 -> c2i?bufin_c2;
+                        [ children_c2{3} = 1 -> c2_c0!bufin_c2 [] children_c2{3} = 0 -> skip],
+                        [ children_c2{2} = 1 -> c2_c1!bufin_c2 [] children_c2{2} = 0 -> skip],
+                        [ children_c2{1} = 1 -> c2_c2!bufin_c2 [] children_c2{1} = 0 -> skip],
+                        [ children_c2{0} = 1 -> c2_c3!bufin_c2 [] children_c2{0} = 0 -> skip]
+                    ]
+                ]
+            ]],
+
+            *[[#c3i-> c3i?bufin_c3; [
+                bufin_c3{BW-1 .. BW-SCAST_ADDR_LEN} != 1<<(SCAST_ADDR_LEN-1) -> [ 
+                    bufin_c3{BW-1} = 0 -> children_c3:= bufin_c3{BW-2 .. BW-3};
+                    bufin_c3{BW-1 .. BW-1-SCAST_ADDR_LEN+3}:= bufin_c3{BW-4 .. BW-4-SCAST_ADDR_LEN+3};bufin_c3{BW-1-SCAST_ADDR_LEN + 2 .. BW-1-SCAST_ADDR_LEN}:= 0; [
+                        children_c3 = 0 -> *[bufin_c3{0}=0 -> c3_c0!bufin_c3; c3i?bufin_c3]; c3_c0!bufin_c3
+                        [] children_c3 = 1 -> *[bufin_c3{0}=0 -> c3_c1!bufin_c3; c3i?bufin_c3]; c3_c1!bufin_c3
+                        [] children_c3 = 2 -> *[bufin_c3{0}=0 -> c3_c2!bufin_c3; c3i?bufin_c3]; c3_c2!bufin_c3
+                        [] children_c3 = 3 -> *[bufin_c3{0}=0 -> c3_c3!bufin_c3; c3i?bufin_c3]; c3_c3!bufin_c3
+                    ]
+                    [] bufin_c3{BW-1} = 1 -> bufin_c3{BW-1 .. BW-1-SCAST_ADDR_LEN+1}:= bufin_c3{BW-2 .. BW-2-SCAST_ADDR_LEN+1};bufin_c3{BW-1-SCAST_ADDR_LEN}:= 0; 
+                    *[bufin_c3{0}=0 -> c3_p!bufin_c3; c3i?bufin_c3]; c3_p!bufin_c3
+                    ]
+                [] bufin_c3{BW-1 .. BW-SCAST_ADDR_LEN} = 1<<(SCAST_ADDR_LEN-1) & bufin_c3{2}= 0 -> 
+                    *[bufin_c3{0}=0 -> c3_cl!bufin_c3; c3i?bufin_c3]; c3_cl!bufin_c3
+                [] bufin_c3{BW-1 .. BW-SCAST_ADDR_LEN} = 1<<(SCAST_ADDR_LEN-1) & bufin_c3{2}= 1 -> 
+                    c3i?bufin_c3; children_c3 := bufin_c3{BW-1 .. BW-4};
+                    bufout_c3[3]:=0, bufout_c3[2]:=0, bufout_c3[1]:=0, bufout_c3[0]:=0, bufin_pntr_c3:=4,
+                    cnt_c3[3] := children_c3{3}, cnt_c3[2] := children_c3{2}, cnt_c3[1] := children_c3{1}, cnt_c3[0] := children_c3{0}, 
+                    bufin_c3 := (bufin_c3 << 4) | bufin_c3{3..0};
+                    *[bufin_c3{BW-1..BW-4} != 0 -> 
+                        (; i : 4 :  
+                        *[children_c3{3-i} = 1 & cnt_c3[3-i] != 0 & bufin_c3{BW-1..BW-4} != 0 -> 
+                            bufout_c3[3-i] := bufout_c3[3-i] | (bufin_c3{BW-1 .. BW-4} << (BW -4- pntr_c3[3-i]));
+                            cnt_c3[3-i]:= cnt_c3[3-i]-1, pntr_c3[3-i]:=pntr_c3[3-i]+4, bufin_pntr_c3:=bufin_pntr_c3+4, 
+                            cnt_next_c3[3-i] := cnt_next_c3[3-i] + bufin_c3{BW-1} + bufin_c3{BW-2} + bufin_c3{BW-3} + bufin_c3{BW-4};
+                            bufin_c3 := (bufin_c3 << 4) | bufin_c3{3..0};
+                            [pntr_c3[3-i]=BW-4 -> pntr_c3[3-i]:=0, bufout_c3[3-i]{3..0}:= bufin_c3{3..0};[
+                                i=0-> c3_c0!bufout_c3[3]; bufout_c3[3]:=0
+                                [] i=1->c3_c1!bufout_c3[2]; bufout_c3[2]:=0
+                                [] i=2->c3_c2!bufout_c3[1]; bufout_c3[1]:=0
+                                [] i=3->c3_c3!bufout_c3[0]; bufout_c3[0]:=0
+                                ]
+                            []pntr_c3[3-i]!=BW-4->skip
+                            ];
+                            [bufin_pntr_c3=BW-4 -> bufin_pntr_c3:=0, c3i?bufin_c3 [] bufin_pntr_c3!=BW-4 ->skip]
+                        ]; cnt_c3[3-i] := cnt_next_c3[3-i]; cnt_next_c3[3-i]:=0
+                        )
+                    ]; [ children_c3{3} = 1 -> bufout_c3[3]{3..0}:= bufin_c3{3..0}; c3_c0!bufout_c3[3], pntr_c3[3]:= 0 [] children_c3{3} = 0 -> skip],
+                        [ children_c3{2} = 1 -> bufout_c3[2]{3..0}:= bufin_c3{3..0}; c3_c1!bufout_c3[2], pntr_c3[2]:= 0 [] children_c3{2} = 0 -> skip],
+                        [ children_c3{1} = 1 -> bufout_c3[1]{3..0}:= bufin_c3{3..0}; c3_c2!bufout_c3[1], pntr_c3[1]:= 0 [] children_c3{1} = 0 -> skip],
+                        [ children_c3{0} = 1 -> bufout_c3[0]{3..0}:= bufin_c3{3..0}; c3_c3!bufout_c3[0], pntr_c3[0]:= 0 [] children_c3{0} = 0 -> skip];
+                    *[ bufin_c3{0}!= 1 -> c3i?bufin_c3;
+                        [ children_c3{3} = 1 -> c3_c0!bufin_c3 [] children_c3{3} = 0 -> skip],
+                        [ children_c3{2} = 1 -> c3_c1!bufin_c3 [] children_c3{2} = 0 -> skip],
+                        [ children_c3{1} = 1 -> c3_c2!bufin_c3 [] children_c3{1} = 0 -> skip],
+                        [ children_c3{0} = 1 -> c3_c3!bufin_c3 [] children_c3{0} = 0 -> skip]
+                    ]
+                ]
+            ]],
+
+            *[[#pi-> pi?bufin_p; [
+                bufin_p{BW-1 .. BW-SCAST_ADDR_LEN} != 1<<(SCAST_ADDR_LEN-1) & bufin_p{1}= 0 -> 
+                    children_p:= bufin_p{BW-1 .. BW-2}; bufin_p{BW-1 .. BW-1-SCAST_ADDR_LEN+2}:= bufin_p{BW-3 .. BW-3-SCAST_ADDR_LEN+2};
+                    bufin_p{BW-1-SCAST_ADDR_LEN + 2 .. BW-1-SCAST_ADDR_LEN}:= 0; [
+                        children_p = 0 -> *[bufin_p{0}=0 -> p_c0!bufin_p; pi?bufin_p]; p_c0!bufin_p
+                        [] children_p = 1 -> *[bufin_p{0}=0 -> p_c1!bufin_p; pi?bufin_p]; p_c1!bufin_p
+                        [] children_p = 2 -> *[bufin_p{0}=0 -> p_c2!bufin_p; pi?bufin_p]; p_c2!bufin_p
+                        [] children_p = 3 -> *[bufin_p{0}=0 -> p_c3!bufin_p; pi?bufin_p]; p_c3!bufin_p
+                    ]
+                [] bufin_p{BW-1 .. BW-SCAST_ADDR_LEN} = 1<<(SCAST_ADDR_LEN-1) & bufin_p{1}= 0 & bufin_p{2}= 0 ->  
+                    *[bufin_p{0}=0 -> p_cl!bufin_p; pi?bufin_p]; p_cl!bufin_p
+                [] (bufin_p{BW-1 .. BW-SCAST_ADDR_LEN} = 1<<(SCAST_ADDR_LEN-1) & bufin_p{1}= 0 & bufin_p{2}=1) | bufin_p{1}=1 -> [bufin_p{2}=1-> pi?bufin_p [] bufin_p{2}=0-> skip];
+                    children_p := bufin_p{BW-1 .. BW-4};
+                    bufout_p[3]:=0, bufout_p[2]:=0, bufout_p[1]:=0, bufout_p[0]:=0, bufin_pntr_p:=4,
+                    cnt_p[3] := children_p{3}, cnt_p[2] := children_p{2}, cnt_p[1] := children_p{1}, cnt_p[0] := children_p{0}, 
+                    bufin_p := (bufin_p << 4) | bufin_p{3..0};
+                    *[bufin_p{BW-1..BW-4} != 0 -> 
+                        (; i : 4 :  
+                        *[children_p{3-i} = 1 & cnt_p[3-i] != 0 & bufin_p{BW-1..BW-4} != 0 -> 
+                            bufout_p[3-i] := bufout_p[3-i] | (bufin_p{BW-1 .. BW-4} << (BW -4- pntr_p[3-i]));
+                            cnt_p[3-i]:= cnt_p[3-i]-1, pntr_p[3-i]:=pntr_p[3-i]+4, bufin_pntr_p:=bufin_pntr_p+4, 
+                            cnt_next_p[3-i] := cnt_next_p[3-i] + bufin_p{BW-1} + bufin_p{BW-2} + bufin_p{BW-3} + bufin_p{BW-4};
+                            bufin_p := (bufin_p << 4) | bufin_p{3..0};
+                            [pntr_p[3-i]=BW-4 -> pntr_p[3-i]:=0, bufout_p[3-i]{3..0}:= bufin_p{3..0};[
+                                i=0-> p_c0!bufout_p[3]; bufout_p[3]:=0
+                                [] i=1->p_c1!bufout_p[2]; bufout_p[2]:=0
+                                [] i=2->p_c2!bufout_p[1]; bufout_p[1]:=0
+                                [] i=3->p_c3!bufout_p[0]; bufout_p[0]:=0
+                                ]
+                            []pntr_p[3-i]!=BW-4->skip
+                            ];
+                            [bufin_pntr_p=BW-4 -> bufin_pntr_p:=0, pi?bufin_p [] bufin_pntr_p!=BW-4 ->skip]
+                        ]; cnt_p[3-i] := cnt_next_p[3-i]; cnt_next_p[3-i]:=0
+                        )
+                    ]; [ children_p{3} = 1 -> bufout_p[3]{3..0}:= bufin_p{3..0}; p_c0!bufout_p[3], pntr_p[3]:= 0 [] children_p{3} = 0 -> skip],
+                        [ children_p{2} = 1 -> bufout_p[2]{3..0}:= bufin_p{3..0}; p_c1!bufout_p[2], pntr_p[2]:= 0 [] children_p{2} = 0 -> skip],
+                        [ children_p{1} = 1 -> bufout_p[1]{3..0}:= bufin_p{3..0}; p_c2!bufout_p[1], pntr_p[1]:= 0 [] children_p{1} = 0 -> skip],
+                        [ children_p{0} = 1 -> bufout_p[0]{3..0}:= bufin_p{3..0}; p_c3!bufout_p[0], pntr_p[0]:= 0 [] children_p{0} = 0 -> skip];
+                    *[ bufin_p{0}!= 1 -> pi?bufin_p;
+                        [ children_p{3} = 1 -> p_c0!bufin_p [] children_p{3} = 0 -> skip],
+                        [ children_p{2} = 1 -> p_c1!bufin_p [] children_p{2} = 0 -> skip],
+                        [ children_p{1} = 1 -> p_c2!bufin_p [] children_p{1} = 0 -> skip],
+                        [ children_p{0} = 1 -> p_c3!bufin_p [] children_p{0} = 0 -> skip]
+                    ]
+                ]
+            ]],
+
+            *[[#cli-> cli?bufin_cl; [
+                bufin_cl{BW-1 .. BW-SCAST_ADDR_LEN} != 1<<(SCAST_ADDR_LEN-1) -> [
+                    bufin_cl{BW-1} = 0 -> children_cl:= bufin_cl{BW-2 .. BW-3};
+                    bufin_cl{BW-1 .. BW-1-SCAST_ADDR_LEN+3}:= bufin_cl{BW-4 .. BW-4-SCAST_ADDR_LEN+3};bufin_cl{BW-1-SCAST_ADDR_LEN + 2 .. BW-1-SCAST_ADDR_LEN}:= 0; [
+                        children_cl = 0 -> *[bufin_cl{0}=0 -> cl_c0!bufin_cl; cli?bufin_cl]; cl_c0!bufin_cl
+                        [] children_cl = 1 -> *[bufin_cl{0}=0 -> cl_c1!bufin_cl; cli?bufin_cl]; cl_c1!bufin_cl
+                        [] children_cl = 2 -> *[bufin_cl{0}=0 -> cl_c2!bufin_cl; cli?bufin_cl]; cl_c2!bufin_cl
+                        [] children_cl = 3 -> *[bufin_cl{0}=0 -> cl_c3!bufin_cl; cli?bufin_cl]; cl_c3!bufin_cl
+                    ]
+                        [] bufin_cl{BW-1} = 1 -> bufin_cl{BW-1 .. BW-1-SCAST_ADDR_LEN+1}:= bufin_cl{BW-2 .. BW-2-SCAST_ADDR_LEN+1};bufin_cl{BW-1-SCAST_ADDR_LEN}:= 0;
+                        *[bufin_cl{0}=0 -> cl_p!bufin_cl; cli?bufin_cl]; cl_p!bufin_cl
+                    ]
+                [] bufin_cl{BW-1 .. BW-SCAST_ADDR_LEN} = 1<<(SCAST_ADDR_LEN-1) -> 
+                    cli?bufin_cl; children_cl := bufin_cl{BW-1 .. BW-4};
+                    bufout_cl[3]:=0, bufout_cl[2]:=0, bufout_cl[1]:=0, bufout_cl[0]:=0, bufin_pntr_cl:=4,
+                    cnt_cl[3] := children_cl{3}, cnt_cl[2] := children_cl{2}, cnt_cl[1] := children_cl{1}, cnt_cl[0] := children_cl{0}, 
+                    bufin_cl := (bufin_cl << 4) | bufin_cl{3..0};
+                    *[bufin_cl{BW-1..BW-4} != 0 -> 
+                        (; i : 4 :  
+                        *[children_cl{3-i} = 1 & cnt_cl[3-i] != 0 & bufin_cl{BW-1..BW-4} != 0 -> 
+                            bufout_cl[3-i] := bufout_cl[3-i] | (bufin_cl{BW-1 .. BW-4} << (BW -4- pntr_cl[3-i]));
+                            cnt_cl[3-i]:= cnt_cl[3-i]-1, pntr_cl[3-i]:=pntr_cl[3-i]+4, bufin_pntr_cl:=bufin_pntr_cl+4, 
+                            cnt_next_cl[3-i] := cnt_next_cl[3-i] + bufin_cl{BW-1} + bufin_cl{BW-2} + bufin_cl{BW-3} + bufin_cl{BW-4};
+                            bufin_cl := (bufin_cl << 4) | bufin_cl{3..0};
+                            [pntr_cl[3-i]=BW-4 -> pntr_cl[3-i]:=0, bufout_cl[3-i]{3..0}:= bufin_cl{3..0};[
+                                i=0-> cl_c0!bufout_cl[3]; bufout_cl[3]:=0
+                                [] i=1->cl_c1!bufout_cl[2]; bufout_cl[2]:=0
+                                [] i=2->cl_c2!bufout_cl[1]; bufout_cl[1]:=0
+                                [] i=3->cl_c3!bufout_cl[0]; bufout_cl[0]:=0
+                                ]
+                            []pntr_cl[3-i]!=BW-4->skip
+                            ];
+                            [bufin_pntr_cl=BW-4 -> bufin_pntr_cl:=0, cli?bufin_cl [] bufin_pntr_cl!=BW-4 ->skip]
+                        ]; cnt_cl[3-i] := cnt_next_cl[3-i]; cnt_next_cl[3-i]:=0
+                        )
+                    ]; [ children_cl{3} = 1 -> bufout_cl[3]{3..0}:= bufin_cl{3..0}; cl_c0!bufout_cl[3], pntr_cl[3]:= 0 [] children_cl{3} = 0 -> skip],
+                        [ children_cl{2} = 1 -> bufout_cl[2]{3..0}:= bufin_cl{3..0}; cl_c1!bufout_cl[2], pntr_cl[2]:= 0 [] children_cl{2} = 0 -> skip],
+                        [ children_cl{1} = 1 -> bufout_cl[1]{3..0}:= bufin_cl{3..0}; cl_c2!bufout_cl[1], pntr_cl[1]:= 0 [] children_cl{1} = 0 -> skip],
+                        [ children_cl{0} = 1 -> bufout_cl[0]{3..0}:= bufin_cl{3..0}; cl_c3!bufout_cl[0], pntr_cl[0]:= 0 [] children_cl{0} = 0 -> skip];
+                    *[ bufin_cl{0}!= 1 -> cli?bufin_cl;
+                        [ children_cl{3} = 1 -> cl_c0!bufin_cl [] children_cl{3} = 0 -> skip],
+                        [ children_cl{2} = 1 -> cl_c1!bufin_cl [] children_cl{2} = 0 -> skip],
+                        [ children_cl{1} = 1 -> cl_c2!bufin_cl [] children_cl{1} = 0 -> skip],
+                        [ children_cl{0} = 1 -> cl_c3!bufin_cl [] children_cl{0} = 0 -> skip]
+                    ]
+                ]
+            ]]
+        ]
+    }
+}

@@ -1,0 +1,58 @@
+import "no_forks/commons/Channels.act";
+
+export defproc CounterLogic(
+    bool? reset;
+    ActiveDualRail4? I;
+    PassiveDualRail8! Cnt;
+    ActiveDualRail8! P;
+    PassiveDualRail8? Q;
+    DualRail4! Sa;
+    DualRail8! Sb;
+    DualRail8? So
+)
+{
+    bool k, v, w;
+
+    // Original non-bubble PRS: RouterDecompositionBubbleReshuffling.pdf, pp. 54–56.
+    prs {
+        (v & Cnt.req) | (~I.a & ~Sb.t[7] & ~Sb.f[7] & k) -> Q.req+
+        (v & ~Cnt.req) | (&i:8: (Sb.t[i] | Sb.f[i])) | reset -> Q.req-
+        (Sa.t[3] | Sa.f[3]) & P.a -> I.a+
+        ~k | reset -> I.a-
+        (I.t[3] | I.f[3]) & ~P.a & ~v -> k+
+        (~P.a & I.a) | reset -> k-
+        Cnt.req -> v+
+        P.a | reset -> v-
+        v & ~Cnt.req & (&i:8: (~Cnt.t[i] & ~Cnt.f[i])) -> w+
+        ~v -> w-
+        (i:4:
+            I.t[i] & k -> Sa.t[i]+
+            ~I.t[i] -> Sa.t[i]-
+            I.f[i] & k -> Sa.f[i]+
+            ~I.f[i] -> Sa.f[i]-
+        )
+        (i:8:
+            Q.t[i] & k -> Sb.t[i]+
+            (~Q.t[i] & I.a) | reset -> Sb.t[i]-
+            Q.f[i] & k -> Sb.f[i]+
+            (~Q.f[i] & I.a) | reset -> Sb.f[i]-
+            So.t[i] & ~Q.req -> P.t[i]+
+            ~So.t[i] -> P.t[i]-
+            (So.f[i] & ~Q.req) | w -> P.f[i]+
+            ~So.f[i] & ~w -> P.f[i]-
+            Cnt.req & Q.t[i] -> Cnt.t[i]+
+            ~Q.t[i] -> Cnt.t[i]-
+            Cnt.req & Q.f[i] -> Cnt.f[i]+
+            ~Q.f[i] -> Cnt.f[i]-
+        )
+    }
+
+    // Existing timing constraints translated to original PRS signal names.
+    spec {
+        timing I.a+ : I.a+ < Sb.f[7]-
+        timing I.a- : I.a- < k+
+        timing P.a+ : P.a+ < v-
+        timing k- : k- < I.a-
+        timing Cnt.req+ : Cnt.req+ < v+
+    }
+}

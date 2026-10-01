@@ -1,0 +1,26 @@
+import "commons/Channels.act";
+
+export defproc Split(bool? reset; PassiveDualRail4? I; PassiveDualRail4! O0; PassiveDualRail4! O1)
+{
+    bool _ir, _o0t[4], _o0f[4], _o1t[4], _o1f[4];
+    prs {
+        ~O0.req & ~O1.req => _ir+
+        (j:4:
+            O0.req & I.t[j] -> _o0t[j]-
+            ~I.t[j] -> _o0t[j]+
+            O0.req & I.f[j] -> _o0f[j]-
+            ~I.f[j] -> _o0f[j]+
+            O1.req & I.t[j] -> _o1t[j]-
+            ~I.t[j] -> _o1t[j]+
+            O1.req & I.f[j] -> _o1f[j]-
+            ~I.f[j] -> _o1f[j]+
+        )
+        ~_ir => I.req+
+        (j:4:
+            ~_o0t[j] => O0.t[j]+
+            ~_o0f[j] => O0.f[j]+
+            ~_o1t[j] => O1.t[j]+
+            ~_o1f[j] => O1.f[j]+
+        )
+    }
+}

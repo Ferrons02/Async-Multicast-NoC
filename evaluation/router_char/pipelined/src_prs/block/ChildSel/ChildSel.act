@@ -1,0 +1,26 @@
+import "commons/PCFB32.act";
+import "UpdownSel/UpdownSel.act";
+
+/* Left-to-right leaf order is O3, O2, O1, O0. */
+export defproc ChildSel(bool? reset; ActiveDualRail32? I; ActiveDualRail32! O0, O1, O2, O3)
+{
+    // Pipeline stages at the red bars in ChildSelPipelined.png.
+    PCFB32 BL;
+    BL.reset = reset;
+    PCFB32 BR;
+    BR.reset = reset;
+
+    UpdownSel root, left, right;
+    root.reset = reset;
+    left.reset = reset;
+    right.reset = reset;
+    root.I = I;
+    BL.L = root.O0;
+    BL.R = left.I;
+    BR.L = root.O1;
+    BR.R = right.I;
+    left.O0 = O3;
+    left.O1 = O2;
+    right.O0 = O1;
+    right.O1 = O0;
+}

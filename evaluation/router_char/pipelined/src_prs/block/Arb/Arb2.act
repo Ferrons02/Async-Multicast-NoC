@@ -1,0 +1,68 @@
+import "commons/Channels.act";
+
+/* Literal supplied bubble PRS, including the explicit cross-coupled MUTEX.
+ * r=reset; i_a0=I0.a; i_a1=I1.a; o_a=O.a.
+ * _s, _w_0, _w_1, _i_a0/1, _o_0{t,f}k, _u, _v are holding/logic
+ * nodes n_s, n_w0, n_w1, n_I0_a/n_I1_a, n_O_t/f[k], n_u, n_v.
+ * Other underscored signals use inv_*. w_0i=w0i; w_0=w0; w_1=w1.
+ * Preserve ~s in n_w0+ and ~n_s in n_w1+ exactly as supplied.
+ * The original ACTSIM HSE mutex is not imported into this transistor source.
+ */
+export defproc Arb2(bool? reset; ActiveDualRail32? I0; ActiveDualRail32? I1; ActiveDualRail32! O)
+{
+    bool p, w0i, f, w0, w1, s, u, v;
+    bool n_s, n_w0, n_w1, n_I0_a, n_I1_a, n_u, n_v;
+    bool inv_p, inv_w0i, inv_f, inv_reset;
+    bool n_O_t[32], n_O_f[32];
+
+    prs {
+        (((~I0.a & ~I1.a) & (~n_u & ~n_s)) | ~inv_reset) -> p+
+        ((n_I0_a & n_I1_a) & (v & s)) -> p-
+        (~n_s & ((~n_u & ~inv_p) | (~n_v & ~p))) -> w0i+
+        ((n_s & O.a) | reset) -> w0i-
+
+        (~O.a & (~n_I0_a | ~n_I1_a) & (~n_w0 | ~n_w1) & ((~u & ~inv_p) | (~v & ~p))) -> f+
+        ((n_w0 & n_w1) | reset) -> f-
+
+        (n_s & ((I0.f[0] & p) | (I1.f[0] & inv_p))) -> n_w0-
+        ((~s & ~inv_f) | ~inv_reset) -> n_w0+
+        (n_s & ((I0.t[0] & p) | (I1.t[0] & inv_p))) -> n_w1-
+        ((~n_s & ~inv_f) | ~inv_reset) -> n_w1+
+        ((w1 & f) | reset) -> n_s-
+        ~inv_w0i -> n_s+
+
+        (p & O.a & (w1 | w0) & inv_w0i) -> n_I0_a-
+        (~f & (~w0 & ~w1)) -> n_I0_a+
+        (inv_p & O.a & (w1 | w0) & inv_w0i) -> n_I1_a-
+        (~f & (~w0 & ~w1)) -> n_I1_a+
+
+        (k:0..31:
+            (n_s & ((p & I0.t[k]) | (inv_p & I1.t[k]))) -> n_O_t[k]-
+            ((~inv_p & ~I0.t[k]) | (~p & ~I1.t[k])) -> n_O_t[k]+
+            (n_s & ((p & I0.f[k]) | (inv_p & I1.f[k]))) -> n_O_f[k]-
+            ((~inv_p & ~I0.f[k]) | (~p & ~I1.f[k])) -> n_O_f[k]+
+        )
+
+        /* Explicit MUTEX equations from the supplied PRS. */
+        ((I0.t[31] | I0.f[31]) & n_v) -> n_u-
+        ((~I0.t[31] & ~I0.f[31]) | ~n_v) -> n_u+
+        ((I1.t[31] | I1.f[31]) & n_u) -> n_v-
+        ((~I1.t[31] & ~I1.f[31]) | ~n_u) -> n_v+
+
+        ~p => inv_p+
+        ~n_s => s+
+        ~w0i => inv_w0i+
+        ~n_w0 => w0+
+        ~n_w1 => w1+
+        ~f => inv_f+
+        ~reset => inv_reset+
+        ~n_u => u+
+        ~n_v => v+
+        ~n_I0_a => I0.a+
+        ~n_I1_a => I1.a+
+        (k:0..31:
+            ~n_O_t[k] => O.t[k]+
+            ~n_O_f[k] => O.f[k]+
+        )
+    }
+}

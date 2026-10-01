@@ -1,0 +1,43 @@
+import "no_forks/commons/Channels.act";
+import "no_forks/commons/Reg4.act";
+
+export defproc QBuffer(bool? reset; PassiveDualRail4? I; ActiveDualRail4! O; Dataless! R; Dataless? L)
+{
+    bool a, b, c, p_a, q_r;
+
+    Reg4 reg;
+    reg.reset = reset;
+    reg.W.t = I.t;
+    reg.W.f = I.f;
+    reg.W.a = p_a;
+    reg.R.req = q_r;
+    reg.R.t = O.t;
+    reg.R.f = O.f;
+
+
+    // Original non-bubble PRS: RouterDecompositionBubbleReshuffling.pdf, pp. 58, 62–63.
+    prs {
+        L.a -> a+
+        p_a | reset -> a-
+        p_a -> b+
+        R.a | reset -> b-
+        R.a -> c+
+        O.a | reset -> c-
+        a & ~L.a -> I.req+
+        (~a & b) | reset -> I.req-
+        L.req & ~c & ~O.a & ~reset -> L.a+
+        (~L.req & a) | reset -> L.a-
+        b & ~p_a -> R.req+
+        (c & ~b) | reset -> R.req-
+        c & ~R.a -> q_r+
+        ~c -> q_r-
+    }
+
+    // Existing timing constraints translated to original PRS signal names.
+    spec {
+        timing L.a+ : L.a+ < a+
+        timing R.a+ : R.a+ < c+
+        timing p_a+ : p_a+ < b+
+        timing O.a+ : O.a+ < c-
+    }
+}

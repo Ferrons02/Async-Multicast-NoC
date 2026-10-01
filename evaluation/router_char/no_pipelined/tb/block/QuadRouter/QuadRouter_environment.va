@@ -1,0 +1,1118 @@
+// One complete tb_QuadRouter.act reference round.
+// Input producer, four pull responders, and ordered output stages run concurrently.
+// A receiver acknowledges only while its current stage has a golden token for it.
+`include "disciplines.vams"
+module quadrouter_environment(
+    reset,
+    I_t_0,
+    I_t_1,
+    I_t_2,
+    I_t_3,
+    I_f_0,
+    I_f_1,
+    I_f_2,
+    I_f_3,
+    I_a,
+    Cnt0_req,
+    Cnt0_t_0,
+    Cnt0_t_1,
+    Cnt0_t_2,
+    Cnt0_t_3,
+    Cnt0_t_4,
+    Cnt0_t_5,
+    Cnt0_t_6,
+    Cnt0_t_7,
+    Cnt0_f_0,
+    Cnt0_f_1,
+    Cnt0_f_2,
+    Cnt0_f_3,
+    Cnt0_f_4,
+    Cnt0_f_5,
+    Cnt0_f_6,
+    Cnt0_f_7,
+    Cnt1_req,
+    Cnt1_t_0,
+    Cnt1_t_1,
+    Cnt1_t_2,
+    Cnt1_t_3,
+    Cnt1_t_4,
+    Cnt1_t_5,
+    Cnt1_t_6,
+    Cnt1_t_7,
+    Cnt1_f_0,
+    Cnt1_f_1,
+    Cnt1_f_2,
+    Cnt1_f_3,
+    Cnt1_f_4,
+    Cnt1_f_5,
+    Cnt1_f_6,
+    Cnt1_f_7,
+    Cnt2_req,
+    Cnt2_t_0,
+    Cnt2_t_1,
+    Cnt2_t_2,
+    Cnt2_t_3,
+    Cnt2_t_4,
+    Cnt2_t_5,
+    Cnt2_t_6,
+    Cnt2_t_7,
+    Cnt2_f_0,
+    Cnt2_f_1,
+    Cnt2_f_2,
+    Cnt2_f_3,
+    Cnt2_f_4,
+    Cnt2_f_5,
+    Cnt2_f_6,
+    Cnt2_f_7,
+    Cnt3_req,
+    Cnt3_t_0,
+    Cnt3_t_1,
+    Cnt3_t_2,
+    Cnt3_t_3,
+    Cnt3_t_4,
+    Cnt3_t_5,
+    Cnt3_t_6,
+    Cnt3_t_7,
+    Cnt3_f_0,
+    Cnt3_f_1,
+    Cnt3_f_2,
+    Cnt3_f_3,
+    Cnt3_f_4,
+    Cnt3_f_5,
+    Cnt3_f_6,
+    Cnt3_f_7,
+    OC0_t_0,
+    OC0_t_1,
+    OC0_t_2,
+    OC0_t_3,
+    OC0_f_0,
+    OC0_f_1,
+    OC0_f_2,
+    OC0_f_3,
+    OC0_a,
+    OC1_t_0,
+    OC1_t_1,
+    OC1_t_2,
+    OC1_t_3,
+    OC1_f_0,
+    OC1_f_1,
+    OC1_f_2,
+    OC1_f_3,
+    OC1_a,
+    OC2_t_0,
+    OC2_t_1,
+    OC2_t_2,
+    OC2_t_3,
+    OC2_f_0,
+    OC2_f_1,
+    OC2_f_2,
+    OC2_f_3,
+    OC2_a,
+    OC3_t_0,
+    OC3_t_1,
+    OC3_t_2,
+    OC3_t_3,
+    OC3_f_0,
+    OC3_f_1,
+    OC3_f_2,
+    OC3_f_3,
+    OC3_a,
+    OD0_t_0,
+    OD0_t_1,
+    OD0_t_2,
+    OD0_t_3,
+    OD0_f_0,
+    OD0_f_1,
+    OD0_f_2,
+    OD0_f_3,
+    OD0_a,
+    OD1_t_0,
+    OD1_t_1,
+    OD1_t_2,
+    OD1_t_3,
+    OD1_f_0,
+    OD1_f_1,
+    OD1_f_2,
+    OD1_f_3,
+    OD1_a,
+    OD2_t_0,
+    OD2_t_1,
+    OD2_t_2,
+    OD2_t_3,
+    OD2_f_0,
+    OD2_f_1,
+    OD2_f_2,
+    OD2_f_3,
+    OD2_a,
+    OD3_t_0,
+    OD3_t_1,
+    OD3_t_2,
+    OD3_t_3,
+    OD3_f_0,
+    OD3_f_1,
+    OD3_f_2,
+    OD3_f_3,
+    OD3_a,
+    Ch_t_0,
+    Ch_t_1,
+    Ch_t_2,
+    Ch_t_3,
+    Ch_f_0,
+    Ch_f_1,
+    Ch_f_2,
+    Ch_f_3,
+    Ch_a,
+    done,
+    failed);
+inout reset, I_t_0, I_t_1, I_t_2, I_t_3, I_f_0, I_f_1, I_f_2, I_f_3, I_a, Cnt0_req, Cnt0_t_0, Cnt0_t_1, Cnt0_t_2, Cnt0_t_3, Cnt0_t_4, Cnt0_t_5, Cnt0_t_6, Cnt0_t_7, Cnt0_f_0, Cnt0_f_1, Cnt0_f_2, Cnt0_f_3, Cnt0_f_4, Cnt0_f_5, Cnt0_f_6, Cnt0_f_7, Cnt1_req, Cnt1_t_0, Cnt1_t_1, Cnt1_t_2, Cnt1_t_3, Cnt1_t_4, Cnt1_t_5, Cnt1_t_6, Cnt1_t_7, Cnt1_f_0, Cnt1_f_1, Cnt1_f_2, Cnt1_f_3, Cnt1_f_4, Cnt1_f_5, Cnt1_f_6, Cnt1_f_7, Cnt2_req, Cnt2_t_0, Cnt2_t_1, Cnt2_t_2, Cnt2_t_3, Cnt2_t_4, Cnt2_t_5, Cnt2_t_6, Cnt2_t_7, Cnt2_f_0, Cnt2_f_1, Cnt2_f_2, Cnt2_f_3, Cnt2_f_4, Cnt2_f_5, Cnt2_f_6, Cnt2_f_7, Cnt3_req, Cnt3_t_0, Cnt3_t_1, Cnt3_t_2, Cnt3_t_3, Cnt3_t_4, Cnt3_t_5, Cnt3_t_6, Cnt3_t_7, Cnt3_f_0, Cnt3_f_1, Cnt3_f_2, Cnt3_f_3, Cnt3_f_4, Cnt3_f_5, Cnt3_f_6, Cnt3_f_7, OC0_t_0, OC0_t_1, OC0_t_2, OC0_t_3, OC0_f_0, OC0_f_1, OC0_f_2, OC0_f_3, OC0_a, OC1_t_0, OC1_t_1, OC1_t_2, OC1_t_3, OC1_f_0, OC1_f_1, OC1_f_2, OC1_f_3, OC1_a, OC2_t_0, OC2_t_1, OC2_t_2, OC2_t_3, OC2_f_0, OC2_f_1, OC2_f_2, OC2_f_3, OC2_a, OC3_t_0, OC3_t_1, OC3_t_2, OC3_t_3, OC3_f_0, OC3_f_1, OC3_f_2, OC3_f_3, OC3_a, OD0_t_0, OD0_t_1, OD0_t_2, OD0_t_3, OD0_f_0, OD0_f_1, OD0_f_2, OD0_f_3, OD0_a, OD1_t_0, OD1_t_1, OD1_t_2, OD1_t_3, OD1_f_0, OD1_f_1, OD1_f_2, OD1_f_3, OD1_a, OD2_t_0, OD2_t_1, OD2_t_2, OD2_t_3, OD2_f_0, OD2_f_1, OD2_f_2, OD2_f_3, OD2_a, OD3_t_0, OD3_t_1, OD3_t_2, OD3_t_3, OD3_f_0, OD3_f_1, OD3_f_2, OD3_f_3, OD3_a, Ch_t_0, Ch_t_1, Ch_t_2, Ch_t_3, Ch_f_0, Ch_f_1, Ch_f_2, Ch_f_3, Ch_a, done, failed;
+electrical reset, I_t_0, I_t_1, I_t_2, I_t_3, I_f_0, I_f_1, I_f_2, I_f_3, I_a, Cnt0_req, Cnt0_t_0, Cnt0_t_1, Cnt0_t_2, Cnt0_t_3, Cnt0_t_4, Cnt0_t_5, Cnt0_t_6, Cnt0_t_7, Cnt0_f_0, Cnt0_f_1, Cnt0_f_2, Cnt0_f_3, Cnt0_f_4, Cnt0_f_5, Cnt0_f_6, Cnt0_f_7, Cnt1_req, Cnt1_t_0, Cnt1_t_1, Cnt1_t_2, Cnt1_t_3, Cnt1_t_4, Cnt1_t_5, Cnt1_t_6, Cnt1_t_7, Cnt1_f_0, Cnt1_f_1, Cnt1_f_2, Cnt1_f_3, Cnt1_f_4, Cnt1_f_5, Cnt1_f_6, Cnt1_f_7, Cnt2_req, Cnt2_t_0, Cnt2_t_1, Cnt2_t_2, Cnt2_t_3, Cnt2_t_4, Cnt2_t_5, Cnt2_t_6, Cnt2_t_7, Cnt2_f_0, Cnt2_f_1, Cnt2_f_2, Cnt2_f_3, Cnt2_f_4, Cnt2_f_5, Cnt2_f_6, Cnt2_f_7, Cnt3_req, Cnt3_t_0, Cnt3_t_1, Cnt3_t_2, Cnt3_t_3, Cnt3_t_4, Cnt3_t_5, Cnt3_t_6, Cnt3_t_7, Cnt3_f_0, Cnt3_f_1, Cnt3_f_2, Cnt3_f_3, Cnt3_f_4, Cnt3_f_5, Cnt3_f_6, Cnt3_f_7, OC0_t_0, OC0_t_1, OC0_t_2, OC0_t_3, OC0_f_0, OC0_f_1, OC0_f_2, OC0_f_3, OC0_a, OC1_t_0, OC1_t_1, OC1_t_2, OC1_t_3, OC1_f_0, OC1_f_1, OC1_f_2, OC1_f_3, OC1_a, OC2_t_0, OC2_t_1, OC2_t_2, OC2_t_3, OC2_f_0, OC2_f_1, OC2_f_2, OC2_f_3, OC2_a, OC3_t_0, OC3_t_1, OC3_t_2, OC3_t_3, OC3_f_0, OC3_f_1, OC3_f_2, OC3_f_3, OC3_a, OD0_t_0, OD0_t_1, OD0_t_2, OD0_t_3, OD0_f_0, OD0_f_1, OD0_f_2, OD0_f_3, OD0_a, OD1_t_0, OD1_t_1, OD1_t_2, OD1_t_3, OD1_f_0, OD1_f_1, OD1_f_2, OD1_f_3, OD1_a, OD2_t_0, OD2_t_1, OD2_t_2, OD2_t_3, OD2_f_0, OD2_f_1, OD2_f_2, OD2_f_3, OD2_a, OD3_t_0, OD3_t_1, OD3_t_2, OD3_t_3, OD3_f_0, OD3_f_1, OD3_f_2, OD3_f_3, OD3_a, Ch_t_0, Ch_t_1, Ch_t_2, Ch_t_3, Ch_f_0, Ch_f_1, Ch_f_2, Ch_f_3, Ch_a, done, failed;
+parameter real SUPPLY=0.0;
+parameter real TICK=10p from (0:inf);
+parameter real TD=100p from (0:inf);
+parameter real EDGE=10p from (0:inf);
+parameter real STOP_TIME=2u from (0:inf);
+integer active, finished, failure, reported;
+integer tx_index, tx_phase, tx_valid, tx_word, input_spacer;
+integer stage, setup_stage, stage_complete, all_complete, quiescent;
+real threshold, stop_after;
+integer ci0, cp0, cv0, cw0, csp0, cvalid0;
+integer ci1, cp1, cv1, cw1, csp1, cvalid1;
+integer ci2, cp2, cv2, cw2, csp2, cvalid2;
+integer ci3, cp3, cv3, cw3, csp3, cvalid3;
+integer ri0, rp0, ack0, valid0, spacer0, illegal0, word0, expected0, remaining0, held0, held_word0;
+integer ri1, rp1, ack1, valid1, spacer1, illegal1, word1, expected1, remaining1, held1, held_word1;
+integer ri2, rp2, ack2, valid2, spacer2, illegal2, word2, expected2, remaining2, held2, held_word2;
+integer ri3, rp3, ack3, valid3, spacer3, illegal3, word3, expected3, remaining3, held3, held_word3;
+integer ri4, rp4, ack4, valid4, spacer4, illegal4, word4, expected4, remaining4, held4, held_word4;
+integer ri5, rp5, ack5, valid5, spacer5, illegal5, word5, expected5, remaining5, held5, held_word5;
+integer ri6, rp6, ack6, valid6, spacer6, illegal6, word6, expected6, remaining6, held6, held_word6;
+integer ri7, rp7, ack7, valid7, spacer7, illegal7, word7, expected7, remaining7, held7, held_word7;
+integer ri8, rp8, ack8, valid8, spacer8, illegal8, word8, expected8, remaining8, held8, held_word8;
+// Supply-current sampling continues after the functional round, with reset low.
+parameter real IDLE_SETTLE=20n from (0:inf);
+parameter real IDLE_WINDOW=20n from (0:inf);
+parameter real IDLE_MARGIN=1n from (0:inf);
+integer idle_started, idle_completed;
+real idle_start;
+analog begin
+  @(initial_step) begin
+    idle_start=-1; idle_started=0; idle_completed=0;
+    active=0; finished=0; failure=0; reported=0;
+    tx_index=0; tx_phase=0; tx_valid=0; tx_word=0;
+    stage=0; setup_stage=1; threshold=0.5*SUPPLY; stop_after=-1;
+    ci0=0; cp0=0; cv0=0; cw0=0;
+    ci1=0; cp1=0; cv1=0; cw1=0;
+    ci2=0; cp2=0; cv2=0; cw2=0;
+    ci3=0; cp3=0; cv3=0; cw3=0;
+    ri0=0; rp0=0; ack0=0; expected0=0; remaining0=0; held0=0; held_word0=0;
+    ri1=0; rp1=0; ack1=0; expected1=0; remaining1=0; held1=0; held_word1=0;
+    ri2=0; rp2=0; ack2=0; expected2=0; remaining2=0; held2=0; held_word2=0;
+    ri3=0; rp3=0; ack3=0; expected3=0; remaining3=0; held3=0; held_word3=0;
+    ri4=0; rp4=0; ack4=0; expected4=0; remaining4=0; held4=0; held_word4=0;
+    ri5=0; rp5=0; ack5=0; expected5=0; remaining5=0; held5=0; held_word5=0;
+    ri6=0; rp6=0; ack6=0; expected6=0; remaining6=0; held6=0; held_word6=0;
+    ri7=0; rp7=0; ack7=0; expected7=0; remaining7=0; held7=0; held_word7=0;
+    ri8=0; rp8=0; ack8=0; expected8=0; remaining8=0; held8=0; held_word8=0;
+    if (SUPPLY<=0) begin failure=1; $display("SIM_ERROR reason=invalid_supply"); end
+  end
+  @(timer(TICK,TICK)) begin
+    input_spacer=1;
+    if (V(I_t_0)>=threshold || V(I_f_0)>=threshold) input_spacer=0;
+    if (V(I_t_1)>=threshold || V(I_f_1)>=threshold) input_spacer=0;
+    if (V(I_t_2)>=threshold || V(I_f_2)>=threshold) input_spacer=0;
+    if (V(I_t_3)>=threshold || V(I_f_3)>=threshold) input_spacer=0;
+    csp0=1; cvalid0=1;
+    if (V(Cnt0_t_0)>=threshold || V(Cnt0_f_0)>=threshold) csp0=0;
+    if (V(Cnt0_t_0)<threshold && V(Cnt0_f_0)<threshold) cvalid0=0;
+    if (V(Cnt0_t_1)>=threshold || V(Cnt0_f_1)>=threshold) csp0=0;
+    if (V(Cnt0_t_1)<threshold && V(Cnt0_f_1)<threshold) cvalid0=0;
+    if (V(Cnt0_t_2)>=threshold || V(Cnt0_f_2)>=threshold) csp0=0;
+    if (V(Cnt0_t_2)<threshold && V(Cnt0_f_2)<threshold) cvalid0=0;
+    if (V(Cnt0_t_3)>=threshold || V(Cnt0_f_3)>=threshold) csp0=0;
+    if (V(Cnt0_t_3)<threshold && V(Cnt0_f_3)<threshold) cvalid0=0;
+    if (V(Cnt0_t_4)>=threshold || V(Cnt0_f_4)>=threshold) csp0=0;
+    if (V(Cnt0_t_4)<threshold && V(Cnt0_f_4)<threshold) cvalid0=0;
+    if (V(Cnt0_t_5)>=threshold || V(Cnt0_f_5)>=threshold) csp0=0;
+    if (V(Cnt0_t_5)<threshold && V(Cnt0_f_5)<threshold) cvalid0=0;
+    if (V(Cnt0_t_6)>=threshold || V(Cnt0_f_6)>=threshold) csp0=0;
+    if (V(Cnt0_t_6)<threshold && V(Cnt0_f_6)<threshold) cvalid0=0;
+    if (V(Cnt0_t_7)>=threshold || V(Cnt0_f_7)>=threshold) csp0=0;
+    if (V(Cnt0_t_7)<threshold && V(Cnt0_f_7)<threshold) cvalid0=0;
+    csp1=1; cvalid1=1;
+    if (V(Cnt1_t_0)>=threshold || V(Cnt1_f_0)>=threshold) csp1=0;
+    if (V(Cnt1_t_0)<threshold && V(Cnt1_f_0)<threshold) cvalid1=0;
+    if (V(Cnt1_t_1)>=threshold || V(Cnt1_f_1)>=threshold) csp1=0;
+    if (V(Cnt1_t_1)<threshold && V(Cnt1_f_1)<threshold) cvalid1=0;
+    if (V(Cnt1_t_2)>=threshold || V(Cnt1_f_2)>=threshold) csp1=0;
+    if (V(Cnt1_t_2)<threshold && V(Cnt1_f_2)<threshold) cvalid1=0;
+    if (V(Cnt1_t_3)>=threshold || V(Cnt1_f_3)>=threshold) csp1=0;
+    if (V(Cnt1_t_3)<threshold && V(Cnt1_f_3)<threshold) cvalid1=0;
+    if (V(Cnt1_t_4)>=threshold || V(Cnt1_f_4)>=threshold) csp1=0;
+    if (V(Cnt1_t_4)<threshold && V(Cnt1_f_4)<threshold) cvalid1=0;
+    if (V(Cnt1_t_5)>=threshold || V(Cnt1_f_5)>=threshold) csp1=0;
+    if (V(Cnt1_t_5)<threshold && V(Cnt1_f_5)<threshold) cvalid1=0;
+    if (V(Cnt1_t_6)>=threshold || V(Cnt1_f_6)>=threshold) csp1=0;
+    if (V(Cnt1_t_6)<threshold && V(Cnt1_f_6)<threshold) cvalid1=0;
+    if (V(Cnt1_t_7)>=threshold || V(Cnt1_f_7)>=threshold) csp1=0;
+    if (V(Cnt1_t_7)<threshold && V(Cnt1_f_7)<threshold) cvalid1=0;
+    csp2=1; cvalid2=1;
+    if (V(Cnt2_t_0)>=threshold || V(Cnt2_f_0)>=threshold) csp2=0;
+    if (V(Cnt2_t_0)<threshold && V(Cnt2_f_0)<threshold) cvalid2=0;
+    if (V(Cnt2_t_1)>=threshold || V(Cnt2_f_1)>=threshold) csp2=0;
+    if (V(Cnt2_t_1)<threshold && V(Cnt2_f_1)<threshold) cvalid2=0;
+    if (V(Cnt2_t_2)>=threshold || V(Cnt2_f_2)>=threshold) csp2=0;
+    if (V(Cnt2_t_2)<threshold && V(Cnt2_f_2)<threshold) cvalid2=0;
+    if (V(Cnt2_t_3)>=threshold || V(Cnt2_f_3)>=threshold) csp2=0;
+    if (V(Cnt2_t_3)<threshold && V(Cnt2_f_3)<threshold) cvalid2=0;
+    if (V(Cnt2_t_4)>=threshold || V(Cnt2_f_4)>=threshold) csp2=0;
+    if (V(Cnt2_t_4)<threshold && V(Cnt2_f_4)<threshold) cvalid2=0;
+    if (V(Cnt2_t_5)>=threshold || V(Cnt2_f_5)>=threshold) csp2=0;
+    if (V(Cnt2_t_5)<threshold && V(Cnt2_f_5)<threshold) cvalid2=0;
+    if (V(Cnt2_t_6)>=threshold || V(Cnt2_f_6)>=threshold) csp2=0;
+    if (V(Cnt2_t_6)<threshold && V(Cnt2_f_6)<threshold) cvalid2=0;
+    if (V(Cnt2_t_7)>=threshold || V(Cnt2_f_7)>=threshold) csp2=0;
+    if (V(Cnt2_t_7)<threshold && V(Cnt2_f_7)<threshold) cvalid2=0;
+    csp3=1; cvalid3=1;
+    if (V(Cnt3_t_0)>=threshold || V(Cnt3_f_0)>=threshold) csp3=0;
+    if (V(Cnt3_t_0)<threshold && V(Cnt3_f_0)<threshold) cvalid3=0;
+    if (V(Cnt3_t_1)>=threshold || V(Cnt3_f_1)>=threshold) csp3=0;
+    if (V(Cnt3_t_1)<threshold && V(Cnt3_f_1)<threshold) cvalid3=0;
+    if (V(Cnt3_t_2)>=threshold || V(Cnt3_f_2)>=threshold) csp3=0;
+    if (V(Cnt3_t_2)<threshold && V(Cnt3_f_2)<threshold) cvalid3=0;
+    if (V(Cnt3_t_3)>=threshold || V(Cnt3_f_3)>=threshold) csp3=0;
+    if (V(Cnt3_t_3)<threshold && V(Cnt3_f_3)<threshold) cvalid3=0;
+    if (V(Cnt3_t_4)>=threshold || V(Cnt3_f_4)>=threshold) csp3=0;
+    if (V(Cnt3_t_4)<threshold && V(Cnt3_f_4)<threshold) cvalid3=0;
+    if (V(Cnt3_t_5)>=threshold || V(Cnt3_f_5)>=threshold) csp3=0;
+    if (V(Cnt3_t_5)<threshold && V(Cnt3_f_5)<threshold) cvalid3=0;
+    if (V(Cnt3_t_6)>=threshold || V(Cnt3_f_6)>=threshold) csp3=0;
+    if (V(Cnt3_t_6)<threshold && V(Cnt3_f_6)<threshold) cvalid3=0;
+    if (V(Cnt3_t_7)>=threshold || V(Cnt3_f_7)>=threshold) csp3=0;
+    if (V(Cnt3_t_7)<threshold && V(Cnt3_f_7)<threshold) cvalid3=0;
+    valid0=1; spacer0=1; illegal0=0; word0=0;
+    if (V(OC0_t_0)<threshold && V(OC0_f_0)<threshold) valid0=0;
+    if (V(OC0_t_0)>=threshold || V(OC0_f_0)>=threshold) spacer0=0;
+    if (V(OC0_t_0)>=threshold && V(OC0_f_0)>=threshold) illegal0=1;
+    if (V(OC0_t_0)>=threshold) word0=word0 | (1 << 0);
+    if (V(OC0_t_1)<threshold && V(OC0_f_1)<threshold) valid0=0;
+    if (V(OC0_t_1)>=threshold || V(OC0_f_1)>=threshold) spacer0=0;
+    if (V(OC0_t_1)>=threshold && V(OC0_f_1)>=threshold) illegal0=1;
+    if (V(OC0_t_1)>=threshold) word0=word0 | (1 << 1);
+    if (V(OC0_t_2)<threshold && V(OC0_f_2)<threshold) valid0=0;
+    if (V(OC0_t_2)>=threshold || V(OC0_f_2)>=threshold) spacer0=0;
+    if (V(OC0_t_2)>=threshold && V(OC0_f_2)>=threshold) illegal0=1;
+    if (V(OC0_t_2)>=threshold) word0=word0 | (1 << 2);
+    if (V(OC0_t_3)<threshold && V(OC0_f_3)<threshold) valid0=0;
+    if (V(OC0_t_3)>=threshold || V(OC0_f_3)>=threshold) spacer0=0;
+    if (V(OC0_t_3)>=threshold && V(OC0_f_3)>=threshold) illegal0=1;
+    if (V(OC0_t_3)>=threshold) word0=word0 | (1 << 3);
+    valid1=1; spacer1=1; illegal1=0; word1=0;
+    if (V(OC1_t_0)<threshold && V(OC1_f_0)<threshold) valid1=0;
+    if (V(OC1_t_0)>=threshold || V(OC1_f_0)>=threshold) spacer1=0;
+    if (V(OC1_t_0)>=threshold && V(OC1_f_0)>=threshold) illegal1=1;
+    if (V(OC1_t_0)>=threshold) word1=word1 | (1 << 0);
+    if (V(OC1_t_1)<threshold && V(OC1_f_1)<threshold) valid1=0;
+    if (V(OC1_t_1)>=threshold || V(OC1_f_1)>=threshold) spacer1=0;
+    if (V(OC1_t_1)>=threshold && V(OC1_f_1)>=threshold) illegal1=1;
+    if (V(OC1_t_1)>=threshold) word1=word1 | (1 << 1);
+    if (V(OC1_t_2)<threshold && V(OC1_f_2)<threshold) valid1=0;
+    if (V(OC1_t_2)>=threshold || V(OC1_f_2)>=threshold) spacer1=0;
+    if (V(OC1_t_2)>=threshold && V(OC1_f_2)>=threshold) illegal1=1;
+    if (V(OC1_t_2)>=threshold) word1=word1 | (1 << 2);
+    if (V(OC1_t_3)<threshold && V(OC1_f_3)<threshold) valid1=0;
+    if (V(OC1_t_3)>=threshold || V(OC1_f_3)>=threshold) spacer1=0;
+    if (V(OC1_t_3)>=threshold && V(OC1_f_3)>=threshold) illegal1=1;
+    if (V(OC1_t_3)>=threshold) word1=word1 | (1 << 3);
+    valid2=1; spacer2=1; illegal2=0; word2=0;
+    if (V(OC2_t_0)<threshold && V(OC2_f_0)<threshold) valid2=0;
+    if (V(OC2_t_0)>=threshold || V(OC2_f_0)>=threshold) spacer2=0;
+    if (V(OC2_t_0)>=threshold && V(OC2_f_0)>=threshold) illegal2=1;
+    if (V(OC2_t_0)>=threshold) word2=word2 | (1 << 0);
+    if (V(OC2_t_1)<threshold && V(OC2_f_1)<threshold) valid2=0;
+    if (V(OC2_t_1)>=threshold || V(OC2_f_1)>=threshold) spacer2=0;
+    if (V(OC2_t_1)>=threshold && V(OC2_f_1)>=threshold) illegal2=1;
+    if (V(OC2_t_1)>=threshold) word2=word2 | (1 << 1);
+    if (V(OC2_t_2)<threshold && V(OC2_f_2)<threshold) valid2=0;
+    if (V(OC2_t_2)>=threshold || V(OC2_f_2)>=threshold) spacer2=0;
+    if (V(OC2_t_2)>=threshold && V(OC2_f_2)>=threshold) illegal2=1;
+    if (V(OC2_t_2)>=threshold) word2=word2 | (1 << 2);
+    if (V(OC2_t_3)<threshold && V(OC2_f_3)<threshold) valid2=0;
+    if (V(OC2_t_3)>=threshold || V(OC2_f_3)>=threshold) spacer2=0;
+    if (V(OC2_t_3)>=threshold && V(OC2_f_3)>=threshold) illegal2=1;
+    if (V(OC2_t_3)>=threshold) word2=word2 | (1 << 3);
+    valid3=1; spacer3=1; illegal3=0; word3=0;
+    if (V(OC3_t_0)<threshold && V(OC3_f_0)<threshold) valid3=0;
+    if (V(OC3_t_0)>=threshold || V(OC3_f_0)>=threshold) spacer3=0;
+    if (V(OC3_t_0)>=threshold && V(OC3_f_0)>=threshold) illegal3=1;
+    if (V(OC3_t_0)>=threshold) word3=word3 | (1 << 0);
+    if (V(OC3_t_1)<threshold && V(OC3_f_1)<threshold) valid3=0;
+    if (V(OC3_t_1)>=threshold || V(OC3_f_1)>=threshold) spacer3=0;
+    if (V(OC3_t_1)>=threshold && V(OC3_f_1)>=threshold) illegal3=1;
+    if (V(OC3_t_1)>=threshold) word3=word3 | (1 << 1);
+    if (V(OC3_t_2)<threshold && V(OC3_f_2)<threshold) valid3=0;
+    if (V(OC3_t_2)>=threshold || V(OC3_f_2)>=threshold) spacer3=0;
+    if (V(OC3_t_2)>=threshold && V(OC3_f_2)>=threshold) illegal3=1;
+    if (V(OC3_t_2)>=threshold) word3=word3 | (1 << 2);
+    if (V(OC3_t_3)<threshold && V(OC3_f_3)<threshold) valid3=0;
+    if (V(OC3_t_3)>=threshold || V(OC3_f_3)>=threshold) spacer3=0;
+    if (V(OC3_t_3)>=threshold && V(OC3_f_3)>=threshold) illegal3=1;
+    if (V(OC3_t_3)>=threshold) word3=word3 | (1 << 3);
+    valid4=1; spacer4=1; illegal4=0; word4=0;
+    if (V(OD0_t_0)<threshold && V(OD0_f_0)<threshold) valid4=0;
+    if (V(OD0_t_0)>=threshold || V(OD0_f_0)>=threshold) spacer4=0;
+    if (V(OD0_t_0)>=threshold && V(OD0_f_0)>=threshold) illegal4=1;
+    if (V(OD0_t_0)>=threshold) word4=word4 | (1 << 0);
+    if (V(OD0_t_1)<threshold && V(OD0_f_1)<threshold) valid4=0;
+    if (V(OD0_t_1)>=threshold || V(OD0_f_1)>=threshold) spacer4=0;
+    if (V(OD0_t_1)>=threshold && V(OD0_f_1)>=threshold) illegal4=1;
+    if (V(OD0_t_1)>=threshold) word4=word4 | (1 << 1);
+    if (V(OD0_t_2)<threshold && V(OD0_f_2)<threshold) valid4=0;
+    if (V(OD0_t_2)>=threshold || V(OD0_f_2)>=threshold) spacer4=0;
+    if (V(OD0_t_2)>=threshold && V(OD0_f_2)>=threshold) illegal4=1;
+    if (V(OD0_t_2)>=threshold) word4=word4 | (1 << 2);
+    if (V(OD0_t_3)<threshold && V(OD0_f_3)<threshold) valid4=0;
+    if (V(OD0_t_3)>=threshold || V(OD0_f_3)>=threshold) spacer4=0;
+    if (V(OD0_t_3)>=threshold && V(OD0_f_3)>=threshold) illegal4=1;
+    if (V(OD0_t_3)>=threshold) word4=word4 | (1 << 3);
+    valid5=1; spacer5=1; illegal5=0; word5=0;
+    if (V(OD1_t_0)<threshold && V(OD1_f_0)<threshold) valid5=0;
+    if (V(OD1_t_0)>=threshold || V(OD1_f_0)>=threshold) spacer5=0;
+    if (V(OD1_t_0)>=threshold && V(OD1_f_0)>=threshold) illegal5=1;
+    if (V(OD1_t_0)>=threshold) word5=word5 | (1 << 0);
+    if (V(OD1_t_1)<threshold && V(OD1_f_1)<threshold) valid5=0;
+    if (V(OD1_t_1)>=threshold || V(OD1_f_1)>=threshold) spacer5=0;
+    if (V(OD1_t_1)>=threshold && V(OD1_f_1)>=threshold) illegal5=1;
+    if (V(OD1_t_1)>=threshold) word5=word5 | (1 << 1);
+    if (V(OD1_t_2)<threshold && V(OD1_f_2)<threshold) valid5=0;
+    if (V(OD1_t_2)>=threshold || V(OD1_f_2)>=threshold) spacer5=0;
+    if (V(OD1_t_2)>=threshold && V(OD1_f_2)>=threshold) illegal5=1;
+    if (V(OD1_t_2)>=threshold) word5=word5 | (1 << 2);
+    if (V(OD1_t_3)<threshold && V(OD1_f_3)<threshold) valid5=0;
+    if (V(OD1_t_3)>=threshold || V(OD1_f_3)>=threshold) spacer5=0;
+    if (V(OD1_t_3)>=threshold && V(OD1_f_3)>=threshold) illegal5=1;
+    if (V(OD1_t_3)>=threshold) word5=word5 | (1 << 3);
+    valid6=1; spacer6=1; illegal6=0; word6=0;
+    if (V(OD2_t_0)<threshold && V(OD2_f_0)<threshold) valid6=0;
+    if (V(OD2_t_0)>=threshold || V(OD2_f_0)>=threshold) spacer6=0;
+    if (V(OD2_t_0)>=threshold && V(OD2_f_0)>=threshold) illegal6=1;
+    if (V(OD2_t_0)>=threshold) word6=word6 | (1 << 0);
+    if (V(OD2_t_1)<threshold && V(OD2_f_1)<threshold) valid6=0;
+    if (V(OD2_t_1)>=threshold || V(OD2_f_1)>=threshold) spacer6=0;
+    if (V(OD2_t_1)>=threshold && V(OD2_f_1)>=threshold) illegal6=1;
+    if (V(OD2_t_1)>=threshold) word6=word6 | (1 << 1);
+    if (V(OD2_t_2)<threshold && V(OD2_f_2)<threshold) valid6=0;
+    if (V(OD2_t_2)>=threshold || V(OD2_f_2)>=threshold) spacer6=0;
+    if (V(OD2_t_2)>=threshold && V(OD2_f_2)>=threshold) illegal6=1;
+    if (V(OD2_t_2)>=threshold) word6=word6 | (1 << 2);
+    if (V(OD2_t_3)<threshold && V(OD2_f_3)<threshold) valid6=0;
+    if (V(OD2_t_3)>=threshold || V(OD2_f_3)>=threshold) spacer6=0;
+    if (V(OD2_t_3)>=threshold && V(OD2_f_3)>=threshold) illegal6=1;
+    if (V(OD2_t_3)>=threshold) word6=word6 | (1 << 3);
+    valid7=1; spacer7=1; illegal7=0; word7=0;
+    if (V(OD3_t_0)<threshold && V(OD3_f_0)<threshold) valid7=0;
+    if (V(OD3_t_0)>=threshold || V(OD3_f_0)>=threshold) spacer7=0;
+    if (V(OD3_t_0)>=threshold && V(OD3_f_0)>=threshold) illegal7=1;
+    if (V(OD3_t_0)>=threshold) word7=word7 | (1 << 0);
+    if (V(OD3_t_1)<threshold && V(OD3_f_1)<threshold) valid7=0;
+    if (V(OD3_t_1)>=threshold || V(OD3_f_1)>=threshold) spacer7=0;
+    if (V(OD3_t_1)>=threshold && V(OD3_f_1)>=threshold) illegal7=1;
+    if (V(OD3_t_1)>=threshold) word7=word7 | (1 << 1);
+    if (V(OD3_t_2)<threshold && V(OD3_f_2)<threshold) valid7=0;
+    if (V(OD3_t_2)>=threshold || V(OD3_f_2)>=threshold) spacer7=0;
+    if (V(OD3_t_2)>=threshold && V(OD3_f_2)>=threshold) illegal7=1;
+    if (V(OD3_t_2)>=threshold) word7=word7 | (1 << 2);
+    if (V(OD3_t_3)<threshold && V(OD3_f_3)<threshold) valid7=0;
+    if (V(OD3_t_3)>=threshold || V(OD3_f_3)>=threshold) spacer7=0;
+    if (V(OD3_t_3)>=threshold && V(OD3_f_3)>=threshold) illegal7=1;
+    if (V(OD3_t_3)>=threshold) word7=word7 | (1 << 3);
+    valid8=1; spacer8=1; illegal8=0; word8=0;
+    if (V(Ch_t_0)<threshold && V(Ch_f_0)<threshold) valid8=0;
+    if (V(Ch_t_0)>=threshold || V(Ch_f_0)>=threshold) spacer8=0;
+    if (V(Ch_t_0)>=threshold && V(Ch_f_0)>=threshold) illegal8=1;
+    if (V(Ch_t_0)>=threshold) word8=word8 | (1 << 0);
+    if (V(Ch_t_1)<threshold && V(Ch_f_1)<threshold) valid8=0;
+    if (V(Ch_t_1)>=threshold || V(Ch_f_1)>=threshold) spacer8=0;
+    if (V(Ch_t_1)>=threshold && V(Ch_f_1)>=threshold) illegal8=1;
+    if (V(Ch_t_1)>=threshold) word8=word8 | (1 << 1);
+    if (V(Ch_t_2)<threshold && V(Ch_f_2)<threshold) valid8=0;
+    if (V(Ch_t_2)>=threshold || V(Ch_f_2)>=threshold) spacer8=0;
+    if (V(Ch_t_2)>=threshold && V(Ch_f_2)>=threshold) illegal8=1;
+    if (V(Ch_t_2)>=threshold) word8=word8 | (1 << 2);
+    if (V(Ch_t_3)<threshold && V(Ch_f_3)<threshold) valid8=0;
+    if (V(Ch_t_3)>=threshold || V(Ch_f_3)>=threshold) spacer8=0;
+    if (V(Ch_t_3)>=threshold && V(Ch_f_3)>=threshold) illegal8=1;
+    if (V(Ch_t_3)>=threshold) word8=word8 | (1 << 3);
+    quiescent=(input_spacer && V(I_a)<threshold && spacer0 && V(OC0_a)<threshold && spacer1 && V(OC1_a)<threshold && spacer2 && V(OC2_a)<threshold && spacer3 && V(OC3_a)<threshold && spacer4 && V(OD0_a)<threshold && spacer5 && V(OD1_a)<threshold && spacer6 && V(OD2_a)<threshold && spacer7 && V(OD3_a)<threshold && spacer8 && V(Ch_a)<threshold && csp0 && V(Cnt0_req)<threshold && csp1 && V(Cnt1_req)<threshold && csp2 && V(Cnt2_req)<threshold && csp3 && V(Cnt3_req)<threshold);
+    if (!active && !finished && !failure && V(reset)<threshold) begin
+      if (!quiescent) begin
+        failure=1; $display("SIM_ERROR t=%e reason=reset_spacer",$abstime);
+      end else begin active=1; $display("SIM_RESET t=%e",$abstime); end
+    end
+    if ((active || finished) && !failure && !reported) begin
+      if (illegal0) begin failure=1; $display("SIM_ERROR t=%e reason=illegal_dual_rail channel=OC0",$abstime); end
+      if (rp0==0 && !failure) begin
+        // A future-stage output may arrive early, but must remain valid until consumed.
+        if (held0 && (!valid0 || word0!=held_word0)) begin
+          failure=1; $display("SIM_ERROR t=%e reason=unacknowledged_word_changed channel=OC0",$abstime);
+        end else if (valid0) begin held0=1; held_word0=word0; end
+        if (valid0 && ri0>=5) begin
+          failure=1; $display("SIM_ERROR t=%e reason=unexpected_output channel=OC0",$abstime);
+        end
+      end
+      if (illegal1) begin failure=1; $display("SIM_ERROR t=%e reason=illegal_dual_rail channel=OC1",$abstime); end
+      if (rp1==0 && !failure) begin
+        // A future-stage output may arrive early, but must remain valid until consumed.
+        if (held1 && (!valid1 || word1!=held_word1)) begin
+          failure=1; $display("SIM_ERROR t=%e reason=unacknowledged_word_changed channel=OC1",$abstime);
+        end else if (valid1) begin held1=1; held_word1=word1; end
+        if (valid1 && ri1>=5) begin
+          failure=1; $display("SIM_ERROR t=%e reason=unexpected_output channel=OC1",$abstime);
+        end
+      end
+      if (illegal2) begin failure=1; $display("SIM_ERROR t=%e reason=illegal_dual_rail channel=OC2",$abstime); end
+      if (rp2==0 && !failure) begin
+        // A future-stage output may arrive early, but must remain valid until consumed.
+        if (held2 && (!valid2 || word2!=held_word2)) begin
+          failure=1; $display("SIM_ERROR t=%e reason=unacknowledged_word_changed channel=OC2",$abstime);
+        end else if (valid2) begin held2=1; held_word2=word2; end
+        if (valid2 && ri2>=5) begin
+          failure=1; $display("SIM_ERROR t=%e reason=unexpected_output channel=OC2",$abstime);
+        end
+      end
+      if (illegal3) begin failure=1; $display("SIM_ERROR t=%e reason=illegal_dual_rail channel=OC3",$abstime); end
+      if (rp3==0 && !failure) begin
+        // A future-stage output may arrive early, but must remain valid until consumed.
+        if (held3 && (!valid3 || word3!=held_word3)) begin
+          failure=1; $display("SIM_ERROR t=%e reason=unacknowledged_word_changed channel=OC3",$abstime);
+        end else if (valid3) begin held3=1; held_word3=word3; end
+        if (valid3 && ri3>=5) begin
+          failure=1; $display("SIM_ERROR t=%e reason=unexpected_output channel=OC3",$abstime);
+        end
+      end
+      if (illegal4) begin failure=1; $display("SIM_ERROR t=%e reason=illegal_dual_rail channel=OD0",$abstime); end
+      if (rp4==0 && !failure) begin
+        // A future-stage output may arrive early, but must remain valid until consumed.
+        if (held4 && (!valid4 || word4!=held_word4)) begin
+          failure=1; $display("SIM_ERROR t=%e reason=unacknowledged_word_changed channel=OD0",$abstime);
+        end else if (valid4) begin held4=1; held_word4=word4; end
+        if (valid4 && ri4>=9) begin
+          failure=1; $display("SIM_ERROR t=%e reason=unexpected_output channel=OD0",$abstime);
+        end
+      end
+      if (illegal5) begin failure=1; $display("SIM_ERROR t=%e reason=illegal_dual_rail channel=OD1",$abstime); end
+      if (rp5==0 && !failure) begin
+        // A future-stage output may arrive early, but must remain valid until consumed.
+        if (held5 && (!valid5 || word5!=held_word5)) begin
+          failure=1; $display("SIM_ERROR t=%e reason=unacknowledged_word_changed channel=OD1",$abstime);
+        end else if (valid5) begin held5=1; held_word5=word5; end
+        if (valid5 && ri5>=9) begin
+          failure=1; $display("SIM_ERROR t=%e reason=unexpected_output channel=OD1",$abstime);
+        end
+      end
+      if (illegal6) begin failure=1; $display("SIM_ERROR t=%e reason=illegal_dual_rail channel=OD2",$abstime); end
+      if (rp6==0 && !failure) begin
+        // A future-stage output may arrive early, but must remain valid until consumed.
+        if (held6 && (!valid6 || word6!=held_word6)) begin
+          failure=1; $display("SIM_ERROR t=%e reason=unacknowledged_word_changed channel=OD2",$abstime);
+        end else if (valid6) begin held6=1; held_word6=word6; end
+        if (valid6 && ri6>=9) begin
+          failure=1; $display("SIM_ERROR t=%e reason=unexpected_output channel=OD2",$abstime);
+        end
+      end
+      if (illegal7) begin failure=1; $display("SIM_ERROR t=%e reason=illegal_dual_rail channel=OD3",$abstime); end
+      if (rp7==0 && !failure) begin
+        // A future-stage output may arrive early, but must remain valid until consumed.
+        if (held7 && (!valid7 || word7!=held_word7)) begin
+          failure=1; $display("SIM_ERROR t=%e reason=unacknowledged_word_changed channel=OD3",$abstime);
+        end else if (valid7) begin held7=1; held_word7=word7; end
+        if (valid7 && ri7>=9) begin
+          failure=1; $display("SIM_ERROR t=%e reason=unexpected_output channel=OD3",$abstime);
+        end
+      end
+      if (illegal8) begin failure=1; $display("SIM_ERROR t=%e reason=illegal_dual_rail channel=Ch",$abstime); end
+      if (rp8==0 && !failure) begin
+        // A future-stage output may arrive early, but must remain valid until consumed.
+        if (held8 && (!valid8 || word8!=held_word8)) begin
+          failure=1; $display("SIM_ERROR t=%e reason=unacknowledged_word_changed channel=Ch",$abstime);
+        end else if (valid8) begin held8=1; held_word8=word8; end
+        if (valid8 && ri8>=2) begin
+          failure=1; $display("SIM_ERROR t=%e reason=unexpected_output channel=Ch",$abstime);
+        end
+      end
+      if (active && !failure && setup_stage && stage<12) begin
+        remaining0=0;
+        remaining1=0;
+        remaining2=0;
+        remaining3=0;
+        remaining4=0;
+        remaining5=0;
+        remaining6=0;
+        remaining7=0;
+        remaining8=0;
+        case (stage)
+          0: begin
+            remaining8=1; expected8=6;
+          end
+          1: begin
+            remaining1=1; expected1=15;
+            remaining5=1; expected5=15;
+          end
+          2: begin
+            remaining2=1; expected2=15;
+            remaining6=1; expected6=15;
+          end
+          3: begin
+            remaining1=4; expected1=15;
+            remaining5=4; expected5=15;
+          end
+          4: begin
+            remaining2=4; expected2=15;
+            remaining6=4; expected6=15;
+          end
+          5: begin
+            remaining4=3; expected4=0;
+            remaining5=3; expected5=0;
+            remaining6=3; expected6=0;
+            remaining7=3; expected7=0;
+          end
+          6: begin
+            remaining8=1; expected8=9;
+          end
+          7: begin
+            remaining0=1; expected0=15;
+            remaining4=1; expected4=15;
+          end
+          8: begin
+            remaining3=1; expected3=15;
+            remaining7=1; expected7=15;
+          end
+          9: begin
+            remaining0=4; expected0=15;
+            remaining4=4; expected4=15;
+          end
+          10: begin
+            remaining3=4; expected3=15;
+            remaining7=4; expected7=15;
+          end
+          11: begin
+            remaining4=1; expected4=0;
+            remaining5=1; expected5=0;
+            remaining6=1; expected6=0;
+            remaining7=1; expected7=0;
+          end
+        endcase
+        setup_stage=0;
+        $display("SIM_STAGE_BEGIN t=%e stage=%d",$abstime,stage+1);
+      end
+      if (active && !failure) begin
+        if (rp0==0 && remaining0>0 && valid0) begin
+          if (word0!=expected0) begin
+            failure=1;
+            $display("SIM_RX t=%e channel=OC0 index=%d stage=%d expected=%h actual=%h FAIL",$abstime,ri0,stage+1,expected0,word0);
+            $display("SIM_ERROR t=%e reason=golden_mismatch channel=OC0",$abstime);
+          end else begin
+            $display("SIM_RX t=%e channel=OC0 index=%d stage=%d expected=%h actual=%h PASS",$abstime,ri0,stage+1,expected0,word0);
+            ack0=1; rp0=1; held0=0;
+          end
+        end else if (rp0==1) begin
+          if (valid0 && word0!=expected0) begin
+            failure=1; $display("SIM_ERROR t=%e reason=word_changed_without_spacer channel=OC0",$abstime);
+          end else if (!valid0 && V(OC0_a)<threshold) begin
+            failure=1; $display("SIM_ERROR t=%e reason=data_withdrawn_before_ack channel=OC0",$abstime);
+          end else if (spacer0 && V(OC0_a)>=threshold) begin
+            ack0=0; rp0=2;
+            $display("SIM_SPACER t=%e channel=OC0 index=%d",$abstime,ri0);
+          end
+        end else if (rp0==2) begin
+          if (!spacer0) begin
+            failure=1; $display("SIM_ERROR t=%e reason=data_before_ack_low channel=OC0",$abstime);
+          end else if (V(OC0_a)<threshold) begin
+            $display("SIM_ACK_LOW t=%e channel=OC0 index=%d",$abstime,ri0);
+            ri0=ri0+1; remaining0=remaining0-1; rp0=0;
+          end
+        end
+      end
+      if (active && !failure) begin
+        if (rp1==0 && remaining1>0 && valid1) begin
+          if (word1!=expected1) begin
+            failure=1;
+            $display("SIM_RX t=%e channel=OC1 index=%d stage=%d expected=%h actual=%h FAIL",$abstime,ri1,stage+1,expected1,word1);
+            $display("SIM_ERROR t=%e reason=golden_mismatch channel=OC1",$abstime);
+          end else begin
+            $display("SIM_RX t=%e channel=OC1 index=%d stage=%d expected=%h actual=%h PASS",$abstime,ri1,stage+1,expected1,word1);
+            ack1=1; rp1=1; held1=0;
+          end
+        end else if (rp1==1) begin
+          if (valid1 && word1!=expected1) begin
+            failure=1; $display("SIM_ERROR t=%e reason=word_changed_without_spacer channel=OC1",$abstime);
+          end else if (!valid1 && V(OC1_a)<threshold) begin
+            failure=1; $display("SIM_ERROR t=%e reason=data_withdrawn_before_ack channel=OC1",$abstime);
+          end else if (spacer1 && V(OC1_a)>=threshold) begin
+            ack1=0; rp1=2;
+            $display("SIM_SPACER t=%e channel=OC1 index=%d",$abstime,ri1);
+          end
+        end else if (rp1==2) begin
+          if (!spacer1) begin
+            failure=1; $display("SIM_ERROR t=%e reason=data_before_ack_low channel=OC1",$abstime);
+          end else if (V(OC1_a)<threshold) begin
+            $display("SIM_ACK_LOW t=%e channel=OC1 index=%d",$abstime,ri1);
+            ri1=ri1+1; remaining1=remaining1-1; rp1=0;
+          end
+        end
+      end
+      if (active && !failure) begin
+        if (rp2==0 && remaining2>0 && valid2) begin
+          if (word2!=expected2) begin
+            failure=1;
+            $display("SIM_RX t=%e channel=OC2 index=%d stage=%d expected=%h actual=%h FAIL",$abstime,ri2,stage+1,expected2,word2);
+            $display("SIM_ERROR t=%e reason=golden_mismatch channel=OC2",$abstime);
+          end else begin
+            $display("SIM_RX t=%e channel=OC2 index=%d stage=%d expected=%h actual=%h PASS",$abstime,ri2,stage+1,expected2,word2);
+            ack2=1; rp2=1; held2=0;
+          end
+        end else if (rp2==1) begin
+          if (valid2 && word2!=expected2) begin
+            failure=1; $display("SIM_ERROR t=%e reason=word_changed_without_spacer channel=OC2",$abstime);
+          end else if (!valid2 && V(OC2_a)<threshold) begin
+            failure=1; $display("SIM_ERROR t=%e reason=data_withdrawn_before_ack channel=OC2",$abstime);
+          end else if (spacer2 && V(OC2_a)>=threshold) begin
+            ack2=0; rp2=2;
+            $display("SIM_SPACER t=%e channel=OC2 index=%d",$abstime,ri2);
+          end
+        end else if (rp2==2) begin
+          if (!spacer2) begin
+            failure=1; $display("SIM_ERROR t=%e reason=data_before_ack_low channel=OC2",$abstime);
+          end else if (V(OC2_a)<threshold) begin
+            $display("SIM_ACK_LOW t=%e channel=OC2 index=%d",$abstime,ri2);
+            ri2=ri2+1; remaining2=remaining2-1; rp2=0;
+          end
+        end
+      end
+      if (active && !failure) begin
+        if (rp3==0 && remaining3>0 && valid3) begin
+          if (word3!=expected3) begin
+            failure=1;
+            $display("SIM_RX t=%e channel=OC3 index=%d stage=%d expected=%h actual=%h FAIL",$abstime,ri3,stage+1,expected3,word3);
+            $display("SIM_ERROR t=%e reason=golden_mismatch channel=OC3",$abstime);
+          end else begin
+            $display("SIM_RX t=%e channel=OC3 index=%d stage=%d expected=%h actual=%h PASS",$abstime,ri3,stage+1,expected3,word3);
+            ack3=1; rp3=1; held3=0;
+          end
+        end else if (rp3==1) begin
+          if (valid3 && word3!=expected3) begin
+            failure=1; $display("SIM_ERROR t=%e reason=word_changed_without_spacer channel=OC3",$abstime);
+          end else if (!valid3 && V(OC3_a)<threshold) begin
+            failure=1; $display("SIM_ERROR t=%e reason=data_withdrawn_before_ack channel=OC3",$abstime);
+          end else if (spacer3 && V(OC3_a)>=threshold) begin
+            ack3=0; rp3=2;
+            $display("SIM_SPACER t=%e channel=OC3 index=%d",$abstime,ri3);
+          end
+        end else if (rp3==2) begin
+          if (!spacer3) begin
+            failure=1; $display("SIM_ERROR t=%e reason=data_before_ack_low channel=OC3",$abstime);
+          end else if (V(OC3_a)<threshold) begin
+            $display("SIM_ACK_LOW t=%e channel=OC3 index=%d",$abstime,ri3);
+            ri3=ri3+1; remaining3=remaining3-1; rp3=0;
+          end
+        end
+      end
+      if (active && !failure) begin
+        if (rp4==0 && remaining4>0 && valid4) begin
+          if (word4!=expected4) begin
+            failure=1;
+            $display("SIM_RX t=%e channel=OD0 index=%d stage=%d expected=%h actual=%h FAIL",$abstime,ri4,stage+1,expected4,word4);
+            $display("SIM_ERROR t=%e reason=golden_mismatch channel=OD0",$abstime);
+          end else begin
+            $display("SIM_RX t=%e channel=OD0 index=%d stage=%d expected=%h actual=%h PASS",$abstime,ri4,stage+1,expected4,word4);
+            ack4=1; rp4=1; held4=0;
+          end
+        end else if (rp4==1) begin
+          if (valid4 && word4!=expected4) begin
+            failure=1; $display("SIM_ERROR t=%e reason=word_changed_without_spacer channel=OD0",$abstime);
+          end else if (!valid4 && V(OD0_a)<threshold) begin
+            failure=1; $display("SIM_ERROR t=%e reason=data_withdrawn_before_ack channel=OD0",$abstime);
+          end else if (spacer4 && V(OD0_a)>=threshold) begin
+            ack4=0; rp4=2;
+            $display("SIM_SPACER t=%e channel=OD0 index=%d",$abstime,ri4);
+          end
+        end else if (rp4==2) begin
+          if (!spacer4) begin
+            failure=1; $display("SIM_ERROR t=%e reason=data_before_ack_low channel=OD0",$abstime);
+          end else if (V(OD0_a)<threshold) begin
+            $display("SIM_ACK_LOW t=%e channel=OD0 index=%d",$abstime,ri4);
+            ri4=ri4+1; remaining4=remaining4-1; rp4=0;
+          end
+        end
+      end
+      if (active && !failure) begin
+        if (rp5==0 && remaining5>0 && valid5) begin
+          if (word5!=expected5) begin
+            failure=1;
+            $display("SIM_RX t=%e channel=OD1 index=%d stage=%d expected=%h actual=%h FAIL",$abstime,ri5,stage+1,expected5,word5);
+            $display("SIM_ERROR t=%e reason=golden_mismatch channel=OD1",$abstime);
+          end else begin
+            $display("SIM_RX t=%e channel=OD1 index=%d stage=%d expected=%h actual=%h PASS",$abstime,ri5,stage+1,expected5,word5);
+            ack5=1; rp5=1; held5=0;
+          end
+        end else if (rp5==1) begin
+          if (valid5 && word5!=expected5) begin
+            failure=1; $display("SIM_ERROR t=%e reason=word_changed_without_spacer channel=OD1",$abstime);
+          end else if (!valid5 && V(OD1_a)<threshold) begin
+            failure=1; $display("SIM_ERROR t=%e reason=data_withdrawn_before_ack channel=OD1",$abstime);
+          end else if (spacer5 && V(OD1_a)>=threshold) begin
+            ack5=0; rp5=2;
+            $display("SIM_SPACER t=%e channel=OD1 index=%d",$abstime,ri5);
+          end
+        end else if (rp5==2) begin
+          if (!spacer5) begin
+            failure=1; $display("SIM_ERROR t=%e reason=data_before_ack_low channel=OD1",$abstime);
+          end else if (V(OD1_a)<threshold) begin
+            $display("SIM_ACK_LOW t=%e channel=OD1 index=%d",$abstime,ri5);
+            ri5=ri5+1; remaining5=remaining5-1; rp5=0;
+          end
+        end
+      end
+      if (active && !failure) begin
+        if (rp6==0 && remaining6>0 && valid6) begin
+          if (word6!=expected6) begin
+            failure=1;
+            $display("SIM_RX t=%e channel=OD2 index=%d stage=%d expected=%h actual=%h FAIL",$abstime,ri6,stage+1,expected6,word6);
+            $display("SIM_ERROR t=%e reason=golden_mismatch channel=OD2",$abstime);
+          end else begin
+            $display("SIM_RX t=%e channel=OD2 index=%d stage=%d expected=%h actual=%h PASS",$abstime,ri6,stage+1,expected6,word6);
+            ack6=1; rp6=1; held6=0;
+          end
+        end else if (rp6==1) begin
+          if (valid6 && word6!=expected6) begin
+            failure=1; $display("SIM_ERROR t=%e reason=word_changed_without_spacer channel=OD2",$abstime);
+          end else if (!valid6 && V(OD2_a)<threshold) begin
+            failure=1; $display("SIM_ERROR t=%e reason=data_withdrawn_before_ack channel=OD2",$abstime);
+          end else if (spacer6 && V(OD2_a)>=threshold) begin
+            ack6=0; rp6=2;
+            $display("SIM_SPACER t=%e channel=OD2 index=%d",$abstime,ri6);
+          end
+        end else if (rp6==2) begin
+          if (!spacer6) begin
+            failure=1; $display("SIM_ERROR t=%e reason=data_before_ack_low channel=OD2",$abstime);
+          end else if (V(OD2_a)<threshold) begin
+            $display("SIM_ACK_LOW t=%e channel=OD2 index=%d",$abstime,ri6);
+            ri6=ri6+1; remaining6=remaining6-1; rp6=0;
+          end
+        end
+      end
+      if (active && !failure) begin
+        if (rp7==0 && remaining7>0 && valid7) begin
+          if (word7!=expected7) begin
+            failure=1;
+            $display("SIM_RX t=%e channel=OD3 index=%d stage=%d expected=%h actual=%h FAIL",$abstime,ri7,stage+1,expected7,word7);
+            $display("SIM_ERROR t=%e reason=golden_mismatch channel=OD3",$abstime);
+          end else begin
+            $display("SIM_RX t=%e channel=OD3 index=%d stage=%d expected=%h actual=%h PASS",$abstime,ri7,stage+1,expected7,word7);
+            ack7=1; rp7=1; held7=0;
+          end
+        end else if (rp7==1) begin
+          if (valid7 && word7!=expected7) begin
+            failure=1; $display("SIM_ERROR t=%e reason=word_changed_without_spacer channel=OD3",$abstime);
+          end else if (!valid7 && V(OD3_a)<threshold) begin
+            failure=1; $display("SIM_ERROR t=%e reason=data_withdrawn_before_ack channel=OD3",$abstime);
+          end else if (spacer7 && V(OD3_a)>=threshold) begin
+            ack7=0; rp7=2;
+            $display("SIM_SPACER t=%e channel=OD3 index=%d",$abstime,ri7);
+          end
+        end else if (rp7==2) begin
+          if (!spacer7) begin
+            failure=1; $display("SIM_ERROR t=%e reason=data_before_ack_low channel=OD3",$abstime);
+          end else if (V(OD3_a)<threshold) begin
+            $display("SIM_ACK_LOW t=%e channel=OD3 index=%d",$abstime,ri7);
+            ri7=ri7+1; remaining7=remaining7-1; rp7=0;
+          end
+        end
+      end
+      if (active && !failure) begin
+        if (rp8==0 && remaining8>0 && valid8) begin
+          if (word8!=expected8) begin
+            failure=1;
+            $display("SIM_RX t=%e channel=Ch index=%d stage=%d expected=%h actual=%h FAIL",$abstime,ri8,stage+1,expected8,word8);
+            $display("SIM_ERROR t=%e reason=golden_mismatch channel=Ch",$abstime);
+          end else begin
+            $display("SIM_RX t=%e channel=Ch index=%d stage=%d expected=%h actual=%h PASS",$abstime,ri8,stage+1,expected8,word8);
+            ack8=1; rp8=1; held8=0;
+          end
+        end else if (rp8==1) begin
+          if (valid8 && word8!=expected8) begin
+            failure=1; $display("SIM_ERROR t=%e reason=word_changed_without_spacer channel=Ch",$abstime);
+          end else if (!valid8 && V(Ch_a)<threshold) begin
+            failure=1; $display("SIM_ERROR t=%e reason=data_withdrawn_before_ack channel=Ch",$abstime);
+          end else if (spacer8 && V(Ch_a)>=threshold) begin
+            ack8=0; rp8=2;
+            $display("SIM_SPACER t=%e channel=Ch index=%d",$abstime,ri8);
+          end
+        end else if (rp8==2) begin
+          if (!spacer8) begin
+            failure=1; $display("SIM_ERROR t=%e reason=data_before_ack_low channel=Ch",$abstime);
+          end else if (V(Ch_a)<threshold) begin
+            $display("SIM_ACK_LOW t=%e channel=Ch index=%d",$abstime,ri8);
+            ri8=ri8+1; remaining8=remaining8-1; rp8=0;
+          end
+        end
+      end
+      if (active && !failure) begin
+        if (cp0==0 && V(Cnt0_req)>=threshold) begin
+          if (ci0>=4) begin
+            failure=1; $display("SIM_ERROR t=%e reason=unexpected_counter_request channel=Cnt0",$abstime);
+          end else begin
+            case (ci0)
+              0: cw0=0;
+              1: cw0=0;
+              2: cw0=4;
+              3: cw0=16;
+            endcase
+            cv0=1; cp0=1;
+            $display("SIM_CNT_SEND t=%e channel=Cnt0 index=%d word=%h",$abstime,ci0,cw0);
+          end
+        end else if (cp0==1 && V(Cnt0_req)<threshold) begin
+          if (!cvalid0) begin
+            failure=1; $display("SIM_ERROR t=%e reason=request_withdrawn_before_counter_data channel=Cnt0",$abstime);
+          end else begin
+            cv0=0; cp0=2;
+            $display("SIM_CNT_REQUEST_LOW t=%e channel=Cnt0 index=%d",$abstime,ci0);
+          end
+        end else if (cp0==2) begin
+          if (!csp0 && V(Cnt0_req)>=threshold) begin
+            failure=1; $display("SIM_ERROR t=%e reason=counter_request_before_spacer channel=Cnt0",$abstime);
+          end else if (csp0) begin
+            $display("SIM_CNT_SPACER t=%e channel=Cnt0 index=%d",$abstime,ci0);
+            ci0=ci0+1; cp0=0;
+          end
+        end
+      end
+      if (active && !failure) begin
+        if (cp1==0 && V(Cnt1_req)>=threshold) begin
+          if (ci1>=4) begin
+            failure=1; $display("SIM_ERROR t=%e reason=unexpected_counter_request channel=Cnt1",$abstime);
+          end else begin
+            case (ci1)
+              0: cw1=4;
+              1: cw1=16;
+              2: cw1=0;
+              3: cw1=0;
+            endcase
+            cv1=1; cp1=1;
+            $display("SIM_CNT_SEND t=%e channel=Cnt1 index=%d word=%h",$abstime,ci1,cw1);
+          end
+        end else if (cp1==1 && V(Cnt1_req)<threshold) begin
+          if (!cvalid1) begin
+            failure=1; $display("SIM_ERROR t=%e reason=request_withdrawn_before_counter_data channel=Cnt1",$abstime);
+          end else begin
+            cv1=0; cp1=2;
+            $display("SIM_CNT_REQUEST_LOW t=%e channel=Cnt1 index=%d",$abstime,ci1);
+          end
+        end else if (cp1==2) begin
+          if (!csp1 && V(Cnt1_req)>=threshold) begin
+            failure=1; $display("SIM_ERROR t=%e reason=counter_request_before_spacer channel=Cnt1",$abstime);
+          end else if (csp1) begin
+            $display("SIM_CNT_SPACER t=%e channel=Cnt1 index=%d",$abstime,ci1);
+            ci1=ci1+1; cp1=0;
+          end
+        end
+      end
+      if (active && !failure) begin
+        if (cp2==0 && V(Cnt2_req)>=threshold) begin
+          if (ci2>=4) begin
+            failure=1; $display("SIM_ERROR t=%e reason=unexpected_counter_request channel=Cnt2",$abstime);
+          end else begin
+            case (ci2)
+              0: cw2=4;
+              1: cw2=16;
+              2: cw2=0;
+              3: cw2=0;
+            endcase
+            cv2=1; cp2=1;
+            $display("SIM_CNT_SEND t=%e channel=Cnt2 index=%d word=%h",$abstime,ci2,cw2);
+          end
+        end else if (cp2==1 && V(Cnt2_req)<threshold) begin
+          if (!cvalid2) begin
+            failure=1; $display("SIM_ERROR t=%e reason=request_withdrawn_before_counter_data channel=Cnt2",$abstime);
+          end else begin
+            cv2=0; cp2=2;
+            $display("SIM_CNT_REQUEST_LOW t=%e channel=Cnt2 index=%d",$abstime,ci2);
+          end
+        end else if (cp2==2) begin
+          if (!csp2 && V(Cnt2_req)>=threshold) begin
+            failure=1; $display("SIM_ERROR t=%e reason=counter_request_before_spacer channel=Cnt2",$abstime);
+          end else if (csp2) begin
+            $display("SIM_CNT_SPACER t=%e channel=Cnt2 index=%d",$abstime,ci2);
+            ci2=ci2+1; cp2=0;
+          end
+        end
+      end
+      if (active && !failure) begin
+        if (cp3==0 && V(Cnt3_req)>=threshold) begin
+          if (ci3>=4) begin
+            failure=1; $display("SIM_ERROR t=%e reason=unexpected_counter_request channel=Cnt3",$abstime);
+          end else begin
+            case (ci3)
+              0: cw3=0;
+              1: cw3=0;
+              2: cw3=4;
+              3: cw3=16;
+            endcase
+            cv3=1; cp3=1;
+            $display("SIM_CNT_SEND t=%e channel=Cnt3 index=%d word=%h",$abstime,ci3,cw3);
+          end
+        end else if (cp3==1 && V(Cnt3_req)<threshold) begin
+          if (!cvalid3) begin
+            failure=1; $display("SIM_ERROR t=%e reason=request_withdrawn_before_counter_data channel=Cnt3",$abstime);
+          end else begin
+            cv3=0; cp3=2;
+            $display("SIM_CNT_REQUEST_LOW t=%e channel=Cnt3 index=%d",$abstime,ci3);
+          end
+        end else if (cp3==2) begin
+          if (!csp3 && V(Cnt3_req)>=threshold) begin
+            failure=1; $display("SIM_ERROR t=%e reason=counter_request_before_spacer channel=Cnt3",$abstime);
+          end else if (csp3) begin
+            $display("SIM_CNT_SPACER t=%e channel=Cnt3 index=%d",$abstime,ci3);
+            ci3=ci3+1; cp3=0;
+          end
+        end
+      end
+      if (active && !failure) begin
+        if (tx_phase==1 && V(I_a)>=threshold) begin
+          tx_valid=0; tx_phase=2;
+          $display("SIM_IACK_HIGH t=%e index=%d",$abstime,tx_index);
+        end else if (tx_phase==2 && V(I_a)<threshold && input_spacer) begin
+          $display("SIM_IACK_LOW t=%e index=%d",$abstime,tx_index);
+          tx_index=tx_index+1; tx_phase=0;
+        end
+        if (tx_phase==0 && tx_index<26 && V(I_a)<threshold && input_spacer) begin
+          if (tx_index==0) tx_word=6;
+          else if (tx_index==14) tx_word=9;
+          else if ((tx_index>=11 && tx_index<=13) || tx_index==25) tx_word=0;
+          else tx_word=15;
+          tx_valid=1; tx_phase=1;
+          $display("SIM_TX t=%e channel=I index=%d word=%h",$abstime,tx_index,tx_word);
+        end
+        stage_complete=(remaining0==0 && rp0==0 && remaining1==0 && rp1==0 && remaining2==0 && rp2==0 && remaining3==0 && rp3==0 && remaining4==0 && rp4==0 && remaining5==0 && rp5==0 && remaining6==0 && rp6==0 && remaining7==0 && rp7==0 && remaining8==0 && rp8==0);
+        if (!setup_stage && stage<12 && stage_complete) begin
+          $display("SIM_STAGE_END t=%e stage=%d",$abstime,stage+1);
+          stage=stage+1; setup_stage=1;
+        end
+        all_complete=(stage==12 && tx_index==26 && tx_phase==0 && ci0==4 && cp0==0 && ci1==4 && cp1==0 && ci2==4 && cp2==0 && ci3==4 && cp3==0 && ri0==5 && ri1==5 && ri2==5 && ri3==5 && ri4==9 && ri5==9 && ri6==9 && ri7==9 && ri8==2);
+        if (all_complete && quiescent) begin
+          finished=1; active=0;
+          $display("SIM_ROUND t=%e inputs=26 counter_responses=16 outputs=58 stages=12",$abstime);
+        end
+      end
+      if (finished && !quiescent) begin
+        failure=1; $display("SIM_ERROR t=%e reason=nonquiescent_completion",$abstime);
+      end
+    end
+    if (finished && !failure && idle_start < 0) idle_start=$abstime+IDLE_SETTLE;
+    if (finished && !failure && !idle_started && $abstime>=idle_start) begin
+      idle_started=1;
+      $display("SIM_IDLE_BEGIN t=%e reset=%e",$abstime,V(reset));
+    end
+    if (idle_started && !failure && !idle_completed && $abstime>=idle_start+IDLE_WINDOW) begin
+      idle_completed=1;
+      $display("SIM_IDLE_END t=%e reset=%e",$abstime,V(reset));
+    end
+    if (failure && (stop_after<0 || stop_after>$abstime+TD+2*EDGE)) stop_after=$abstime+TD+2*EDGE;
+    else if (finished && stop_after<0) stop_after=$abstime+IDLE_SETTLE+IDLE_WINDOW+IDLE_MARGIN;
+    if (!reported && stop_after>0 && $abstime>=stop_after) begin
+      reported=1;
+      if (failure) $display("SIM_FAIL t=%e reason=see_SIM_ERROR",$abstime);
+      else $display("SIM_PASS t=%e rounds=1 inputs=26 counter_responses=16 outputs=58 stages=12",$abstime);
+      $finish(0);
+    end
+  end
+  @(timer(STOP_TIME-4*TD-4*EDGE)) begin
+    if (!finished && !failure) begin
+      failure=1;
+      $display("SIM_ERROR t=%e reason=timeout tx=%d tx_phase=%d stage=%d I.a=%e",$abstime,tx_index,tx_phase,stage+1,V(I_a));
+    end
+  end
+  V(I_t_0) <+ transition(SUPPLY*tx_valid*((tx_word >> 0) & 1),TD,EDGE,EDGE);
+  V(I_f_0) <+ transition(SUPPLY*tx_valid*(1-((tx_word >> 0) & 1)),TD,EDGE,EDGE);
+  V(I_t_1) <+ transition(SUPPLY*tx_valid*((tx_word >> 1) & 1),TD,EDGE,EDGE);
+  V(I_f_1) <+ transition(SUPPLY*tx_valid*(1-((tx_word >> 1) & 1)),TD,EDGE,EDGE);
+  V(I_t_2) <+ transition(SUPPLY*tx_valid*((tx_word >> 2) & 1),TD,EDGE,EDGE);
+  V(I_f_2) <+ transition(SUPPLY*tx_valid*(1-((tx_word >> 2) & 1)),TD,EDGE,EDGE);
+  V(I_t_3) <+ transition(SUPPLY*tx_valid*((tx_word >> 3) & 1),TD,EDGE,EDGE);
+  V(I_f_3) <+ transition(SUPPLY*tx_valid*(1-((tx_word >> 3) & 1)),TD,EDGE,EDGE);
+  V(Cnt0_t_0) <+ transition(SUPPLY*cv0*((cw0 >> 0) & 1),TD,EDGE,EDGE);
+  V(Cnt0_f_0) <+ transition(SUPPLY*cv0*(1-((cw0 >> 0) & 1)),TD,EDGE,EDGE);
+  V(Cnt0_t_1) <+ transition(SUPPLY*cv0*((cw0 >> 1) & 1),TD,EDGE,EDGE);
+  V(Cnt0_f_1) <+ transition(SUPPLY*cv0*(1-((cw0 >> 1) & 1)),TD,EDGE,EDGE);
+  V(Cnt0_t_2) <+ transition(SUPPLY*cv0*((cw0 >> 2) & 1),TD,EDGE,EDGE);
+  V(Cnt0_f_2) <+ transition(SUPPLY*cv0*(1-((cw0 >> 2) & 1)),TD,EDGE,EDGE);
+  V(Cnt0_t_3) <+ transition(SUPPLY*cv0*((cw0 >> 3) & 1),TD,EDGE,EDGE);
+  V(Cnt0_f_3) <+ transition(SUPPLY*cv0*(1-((cw0 >> 3) & 1)),TD,EDGE,EDGE);
+  V(Cnt0_t_4) <+ transition(SUPPLY*cv0*((cw0 >> 4) & 1),TD,EDGE,EDGE);
+  V(Cnt0_f_4) <+ transition(SUPPLY*cv0*(1-((cw0 >> 4) & 1)),TD,EDGE,EDGE);
+  V(Cnt0_t_5) <+ transition(SUPPLY*cv0*((cw0 >> 5) & 1),TD,EDGE,EDGE);
+  V(Cnt0_f_5) <+ transition(SUPPLY*cv0*(1-((cw0 >> 5) & 1)),TD,EDGE,EDGE);
+  V(Cnt0_t_6) <+ transition(SUPPLY*cv0*((cw0 >> 6) & 1),TD,EDGE,EDGE);
+  V(Cnt0_f_6) <+ transition(SUPPLY*cv0*(1-((cw0 >> 6) & 1)),TD,EDGE,EDGE);
+  V(Cnt0_t_7) <+ transition(SUPPLY*cv0*((cw0 >> 7) & 1),TD,EDGE,EDGE);
+  V(Cnt0_f_7) <+ transition(SUPPLY*cv0*(1-((cw0 >> 7) & 1)),TD,EDGE,EDGE);
+  V(Cnt1_t_0) <+ transition(SUPPLY*cv1*((cw1 >> 0) & 1),TD,EDGE,EDGE);
+  V(Cnt1_f_0) <+ transition(SUPPLY*cv1*(1-((cw1 >> 0) & 1)),TD,EDGE,EDGE);
+  V(Cnt1_t_1) <+ transition(SUPPLY*cv1*((cw1 >> 1) & 1),TD,EDGE,EDGE);
+  V(Cnt1_f_1) <+ transition(SUPPLY*cv1*(1-((cw1 >> 1) & 1)),TD,EDGE,EDGE);
+  V(Cnt1_t_2) <+ transition(SUPPLY*cv1*((cw1 >> 2) & 1),TD,EDGE,EDGE);
+  V(Cnt1_f_2) <+ transition(SUPPLY*cv1*(1-((cw1 >> 2) & 1)),TD,EDGE,EDGE);
+  V(Cnt1_t_3) <+ transition(SUPPLY*cv1*((cw1 >> 3) & 1),TD,EDGE,EDGE);
+  V(Cnt1_f_3) <+ transition(SUPPLY*cv1*(1-((cw1 >> 3) & 1)),TD,EDGE,EDGE);
+  V(Cnt1_t_4) <+ transition(SUPPLY*cv1*((cw1 >> 4) & 1),TD,EDGE,EDGE);
+  V(Cnt1_f_4) <+ transition(SUPPLY*cv1*(1-((cw1 >> 4) & 1)),TD,EDGE,EDGE);
+  V(Cnt1_t_5) <+ transition(SUPPLY*cv1*((cw1 >> 5) & 1),TD,EDGE,EDGE);
+  V(Cnt1_f_5) <+ transition(SUPPLY*cv1*(1-((cw1 >> 5) & 1)),TD,EDGE,EDGE);
+  V(Cnt1_t_6) <+ transition(SUPPLY*cv1*((cw1 >> 6) & 1),TD,EDGE,EDGE);
+  V(Cnt1_f_6) <+ transition(SUPPLY*cv1*(1-((cw1 >> 6) & 1)),TD,EDGE,EDGE);
+  V(Cnt1_t_7) <+ transition(SUPPLY*cv1*((cw1 >> 7) & 1),TD,EDGE,EDGE);
+  V(Cnt1_f_7) <+ transition(SUPPLY*cv1*(1-((cw1 >> 7) & 1)),TD,EDGE,EDGE);
+  V(Cnt2_t_0) <+ transition(SUPPLY*cv2*((cw2 >> 0) & 1),TD,EDGE,EDGE);
+  V(Cnt2_f_0) <+ transition(SUPPLY*cv2*(1-((cw2 >> 0) & 1)),TD,EDGE,EDGE);
+  V(Cnt2_t_1) <+ transition(SUPPLY*cv2*((cw2 >> 1) & 1),TD,EDGE,EDGE);
+  V(Cnt2_f_1) <+ transition(SUPPLY*cv2*(1-((cw2 >> 1) & 1)),TD,EDGE,EDGE);
+  V(Cnt2_t_2) <+ transition(SUPPLY*cv2*((cw2 >> 2) & 1),TD,EDGE,EDGE);
+  V(Cnt2_f_2) <+ transition(SUPPLY*cv2*(1-((cw2 >> 2) & 1)),TD,EDGE,EDGE);
+  V(Cnt2_t_3) <+ transition(SUPPLY*cv2*((cw2 >> 3) & 1),TD,EDGE,EDGE);
+  V(Cnt2_f_3) <+ transition(SUPPLY*cv2*(1-((cw2 >> 3) & 1)),TD,EDGE,EDGE);
+  V(Cnt2_t_4) <+ transition(SUPPLY*cv2*((cw2 >> 4) & 1),TD,EDGE,EDGE);
+  V(Cnt2_f_4) <+ transition(SUPPLY*cv2*(1-((cw2 >> 4) & 1)),TD,EDGE,EDGE);
+  V(Cnt2_t_5) <+ transition(SUPPLY*cv2*((cw2 >> 5) & 1),TD,EDGE,EDGE);
+  V(Cnt2_f_5) <+ transition(SUPPLY*cv2*(1-((cw2 >> 5) & 1)),TD,EDGE,EDGE);
+  V(Cnt2_t_6) <+ transition(SUPPLY*cv2*((cw2 >> 6) & 1),TD,EDGE,EDGE);
+  V(Cnt2_f_6) <+ transition(SUPPLY*cv2*(1-((cw2 >> 6) & 1)),TD,EDGE,EDGE);
+  V(Cnt2_t_7) <+ transition(SUPPLY*cv2*((cw2 >> 7) & 1),TD,EDGE,EDGE);
+  V(Cnt2_f_7) <+ transition(SUPPLY*cv2*(1-((cw2 >> 7) & 1)),TD,EDGE,EDGE);
+  V(Cnt3_t_0) <+ transition(SUPPLY*cv3*((cw3 >> 0) & 1),TD,EDGE,EDGE);
+  V(Cnt3_f_0) <+ transition(SUPPLY*cv3*(1-((cw3 >> 0) & 1)),TD,EDGE,EDGE);
+  V(Cnt3_t_1) <+ transition(SUPPLY*cv3*((cw3 >> 1) & 1),TD,EDGE,EDGE);
+  V(Cnt3_f_1) <+ transition(SUPPLY*cv3*(1-((cw3 >> 1) & 1)),TD,EDGE,EDGE);
+  V(Cnt3_t_2) <+ transition(SUPPLY*cv3*((cw3 >> 2) & 1),TD,EDGE,EDGE);
+  V(Cnt3_f_2) <+ transition(SUPPLY*cv3*(1-((cw3 >> 2) & 1)),TD,EDGE,EDGE);
+  V(Cnt3_t_3) <+ transition(SUPPLY*cv3*((cw3 >> 3) & 1),TD,EDGE,EDGE);
+  V(Cnt3_f_3) <+ transition(SUPPLY*cv3*(1-((cw3 >> 3) & 1)),TD,EDGE,EDGE);
+  V(Cnt3_t_4) <+ transition(SUPPLY*cv3*((cw3 >> 4) & 1),TD,EDGE,EDGE);
+  V(Cnt3_f_4) <+ transition(SUPPLY*cv3*(1-((cw3 >> 4) & 1)),TD,EDGE,EDGE);
+  V(Cnt3_t_5) <+ transition(SUPPLY*cv3*((cw3 >> 5) & 1),TD,EDGE,EDGE);
+  V(Cnt3_f_5) <+ transition(SUPPLY*cv3*(1-((cw3 >> 5) & 1)),TD,EDGE,EDGE);
+  V(Cnt3_t_6) <+ transition(SUPPLY*cv3*((cw3 >> 6) & 1),TD,EDGE,EDGE);
+  V(Cnt3_f_6) <+ transition(SUPPLY*cv3*(1-((cw3 >> 6) & 1)),TD,EDGE,EDGE);
+  V(Cnt3_t_7) <+ transition(SUPPLY*cv3*((cw3 >> 7) & 1),TD,EDGE,EDGE);
+  V(Cnt3_f_7) <+ transition(SUPPLY*cv3*(1-((cw3 >> 7) & 1)),TD,EDGE,EDGE);
+  V(OC0_a) <+ transition(SUPPLY*ack0,TD,EDGE,EDGE);
+  V(OC1_a) <+ transition(SUPPLY*ack1,TD,EDGE,EDGE);
+  V(OC2_a) <+ transition(SUPPLY*ack2,TD,EDGE,EDGE);
+  V(OC3_a) <+ transition(SUPPLY*ack3,TD,EDGE,EDGE);
+  V(OD0_a) <+ transition(SUPPLY*ack4,TD,EDGE,EDGE);
+  V(OD1_a) <+ transition(SUPPLY*ack5,TD,EDGE,EDGE);
+  V(OD2_a) <+ transition(SUPPLY*ack6,TD,EDGE,EDGE);
+  V(OD3_a) <+ transition(SUPPLY*ack7,TD,EDGE,EDGE);
+  V(Ch_a) <+ transition(SUPPLY*ack8,TD,EDGE,EDGE);
+  V(done) <+ transition(SUPPLY*finished,0,EDGE,EDGE);
+  V(failed) <+ transition(SUPPLY*failure,0,EDGE,EDGE);
+end
+endmodule

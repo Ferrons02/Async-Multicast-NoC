@@ -1,0 +1,209 @@
+SIM_RUN campaign=/tmp/ferroma_analog_campaign_cmCg4mJM level=top module=Router
+SIM_CONSTANTS_PASS t=0.000000e+00
+SIM_RESET t=1.000100e-07
+SIM_LUT_BEGIN t=1.050100e-07 id=0 case=0 local=0
+SIM_TX t=1.050100e-07 channel=Pi index=0 word=88888882
+SIM_INPUT_PASS t=1.050300e-07 id=0 hi=34952 lo=34946
+SIM_LUT_END t=2.010600e-07 id=0
+SIM_LUT_BEGIN t=2.010600e-07 id=1 case=0 local=1
+SIM_TX t=2.010600e-07 channel=Pi index=1 word=88888882
+SIM_INPUT_PASS t=2.010800e-07 id=1 hi=34952 lo=34946
+SIM_RX t=2.135100e-07 channel=C0o index=0 expected=88888882 actual=88888882 PASS
+SIM_LUT_END t=3.158700e-07 id=1
+SIM_LUT_BEGIN t=3.158700e-07 id=2 case=0 local=2
+SIM_TX t=3.158700e-07 channel=Pi index=2 word=88888882
+SIM_INPUT_PASS t=3.158900e-07 id=2 hi=34952 lo=34946
+SIM_RX t=3.282900e-07 channel=C0o index=1 expected=88888882 actual=88888882 PASS
+SIM_LUT_END t=4.307100e-07 id=2
+SIM_LUT_BEGIN t=4.307100e-07 id=3 case=0 local=3
+SIM_TX t=4.307100e-07 channel=Pi index=3 word=88888882
+SIM_INPUT_PASS t=4.307300e-07 id=3 hi=34952 lo=34946
+SIM_RX t=4.431200e-07 channel=C0o index=2 expected=88888882 actual=88888882 PASS
+SIM_LUT_END t=5.455700e-07 id=3
+SIM_LUT_BEGIN t=5.455700e-07 id=4 case=0 local=4
+SIM_TX t=5.455700e-07 channel=Pi index=4 word=80000002
+SIM_INPUT_PASS t=5.455900e-07 id=4 hi=32768 lo=2
+SIM_RX t=5.579800e-07 channel=C0o index=3 expected=88888882 actual=88888882 PASS
+SIM_LUT_END t=5.908000e-07 id=4
+SIM_LUT_BEGIN t=5.908000e-07 id=5 case=0 local=5
+SIM_TX t=5.908000e-07 channel=Pi index=5 word=13572469
+SIM_INPUT_PASS t=5.908200e-07 id=5 hi=4951 lo=9321
+SIM_RX t=5.917000e-07 channel=C0o index=4 expected=13572469 actual=13572469 PASS
+SIM_LUT_END t=5.991900e-07 id=5
+SIM_LUT_BEGIN t=5.991900e-07 id=6 case=1 local=0
+SIM_TX t=5.991900e-07 channel=Pi index=6 word=88888882
+SIM_INPUT_PASS t=5.992100e-07 id=6 hi=34952 lo=34946
+SIM_LUT_BEGIN t=6.011300e-07 id=7 case=1 local=1
+SIM_TX t=6.011300e-07 channel=Pi index=7 word=88888882
+SIM_INPUT_PASS t=6.011500e-07 id=7 hi=34952 lo=34946
+SIM_LUT_BEGIN t=6.027500e-07 id=8 case=1 local=2
+SIM_TX t=6.027500e-07 channel=Pi index=8 word=88888882
+SIM_INPUT_PASS t=6.027700e-07 id=8 hi=34952 lo=34946
+SIM_LUT_BEGIN t=6.063800e-07 id=9 case=1 local=3
+SIM_TX t=6.063800e-07 channel=Pi index=9 word=88888882
+SIM_INPUT_PASS t=6.064000e-07 id=9 hi=34952 lo=34946
+SIM_LUT_BEGIN t=6.955900e-07 id=10 case=1 local=4
+SIM_TX t=6.955900e-07 channel=Pi index=10 word=80000002
+SIM_INPUT_PASS t=6.956100e-07 id=10 hi=32768 lo=2
+SIM_RX t=7.068300e-07 channel=C0o index=5 expected=88888882 actual=88888882 PASS
+SIM_LUT_BEGIN t=8.103700e-07 id=11 case=1 local=5
+SIM_TX t=8.103700e-07 channel=Pi index=11 word=13572469
+SIM_INPUT_PASS t=8.103900e-07 id=11 hi=4951 lo=9321
+SIM_RX t=8.216400e-07 channel=C0o index=6 expected=88888882 actual=88888882 PASS
+SIM_RX t=9.364700e-07 channel=C0o index=7 expected=88888882 actual=88888882 PASS
+SIM_RX t=1.051290e-06 channel=C0o index=8 expected=88888882 actual=88888882 PASS
+SIM_RX t=1.079640e-06 channel=C0o index=9 expected=13572469 actual=13572469 PASS
+SIM_LUT_END t=1.087150e-06 id=11
+SIM_LUT_BEGIN t=1.087150e-06 id=12 case=2 local=0
+SIM_TX t=1.087150e-06 channel=Pi index=12 word=f8888882
+SIM_INPUT_PASS t=1.087170e-06 id=12 hi=63624 lo=34946
+SIM_LUT_END t=1.136300e-06 id=12
+SIM_LUT_BEGIN t=1.136300e-06 id=13 case=2 local=1
+SIM_TX t=1.136300e-06 channel=Pi index=13 word=88888882
+SIM_INPUT_PASS t=1.136320e-06 id=13 hi=34952 lo=34946
+SIM_LUT_END t=1.187850e-06 id=13
+SIM_LUT_BEGIN t=1.187850e-06 id=14 case=2 local=2
+SIM_TX t=1.187850e-06 channel=Pi index=14 word=88888882
+SIM_INPUT_PASS t=1.187870e-06 id=14 hi=34952 lo=34946
+SIM_LUT_END t=1.238340e-06 id=14
+SIM_LUT_BEGIN t=1.238340e-06 id=15 case=2 local=3
+SIM_TX t=1.238340e-06 channel=Pi index=15 word=88888882
+SIM_INPUT_PASS t=1.238360e-06 id=15 hi=34952 lo=34946
+SIM_RX t=1.272870e-06 channel=C0o index=10 expected=88888882 actual=88888882 PASS
+SIM_RX t=1.279630e-06 channel=C1o index=0 expected=88888882 actual=88888882 PASS
+SIM_RX t=1.286380e-06 channel=C2o index=0 expected=88888882 actual=88888882 PASS
+SIM_LUT_END t=1.293580e-06 id=15
+SIM_LUT_BEGIN t=1.293580e-06 id=16 case=2 local=4
+SIM_TX t=1.293580e-06 channel=Pi index=16 word=80000002
+SIM_INPUT_PASS t=1.293600e-06 id=16 hi=32768 lo=2
+SIM_RX t=1.298780e-06 channel=C3o index=0 expected=88888882 actual=88888882 PASS
+SIM_LUT_END t=1.322890e-06 id=16
+SIM_LUT_BEGIN t=1.322890e-06 id=17 case=2 local=5
+SIM_TX t=1.322890e-06 channel=Pi index=17 word=13572469
+SIM_INPUT_PASS t=1.322910e-06 id=17 hi=4951 lo=9321
+SIM_RX t=1.323790e-06 channel=C0o index=11 expected=13572469 actual=13572469 PASS
+SIM_RX t=1.323790e-06 channel=C1o index=1 expected=13572469 actual=13572469 PASS
+SIM_RX t=1.323790e-06 channel=C2o index=1 expected=13572469 actual=13572469 PASS
+SIM_RX t=1.323790e-06 channel=C3o index=1 expected=13572469 actual=13572469 PASS
+SIM_LUT_END t=1.331270e-06 id=17
+SIM_LUT_BEGIN t=1.331270e-06 id=18 case=3 local=0
+SIM_TX t=1.331270e-06 channel=Pi index=18 word=f8888882
+SIM_INPUT_PASS t=1.331290e-06 id=18 hi=63624 lo=34946
+SIM_LUT_BEGIN t=1.333210e-06 id=19 case=3 local=1
+SIM_TX t=1.333210e-06 channel=Pi index=19 word=88888882
+SIM_INPUT_PASS t=1.333230e-06 id=19 hi=34952 lo=34946
+SIM_LUT_BEGIN t=1.334830e-06 id=20 case=3 local=2
+SIM_TX t=1.334830e-06 channel=Pi index=20 word=88888882
+SIM_INPUT_PASS t=1.334850e-06 id=20 hi=34952 lo=34946
+SIM_LUT_BEGIN t=1.338460e-06 id=21 case=3 local=3
+SIM_TX t=1.338460e-06 channel=Pi index=21 word=88888882
+SIM_INPUT_PASS t=1.338490e-06 id=21 hi=34952 lo=34946
+SIM_LUT_BEGIN t=1.380340e-06 id=22 case=3 local=4
+SIM_TX t=1.380340e-06 channel=Pi index=22 word=80000002
+SIM_INPUT_PASS t=1.380360e-06 id=22 hi=32768 lo=2
+SIM_LUT_BEGIN t=1.429420e-06 id=23 case=3 local=5
+SIM_TX t=1.429420e-06 channel=Pi index=23 word=13572469
+SIM_INPUT_PASS t=1.429440e-06 id=23 hi=4951 lo=9321
+SIM_RX t=1.508140e-06 channel=C0o index=12 expected=88888882 actual=88888882 PASS
+SIM_RX t=1.514890e-06 channel=C1o index=2 expected=88888882 actual=88888882 PASS
+SIM_RX t=1.521650e-06 channel=C2o index=2 expected=88888882 actual=88888882 PASS
+SIM_RX t=1.528300e-06 channel=C3o index=2 expected=88888882 actual=88888882 PASS
+SIM_RX t=1.547940e-06 channel=C0o index=13 expected=13572469 actual=13572469 PASS
+SIM_RX t=1.547940e-06 channel=C1o index=3 expected=13572469 actual=13572469 PASS
+SIM_RX t=1.547940e-06 channel=C2o index=3 expected=13572469 actual=13572469 PASS
+SIM_RX t=1.547940e-06 channel=C3o index=3 expected=13572469 actual=13572469 PASS
+SIM_LUT_END t=1.555450e-06 id=23
+SIM_LUT_BEGIN t=1.555450e-06 id=24 case=4 local=0
+SIM_TX t=1.555450e-06 channel=Pi index=24 word=44440002
+SIM_INPUT_PASS t=1.555470e-06 id=24 hi=17476 lo=2
+SIM_RX t=1.616390e-06 channel=C1o index=4 expected=44400002 actual=44400002 PASS
+SIM_LUT_END t=1.629290e-06 id=24
+SIM_LUT_BEGIN t=1.629290e-06 id=25 case=4 local=1
+SIM_TX t=1.629290e-06 channel=Pi index=25 word=13572469
+SIM_INPUT_PASS t=1.629310e-06 id=25 hi=4951 lo=9321
+SIM_RX t=1.630190e-06 channel=C1o index=5 expected=13572469 actual=13572469 PASS
+SIM_LUT_END t=1.637680e-06 id=25
+SIM_LUT_BEGIN t=1.637680e-06 id=26 case=5 local=0
+SIM_TX t=1.637680e-06 channel=Pi index=26 word=44440002
+SIM_INPUT_PASS t=1.637700e-06 id=26 hi=17476 lo=2
+SIM_LUT_BEGIN t=1.639560e-06 id=27 case=5 local=1
+SIM_TX t=1.639560e-06 channel=Pi index=27 word=13572469
+SIM_INPUT_PASS t=1.639580e-06 id=27 hi=4951 lo=9321
+SIM_RX t=1.698020e-06 channel=C1o index=6 expected=44400002 actual=44400002 PASS
+SIM_RX t=1.706430e-06 channel=C1o index=7 expected=13572469 actual=13572469 PASS
+SIM_LUT_END t=1.713950e-06 id=27
+SIM_LUT_BEGIN t=1.713950e-06 id=28 case=6 local=0
+SIM_TX t=1.713950e-06 channel=Pi index=28 word=f4444442
+SIM_INPUT_PASS t=1.713970e-06 id=28 hi=62532 lo=17474
+SIM_LUT_END t=1.762940e-06 id=28
+SIM_LUT_BEGIN t=1.762940e-06 id=29 case=6 local=1
+SIM_TX t=1.762940e-06 channel=Pi index=29 word=44444402
+SIM_INPUT_PASS t=1.762960e-06 id=29 hi=17476 lo=17410
+SIM_RX t=1.812570e-06 channel=C0o index=14 expected=44400002 actual=44400002 PASS
+SIM_RX t=1.812570e-06 channel=C1o index=8 expected=44400002 actual=44400002 PASS
+SIM_RX t=1.812570e-06 channel=C2o index=4 expected=44400002 actual=44400002 PASS
+SIM_RX t=1.812570e-06 channel=C3o index=4 expected=44400002 actual=44400002 PASS
+SIM_LUT_END t=1.820250e-06 id=29
+SIM_LUT_BEGIN t=1.820250e-06 id=30 case=6 local=2
+SIM_TX t=1.820250e-06 channel=Pi index=30 word=13572469
+SIM_INPUT_PASS t=1.820270e-06 id=30 hi=4951 lo=9321
+SIM_RX t=1.821150e-06 channel=C0o index=15 expected=13572469 actual=13572469 PASS
+SIM_RX t=1.821150e-06 channel=C1o index=9 expected=13572469 actual=13572469 PASS
+SIM_RX t=1.821150e-06 channel=C2o index=5 expected=13572469 actual=13572469 PASS
+SIM_RX t=1.821150e-06 channel=C3o index=5 expected=13572469 actual=13572469 PASS
+SIM_LUT_END t=1.828640e-06 id=30
+SIM_LUT_BEGIN t=1.828640e-06 id=31 case=7 local=0
+SIM_TX t=1.828640e-06 channel=Pi index=31 word=f4444442
+SIM_INPUT_PASS t=1.828660e-06 id=31 hi=62532 lo=17474
+SIM_LUT_BEGIN t=1.830530e-06 id=32 case=7 local=1
+SIM_TX t=1.830530e-06 channel=Pi index=32 word=44444402
+SIM_INPUT_PASS t=1.830550e-06 id=32 hi=17476 lo=17410
+SIM_LUT_BEGIN t=1.832090e-06 id=33 case=7 local=2
+SIM_TX t=1.832090e-06 channel=Pi index=33 word=13572469
+SIM_INPUT_PASS t=1.832110e-06 id=33 hi=4951 lo=9321
+SIM_RX t=1.923500e-06 channel=C0o index=16 expected=44400002 actual=44400002 PASS
+SIM_RX t=1.923500e-06 channel=C1o index=10 expected=44400002 actual=44400002 PASS
+SIM_RX t=1.923500e-06 channel=C2o index=6 expected=44400002 actual=44400002 PASS
+SIM_RX t=1.923500e-06 channel=C3o index=6 expected=44400002 actual=44400002 PASS
+SIM_RX t=1.926710e-06 channel=C0o index=17 expected=13572469 actual=13572469 PASS
+SIM_RX t=1.926710e-06 channel=C1o index=11 expected=13572469 actual=13572469 PASS
+SIM_RX t=1.926710e-06 channel=C2o index=7 expected=13572469 actual=13572469 PASS
+SIM_RX t=1.926710e-06 channel=C3o index=7 expected=13572469 actual=13572469 PASS
+SIM_LUT_END t=1.934230e-06 id=33
+SIM_LUT_BEGIN t=1.934230e-06 id=34 case=8 local=0
+SIM_TX t=1.934230e-06 channel=Pi index=34 word=38888882
+SIM_INPUT_PASS t=1.934250e-06 id=34 hi=14472 lo=34946
+SIM_LUT_END t=2.001080e-06 id=34
+SIM_LUT_BEGIN t=2.001080e-06 id=35 case=8 local=1
+SIM_TX t=2.001080e-06 channel=Pi index=35 word=2
+SIM_INPUT_PASS t=2.001100e-06 id=35 hi=0 lo=2
+SIM_RX t=2.009870e-06 channel=C2o index=8 expected=88800002 actual=88800002 PASS
+SIM_RX t=2.009870e-06 channel=C3o index=8 expected=88800002 actual=88800002 PASS
+SIM_LUT_END t=2.032760e-06 id=35
+SIM_LUT_BEGIN t=2.032760e-06 id=36 case=8 local=2
+SIM_TX t=2.032760e-06 channel=Pi index=36 word=13572469
+SIM_INPUT_PASS t=2.032780e-06 id=36 hi=4951 lo=9321
+SIM_RX t=2.033660e-06 channel=C2o index=9 expected=13572469 actual=13572469 PASS
+SIM_RX t=2.033660e-06 channel=C3o index=9 expected=13572469 actual=13572469 PASS
+SIM_LUT_END t=2.041150e-06 id=36
+SIM_LUT_BEGIN t=2.041150e-06 id=37 case=9 local=0
+SIM_TX t=2.041150e-06 channel=Pi index=37 word=38888882
+SIM_INPUT_PASS t=2.041170e-06 id=37 hi=14472 lo=34946
+SIM_LUT_BEGIN t=2.043090e-06 id=38 case=9 local=1
+SIM_TX t=2.043090e-06 channel=Pi index=38 word=2
+SIM_INPUT_PASS t=2.043110e-06 id=38 hi=0 lo=2
+SIM_LUT_BEGIN t=2.044650e-06 id=39 case=9 local=2
+SIM_TX t=2.044650e-06 channel=Pi index=39 word=13572469
+SIM_INPUT_PASS t=2.044670e-06 id=39 hi=4951 lo=9321
+SIM_RX t=2.113190e-06 channel=C2o index=10 expected=88800002 actual=88800002 PASS
+SIM_RX t=2.113190e-06 channel=C3o index=10 expected=88800002 actual=88800002 PASS
+SIM_RX t=2.131600e-06 channel=C2o index=11 expected=13572469 actual=13572469 PASS
+SIM_RX t=2.131600e-06 channel=C3o index=11 expected=13572469 actual=13572469 PASS
+SIM_LUT_END t=2.139110e-06 id=39
+SIM_ROUND t=2.139110e-06 inputs=40 outputs=54
+SIM_IDLE_BEGIN t=2.144110e-06
+SIM_IDLE_END t=2.164110e-06
+SIM_MEASUREMENT_SOURCE format=hspice_native_gzip
+SIM_PASS t=2.165110e-06
+
+FINAL RESULT: PASS

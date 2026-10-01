@@ -1,0 +1,50 @@
+import "no_forks/commons/Channels.act";
+
+/* Action order A0 through A6 is the original QS7 through QS1 order. */
+export defproc Seq7(bool? reset; Dataless! A0; Dataless! A1; Dataless! A2; Dataless! A3; Dataless! A4; Dataless! A5; Dataless! A6)
+{
+    bool q7, q6, q5, q4, q3, q2, q1;
+
+    // Supplied reset convention: initialize q7 high and q6..q1 low.
+    prs {
+        reset | (A6.a & ~q6) -> q7+
+        (~A6.a & q6) -> q7-
+        (A0.a & ~q5) -> q6+
+        reset | (~A0.a & q5) -> q6-
+        (A1.a & ~q4) -> q5+
+        reset | (~A1.a & q4) -> q5-
+        (A2.a & ~q3) -> q4+
+        reset | (~A2.a & q3) -> q4-
+        (A3.a & ~q2) -> q3+
+        reset | (~A3.a & q2) -> q3-
+        (A4.a & ~q1) -> q2+
+        reset | (~A4.a & q1) -> q2-
+        (A5.a & ~q7) -> q1+
+        reset | (~A5.a & q7) -> q1-
+        q7 & ~A6.a -> A0.req+
+        ~q7 -> A0.req-
+        q6 & ~A0.a -> A1.req+
+        ~q6 -> A1.req-
+        q5 & ~A1.a -> A2.req+
+        ~q5 -> A2.req-
+        q4 & ~A2.a -> A3.req+
+        ~q4 -> A3.req-
+        q3 & ~A3.a -> A4.req+
+        ~q3 -> A4.req-
+        q2 & ~A4.a -> A5.req+
+        ~q2 -> A5.req-
+        q1 & ~A5.a -> A6.req+
+        ~q1 -> A6.req-
+    }
+
+    // Existing timing constraints translated to original PRS signal names.
+    spec {
+        timing A6.a+ : A6.a+ < q7+
+        timing A0.a+ : A0.a+ < q6+
+        timing A1.a+ : A1.a+ < q5+
+        timing A2.a+ : A2.a+ < q4+
+        timing A3.a+ : A3.a+ < q3+
+        timing A4.a+ : A4.a+ < q2+
+        timing A5.a+ : A5.a+ < q1+
+    }
+}

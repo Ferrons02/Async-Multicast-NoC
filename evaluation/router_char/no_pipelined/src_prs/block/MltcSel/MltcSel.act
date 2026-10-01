@@ -1,0 +1,59 @@
+import "commons/Channels.act";
+
+/* Literal transcription of the supplied bubble-reshuffled PRS.
+ * r=reset; _i_a=n_I_a; _w_0/1=n_w_0/1; _o_0{t,f}k=n_O0_{t,f}[k].
+ * Other underscored signals are combinational inv_* nodes.
+ * Preserve ~s in n_w_0+ and the absence of a reset term in n_I_a+.
+ * Selection uses header bit 1. No artificial fork delays are present.
+ */
+export defproc MltcSel(bool? reset; ActiveDualRail32? I; ActiveDualRail32! O0, O1)
+{
+    bool p, s, w_0i, w_0, w_1;
+    bool n_I_a, n_w_0, n_w_1;
+    bool inv_s, inv_reset, inv_p, inv_w_0i;
+    bool inv_I_t[32], inv_I_f[32], n_O0_t[32], n_O0_f[32];
+
+    prs {
+        ((~inv_I_t[1] & ~inv_s) | ~inv_reset) -> p+
+        (I.f[1] & s) -> p-
+        (~inv_s & ((~inv_I_t[1] & ~inv_p) | (~inv_I_f[1] & ~p))) -> w_0i+
+        ((inv_s & (O0.a | O1.a)) | reset) -> w_0i-
+
+        (inv_s & I.f[0]) -> n_w_0-
+        ((~s & ~n_I_a & (~O0.a & ~O1.a)) | ~inv_reset) -> n_w_0+
+        (inv_s & I.t[0]) -> n_w_1-
+        ((~inv_s & ~n_I_a & (~O0.a & ~O1.a)) | ~inv_reset) -> n_w_1+
+        ((~n_w_1 & ~n_I_a & (~O0.a & ~O1.a)) | ~inv_reset) -> s+
+        w_0i -> s-
+
+        ((O0.a | O1.a) & (w_1 | w_0) & inv_w_0i) -> n_I_a-
+        ((~O0.a & ~O1.a) & (~w_1 & ~w_0)) -> n_I_a+
+
+        (k:0..31:
+            (p & inv_s & I.t[k]) -> n_O0_t[k]-
+            ~I.t[k] -> n_O0_t[k]+
+            (p & inv_s & I.f[k]) -> n_O0_f[k]-
+            ~I.f[k] -> n_O0_f[k]+
+            (~p & ~s & ~inv_I_t[k]) -> O1.t[k]+
+            inv_I_t[k] -> O1.t[k]-
+            (~p & ~s & ~inv_I_f[k]) -> O1.f[k]+
+            inv_I_f[k] -> O1.f[k]-
+        )
+
+        ~s => inv_s+
+        ~reset => inv_reset+
+        ~p => inv_p+
+        ~w_0i => inv_w_0i+
+        ~n_w_0 => w_0+
+        ~n_w_1 => w_1+
+        (k:0..31:
+            ~I.t[k] => inv_I_t[k]+
+            ~I.f[k] => inv_I_f[k]+
+        )
+        ~n_I_a => I.a+
+        (k:0..31:
+            ~n_O0_t[k] => O0.t[k]+
+            ~n_O0_f[k] => O0.f[k]+
+        )
+    }
+}

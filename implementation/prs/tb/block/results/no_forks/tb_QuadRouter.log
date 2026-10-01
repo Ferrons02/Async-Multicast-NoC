@@ -1,0 +1,22 @@
+WARNING: TbStageCheck<4>: substituting chp model (requested prs, not found)
+WARNING: TbStageCheck<4>: substituting chp model (requested prs, not found)
+WARNING: QuadRouterDriver<>: substituting chp model (requested prs, not found)
+WARNING: TbStageCheck<4>: substituting chp model (requested prs, not found)
+WARNING: TbStageCheck<4>: substituting chp model (requested prs, not found)
+WARNING: TbStageCheck<4>: substituting chp model (requested prs, not found)
+WARNING: TbStageCheck<4>: substituting chp model (requested prs, not found)
+WARNING: TbStageCheck<4>: substituting chp model (requested prs, not found)
+WARNING: TbStageCheck<4>: substituting chp model (requested prs, not found)
+WARNING: TbFailure<9>: substituting chp model (requested prs, not found)
+WARNING: TbStageCheck<4>: substituting chp model (requested prs, not found)
+TB_RANDOM_CHOICE off
+TB_WARNING_POLICY resume-on-warn
+TB_STRESS_BEGIN 10000
+TB_STRESS_END 500009928
+[           500050090] <driver>  PASSED: rounds=7152
+TB_FINAL
+done: 1
+fail: 0
+rounds: 7152  (0x1bf0)
+TB_X_BEGIN
+TB_X_END

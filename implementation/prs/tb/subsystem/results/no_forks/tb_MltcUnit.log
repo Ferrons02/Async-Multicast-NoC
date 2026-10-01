@@ -1,0 +1,82 @@
+WARNING: MltcUnitDriver<>: substituting chp model (requested prs, not found)
+WARNING: SubsystemCheck<11,{2248146946,3134958867,2282749954,3134958867,2252406786,3134958867,2256816146,536870914,3134958867,2147483650,3134958867},3>: substituting chp model (requested prs, not found)
+WARNING: TbFailure<6>: substituting chp model (requested prs, not found)
+WARNING: SubsystemCheck<11,{1291845634,3134958867,1108344834,3134958867,1295089666,3134958867,1278284306,1142947842,3134958867,1073741826,3134958867},2>: substituting chp model (requested prs, not found)
+WARNING: SubsystemCheck<2,{268435458,3134958867},0>: substituting chp model (requested prs, not found)
+WARNING: SubsystemCheck<2,{536870914,3134958867},1>: substituting chp model (requested prs, not found)
+TB_RANDOM_CHOICE off
+TB_WARNING_POLICY resume-on-warn
+TB_STRESS_BEGIN 10000
+[               48332] <check_C2>  TB_RX channel=2 count=1 value=1291845634
+[               48511] <check_C3>  TB_RX channel=3 count=1 value=2248146946
+[               51076] <driver>  TB_TX count=1 value=881680386
+[               52021] <check_C2>  TB_RX channel=2 count=2 value=3134958867
+[               52209] <check_C3>  TB_RX channel=3 count=2 value=3134958867
+[               52530] <driver>  TB_TX count=2 value=3134958867
+[               91767] <driver>  TB_TX count=3 value=880967954
+[              102241] <check_C2>  TB_RX channel=2 count=3 value=1108344834
+[              102527] <check_C3>  TB_RX channel=3 count=3 value=2282749954
+[              112299] <driver>  TB_TX count=4 value=2
+[              113256] <check_C3>  TB_RX channel=3 count=4 value=3134958867
+[              113347] <check_C2>  TB_RX channel=2 count=4 value=3134958867
+[              113908] <driver>  TB_TX count=5 value=3134958867
+[              151415] <driver>  TB_TX count=6 value=881681170
+[              172171] <check_C2>  TB_RX channel=2 count=5 value=1295089666
+[              172264] <check_C3>  TB_RX channel=3 count=5 value=2252406786
+[              177029] <driver>  TB_TX count=7 value=2215641090
+[              178052] <check_C3>  TB_RX channel=3 count=6 value=3134958867
+[              178174] <check_C2>  TB_RX channel=2 count=6 value=3134958867
+[              178501] <driver>  TB_TX count=8 value=3134958867
+[              215885] <driver>  TB_TX count=9 value=881615634
+[              239577] <check_C2>  TB_RX channel=2 count=7 value=1278284306
+[              244955] <driver>  TB_TX count=10 value=2215777410
+[              265283] <check_C3>  TB_RX channel=3 count=7 value=2256816146
+[              279550] <check_C2>  TB_RX channel=2 count=8 value=1142947842
+[              279596] <check_C3>  TB_RX channel=3 count=8 value=536870914
+[              281672] <driver>  TB_TX count=11 value=1143021571
+[              282760] <check_C2>  TB_RX channel=2 count=9 value=3134958867
+[              282782] <check_C3>  TB_RX channel=3 count=9 value=3134958867
+[              283308] <driver>  TB_TX count=12 value=3134958867
+[              316203] <check_C2>  TB_RX channel=2 count=10 value=1073741826
+[              316238] <check_C3>  TB_RX channel=3 count=10 value=2147483650
+[              316250] <check_C1>  TB_RX channel=1 count=1 value=536870914
+[              316382] <check_C0>  TB_RX channel=0 count=1 value=268435458
+[              318207] <driver>  TB_TX count=13 value=4045701122
+[              319328] <check_C1>  TB_RX channel=1 count=2 value=3134958867
+[              319369] <check_C2>  TB_RX channel=2 count=11 value=3134958867
+[              319391] <check_C3>  TB_RX channel=3 count=11 value=3134958867
+[              319395] <check_C0>  TB_RX channel=0 count=2 value=3134958867
+[              319941] <driver>  TB_TX count=14 value=3134958867
+TB_STRESS_END 500009922
+[           500156944] <driver>  PASSED: rounds=1624
+TB_FINAL
+done: 1
+fail: 0
+rounds: 1624  (0x658)
+TB_PROGRESS_BEGIN
+issued: 1624  (0x658)
+tx_count: 22736  (0x58d0)
+tx_last: 3134958867  (0xbadbad13)
+tx_next: 0  (0x0)
+rx_count[0]: 3248  (0xcb0)
+rx_last[0]: 3134958867  (0xbadbad13)
+rx_next[0]: 268435458  (0x10000002)
+rx_count[1]: 3248  (0xcb0)
+rx_last[1]: 3134958867  (0xbadbad13)
+rx_next[1]: 536870914  (0x20000002)
+rx_count[2]: 17864  (0x45c8)
+rx_last[2]: 3134958867  (0xbadbad13)
+rx_next[2]: 1291845634  (0x4d000002)
+rx_count[3]: 17864  (0x45c8)
+rx_last[3]: 3134958867  (0xbadbad13)
+rx_next[3]: 2248146946  (0x86000002)
+rx_count[4]: 0  (0x0)
+rx_last[4]: 0  (0x0)
+rx_next[4]: 0  (0x0)
+rx_count[5]: 0  (0x0)
+rx_last[5]: 0  (0x0)
+rx_next[5]: 0  (0x0)
+TB_PROGRESS_END
+TB_X_BEGIN
+TB_X_END
+TB_COMPLETION_ASSERTIONS

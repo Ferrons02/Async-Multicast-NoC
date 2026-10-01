@@ -1,0 +1,71 @@
+import "commons/Split.act";
+
+export defproc SplitTree7(
+    bool? reset;
+    PassiveDualRail4? I;
+    PassiveDualRail4! O0;
+    PassiveDualRail4! O1;
+    PassiveDualRail4! O2;
+    PassiveDualRail4! O3;
+    PassiveDualRail4! O4;
+    PassiveDualRail4! O5;
+    PassiveDualRail4! O6
+)
+{
+    Split root;
+    root.I.req = I.req;
+    root.I.t[0..3] = I.t[0..3];
+    root.I.f[0..3] = I.f[0..3];
+    root.reset = reset;
+
+    Split hi;
+    hi.I.req = root.O0.req;
+    hi.I.t[0..3] = root.O0.t[0..3];
+    hi.I.f[0..3] = root.O0.f[0..3];
+    hi.reset = reset;
+
+    Split lo;
+    lo.I.req = root.O1.req;
+    lo.I.t[0..3] = root.O1.t[0..3];
+    lo.I.f[0..3] = root.O1.f[0..3];
+    lo.O1.t[0..3] = O0.t[0..3];
+    lo.O1.f[0..3] = O0.f[0..3];
+    lo.O1.req = O0.req;
+    lo.reset = reset;
+
+    Split s76;
+    s76.I.req = hi.O0.req;
+    s76.I.t[0..3] = hi.O0.t[0..3];
+    s76.I.f[0..3] = hi.O0.f[0..3];
+    s76.O0.t[0..3] = O6.t[0..3];
+    s76.O0.f[0..3] = O6.f[0..3];
+    s76.O0.req = O6.req;
+    s76.O1.t[0..3] = O5.t[0..3];
+    s76.O1.f[0..3] = O5.f[0..3];
+    s76.O1.req = O5.req;
+    s76.reset = reset;
+
+    Split s54;
+    s54.I.req = hi.O1.req;
+    s54.I.t[0..3] = hi.O1.t[0..3];
+    s54.I.f[0..3] = hi.O1.f[0..3];
+    s54.O0.t[0..3] = O4.t[0..3];
+    s54.O0.f[0..3] = O4.f[0..3];
+    s54.O0.req = O4.req;
+    s54.O1.t[0..3] = O3.t[0..3];
+    s54.O1.f[0..3] = O3.f[0..3];
+    s54.O1.req = O3.req;
+    s54.reset = reset;
+
+    Split s32;
+    s32.I.req = lo.O0.req;
+    s32.I.t[0..3] = lo.O0.t[0..3];
+    s32.I.f[0..3] = lo.O0.f[0..3];
+    s32.O0.t[0..3] = O2.t[0..3];
+    s32.O0.f[0..3] = O2.f[0..3];
+    s32.O0.req = O2.req;
+    s32.O1.t[0..3] = O1.t[0..3];
+    s32.O1.f[0..3] = O1.f[0..3];
+    s32.O1.req = O1.req;
+    s32.reset = reset;
+}

@@ -1,0 +1,38 @@
+import "Arb.act";
+import "MltcUnit.act";
+import "ChildRouter.act";
+import "ParentRouter.act";
+
+pint BW = 32;
+pint SCAST_ADDR_LEN = 19;
+
+defproc Router(
+  chan(int<BW>)? c0i,c1i,c2i,c3i,pi;
+  chan(int<BW>)! c0o,c1o,c2o,c3o,po
+) {
+
+    chan(int<BW>)! m_in;
+
+    chan(int<BW>)! c0_c0,c1_c0,c2_c0,c3_c0,p_c0,m_c0;
+    chan(int<BW>)! c0_c1,c1_c1,c2_c1,c3_c1,p_c1,m_c1;
+    chan(int<BW>)! c0_c2,c1_c2,c2_c2,c3_c2,p_c2,m_c2;
+    chan(int<BW>)! c0_c3,c1_c3,c2_c3,c3_c3,p_c3,m_c3;
+    chan(int<BW>)! c0_p,c1_p,c2_p,c3_p,p_p;
+    chan(int<BW>)! c0_m,c1_m,c2_m,c3_m,p_m;
+    Arb<BW> c0_arb(c0_c0,c1_c0,c2_c0,c3_c0,p_c0,m_c0,c0o);
+    Arb<BW> c1_arb(c0_c1,c1_c1,c2_c1,c3_c1,p_c1,m_c1,c1o);
+    Arb<BW> c2_arb(c0_c2,c1_c2,c2_c2,c3_c2,p_c2,m_c2,c2o);
+    Arb<BW> c3_arb(c0_c3,c1_c3,c2_c3,c3_c3,p_c3,m_c3,c3o);
+    Arb<BW> p_arb(.c0=c0_p,.c1=c1_p,.c2=c2_p,.c3=c3_p,.p=p_p,.out=po);
+    Arb<BW> m_arb(.c0=c0_m,.c1=c1_m,.c2=c2_m,.c3=c3_m,.p=p_m,.out=m_in);
+
+    ChildRouter<BW,SCAST_ADDR_LEN> C0Router(c0i,c0_c0,c0_c1,c0_c2,c0_c3,c0_p,c0_m);
+    ChildRouter<BW,SCAST_ADDR_LEN> C1Router(c1i,c1_c0,c1_c1,c1_c2,c1_c3,c1_p,c1_m);
+    ChildRouter<BW,SCAST_ADDR_LEN> C2Router(c2i,c2_c0,c2_c1,c2_c2,c2_c3,c2_p,c2_m);
+    ChildRouter<BW,SCAST_ADDR_LEN> C3Router(c3i,c3_c0,c3_c1,c3_c2,c3_c3,c3_p,c3_m);
+
+    ParentRouter<BW,SCAST_ADDR_LEN> ParRouter(pi,p_c0,p_c1,p_c2,p_c3,p_p,p_m);
+
+    MltcUnit<BW> MUnit(m_in,m_c0,m_c1,m_c2,m_c3);
+
+}

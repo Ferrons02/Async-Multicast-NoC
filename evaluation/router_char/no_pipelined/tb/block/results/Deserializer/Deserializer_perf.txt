@@ -1,0 +1,54 @@
+Module: Deserializer
+Status: COMPLETE - functional PASS
+Waveform: /home/cad/ferroma/benchmark/analog_sim/no_pipelined/tb/block/results/Deserializer/Deserializer_waves.csv
+Events: /home/cad/ferroma/benchmark/analog_sim/no_pipelined/tb/block/results/Deserializer/Deserializer.log
+Last Complete Sample: 181.290000 ns
+Operating Point: PTM65 TT; VDD=1.1 V; temperature=27 C
+Timing boundary: complete dual-rail validity at VDD/2, linearly interpolated.
+Energy basis: idle-leakage-subtracted physical window (dynamic estimate).
+Simulation campaign: /tmp/ferroma_analog_campaign_hvz2YDl6
+
+Leakage Power
+-------------
+20.290062 uW
+No transitions on saved functional nodes; interfaces idle; reset low.
+Idle-only interval: 170.290000 .. 180.290000 ns
+Neighboring idle means (uW): 20.326384, 20.308343, 20.295174, 20.284950
+LEAKAGE_AUDIT {"drift": 0.0005039036715070582, "neighbor_means": [2.032638409207768e-05, 2.030834320658141e-05, 2.029517374676281e-05, 2.028494951021311e-05], "power": 2.029006162848796e-05, "reason": "No transitions on saved functional nodes; interfaces idle; reset low.", "relative_std": 0.0005772661239223613, "transitions": 0, "voltage_columns_checked": 333, "window": [1.7029e-07, 1.8029e-07]}
+
+Batch Latency
+-------------
+11.119672 ns
+
+Batch Energy
+------------
+1.780589 pJ
+
+Measurement Interpretation
+--------------------------
+Timing values subtract only observed external waits of the measured handshake/batch; overlapping waits are counted once.
+The corrected values are trace-based de-embedding estimates. Concurrent internal work and arbitration cannot be replayed from boundary traces.
+They are not a guarantee of identical timing in an unmeasured zero-delay environment. Raw physical times and all removed intervals follow.
+Energy uses the physical start/end interval, with idle leakage subtracted when available. Switching energy during waits is retained.
+No whole-round average or arbitrary inter-transaction idle time is assigned to a transfer. Energy per Bit uses the requested 32-bit normalization.
+Supply boundary is the entire DUT. Simultaneous output copies share one transaction energy; unrelated concurrent traffic is not separable.
+Overlapping destination windows must not be added: they can integrate the same supply current twice.
+If leakage is N/A, displayed energy/bit is gross observed DUT window energy/32, not isolated dynamic transfer energy.
+Input/output edge slew and loading are those of the saved simulation. N/A means unsupported, unobserved or not yet complete.
+All saved functional nodes are checked for idle transitions; unsaved internal nodes cannot be certified directly from these traces.
+
+Selected Transactions and Reproducible Boundaries
+-------------------------------------------------
+batch: seven nonzero nibbles I[5:12] -> O[1]
+  input valid=114.506000 ns; output/batch end=127.095305 ns; input ack low=N/A
+  raw forward/cycle=12.589305 ns; removed testbench wait=1.469633 ns; corrected=11.119672 ns
+  raw recovery=N/A; removed testbench wait=0.000000 ns; corrected=N/A
+  physical energy window=114.506000 .. 127.095305 ns; gross=2.036026 pJ; leakage-subtracted=1.780589 pJ
+  excluded forward waits (ns): [(115.43089865847745, 115.54599999999999), (115.75079619123736, 115.86535263479557), (117.1041726459896, 117.216), (117.42081214539152, 117.5354834645858), (118.80385921577668, 118.91600000000001), (119.12083090329932, 119.23499957752688), (120.49241605506668, 120.606), (120.81097368433085, 120.92504232944677), (122.19546097843096, 122.30600000000001), (122.51077071072741, 122.62541317236546), (123.88559231620066, 123.996), (124.20087477730229, 124.31549633981277), (125.44669587158145, 125.55599999999998)]
+  excluded recovery waits (ns): []
+  overlapping other input handshakes: i[12]
+SELECTED_AUDIT {"ack_low": null, "destinations": ["o"], "dynamic_energy": 1.7805885120702972e-12, "energy_end": 1.2709530498226684e-07, "energy_per_bit": 5.564339100219679e-14, "energy_start": 1.14506e-07, "forward": 1.1119671617545868e-08, "forward_raw": 1.2589304982266838e-08, "forward_tb_wait": 1.46963336472097e-09, "gross_energy": 2.0360262860203217e-12, "input_indices": [5, 6, 7, 8, 9, 10, 11], "input_words": ["0xf", "0xf", "0xf", "0xf", "0xf", "0xf", "0xf"], "inputs": [{"ack_high": 1.1543089865847744e-07, "ack_low": 1.1575079619123736e-07, "index": 5, "invalid": 1.15546e-07, "port": "i", "spacer": 1.15546e-07, "valid": 1.14506e-07, "word": 15}, {"ack_high": 1.171041726459896e-07, "ack_low": 1.1742081214539152e-07, "index": 6, "invalid": 1.17216e-07, "port": "i", "spacer": 1.17216e-07, "valid": 1.1586535263479557e-07, "word": 15}, {"ack_high": 1.1880385921577668e-07, "ack_low": 1.1912083090329932e-07, "index": 7, "invalid": 1.18916e-07, "port": "i", "spacer": 1.18916e-07, "valid": 1.175354834645858e-07, "word": 15}, {"ack_high": 1.204924160550667e-07, "ack_low": 1.2081097368433085e-07, "index": 8, "invalid": 1.20606e-07, "port": "i", "spacer": 1.20606e-07, "valid": 1.1923499957752688e-07, "word": 15}, {"ack_high": 1.2219546097843096e-07, "ack_low": 1.2251077071072742e-07, "index": 9, "invalid": 1.22306e-07, "port": "i", "spacer": 1.22306e-07, "valid": 1.2092504232944677e-07, "word": 15}, {"ack_high": 1.2388559231620066e-07, "ack_low": 1.242008747773023e-07, "index": 10, "invalid": 1.23996e-07, "port": "i", "spacer": 1.23996e-07, "valid": 1.2262541317236545e-07, "word": 15}, {"ack_high": 1.2544669587158145e-07, "ack_low": 1.257608614965253e-07, "index": 11, "invalid": 1.25556e-07, "port": "i", "spacer": 1.25556e-07, "valid": 1.2431549633981277e-07, "word": 15}], "key": "batch", "label": "seven nonzero nibbles I[5:12] -> O[1]", "output_indices": [["o", 1]], "output_valid": 1.2709530498226684e-07, "outputs": [{"ack_high": 1.2720511735197033e-07, "ack_low": 1.27426e-07, "index": 1, "invalid": 1.2731243323327404e-07, "port": "o", "spacer": 1.2731252719678955e-07, "valid": 1.2709530498226684e-07, "word": 4294967282}], "overlapping_input_handshakes": ["i[12]"], "recovery": null, "recovery_raw": null, "recovery_tb_wait": 0, "removed_forward_intervals": [[1.1543089865847744e-07, 1.15546e-07], [1.1575079619123736e-07, 1.1586535263479557e-07], [1.171041726459896e-07, 1.17216e-07], [1.1742081214539152e-07, 1.175354834645858e-07], [1.1880385921577668e-07, 1.18916e-07], [1.1912083090329932e-07, 1.1923499957752688e-07], [1.204924160550667e-07, 1.20606e-07], [1.2081097368433085e-07, 1.2092504232944677e-07], [1.2219546097843096e-07, 1.22306e-07], [1.2251077071072742e-07, 1.2262541317236545e-07], [1.2388559231620066e-07, 1.23996e-07], [1.242008747773023e-07, 1.2431549633981277e-07], [1.2544669587158145e-07, 1.25556e-07]], "removed_recovery_intervals": [], "source": "i", "start": 1.14506e-07}
+
+All Matched Physical Transactions (audit, SI units)
+---------------------------------------------------
+TRANSACTION_AUDIT {"ack_low": null, "destinations": ["o"], "dynamic_energy": 1.7805885120702972e-12, "energy_end": 1.2709530498226684e-07, "energy_per_bit": 5.564339100219679e-14, "energy_start": 1.14506e-07, "forward": 1.1119671617545868e-08, "forward_raw": 1.2589304982266838e-08, "forward_tb_wait": 1.46963336472097e-09, "gross_energy": 2.0360262860203217e-12, "input_indices": [5, 6, 7, 8, 9, 10, 11], "input_words": ["0xf", "0xf", "0xf", "0xf", "0xf", "0xf", "0xf"], "inputs": [{"ack_high": 1.1543089865847744e-07, "ack_low": 1.1575079619123736e-07, "index": 5, "invalid": 1.15546e-07, "port": "i", "spacer": 1.15546e-07, "valid": 1.14506e-07, "word": 15}, {"ack_high": 1.171041726459896e-07, "ack_low": 1.1742081214539152e-07, "index": 6, "invalid": 1.17216e-07, "port": "i", "spacer": 1.17216e-07, "valid": 1.1586535263479557e-07, "word": 15}, {"ack_high": 1.1880385921577668e-07, "ack_low": 1.1912083090329932e-07, "index": 7, "invalid": 1.18916e-07, "port": "i", "spacer": 1.18916e-07, "valid": 1.175354834645858e-07, "word": 15}, {"ack_high": 1.204924160550667e-07, "ack_low": 1.2081097368433085e-07, "index": 8, "invalid": 1.20606e-07, "port": "i", "spacer": 1.20606e-07, "valid": 1.1923499957752688e-07, "word": 15}, {"ack_high": 1.2219546097843096e-07, "ack_low": 1.2251077071072742e-07, "index": 9, "invalid": 1.22306e-07, "port": "i", "spacer": 1.22306e-07, "valid": 1.2092504232944677e-07, "word": 15}, {"ack_high": 1.2388559231620066e-07, "ack_low": 1.242008747773023e-07, "index": 10, "invalid": 1.23996e-07, "port": "i", "spacer": 1.23996e-07, "valid": 1.2262541317236545e-07, "word": 15}, {"ack_high": 1.2544669587158145e-07, "ack_low": 1.257608614965253e-07, "index": 11, "invalid": 1.25556e-07, "port": "i", "spacer": 1.25556e-07, "valid": 1.2431549633981277e-07, "word": 15}], "label": "seven nonzero nibbles I[5:12] -> O[1]", "output_indices": [["o", 1]], "output_valid": 1.2709530498226684e-07, "outputs": [{"ack_high": 1.2720511735197033e-07, "ack_low": 1.27426e-07, "index": 1, "invalid": 1.2731243323327404e-07, "port": "o", "spacer": 1.2731252719678955e-07, "valid": 1.2709530498226684e-07, "word": 4294967282}], "overlapping_input_handshakes": ["i[12]"], "recovery": null, "recovery_raw": null, "recovery_tb_wait": 0, "removed_forward_intervals": [[1.1543089865847744e-07, 1.15546e-07], [1.1575079619123736e-07, 1.1586535263479557e-07], [1.171041726459896e-07, 1.17216e-07], [1.1742081214539152e-07, 1.175354834645858e-07], [1.1880385921577668e-07, 1.18916e-07], [1.1912083090329932e-07, 1.1923499957752688e-07], [1.204924160550667e-07, 1.20606e-07], [1.2081097368433085e-07, 1.2092504232944677e-07], [1.2219546097843096e-07, 1.22306e-07], [1.2251077071072742e-07, 1.2262541317236545e-07], [1.2388559231620066e-07, 1.23996e-07], [1.242008747773023e-07, 1.2431549633981277e-07], [1.2544669587158145e-07, 1.25556e-07]], "removed_recovery_intervals": [], "source": "i", "start": 1.14506e-07}

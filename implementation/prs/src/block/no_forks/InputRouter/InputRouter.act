@@ -1,0 +1,45 @@
+import "no_forks/commons/Channels.act";
+
+/* InputRouter: PRS-only process without testbench managers. */
+
+export defproc InputRouter(bool? reset; ActiveDualRail32? I; ActiveDualRail32! O0, O1)
+{
+    bool p, w0, w1, a;
+
+    // User-supplied PRS: a completes the state-update handshake.
+    // p selects O0; w0 and reset set p high, while w1 sets it low.
+    prs {
+        ((I.t[0] & ~p) | ((I.t[7] | I.t[6] | I.t[5] | I.t[4]) & p)) -> w0+
+        (p & a) | reset -> w0-
+        ((I.f[0] & ~p) | ((I.f[7] & I.f[6] & I.f[5] & I.f[4]) & p)) -> w1+
+        (~p & a) | reset -> w1-
+        I.a & ~O0.a & ~O1.a & (w0 | w1) -> a+
+        ~w0 & ~w1 -> a-
+        (w0 & a) | reset -> p+
+        w1 & a -> p-
+        (w0 | w1) & (O0.a | O1.a) -> I.a+
+        ~w0 & ~w1 & ~a -> I.a-
+        (i:32:
+            p & I.t[i] -> O0.t[i]+
+            ~I.t[i] -> O0.t[i]-
+            p & I.f[i] -> O0.f[i]+
+            ~I.f[i] -> O0.f[i]-
+            ~p & I.t[i] -> O1.t[i]+
+            ~I.t[i] -> O1.t[i]-
+            ~p & I.f[i] -> O1.f[i]+
+            ~I.f[i] -> O1.f[i]-
+        )
+    }
+
+    // Existing fork assumptions adapted to the a stage and new p polarity.
+    // O*.a reaches a before I.a; I.a falls at a before new w assertions.
+    // p reaches the output enables before the selected write is cleared.
+    spec {
+        timing O0.a+ : O0.a+ < I.a+
+        timing O1.a+ : O1.a+ < I.a+
+        timing I.a- : I.a- < w0+
+        timing I.a- : I.a- < w1+
+        timing p+ : p+ < w0-
+        timing p- : p- < w1-
+    }
+}

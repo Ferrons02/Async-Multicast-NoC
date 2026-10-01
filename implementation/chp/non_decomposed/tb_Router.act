@@ -1,0 +1,736 @@
+
+import "Router.act";
+
+defproc tb_Router () {
+
+  pint BW = 32;
+ 
+  chan(int<BW>)! c0i,c1i,c2i,c3i,pi,ctli;
+  chan(int<BW>)? c0o,c1o,c2o,c3o,po,ctlo;
+
+  int<BW> outp,outc0,outc1,outc2,outc3,outctl;
+  bool test1,test2,test3,test4,test5,test6,test7,test8,test9,test10,test11;
+
+  Router dut(c0i,c1i,c2i,c3i,pi,ctli,c0o,c1o,c2o,c3o,po,ctlo);
+
+  pint FROM_C_OR_CL_TO_P = ((int(0xD695AB41,32) << (BW-32)) | int(0xD695AB41 & 0xF,BW));
+  pint FROM_C_OR_CL_TO_P_OUT = ((int(0xAD2B4B41,32) << (BW-32)) | int(0xAD2B4B41 & 0xF,BW));
+
+  pint FROM_P_TO_C0 = ((int(0x1695AB41,32) << (BW-32)) | int(0x1695AB41 & 0xF,BW));
+  pint FROM_P_TO_C1 = ((int(0x5695AB41,32) << (BW-32)) | int(0x5695AB41 & 0xF,BW));
+  pint FROM_P_TO_C2 = ((int(0x9695AB41,32) << (BW-32)) | int(0x9695AB41 & 0xF,BW));
+  pint FROM_P_TO_C3 = ((int(0xD695AB41,32) << (BW-32)) | int(0xD695AB41 & 0xF,BW));
+  pint FROM_P_TO_C_OUT = ((int(0x5A568B41,32) << (BW-32)) | int(0x5A568B41 & 0xF,BW));
+
+  pint FROM_C_OR_CL_TO_C0 = ((int(0x0695AB41,32) << (BW-32)) | int(0x0695AB41 & 0xF,BW));
+  pint FROM_C_OR_CL_TO_C1 = ((int(0x2695AB41,32) << (BW-32)) | int(0x2695AB41 & 0xF,BW));
+  pint FROM_C_OR_CL_TO_C2 = ((int(0x4695AB41,32) << (BW-32)) | int(0x4695AB41 & 0xF,BW));
+  pint FROM_C_OR_CL_TO_C3 = ((int(0x6695AB41,32) << (BW-32)) | int(0x6695AB41 & 0xF,BW));
+  pint FROM_C_OR_CL_TO_C_OUT = ((int(0x34AD0B41,32) << (BW-32)) | int(0x34AD0B41 & 0xF,BW));
+
+  pint FROM_C_OR_P_TO_CTL = ((int(0x80001B41,32) << (BW-32)) | int(0x80001B41 & 0xF,BW));
+  pint FROM_C_OR_P_TO_CTL_OUT = ((int(0x80001B41,32) << (BW-32)) | int(0x80001B41 & 0xF,BW));
+
+  pint PAYLOAD = ((int(0xBADBAD11,32) << (BW-32)) | int(0xBADBAD11 & 0xF,BW));
+  
+  pint MLTC_ROUTE_2_HALF_WAY = ((int(0x34AD6003,32) << (BW-32)) | int(0x34AD6003 & 0xF,BW));
+  pint MLTC_ROUTE_2_HALF_WAY_OUTC2 = ((int(0x4D000003,32) << (BW-32)) | int(0x4D000003 & 0xF,BW));
+  pint MLTC_ROUTE_2_HALF_WAY_OUTC3 = ((int(0xA6000003,32) << (BW-32)) | int(0xA6000003 & 0xF,BW));
+  pint MLTC_ROUTE_2_FULL = 0;
+  (i:BW/32: MLTC_ROUTE_2_FULL = (MLTC_ROUTE_2_FULL << 32) | int(0x34AD6243,32);)
+
+  pint MLTC_ROUTE_2_FULL_OUTC2 = 1296039939; //works only for BW=32
+  pint MLTC_ROUTE_2_FULL_OUTC3 = 2787115011; //works only for BW=32
+
+  pint MLTC_ROUTE_2_ONEHALF_OUTC2 = 1296252931; //works only for BW=32
+  pint MLTC_ROUTE_2_ONEHALF_OUTC3 = 2787825155; //works only for BW=32
+
+  pint MLTC_ROUTE_2_COMPLETE_OUTC2 = 1296253507; //works only for BW=32
+  pint MLTC_ROUTE_2_COMPLETE_OUTC3 = 2787825315; //works only for BW=32
+  pint MLTC_ROUTE_2_LAST_OUTC2 = 872415235; //works only for BW=32
+  pint MLTC_ROUTE_2_LAST_OUTC3 = 3592683523; //works only for BW=32
+
+  pint MLTC_ROUTE_4_FULL = 0;
+  (i:BW/32: MLTC_ROUTE_4_FULL = (MLTC_ROUTE_4_FULL << 32) | int(0xF4AD6243,32);)
+
+  pint MLTC_ROUTE_4_FULL_OUTC0 = 1107296259;
+  pint MLTC_ROUTE_4_FULL_OUTC1 = 2751463427;
+  pint MLTC_ROUTE_4_FULL_OUTC2 = 3489660931;
+  pint MLTC_ROUTE_4_FULL_OUTC3 = 1610612739;
+
+  chp {
+
+    test1:=true;
+    test2:=true;
+    test3:=true;
+    test4:=true;
+    test5:=true;
+    test6:=true;
+    test7:=true;
+    test8:=true;
+    test9:=true;
+    test10:=true;
+    test11:=true;
+    
+    c0i!(FROM_C_OR_CL_TO_P); po?outp; [outp!=FROM_C_OR_CL_TO_P_OUT -> test1:=false [] else-> skip];
+    c1i!(FROM_C_OR_CL_TO_P); po?outp; [outp!=FROM_C_OR_CL_TO_P_OUT -> test1:=false [] else-> skip]; 
+    c2i!(FROM_C_OR_CL_TO_P); po?outp; [outp!=FROM_C_OR_CL_TO_P_OUT -> test1:=false [] else-> skip];
+    c3i!(FROM_C_OR_CL_TO_P); po?outp; [outp!=FROM_C_OR_CL_TO_P_OUT -> test1:=false [] else-> skip];
+
+    c0i!(FROM_C_OR_CL_TO_C0); 
+    [|#c0o-> c0o?outc0 [] #c1o-> c1o?outc1 [] #c2o-> c2o?outc2 [] #c3o-> c3o?outc3|]; 
+    [outc0!=FROM_C_OR_CL_TO_C_OUT | outc1!=0 | outc2!=0 | outc3!=0 -> test1:=false [] else-> skip]; 
+
+    pi!(FROM_P_TO_C0); 
+    [|#c0o-> c0o?outc0 [] #c1o-> c1o?outc1 [] #c2o-> c2o?outc2 [] #c3o-> c3o?outc3|]; 
+    [outc0!=FROM_P_TO_C_OUT | outc1!=0 | outc2!=0 | outc3!=0 -> test1:=false [] else-> skip]; 
+
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+    
+    pi!(FROM_P_TO_C1); 
+    [|#c0o-> c0o?outc0 [] #c1o-> c1o?outc1 [] #c2o-> c2o?outc2 [] #c3o-> c3o?outc3|]; 
+    [outc0!=0 | outc1!=FROM_P_TO_C_OUT | outc2!=0 | outc3!=0 -> test1:=false [] else-> skip];
+
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+
+    pi!(FROM_P_TO_C2); 
+    [|#c0o-> c0o?outc0 [] #c1o-> c1o?outc1 [] #c2o-> c2o?outc2 [] #c3o-> c3o?outc3|]; 
+    [outc0!=0 | outc1!=0 | outc2!=FROM_P_TO_C_OUT | outc3!=0 -> test1:=false [] else-> skip];
+
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+
+    pi!(FROM_P_TO_C3); 
+    [|#c0o-> c0o?outc0 [] #c1o-> c1o?outc1 [] #c2o-> c2o?outc2 [] #c3o-> c3o?outc3|]; 
+    [outc0!=0 | outc1!=0 | outc2!=0 | outc3!=FROM_P_TO_C_OUT -> test1:=false [] else-> skip];
+
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+    ctli!(FROM_C_OR_CL_TO_C0); c0o?outc0; [outc0!=FROM_C_OR_CL_TO_C_OUT -> test1:=false [] else-> skip];
+    ctli!(FROM_C_OR_CL_TO_C1); c1o?outc1; [outc1!=FROM_C_OR_CL_TO_C_OUT -> test1:=false [] else-> skip];
+    ctli!(FROM_C_OR_CL_TO_C2); c2o?outc2; [outc2!=FROM_C_OR_CL_TO_C_OUT -> test1:=false [] else-> skip];
+    ctli!(FROM_C_OR_CL_TO_C3); c3o?outc3; [outc3!=FROM_C_OR_CL_TO_C_OUT -> test1:=false [] else-> skip];
+    ctli!(FROM_C_OR_CL_TO_P); po?outp; [outp!=FROM_C_OR_CL_TO_P_OUT -> test1:=false [] else-> skip];
+
+    c0i!(FROM_C_OR_P_TO_CTL); ctlo?outctl; [outctl!=FROM_C_OR_P_TO_CTL_OUT -> test1:=false [] else-> skip]; 
+    c1i!(FROM_C_OR_P_TO_CTL); ctlo?outctl; [outctl!=FROM_C_OR_P_TO_CTL_OUT -> test1:=false [] else-> skip]; 
+    c2i!(FROM_C_OR_P_TO_CTL); ctlo?outctl; [outctl!=FROM_C_OR_P_TO_CTL_OUT -> test1:=false [] else-> skip]; 
+    c3i!(FROM_C_OR_P_TO_CTL); ctlo?outctl; [outctl!=FROM_C_OR_P_TO_CTL_OUT -> test1:=false [] else-> skip];
+    pi!(FROM_C_OR_P_TO_CTL); ctlo?outctl; [outctl!=FROM_C_OR_P_TO_CTL_OUT -> test1:=false [] else-> skip]; 
+  
+    c0i!(FROM_C_OR_CL_TO_C1); c1o?outc1; [outc1!=FROM_C_OR_CL_TO_C_OUT -> test1:=false [] else-> skip];
+    c0i!(FROM_C_OR_CL_TO_C2); c2o?outc2; [outc2!=FROM_C_OR_CL_TO_C_OUT -> test1:=false [] else-> skip];
+    c0i!(FROM_C_OR_CL_TO_C3); c3o?outc3; [outc3!=FROM_C_OR_CL_TO_C_OUT -> test1:=false [] else-> skip];
+
+    c1i!(FROM_C_OR_CL_TO_C0); c0o?outc0; [outc0!=FROM_C_OR_CL_TO_C_OUT -> test1:=false [] else-> skip];
+    c1i!(FROM_C_OR_CL_TO_C2); c2o?outc2; [outc2!=FROM_C_OR_CL_TO_C_OUT -> test1:=false [] else-> skip];
+    c1i!(FROM_C_OR_CL_TO_C3); c3o?outc3; [outc3!=FROM_C_OR_CL_TO_C_OUT -> test1:=false [] else-> skip];
+
+    c2i!(FROM_C_OR_CL_TO_C0); c0o?outc0; [outc0!=FROM_C_OR_CL_TO_C_OUT -> test1:=false [] else-> skip];
+    c2i!(FROM_C_OR_CL_TO_C1); c1o?outc1; [outc1!=FROM_C_OR_CL_TO_C_OUT -> test1:=false [] else-> skip];
+    c2i!(FROM_C_OR_CL_TO_C3); c3o?outc3; [outc3!=FROM_C_OR_CL_TO_C_OUT -> test1:=false [] else-> skip];
+
+    c3i!(FROM_C_OR_CL_TO_C0); c0o?outc0; [outc0!=FROM_C_OR_CL_TO_C_OUT -> test1:=false [] else-> skip];
+    c3i!(FROM_C_OR_CL_TO_C1); c1o?outc1; [outc1!=FROM_C_OR_CL_TO_C_OUT -> test1:=false [] else-> skip];
+    c3i!(FROM_C_OR_CL_TO_C2); c2o?outc2; [outc2!=FROM_C_OR_CL_TO_C_OUT -> test1:=false [] else-> skip];
+
+    [test1=true -> log("TEST 1 PASSED!!! :))")
+    [] test1=false -> log("TEST 1 FAILED :((")
+    ];
+
+    // Test2: multiple flits in one channel
+
+    c0i!(FROM_C_OR_CL_TO_P-1); po?outp; [outp!= FROM_C_OR_CL_TO_P_OUT -1-> test2:=false [] else-> skip];
+    c0i!(PAYLOAD-1); po?outp; [outp!=PAYLOAD-1 -> test2:=false [] else-> skip];
+    c0i!(PAYLOAD); po?outp; [outp!=PAYLOAD -> test2:=false [] else-> skip];
+
+    c1i!(FROM_C_OR_CL_TO_P-1); po?outp; [outp!=FROM_C_OR_CL_TO_P_OUT-1 -> test2:=false [] else-> skip];
+    c1i!(PAYLOAD-1); po?outp; [outp!=PAYLOAD-1 -> test2:=false [] else-> skip];
+    c1i!(PAYLOAD); po?outp; [outp!=PAYLOAD -> test2:=false [] else-> skip];
+
+    c2i!(FROM_C_OR_CL_TO_P-1); po?outp; [outp!=FROM_C_OR_CL_TO_P_OUT-1 -> test2:=false [] else-> skip];
+    c2i!(PAYLOAD-1); po?outp; [outp!=PAYLOAD-1 -> test2:=false [] else-> skip];
+    c2i!(PAYLOAD); po?outp; [outp!=PAYLOAD -> test2:=false [] else-> skip];
+
+    c3i!(FROM_C_OR_CL_TO_P-1); po?outp; [outp!=FROM_C_OR_CL_TO_P_OUT-1 -> test2:=false [] else-> skip];
+    c3i!(PAYLOAD-1); po?outp; [outp!=PAYLOAD-1 -> test2:=false [] else-> skip];
+    c3i!(PAYLOAD); po?outp; [outp!=PAYLOAD -> test2:=false [] else-> skip];
+
+    pi!(FROM_P_TO_C0-1); c0o?outc0; [outc0!=FROM_P_TO_C_OUT-1 -> test2:=false [] else-> skip];
+    pi!(PAYLOAD-1); c0o?outc0; [outc0!=PAYLOAD-1 -> test2:=false [] else-> skip];
+    pi!(PAYLOAD); c0o?outc0; [outc0!=PAYLOAD -> test2:=false [] else-> skip];
+
+    pi!(FROM_P_TO_C1-1); c1o?outc1; [outc1!=FROM_P_TO_C_OUT-1 -> test2:=false [] else-> skip];
+    pi!(PAYLOAD-1); c1o?outc1; [outc1!=PAYLOAD-1 -> test2:=false [] else-> skip];
+    pi!(PAYLOAD); c1o?outc1; [outc1!=PAYLOAD -> test2:=false [] else-> skip];
+
+    pi!(FROM_P_TO_C2-1); c2o?outc2; [outc2!=FROM_P_TO_C_OUT-1 -> test2:=false [] else-> skip];
+    pi!(PAYLOAD-1); c2o?outc2; [outc2!=PAYLOAD-1 -> test2:=false [] else-> skip];
+    pi!(PAYLOAD); c2o?outc2; [outc2!=PAYLOAD -> test2:=false [] else-> skip];
+
+    pi!(FROM_P_TO_C3-1); c3o?outc3; [outc3!=FROM_P_TO_C_OUT-1 -> test2:=false [] else-> skip];
+    pi!(PAYLOAD-1); c3o?outc3; [outc3!=PAYLOAD-1 -> test2:=false [] else-> skip];
+    pi!(PAYLOAD); c3o?outc3; [outc3!=PAYLOAD -> test2:=false [] else-> skip];
+
+    ctli!(FROM_C_OR_CL_TO_C0-1); c0o?outc0; [outc0!=FROM_C_OR_CL_TO_C_OUT-1 -> test2:=false [] else-> skip];
+    ctli!(PAYLOAD-1); c0o?outc0; [outc0!=PAYLOAD-1 -> test2:=false [] else-> skip];
+    ctli!(PAYLOAD); c0o?outc0; [outc0!=PAYLOAD -> test2:=false [] else-> skip];
+
+    ctli!(FROM_C_OR_CL_TO_C1-1); c1o?outc1; [outc1!=FROM_C_OR_CL_TO_C_OUT-1 -> test2:=false [] else-> skip];
+    ctli!(PAYLOAD-1); c1o?outc1; [outc1!=PAYLOAD-1 -> test2:=false [] else-> skip];
+    ctli!(PAYLOAD); c1o?outc1; [outc1!=PAYLOAD -> test2:=false [] else-> skip];
+
+    ctli!(FROM_C_OR_CL_TO_C2-1); c2o?outc2; [outc2!=FROM_C_OR_CL_TO_C_OUT-1 -> test2:=false [] else-> skip];
+    ctli!(PAYLOAD-1); c2o?outc2; [outc2!=PAYLOAD-1 -> test2:=false [] else-> skip];
+    ctli!(PAYLOAD); c2o?outc2; [outc2!=PAYLOAD -> test2:=false [] else-> skip];
+
+    ctli!(FROM_C_OR_CL_TO_C3-1); c3o?outc3; [outc3!=FROM_C_OR_CL_TO_C_OUT-1 -> test2:=false [] else-> skip];
+    ctli!(PAYLOAD-1); c3o?outc3; [outc3!=PAYLOAD-1 -> test2:=false [] else-> skip];
+    ctli!(PAYLOAD); c3o?outc3; [outc3!=PAYLOAD -> test2:=false [] else-> skip];
+
+    ctli!(FROM_C_OR_CL_TO_P-1); po?outp; [outp!=FROM_C_OR_CL_TO_P_OUT-1 -> test2:=false [] else-> skip];
+    ctli!(PAYLOAD-1); po?outp; [outp!=PAYLOAD-1 -> test2:=false [] else-> skip];
+    ctli!(PAYLOAD); po?outp; [outp!=PAYLOAD -> test2:=false [] else-> skip];
+
+    c0i!(FROM_C_OR_P_TO_CTL-1); ctlo?outctl; [outctl!=FROM_C_OR_P_TO_CTL_OUT-1 -> test2:=false [] else-> skip];
+    c0i!(PAYLOAD-1); ctlo?outctl; [outctl!=PAYLOAD-1 -> test2:=false [] else-> skip];
+    c0i!(PAYLOAD); ctlo?outctl; [outctl!=PAYLOAD -> test2:=false [] else-> skip];
+
+    c1i!(FROM_C_OR_P_TO_CTL-1); ctlo?outctl; [outctl!=FROM_C_OR_P_TO_CTL_OUT-1 -> test2:=false [] else-> skip];
+    c1i!(PAYLOAD-1); ctlo?outctl; [outctl!=PAYLOAD-1 -> test2:=false [] else-> skip];
+    c1i!(PAYLOAD); ctlo?outctl; [outctl!=PAYLOAD -> test2:=false [] else-> skip];
+
+    c2i!(FROM_C_OR_P_TO_CTL-1); ctlo?outctl; [outctl!=FROM_C_OR_P_TO_CTL_OUT-1 -> test2:=false [] else-> skip];
+    c2i!(PAYLOAD-1); ctlo?outctl; [outctl!=PAYLOAD-1 -> test2:=false [] else-> skip];
+    c2i!(PAYLOAD); ctlo?outctl; [outctl!=PAYLOAD -> test2:=false [] else-> skip];
+
+    c3i!(FROM_C_OR_P_TO_CTL-1); ctlo?outctl; [outctl!=FROM_C_OR_P_TO_CTL_OUT-1 -> test2:=false [] else-> skip];
+    c3i!(PAYLOAD-1); ctlo?outctl; [outctl!=PAYLOAD-1 -> test2:=false [] else-> skip];
+    c3i!(PAYLOAD); ctlo?outctl; [outctl!=PAYLOAD -> test2:=false [] else-> skip];
+
+    c0i!(FROM_C_OR_CL_TO_C1-1); c1o?outc1; [outc1!=FROM_C_OR_CL_TO_C_OUT-1 -> test2:=false [] else-> skip];
+    c0i!(PAYLOAD-1); c1o?outc1; [outc1!=PAYLOAD-1 -> test2:=false [] else-> skip];
+    c0i!(PAYLOAD); c1o?outc1; [outc1!=PAYLOAD -> test2:=false [] else-> skip];
+
+    c0i!(FROM_C_OR_CL_TO_C2-1); c2o?outc2; [outc2!=FROM_C_OR_CL_TO_C_OUT-1 -> test2:=false [] else-> skip];
+    c0i!(PAYLOAD-1); c2o?outc2; [outc2!=PAYLOAD-1 -> test2:=false [] else-> skip];
+    c0i!(PAYLOAD); c2o?outc2; [outc2!=PAYLOAD -> test2:=false [] else-> skip];
+
+    c0i!(FROM_C_OR_CL_TO_C3-1); c3o?outc3; [outc3!=FROM_C_OR_CL_TO_C_OUT-1 -> test2:=false [] else-> skip];
+    c0i!(PAYLOAD-1); c3o?outc3; [outc3!=PAYLOAD-1 -> test2:=false [] else-> skip];
+    c0i!(PAYLOAD); c3o?outc3; [outc3!=PAYLOAD -> test2:=false [] else-> skip];
+
+    c1i!(FROM_C_OR_CL_TO_C0-1); c0o?outc0; [outc0!=FROM_C_OR_CL_TO_C_OUT-1 -> test2:=false [] else-> skip];
+    c1i!(PAYLOAD-1); c0o?outc0; [outc0!=PAYLOAD-1 -> test2:=false [] else-> skip];
+    c1i!(PAYLOAD); c0o?outc0; [outc0!=PAYLOAD -> test2:=false [] else-> skip];
+
+    c1i!(FROM_C_OR_CL_TO_C2-1); c2o?outc2; [outc2!=FROM_C_OR_CL_TO_C_OUT-1 -> test2:=false [] else-> skip];
+    c1i!(PAYLOAD-1); c2o?outc2; [outc2!=PAYLOAD-1 -> test2:=false [] else-> skip];
+    c1i!(PAYLOAD); c2o?outc2; [outc2!=PAYLOAD -> test2:=false [] else-> skip];
+
+    c1i!(FROM_C_OR_CL_TO_C3-1); c3o?outc3; [outc3!=FROM_C_OR_CL_TO_C_OUT-1 -> test2:=false [] else-> skip];
+    c1i!(PAYLOAD-1); c3o?outc3; [outc3!=PAYLOAD-1 -> test2:=false [] else-> skip];
+    c1i!(PAYLOAD); c3o?outc3; [outc3!=PAYLOAD -> test2:=false [] else-> skip];
+
+    c2i!(FROM_C_OR_CL_TO_C0-1); c0o?outc0; [outc0!=FROM_C_OR_CL_TO_C_OUT-1 -> test2:=false [] else-> skip];
+    c2i!(PAYLOAD-1); c0o?outc0; [outc0!=PAYLOAD-1 -> test2:=false [] else-> skip];
+    c2i!(PAYLOAD); c0o?outc0; [outc0!=PAYLOAD -> test2:=false [] else-> skip];
+
+    c2i!(FROM_C_OR_CL_TO_C1-1); c1o?outc1; [outc1!=FROM_C_OR_CL_TO_C_OUT-1 -> test2:=false [] else-> skip];
+    c2i!(PAYLOAD-1); c1o?outc1; [outc1!=PAYLOAD-1 -> test2:=false [] else-> skip];
+    c2i!(PAYLOAD); c1o?outc1; [outc1!=PAYLOAD -> test2:=false [] else-> skip];
+
+    c2i!(FROM_C_OR_CL_TO_C3-1); c3o?outc3; [outc3!=FROM_C_OR_CL_TO_C_OUT-1 -> test2:=false [] else-> skip];
+    c2i!(PAYLOAD-1); c3o?outc3; [outc3!=PAYLOAD-1 -> test2:=false [] else-> skip];
+    c2i!(PAYLOAD); c3o?outc3; [outc3!=PAYLOAD -> test2:=false [] else-> skip];
+
+    c3i!(FROM_C_OR_CL_TO_C0-1); c0o?outc0; [outc0!=FROM_C_OR_CL_TO_C_OUT-1 -> test2:=false [] else-> skip];
+    c3i!(PAYLOAD-1); c0o?outc0; [outc0!=PAYLOAD-1 -> test2:=false [] else-> skip];
+    c3i!(PAYLOAD); c0o?outc0; [outc0!=PAYLOAD -> test2:=false [] else-> skip];
+
+    c3i!(FROM_C_OR_CL_TO_C1-1); c1o?outc1; [outc1!=FROM_C_OR_CL_TO_C_OUT-1 -> test2:=false [] else-> skip];
+    c3i!(PAYLOAD-1); c1o?outc1; [outc1!=PAYLOAD-1 -> test2:=false [] else-> skip];
+    c3i!(PAYLOAD); c1o?outc1; [outc1!=PAYLOAD -> test2:=false [] else-> skip];
+
+    c3i!(FROM_C_OR_CL_TO_C2-1); c2o?outc2; [outc2!=FROM_C_OR_CL_TO_C_OUT-1 -> test2:=false [] else-> skip];
+    c3i!(PAYLOAD-1); c2o?outc2; [outc2!=PAYLOAD-1 -> test2:=false [] else-> skip];
+    c3i!(PAYLOAD); c2o?outc2; [outc2!=PAYLOAD -> test2:=false [] else-> skip];
+
+    [test2=true -> log("TEST 2 PASSED!!! :))")
+    [] test2=false -> log("TEST 2 FAILED :((")
+    ];
+
+    // Test3: competing messages to the same output port
+
+    (
+      /* Writer c0 */
+      c0i!(FROM_C_OR_CL_TO_P-1);
+      c0i!(PAYLOAD+2-1);
+      c0i!(PAYLOAD+4)
+    ),
+    (
+      /* Writer c1 */
+      c1i!(FROM_C_OR_CL_TO_P-1+32);
+      c1i!(PAYLOAD+6-1);
+      c1i!(PAYLOAD+8)
+    ),
+    (
+      /* Reader / checker */
+      po?outp;
+
+      [
+        outp = FROM_C_OR_CL_TO_P_OUT-1+32 ->
+          po?outp;
+          [ outp != PAYLOAD+6-1 -> test3 := false [] else -> skip ];
+
+          po?outp;
+          [ outp != PAYLOAD+8 -> test3 := false [] else -> skip ];
+
+          po?outp;
+          [ outp != FROM_C_OR_CL_TO_P_OUT-1 -> test3 := false [] else -> skip ];
+
+          po?outp;
+          [ outp != PAYLOAD+2-1 -> test3 := false [] else -> skip ];
+
+          po?outp;
+          [ outp != PAYLOAD+4 -> test3 := false [] else -> skip ]
+
+      []
+        outp = FROM_C_OR_CL_TO_P_OUT-1 ->
+          po?outp;
+          [ outp != PAYLOAD+2-1 -> test3 := false [] else -> skip ];
+
+          po?outp;
+          [ outp != PAYLOAD+4 -> test3 := false [] else -> skip ];
+
+          po?outp;
+          [ outp != FROM_C_OR_CL_TO_P_OUT-1+32 -> test3 := false [] else -> skip ];
+
+          po?outp;
+          [ outp != PAYLOAD+6-1 -> test3 := false [] else -> skip ];
+
+          po?outp;
+          [ outp != PAYLOAD+8 -> test3 := false [] else -> skip ]
+
+      []
+        else -> test3 := false
+      ]
+    );
+
+    (
+      /* Writer ctli -> c0 */
+      ctli!(FROM_C_OR_CL_TO_C0-1);
+      ctli!(PAYLOAD+2-1);
+      ctli!(PAYLOAD+4)
+    ),
+    (
+      /* Writer pi -> c0 */
+      pi!(FROM_P_TO_C0-1+32);
+      pi!(PAYLOAD+6-1);
+      pi!(PAYLOAD+8)
+    ),
+    (
+      /* Reader / checker su c0o */
+      c0o?outp;
+
+      [
+        outp = FROM_P_TO_C_OUT-1+32 ->
+          c0o?outp;
+          [ outp != PAYLOAD+6-1 -> test3 := false [] else -> skip ];
+
+          c0o?outp;
+          [ outp != PAYLOAD+8 -> test3 := false [] else -> skip ];
+
+          c0o?outp;
+          [ outp != FROM_C_OR_CL_TO_C_OUT-1 -> test3 := false [] else -> skip ];
+
+          c0o?outp;
+          [ outp != PAYLOAD+2-1 -> test3 := false [] else -> skip ];
+
+          c0o?outp;
+          [ outp != PAYLOAD+4 -> test3 := false [] else -> skip ]
+
+      []
+        outp = FROM_C_OR_CL_TO_C_OUT-1 ->
+          c0o?outp;
+          [ outp != PAYLOAD+2-1 -> test3 := false [] else -> skip ];
+
+          c0o?outp;
+          [ outp != PAYLOAD+4 -> test3 := false [] else -> skip ];
+
+          c0o?outp;
+          [ outp != FROM_P_TO_C_OUT-1+32 -> test3 := false [] else -> skip ];
+
+          c0o?outp;
+          [ outp != PAYLOAD+6-1 -> test3 := false [] else -> skip ];
+
+          c0o?outp;
+          [ outp != PAYLOAD+8 -> test3 := false [] else -> skip ]
+
+      []
+        else -> test3 := false
+      ]
+    );
+
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+
+    [test3=true -> log("TEST 3 PASSED!!! :))")
+    [] test3=false -> log("TEST 3 FAILED :((")
+    ];
+
+    // Test4: non competing messages
+
+    (
+      /* Flow 0: c0i -> ctlo */
+      c0i!(FROM_C_OR_P_TO_CTL-1);
+      ctlo?outctl;
+      [ outctl != FROM_C_OR_P_TO_CTL_OUT-1 -> test4 := false [] else -> skip ];
+
+      c0i!(PAYLOAD+2-1);
+      ctlo?outctl;
+      [ outctl != PAYLOAD+2-1 -> test4 := false [] else -> skip ];
+
+      c0i!(PAYLOAD+4);
+      ctlo?outctl;
+      [ outctl != PAYLOAD+4 -> test4 := false [] else -> skip ]
+    ),
+    (
+      /* Flow 1: c1i -> po */
+      c1i!(FROM_C_OR_CL_TO_P-1);
+      po?outp;
+      [ outp != FROM_C_OR_CL_TO_P_OUT-1 -> test4 := false [] else -> skip ];
+
+      c1i!(PAYLOAD+6-1);
+      po?outp;
+      [ outp != PAYLOAD+6-1 -> test4 := false [] else -> skip ];
+
+      c1i!(PAYLOAD+8);
+      po?outp;
+      [ outp != PAYLOAD+8 -> test4 := false [] else -> skip ]
+    ),
+    (
+      /* Flow 2: c2i -> c3o */
+      c2i!(FROM_C_OR_CL_TO_C3-1);
+      c3o?outc3;
+      [ outc3 != FROM_C_OR_CL_TO_C_OUT-1 -> test4 := false [] else -> skip ];
+
+      c2i!(PAYLOAD+10-1);
+      c3o?outc3;
+      [ outc3 != PAYLOAD+10-1 -> test4 := false [] else -> skip ];
+
+      c2i!(PAYLOAD+12);
+      c3o?outc3;
+      [ outc3 != PAYLOAD+12 -> test4 := false [] else -> skip ]
+    );
+
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+
+    [test4=true -> log("TEST 4 PASSED!!! :))")
+    [] test4=false -> log("TEST 4 FAILED :((")
+    ];
+
+    //Test5: One channel wants to multicast with one flit long payload
+
+    pi!(MLTC_ROUTE_2_HALF_WAY-1);
+    c2o?outc2; c3o?outc3;
+    [outc0!=0 | outc1!=0 | outc2!=MLTC_ROUTE_2_HALF_WAY_OUTC2-1 | outc3!=MLTC_ROUTE_2_HALF_WAY_OUTC3-1 -> test5:=false [] else-> skip]; 
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+    
+    pi!(PAYLOAD); 
+    c2o?outc2; c3o?outc3;
+    [outc0!=0 | outc1!=0 | outc2!=PAYLOAD | outc3!=PAYLOAD -> test5:=false [] else-> skip];
+
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+
+    [test5=true -> log("TEST 5 PASSED!!! :))")
+    [] test5=false -> log("TEST 5 FAILED :((")
+    ];
+
+    //Test6: One channel wants to multicast with many flits long payload
+
+    pi!(MLTC_ROUTE_2_HALF_WAY-1);
+    c2o?outc2; c3o?outc3;
+    [outc0!=0 | outc1!=0 | outc2!=MLTC_ROUTE_2_HALF_WAY_OUTC2-1 | outc3!=MLTC_ROUTE_2_HALF_WAY_OUTC3-1 -> test6:=false [] else-> skip]; 
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+    
+    pi!(PAYLOAD-1); 
+    c2o?outc2; c3o?outc3;
+    [outc0!=0 | outc1!=0 | outc2!=PAYLOAD-1 | outc3!=PAYLOAD-1 -> test6:=false [] else-> skip];
+
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+
+    pi!(PAYLOAD-1); 
+    c2o?outc2; c3o?outc3;
+    [outc0!=0 | outc1!=0 | outc2!=PAYLOAD-1 | outc3!=PAYLOAD-1 -> test6:=false [] else-> skip];
+
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+
+    pi!(PAYLOAD); 
+    c2o?outc2; c3o?outc3;
+    [outc0!=0 | outc1!=0 | outc2!=PAYLOAD | outc3!=PAYLOAD -> test6:=false [] else-> skip];
+
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+
+    [test6=true -> log("TEST 6 PASSED!!! :))")
+    [] test6=false -> log("TEST 6 FAILED :((")
+    ];
+
+    //Test7: One channel wants to multicast and the route is one full flit long
+
+    pi!(MLTC_ROUTE_2_FULL-1);
+    pi!(2);
+    c2o?outc2; c3o?outc3;
+    [outc0!=0 | outc1!=0 | outc2!=MLTC_ROUTE_2_FULL_OUTC2-1 | outc3!=MLTC_ROUTE_2_FULL_OUTC3-1 -> test7:=false [] else-> skip]; 
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+    
+    pi!(PAYLOAD-1); 
+    c2o?outc2; c3o?outc3;
+    [outc0!=0 | outc1!=0 | outc2!=PAYLOAD-1 | outc3!=PAYLOAD-1 -> test7:=false [] else-> skip];
+
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+
+    pi!(PAYLOAD-1); 
+    c2o?outc2; c3o?outc3;
+    [outc0!=0 | outc1!=0 | outc2!=PAYLOAD-1 | outc3!=PAYLOAD-1 -> test7:=false [] else-> skip];
+
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+
+    pi!(PAYLOAD); 
+    c2o?outc2; c3o?outc3;
+    [outc0!=0 | outc1!=0 | outc2!=PAYLOAD | outc3!=PAYLOAD -> test7:=false [] else-> skip];
+
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+
+    [test7=true -> log("TEST 7 PASSED!!! :))")
+    [] test7=false -> log("TEST 7 FAILED :((")
+    ];
+
+    //Test8: One channel wants to multicast and the route is two flits long 
+
+    pi!(MLTC_ROUTE_2_FULL-1);
+    pi!(MLTC_ROUTE_2_HALF_WAY-1);
+    c2o?outc2; c3o?outc3;
+    [outc0!=0 | outc1!=0 | outc2!=MLTC_ROUTE_2_ONEHALF_OUTC2-1 | outc3!=MLTC_ROUTE_2_ONEHALF_OUTC3-1 -> test8:=false [] else-> skip]; 
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+    
+    pi!(PAYLOAD-1); 
+    c2o?outc2; c3o?outc3;
+    [outc0!=0 | outc1!=0 | outc2!=PAYLOAD-1 | outc3!=PAYLOAD-1 -> test8:=false [] else-> skip];
+
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+
+    pi!(PAYLOAD-1); 
+    c2o?outc2; c3o?outc3;
+    [outc0!=0 | outc1!=0 | outc2!=PAYLOAD-1 | outc3!=PAYLOAD-1 -> test8:=false [] else-> skip];
+
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+
+    pi!(PAYLOAD); 
+    c2o?outc2; c3o?outc3;
+    [outc0!=0 | outc1!=0 | outc2!=PAYLOAD | outc3!=PAYLOAD -> test8:=false [] else-> skip];
+
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+
+    [test8=true -> log("TEST 8 PASSED!!! :))")
+    [] test8=false -> log("TEST 8 FAILED :((")
+    ];
+
+    //Test9: One channel wants to multicast and the route is so long it requires sending full buffers
+    pi!(MLTC_ROUTE_2_FULL-1);
+    pi!(MLTC_ROUTE_2_FULL-1);
+    pi!(MLTC_ROUTE_2_FULL-1);
+
+    c2o?outc2; 
+    c3o?outc3;
+    [outc0!=0 | outc1!=0 | outc2!=MLTC_ROUTE_2_COMPLETE_OUTC2-1 | outc3!=MLTC_ROUTE_2_COMPLETE_OUTC3-1 -> test9:=false [] else-> skip]; 
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+    pi!(2);
+    c2o?outc2; c3o?outc3;
+    [outc0!=0 | outc1!=0 | outc2!=MLTC_ROUTE_2_LAST_OUTC2-1 | outc3!=MLTC_ROUTE_2_LAST_OUTC3-1 -> test9:=false [] else-> skip]; 
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+
+    pi!(PAYLOAD-1); 
+    c2o?outc2; c3o?outc3;
+    [outc0!=0 | outc1!=0 | outc2!=PAYLOAD-1 | outc3!=PAYLOAD-1 -> test9:=false [] else-> skip];
+
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+
+    pi!(PAYLOAD-1); 
+    c2o?outc2; c3o?outc3;
+    [outc0!=0 | outc1!=0 | outc2!=PAYLOAD-1 | outc3!=PAYLOAD-1 -> test9:=false [] else-> skip];
+
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+
+    pi!(PAYLOAD); 
+    c2o?outc2; c3o?outc3;
+    [outc0!=0 | outc1!=0 | outc2!=PAYLOAD | outc3!=PAYLOAD -> test9:=false [] else-> skip];
+
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+
+    [test9=true -> log("TEST 9 PASSED!!! :))")
+    [] test9=false -> log("TEST 9 FAILED :((")
+    ];
+
+    //Test10: One channel wants to multicast to 4 children
+    
+    pi!(MLTC_ROUTE_4_FULL-1);
+    pi!(2);
+    c0o?outc0, c1o?outc1, c2o?outc2, c3o?outc3;
+    [outc0!=MLTC_ROUTE_4_FULL_OUTC0-1 | outc1!=MLTC_ROUTE_4_FULL_OUTC1-1 | outc2!=MLTC_ROUTE_4_FULL_OUTC2-1 | outc3!=MLTC_ROUTE_4_FULL_OUTC3-1 -> test10:=false [] else-> skip]; 
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+
+    pi!(PAYLOAD-1); 
+    c0o?outc0, c1o?outc1, c2o?outc2, c3o?outc3;
+    [outc0!=PAYLOAD-1 | outc1!=PAYLOAD-1 | outc2!=PAYLOAD-1 | outc3!=PAYLOAD-1 -> test10:=false [] else-> skip];
+
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+
+    pi!(PAYLOAD-1); 
+    c0o?outc0, c1o?outc1, c2o?outc2, c3o?outc3;
+    [outc0!=PAYLOAD-1 | outc1!=PAYLOAD-1 | outc2!=PAYLOAD-1 | outc3!=PAYLOAD-1 -> test10:=false [] else-> skip];
+
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+
+    pi!(PAYLOAD); 
+    c0o?outc0, c1o?outc1, c2o?outc2, c3o?outc3;
+    [outc0!=PAYLOAD | outc1!=PAYLOAD | outc2!=PAYLOAD | outc3!=PAYLOAD -> test10:=false [] else-> skip];
+
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+
+    [test10=true -> log("TEST 10 PASSED!!! :))")
+    [] test10=false -> log("TEST 10 FAILED :((")
+    ];
+
+    //Test11: One channel wants to multicast to 4 children
+    
+    c0i!(FROM_C_OR_P_TO_CTL-1+4);
+    c0i!(MLTC_ROUTE_4_FULL-1);
+    c0i!(2);
+    c0o?outc0, c1o?outc1, c2o?outc2, c3o?outc3;
+    [outc0!=MLTC_ROUTE_4_FULL_OUTC0-1 | outc1!=MLTC_ROUTE_4_FULL_OUTC1-1 | outc2!=MLTC_ROUTE_4_FULL_OUTC2-1 | outc3!=MLTC_ROUTE_4_FULL_OUTC3-1 -> test11:=false [] else-> skip]; 
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+
+    c0i!(PAYLOAD-1); 
+    c0o?outc0, c1o?outc1, c2o?outc2, c3o?outc3;
+    [outc0!=PAYLOAD-1 | outc1!=PAYLOAD-1 | outc2!=PAYLOAD-1 | outc3!=PAYLOAD-1 -> test11:=false [] else-> skip];
+
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+
+    c0i!(PAYLOAD-1); 
+    c0o?outc0, c1o?outc1, c2o?outc2, c3o?outc3;
+    [outc0!=PAYLOAD-1 | outc1!=PAYLOAD-1 | outc2!=PAYLOAD-1 | outc3!=PAYLOAD-1 -> test11:=false [] else-> skip];
+
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+
+    c0i!(PAYLOAD); 
+    c0o?outc0, c1o?outc1, c2o?outc2, c3o?outc3;
+    [outc0!=PAYLOAD | outc1!=PAYLOAD | outc2!=PAYLOAD | outc3!=PAYLOAD -> test11:=false [] else-> skip];
+
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+
+
+    c1i!(FROM_C_OR_P_TO_CTL-1+4);
+    c1i!(MLTC_ROUTE_4_FULL-1);
+    c1i!(2);
+    c0o?outc0, c1o?outc1, c2o?outc2, c3o?outc3;
+    [outc0!=MLTC_ROUTE_4_FULL_OUTC0-1 | outc1!=MLTC_ROUTE_4_FULL_OUTC1-1 | outc2!=MLTC_ROUTE_4_FULL_OUTC2-1 | outc3!=MLTC_ROUTE_4_FULL_OUTC3-1 -> test11:=false [] else-> skip]; 
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+
+    c1i!(PAYLOAD-1); 
+    c0o?outc0, c1o?outc1, c2o?outc2, c3o?outc3;
+    [outc0!=PAYLOAD-1 | outc1!=PAYLOAD-1 | outc2!=PAYLOAD-1 | outc3!=PAYLOAD-1 -> test11:=false [] else-> skip];
+
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+
+    c1i!(PAYLOAD-1); 
+    c0o?outc0, c1o?outc1, c2o?outc2, c3o?outc3;
+    [outc0!=PAYLOAD-1 | outc1!=PAYLOAD-1 | outc2!=PAYLOAD-1 | outc3!=PAYLOAD-1 -> test11:=false [] else-> skip];
+
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+
+    c1i!(PAYLOAD); 
+    c0o?outc0, c1o?outc1, c2o?outc2, c3o?outc3;
+    [outc0!=PAYLOAD | outc1!=PAYLOAD | outc2!=PAYLOAD | outc3!=PAYLOAD -> test11:=false [] else-> skip];
+
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+
+
+    c2i!(FROM_C_OR_P_TO_CTL-1+4);
+    c2i!(MLTC_ROUTE_4_FULL-1);
+    c2i!(2);
+    c0o?outc0, c1o?outc1, c2o?outc2, c3o?outc3;
+    [outc0!=MLTC_ROUTE_4_FULL_OUTC0-1 | outc1!=MLTC_ROUTE_4_FULL_OUTC1-1 | outc2!=MLTC_ROUTE_4_FULL_OUTC2-1 | outc3!=MLTC_ROUTE_4_FULL_OUTC3-1 -> test11:=false [] else-> skip]; 
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+
+    c2i!(PAYLOAD-1); 
+    c0o?outc0, c1o?outc1, c2o?outc2, c3o?outc3;
+    [outc0!=PAYLOAD-1 | outc1!=PAYLOAD-1 | outc2!=PAYLOAD-1 | outc3!=PAYLOAD-1 -> test11:=false [] else-> skip];
+
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+
+    c2i!(PAYLOAD-1); 
+    c0o?outc0, c1o?outc1, c2o?outc2, c3o?outc3;
+    [outc0!=PAYLOAD-1 | outc1!=PAYLOAD-1 | outc2!=PAYLOAD-1 | outc3!=PAYLOAD-1 -> test11:=false [] else-> skip];
+
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+
+    c2i!(PAYLOAD); 
+    c0o?outc0, c1o?outc1, c2o?outc2, c3o?outc3;
+    [outc0!=PAYLOAD | outc1!=PAYLOAD | outc2!=PAYLOAD | outc3!=PAYLOAD -> test11:=false [] else-> skip];
+
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+
+    c3i!(FROM_C_OR_P_TO_CTL-1+4);
+    c3i!(MLTC_ROUTE_4_FULL-1);
+    c3i!(2);
+    c0o?outc0, c1o?outc1, c2o?outc2, c3o?outc3;
+    [outc0!=MLTC_ROUTE_4_FULL_OUTC0-1 | outc1!=MLTC_ROUTE_4_FULL_OUTC1-1 | outc2!=MLTC_ROUTE_4_FULL_OUTC2-1 | outc3!=MLTC_ROUTE_4_FULL_OUTC3-1 -> test11:=false [] else-> skip]; 
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+
+    c3i!(PAYLOAD-1); 
+    c0o?outc0, c1o?outc1, c2o?outc2, c3o?outc3;
+    [outc0!=PAYLOAD-1 | outc1!=PAYLOAD-1 | outc2!=PAYLOAD-1 | outc3!=PAYLOAD-1 -> test11:=false [] else-> skip];
+
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+
+    c3i!(PAYLOAD-1); 
+    c0o?outc0, c1o?outc1, c2o?outc2, c3o?outc3;
+    [outc0!=PAYLOAD-1 | outc1!=PAYLOAD-1 | outc2!=PAYLOAD-1 | outc3!=PAYLOAD-1 -> test11:=false [] else-> skip];
+
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+
+    c3i!(PAYLOAD); 
+    c0o?outc0, c1o?outc1, c2o?outc2, c3o?outc3;
+    [outc0!=PAYLOAD | outc1!=PAYLOAD | outc2!=PAYLOAD | outc3!=PAYLOAD -> test11:=false [] else-> skip];
+
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+
+    ctli!(FROM_C_OR_P_TO_CTL-1+4);
+    ctli!(MLTC_ROUTE_4_FULL-1);
+    ctli!(2);
+    c0o?outc0, c1o?outc1, c2o?outc2, c3o?outc3;
+    [outc0!=MLTC_ROUTE_4_FULL_OUTC0-1 | outc1!=MLTC_ROUTE_4_FULL_OUTC1-1 | outc2!=MLTC_ROUTE_4_FULL_OUTC2-1 | outc3!=MLTC_ROUTE_4_FULL_OUTC3-1 -> test11:=false [] else-> skip]; 
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+
+    ctli!(PAYLOAD-1); 
+    c0o?outc0, c1o?outc1, c2o?outc2, c3o?outc3;
+    [outc0!=PAYLOAD-1 | outc1!=PAYLOAD-1 | outc2!=PAYLOAD-1 | outc3!=PAYLOAD-1 -> test11:=false [] else-> skip];
+
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+
+    ctli!(PAYLOAD-1); 
+    c0o?outc0, c1o?outc1, c2o?outc2, c3o?outc3;
+    [outc0!=PAYLOAD-1 | outc1!=PAYLOAD-1 | outc2!=PAYLOAD-1 | outc3!=PAYLOAD-1 -> test11:=false [] else-> skip];
+
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+
+    ctli!(PAYLOAD); 
+    c0o?outc0, c1o?outc1, c2o?outc2, c3o?outc3;
+    [outc0!=PAYLOAD | outc1!=PAYLOAD | outc2!=PAYLOAD | outc3!=PAYLOAD -> test11:=false [] else-> skip];
+
+    outc0:= 0; outc1:= 0; outc2:= 0; outc3:= 0;
+
+    [test11=true -> log("TEST 11 PASSED!!! :))")
+    [] test11=false -> log("TEST 11 FAILED :((")
+    ];
+    *[ skip ]
+  }
+}

@@ -1,0 +1,41 @@
+import "commons/Channels.act";
+import "commons/Reg4.act";
+
+export defproc QBuffer(bool? reset; PassiveDualRail4? I; ActiveDualRail4! O; Dataless! R; Dataless? L)
+{
+    bool a, b, c, p_a, q_r, _a, _b, _c, _pa, _ra, _oa, _lr, _r;
+    Reg4 reg;
+    reg.reset = reset;
+    reg.W.t = I.t;
+    reg.W.f = I.f;
+    reg.W.a = p_a;
+    reg.R.req = q_r;
+    reg.R.t = O.t;
+    reg.R.f = O.f;
+
+    prs {
+        L.a -> _a-
+        ~_pa | ~_r -> _a+
+        p_a -> _b-
+        ~_ra | ~_r -> _b+
+        R.a -> _c-
+        ~_oa | ~_r -> _c+
+        ~_a & ~L.a -> I.req+
+        (_a & b) | reset -> I.req-
+        ~_lr & ~c & ~O.a & ~reset -> L.a+
+        (_lr & a) | reset -> L.a-
+        ~_b & ~p_a -> R.req+
+        (c & _b) | reset -> R.req-
+        ~_c & ~R.a -> q_r+
+        _c -> q_r-
+        ~p_a => _pa+
+        ~R.a => _ra+
+        ~O.a => _oa+
+        ~L.req => _lr+
+        ~reset => _r+
+        ~_a => a+
+        ~_b => b+
+        ~_c => c+
+
+    }
+}

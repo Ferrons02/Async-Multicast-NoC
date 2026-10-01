@@ -1,0 +1,155 @@
+import "no_forks/InputRouter/InputRouter.act";
+import "no_forks/Serializer/Serializer.act";
+import "no_forks/QuadRouter/QuadRouter.act";
+import "no_forks/Counter/Counter.act";
+import "no_forks/Deserializer/Deserializer.act";
+import "no_forks/PayloadDispatch/PayloadDispatch.act";
+import "no_forks/commons/Merge.act";
+
+/*
+ * Topology and instance names follow src/MltcUnit.png.
+ * Diagram QR.Oc/Od, QR.C_h and PD.O0..O3 use the actual ports
+ * QR.OC/OD, QR.Ch and PD.C0..C3, respectively.
+ * Merge<32,true> uses bit 31 for acknowledgement and releases it on ~O.a.
+ * Cnt is a pull channel: QR drives req; CT supplies the eight data bits.
+ *
+ * ACT_PATH must include src/block. Reset is shared directly, as in the blocks.
+ */
+export defproc MltcUnit(
+    bool? reset;
+    ActiveDualRail32? I;
+    ActiveDualRail32! C0, C1, C2, C3
+)
+{
+    InputRouter IR;
+    Serializer SE;
+    QuadRouter QR;
+    Counter CT0, CT1, CT2, CT3;
+    Deserializer DS0, DS1, DS2, DS3;
+    PayloadDispatch PD;
+    Merge<32,true> M0, M1, M2, M3;
+
+    IR.reset = reset;
+    SE.reset = reset;
+    QR.reset = reset;
+    PD.reset = reset;
+    CT0.reset = reset;
+    DS0.reset = reset;
+    CT1.reset = reset;
+    DS1.reset = reset;
+    CT2.reset = reset;
+    DS2.reset = reset;
+    CT3.reset = reset;
+    DS3.reset = reset;
+
+    // Input classification.
+    IR.I = I;
+
+    // Routing words to serializer.
+    SE.I = IR.O0;
+
+    // Serialized routing nibbles.
+    QR.I = SE.O;
+
+    // Payload words to dispatcher.
+    PD.I = IR.O1;
+
+    // Child-selection mask.
+    PD.Ch = QR.Ch;
+
+    // Child 0: counter updates.
+    CT0.I = QR.OC0;
+
+    // Child 0: counter data to QR, request back to CT.
+    QR.Cnt0 = CT0.Cnt;
+
+    // Child 0: routing nibbles to deserializer.
+    DS0.I = QR.OD0;
+
+    // Child 0: reconstructed routing words.
+    M0.I0.t = DS0.O.t;
+    M0.I0.f = DS0.O.f;
+    M0.I0.a = DS0.O.a;
+
+    // Child 0: dispatched payload words.
+    M0.I1.t = PD.C0.t;
+    M0.I1.f = PD.C0.f;
+    M0.I1.a = PD.C0.a;
+
+    // Child 0: merged output.
+    C0.t = M0.O.t;
+    C0.f = M0.O.f;
+    C0.a = M0.O.a;
+
+    // Child 1: counter updates.
+    CT1.I = QR.OC1;
+
+    // Child 1: counter data to QR, request back to CT.
+    QR.Cnt1 = CT1.Cnt;
+
+    // Child 1: routing nibbles to deserializer.
+    DS1.I = QR.OD1;
+
+    // Child 1: reconstructed routing words.
+    M1.I0.t = DS1.O.t;
+    M1.I0.f = DS1.O.f;
+    M1.I0.a = DS1.O.a;
+
+    // Child 1: dispatched payload words.
+    M1.I1.t = PD.C1.t;
+    M1.I1.f = PD.C1.f;
+    M1.I1.a = PD.C1.a;
+
+    // Child 1: merged output.
+    C1.t = M1.O.t;
+    C1.f = M1.O.f;
+    C1.a = M1.O.a;
+
+    // Child 2: counter updates.
+    CT2.I = QR.OC2;
+
+    // Child 2: counter data to QR, request back to CT.
+    QR.Cnt2 = CT2.Cnt;
+
+    // Child 2: routing nibbles to deserializer.
+    DS2.I = QR.OD2;
+
+    // Child 2: reconstructed routing words.
+    M2.I0.t = DS2.O.t;
+    M2.I0.f = DS2.O.f;
+    M2.I0.a = DS2.O.a;
+
+    // Child 2: dispatched payload words.
+    M2.I1.t = PD.C2.t;
+    M2.I1.f = PD.C2.f;
+    M2.I1.a = PD.C2.a;
+
+    // Child 2: merged output.
+    C2.t = M2.O.t;
+    C2.f = M2.O.f;
+    C2.a = M2.O.a;
+
+    // Child 3: counter updates.
+    CT3.I = QR.OC3;
+
+    // Child 3: counter data to QR, request back to CT.
+    QR.Cnt3 = CT3.Cnt;
+
+    // Child 3: routing nibbles to deserializer.
+    DS3.I = QR.OD3;
+
+    // Child 3: reconstructed routing words.
+    M3.I0.t = DS3.O.t;
+    M3.I0.f = DS3.O.f;
+    M3.I0.a = DS3.O.a;
+
+    // Child 3: dispatched payload words.
+    M3.I1.t = PD.C3.t;
+    M3.I1.f = PD.C3.f;
+    M3.I1.a = PD.C3.a;
+
+    // Child 3: merged output.
+    C3.t = M3.O.t;
+    C3.f = M3.O.f;
+    C3.a = M3.O.a;
+}

@@ -1,0 +1,117 @@
+import "commons/Channels.act";
+
+/* User-supplied bubble PRS with completion and header trees, 2026-09-17.
+ * r = reset; _i_a = n_I_a; _w_j = n_w_j; _v = n_v;
+ * _o_0{t,f}k = n_O0_{t,f}[k]; other underscored signals = inv_*.
+ * Header: bit 31 true, bits 30..13 false. No PRS fork delays here.
+ * Preserve ~s in n_w_0+ and the explicit p term in s- as supplied.
+ */
+export defproc StopcodeSel(bool? reset; ActiveDualRail32? I; ActiveDualRail32! O0, O1)
+{
+    bool p, s, f, v, w_0i, w_0, w_1;
+    bool _c[8], d[4], _e[2], c;
+    bool _g[4], h[2], _z, u[4], _x[2], y;
+    bool n_I_a, n_w_0, n_w_1, n_v;
+    bool inv_w_0i, inv_s, inv_reset, inv_p, inv_O0_a, inv_O1_a, inv_f;
+    bool inv_I_t[32], inv_I_f[32], n_O0_t[32], n_O0_f[32];
+
+    prs {
+        // Four-bit validity/spacer leaves and the supplied completion tree.
+        (k:8:
+            (&n:4: (I.t[4*k+3-n] | I.f[4*k+3-n])) -> _c[k]-
+            (&n:4: (~I.t[4*k+3-n] & ~I.f[4*k+3-n])) -> _c[k]+
+        )
+        (k:4:
+            ~_c[2*k+1] & ~_c[2*k] -> d[k]+
+            _c[2*k+1] & _c[2*k] -> d[k]-
+        )
+        (k:2:
+            d[2*k+1] & d[2*k] -> _e[k]-
+            ~d[2*k+1] & ~d[2*k] -> _e[k]+
+        )
+        ~_e[1] & ~_e[0] -> c+
+        _e[1] & _e[0] -> c-
+        ~inv_w_0i & ~c -> f+
+        (inv_w_0i | reset) -> f-
+
+        // Stopcode header: four groups covering bits 31..13.
+        I.t[31] & (&n:4: I.f[30-n]) -> _g[3]-
+        (&n:5: (~I.t[31-n] & ~I.f[31-n])) -> _g[3]+
+        (&n:5: I.f[26-n]) -> _g[2]-
+        (&n:5: (~I.t[26-n] & ~I.f[26-n])) -> _g[2]+
+        (&n:5: I.f[21-n]) -> _g[1]-
+        (&n:5: (~I.t[21-n] & ~I.f[21-n])) -> _g[1]+
+        (&n:4: I.f[16-n]) -> _g[0]-
+        (&n:4: (~I.t[16-n] & ~I.f[16-n])) -> _g[0]+
+        (k:2:
+            ~_g[2*k+1] & ~_g[2*k] -> h[k]+
+            _g[2*k+1] & _g[2*k] -> h[k]-
+        )
+        h[1] & h[0] -> _z-
+        ~h[1] & ~h[0] -> _z+
+
+        // Non-stopcode header: retain mismatch until its group is spacer.
+        (~inv_I_f[31] | (|n:4: ~inv_I_t[30-n])) -> u[3]+
+        (&n:5: (inv_I_t[31-n] & inv_I_f[31-n])) -> u[3]-
+        (|n:5: ~inv_I_t[26-n]) -> u[2]+
+        (&n:5: (inv_I_t[26-n] & inv_I_f[26-n])) -> u[2]-
+        (|n:5: ~inv_I_t[21-n]) -> u[1]+
+        (&n:5: (inv_I_t[21-n] & inv_I_f[21-n])) -> u[1]-
+        (|n:4: ~inv_I_t[16-n]) -> u[0]+
+        (&n:4: (inv_I_t[16-n] & inv_I_f[16-n])) -> u[0]-
+        (k:2:
+            u[2*k+1] | u[2*k] -> _x[k]-
+            ~u[2*k+1] & ~u[2*k] -> _x[k]+
+        )
+        ~_x[1] | ~_x[0] -> y+
+        _x[1] & _x[0] -> y-
+
+        ((~w_0i & ~_z & ~inv_s) | ~inv_reset) -> p+
+        (inv_w_0i & y & s) -> p-
+        (~inv_s & ((~_z & ~inv_p) | ((~_x[1] | ~_x[0]) & ~p))) -> w_0i+
+        ((inv_s & (O0.a | O1.a)) | reset) -> w_0i-
+
+        (inv_s & I.f[0]) -> n_w_0-
+        ((~s & ~n_I_a & (~O0.a & ~O1.a)) | ~inv_reset) -> n_w_0+
+        (inv_s & I.t[0]) -> n_w_1-
+        ((~inv_s & ~n_I_a & (~O0.a & ~O1.a)) | ~inv_reset) -> n_w_1+
+        ((~n_w_1 & ~n_I_a & (~O0.a & ~O1.a)) | ~inv_reset) -> s+
+        (w_0i & ((p & f & n_I_a) | inv_p)) -> s-
+
+        ((O0.a | O1.a) & (w_1 | w_0) & inv_w_0i & inv_f) -> n_v-
+        (((~O0.a & ~O1.a) & (~w_1 & ~w_0)) | ~inv_reset) -> n_v+
+        ((inv_s & v) | (s & w_0i & p & inv_f)) -> n_I_a-
+        ((~w_0i & ~v) | (~inv_s & ~inv_f) | ~inv_reset) -> n_I_a+
+
+        (k:0..31:
+            (p & inv_s & I.t[k]) -> n_O0_t[k]-
+            (p & inv_s & I.f[k]) -> n_O0_f[k]-
+            ~I.t[k] -> n_O0_t[k]+
+            ~I.f[k] -> n_O0_f[k]+
+            (~p & ~s & ~inv_I_t[k]) -> O1.t[k]+
+            (~p & ~s & ~inv_I_f[k]) -> O1.f[k]+
+            inv_I_t[k] -> O1.t[k]-
+            inv_I_f[k] -> O1.f[k]-
+        )
+
+        ~w_0i => inv_w_0i+
+        ~s => inv_s+
+        ~reset => inv_reset+
+        ~p => inv_p+
+        ~O0.a => inv_O0_a+
+        ~O1.a => inv_O1_a+
+        ~n_w_0 => w_0+
+        ~n_w_1 => w_1+
+        ~n_v => v+
+        ~f => inv_f+
+        (k:0..31:
+            ~I.t[k] => inv_I_t[k]+
+            ~I.f[k] => inv_I_f[k]+
+        )
+        ~n_I_a => I.a+
+        (k:0..31:
+            ~n_O0_t[k] => O0.t[k]+
+            ~n_O0_f[k] => O0.f[k]+
+        )
+    }
+}

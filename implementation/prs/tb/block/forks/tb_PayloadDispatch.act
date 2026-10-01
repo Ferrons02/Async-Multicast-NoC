@@ -1,0 +1,145 @@
+import "../../../src/block/forks/PayloadDispatch/PayloadDispatch.act";
+import "../testbench_support.act";
+
+/* The current interface calls the control Ch and the outputs C0..C3.
+ * Control bit 3 selects C0; bit 0 selects C3. */
+/* Global controls avoid an actsim state-offset bug for parent-owned CHP
+ * Boolean ports beside the PRS hierarchy. The command file uses these names. */
+bool reset, stop, fail, done, ready;
+int<32> rounds;
+Initialize { actions { ready- } }
+bool bad[4];
+TbPush<4> Ch;
+TbPush<32> I;
+TbPush<32> C0;
+TbPush<32> C1;
+TbPush<32> C2;
+TbPush<32> C3;
+
+defproc PayloadDispatchDriver(
+    bool bad_C0, bad_C1, bad_C2, bad_C3;
+    TbPush!<4> Ch;
+    TbPush!<32> I;
+    TbPush?<32> C0;
+    TbPush?<32> C1;
+    TbPush?<32> C2;
+    TbPush?<32> C3
+)
+{
+    /* ACT disallows nonlocal ports directly in loop guards. Sample the
+     * external stop/fail flags at each completed sequence boundary. */
+    bool running;
+    int<32> out_C0;
+    int<32> out_C1;
+    int<32> out_C2;
+    int<32> out_C3;
+    chp {
+        ready := false; stop := false; done := false; rounds := 0;
+        bad_C0 := false; bad_C1 := false; bad_C2 := false; bad_C3 := false;
+        ready := true; running := true;
+        [~reset];
+        *[running ->
+            ((
+            Ch!0xA;
+            I!0xFFFFFFFE;
+            I!0xFFFFFFFE;
+            I!0xFFFFFFFF;
+            Ch!0xF;
+            I!0xFFFFFFFF
+            ),(
+            C0?out_C0;
+            [out_C0 != 0xFFFFFFFE ->
+                bad_C0 := true;
+                log("FAILED: C0 expected ", 0xFFFFFFFE, ", got ", out_C0, ", round ", rounds);
+                assert(out_C0 = 0xFFFFFFFE, "C0 golden mismatch");
+                [reset]
+            [] else -> skip];
+            C0?out_C0;
+            [out_C0 != 0xFFFFFFFE ->
+                bad_C0 := true;
+                log("FAILED: C0 expected ", 0xFFFFFFFE, ", got ", out_C0, ", round ", rounds);
+                assert(out_C0 = 0xFFFFFFFE, "C0 golden mismatch");
+                [reset]
+            [] else -> skip];
+            C0?out_C0;
+            [out_C0 != 0xFFFFFFFF ->
+                bad_C0 := true;
+                log("FAILED: C0 expected ", 0xFFFFFFFF, ", got ", out_C0, ", round ", rounds);
+                assert(out_C0 = 0xFFFFFFFF, "C0 golden mismatch");
+                [reset]
+            [] else -> skip];
+            C0?out_C0;
+            [out_C0 != 0xFFFFFFFF ->
+                bad_C0 := true;
+                log("FAILED: C0 expected ", 0xFFFFFFFF, ", got ", out_C0, ", round ", rounds);
+                assert(out_C0 = 0xFFFFFFFF, "C0 golden mismatch");
+                [reset]
+            [] else -> skip]
+            ),(
+            C1?out_C1;
+            [out_C1 != 0xFFFFFFFF ->
+                bad_C1 := true;
+                log("FAILED: C1 expected ", 0xFFFFFFFF, ", got ", out_C1, ", round ", rounds);
+                assert(out_C1 = 0xFFFFFFFF, "C1 golden mismatch");
+                [reset]
+            [] else -> skip]
+            ),(
+            C2?out_C2;
+            [out_C2 != 0xFFFFFFFE ->
+                bad_C2 := true;
+                log("FAILED: C2 expected ", 0xFFFFFFFE, ", got ", out_C2, ", round ", rounds);
+                assert(out_C2 = 0xFFFFFFFE, "C2 golden mismatch");
+                [reset]
+            [] else -> skip];
+            C2?out_C2;
+            [out_C2 != 0xFFFFFFFE ->
+                bad_C2 := true;
+                log("FAILED: C2 expected ", 0xFFFFFFFE, ", got ", out_C2, ", round ", rounds);
+                assert(out_C2 = 0xFFFFFFFE, "C2 golden mismatch");
+                [reset]
+            [] else -> skip];
+            C2?out_C2;
+            [out_C2 != 0xFFFFFFFF ->
+                bad_C2 := true;
+                log("FAILED: C2 expected ", 0xFFFFFFFF, ", got ", out_C2, ", round ", rounds);
+                assert(out_C2 = 0xFFFFFFFF, "C2 golden mismatch");
+                [reset]
+            [] else -> skip];
+            C2?out_C2;
+            [out_C2 != 0xFFFFFFFF ->
+                bad_C2 := true;
+                log("FAILED: C2 expected ", 0xFFFFFFFF, ", got ", out_C2, ", round ", rounds);
+                assert(out_C2 = 0xFFFFFFFF, "C2 golden mismatch");
+                [reset]
+            [] else -> skip]
+            ),(
+            C3?out_C3;
+            [out_C3 != 0xFFFFFFFF ->
+                bad_C3 := true;
+                log("FAILED: C3 expected ", 0xFFFFFFFF, ", got ", out_C3, ", round ", rounds);
+                assert(out_C3 = 0xFFFFFFFF, "C3 golden mismatch");
+                [reset]
+            [] else -> skip]
+            ));
+            rounds := rounds + 1;
+            [stop | fail -> running := false [] else -> skip]
+        ];
+        done := true;
+        [fail -> log("FAILED")
+        [] else -> log("PASSED: rounds=", rounds)]
+    }
+}
+
+defproc tb_PayloadDispatch()
+{
+    PayloadDispatch dut;
+    dut.reset = reset;
+    TbPushSender<4> wire_Ch(Ch, dut.Ch.t, dut.Ch.f, dut.Ch.a);
+    TbPushSender<32> wire_I(I, dut.I.t, dut.I.f, dut.I.a);
+    TbPushReceiver<32> wire_C0(C0, dut.C0.t, dut.C0.f, dut.C0.a);
+    TbPushReceiver<32> wire_C1(C1, dut.C1.t, dut.C1.f, dut.C1.a);
+    TbPushReceiver<32> wire_C2(C2, dut.C2.t, dut.C2.f, dut.C2.a);
+    TbPushReceiver<32> wire_C3(C3, dut.C3.t, dut.C3.f, dut.C3.a);
+    TbFailure<4> failure(ready, bad, fail);
+    PayloadDispatchDriver driver(bad[0], bad[1], bad[2], bad[3], Ch, I, C0, C1, C2, C3);
+}

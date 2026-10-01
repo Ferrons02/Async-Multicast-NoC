@@ -1,0 +1,171 @@
+Recovery-oriented block sizing: accepted results
+=================================================
+Comparison baseline: previously accepted fanout sizing (17 September 2026).
+All accepted candidates completed HSPICE with functional PASS and stable idle leakage.
+PTM65 TT, VDD=1.1 V, 27 C. Stimuli, models, electrical loads and solver settings unchanged.
+Additional .probe commands only save non-loading observations of internal nodes.
+Only transistor W changed in each circuit; keepers, L, topology and device counts unchanged.
+Timing subtraction follows the existing extractor; exact windows are in *_perf.txt.
+Definitions shared across the block library have identical bodies.
+
+All matched external performance samples
+----------------------------------------
+Module | Sample | Metric | Previous | Current | Change %
+Serializer | word I[0] -> seven nibbles | forward (ns) | 4.614019 | 4.095463 | -11.24
+Serializer | word I[0] -> seven nibbles | dynamic_energy (pJ) | 0.985628 | 1.036650 | +5.18
+Serializer | word I[1] -> seven nibbles | forward (ns) | 4.672297 | 4.049351 | -13.33
+Serializer | word I[1] -> seven nibbles | dynamic_energy (pJ) | 0.922375 | 0.965201 | +4.64
+Serializer | stable idle | leakage (uW) | 17.599101 | 17.808401 | +1.19
+Deserializer | seven nonzero nibbles I[5:12] -> O[1] | forward (ns) | 14.116143 | 11.119672 | -21.23
+Deserializer | seven nonzero nibbles I[5:12] -> O[1] | dynamic_energy (pJ) | 1.661768 | 1.780589 | +7.15
+Deserializer | stable idle | leakage (uW) | 20.167518 | 20.290062 | +0.61
+QuadRouter | i[0] -> ch[0] | forward (ns) | 1.200312 | 1.222064 | +1.81
+QuadRouter | i[0] -> ch[0] | recovery (ns) | 1.322712 | 1.282059 | -3.07
+QuadRouter | i[0] -> ch[0] | dynamic_energy (pJ) | 1.073138 | 1.104864 | +2.96
+QuadRouter | i[14] -> ch[1] | forward (ns) | 1.167628 | 1.183021 | +1.32
+QuadRouter | i[14] -> ch[1] | recovery (ns) | 1.343503 | 1.295251 | -3.59
+QuadRouter | i[14] -> ch[1] | dynamic_energy (pJ) | 1.104092 | 1.141421 | +3.38
+QuadRouter | i[15] -> oc0[0] | forward (ns) | 1.836379 | 1.489577 | -18.89
+QuadRouter | i[15] -> oc0[0] | dynamic_energy (pJ) | 0.886811 | 0.863493 | -2.63
+QuadRouter | i[15] -> od0[3] | forward (ns) | 1.873603 | 1.527005 | -18.50
+QuadRouter | i[15] -> od0[3] | dynamic_energy (pJ) | 0.896014 | 0.877315 | -2.09
+QuadRouter | i[17] -> oc0[1] | forward (ns) | 8.297518 | 5.956567 | -28.21
+QuadRouter | i[17] -> oc0[1] | dynamic_energy (pJ) | 1.831275 | 1.955994 | +6.81
+QuadRouter | i[17] -> od0[4] | forward (ns) | 8.335935 | 5.995235 | -28.08
+QuadRouter | i[17] -> od0[4] | dynamic_energy (pJ) | 1.840327 | 1.972243 | +7.17
+QuadRouter | i[18] -> oc0[2] | forward (ns) | 4.301927 | 3.357039 | -21.96
+QuadRouter | i[18] -> oc0[2] | dynamic_energy (pJ) | 1.306839 | 1.452156 | +11.12
+QuadRouter | i[18] -> od0[5] | forward (ns) | 4.340187 | 3.395850 | -21.76
+QuadRouter | i[18] -> od0[5] | dynamic_energy (pJ) | 1.316200 | 1.465741 | +11.36
+QuadRouter | i[19] -> oc0[3] | forward (ns) | 4.387820 | 3.405340 | -22.39
+QuadRouter | i[19] -> oc0[3] | dynamic_energy (pJ) | 1.293700 | 1.431076 | +10.62
+QuadRouter | i[19] -> od0[6] | forward (ns) | 4.426818 | 3.444310 | -22.19
+QuadRouter | i[19] -> od0[6] | dynamic_energy (pJ) | 1.301120 | 1.447778 | +11.27
+QuadRouter | i[20] -> oc0[4] | forward (ns) | 4.386754 | 3.403140 | -22.42
+QuadRouter | i[20] -> oc0[4] | dynamic_energy (pJ) | 1.297079 | 1.431270 | +10.35
+QuadRouter | i[20] -> od0[7] | forward (ns) | 4.424993 | 3.441450 | -22.23
+QuadRouter | i[20] -> od0[7] | dynamic_energy (pJ) | 1.306455 | 1.442165 | +10.39
+QuadRouter | i[1] -> oc1[0] | forward (ns) | 5.065855 | 3.909936 | -22.82
+QuadRouter | i[1] -> oc1[0] | dynamic_energy (pJ) | 1.235635 | 1.225900 | -0.79
+QuadRouter | i[1] -> od1[0] | forward (ns) | 5.103118 | 3.947563 | -22.64
+QuadRouter | i[1] -> od1[0] | dynamic_energy (pJ) | 1.245025 | 1.239529 | -0.44
+QuadRouter | i[3] -> oc1[1] | forward (ns) | 14.690147 | 10.758610 | -26.76
+QuadRouter | i[3] -> oc1[1] | dynamic_energy (pJ) | 2.605066 | 2.762592 | +6.05
+QuadRouter | i[3] -> od1[1] | forward (ns) | 14.728825 | 10.796927 | -26.70
+QuadRouter | i[3] -> od1[1] | dynamic_energy (pJ) | 2.614697 | 2.778678 | +6.27
+QuadRouter | i[4] -> oc1[2] | forward (ns) | 4.315213 | 3.363563 | -22.05
+QuadRouter | i[4] -> oc1[2] | dynamic_energy (pJ) | 1.217802 | 1.356242 | +11.37
+QuadRouter | i[4] -> od1[2] | forward (ns) | 4.354037 | 3.402034 | -21.86
+QuadRouter | i[4] -> od1[2] | dynamic_energy (pJ) | 1.227025 | 1.369751 | +11.63
+QuadRouter | i[5] -> oc1[3] | forward (ns) | 4.400439 | 3.411733 | -22.47
+QuadRouter | i[5] -> oc1[3] | dynamic_energy (pJ) | 1.200058 | 1.333172 | +11.09
+QuadRouter | i[5] -> od1[3] | forward (ns) | 4.438590 | 3.450128 | -22.27
+QuadRouter | i[5] -> od1[3] | dynamic_energy (pJ) | 1.208713 | 1.349924 | +11.68
+QuadRouter | i[6] -> oc1[4] | forward (ns) | 4.387140 | 3.410839 | -22.25
+QuadRouter | i[6] -> oc1[4] | dynamic_energy (pJ) | 1.203810 | 1.332696 | +10.71
+QuadRouter | i[6] -> od1[4] | forward (ns) | 4.425434 | 3.449181 | -22.06
+QuadRouter | i[6] -> od1[4] | dynamic_energy (pJ) | 1.212804 | 1.343524 | +10.78
+QuadRouter | i[2] -> oc2[0] | forward (ns) | 7.485957 | 5.143964 | -31.29
+QuadRouter | i[2] -> oc2[0] | dynamic_energy (pJ) | 1.677988 | 1.794983 | +6.97
+QuadRouter | i[2] -> od2[0] | forward (ns) | 7.523624 | 5.181209 | -31.13
+QuadRouter | i[2] -> od2[0] | dynamic_energy (pJ) | 1.687352 | 1.808459 | +7.18
+QuadRouter | i[7] -> oc2[1] | forward (ns) | 7.261940 | 4.932857 | -32.07
+QuadRouter | i[7] -> oc2[1] | dynamic_energy (pJ) | 1.653324 | 1.778382 | +7.56
+QuadRouter | i[7] -> od2[1] | forward (ns) | 7.300429 | 4.971496 | -31.90
+QuadRouter | i[7] -> od2[1] | dynamic_energy (pJ) | 1.662629 | 1.794680 | +7.94
+QuadRouter | i[8] -> oc2[2] | forward (ns) | 4.331858 | 3.367097 | -22.27
+QuadRouter | i[8] -> oc2[2] | dynamic_energy (pJ) | 1.221806 | 1.358023 | +11.15
+QuadRouter | i[8] -> od2[2] | forward (ns) | 4.370694 | 3.405494 | -22.08
+QuadRouter | i[8] -> od2[2] | dynamic_energy (pJ) | 1.230947 | 1.371493 | +11.42
+QuadRouter | i[9] -> oc2[3] | forward (ns) | 4.416624 | 3.417554 | -22.62
+QuadRouter | i[9] -> oc2[3] | dynamic_energy (pJ) | 1.204304 | 1.336570 | +10.98
+QuadRouter | i[9] -> od2[3] | forward (ns) | 4.455542 | 3.456019 | -22.43
+QuadRouter | i[9] -> od2[3] | dynamic_energy (pJ) | 1.213164 | 1.353665 | +11.58
+QuadRouter | i[10] -> oc2[4] | forward (ns) | 4.405438 | 3.416163 | -22.46
+QuadRouter | i[10] -> oc2[4] | dynamic_energy (pJ) | 1.191711 | 1.331215 | +11.71
+QuadRouter | i[10] -> od2[4] | forward (ns) | 4.444315 | 3.454594 | -22.27
+QuadRouter | i[10] -> od2[4] | dynamic_energy (pJ) | 1.200698 | 1.342274 | +11.79
+QuadRouter | i[16] -> oc3[0] | forward (ns) | 13.909187 | 9.945653 | -28.50
+QuadRouter | i[16] -> oc3[0] | dynamic_energy (pJ) | 2.644693 | 2.796780 | +5.75
+QuadRouter | i[16] -> od3[3] | forward (ns) | 13.946492 | 9.982971 | -28.42
+QuadRouter | i[16] -> od3[3] | dynamic_energy (pJ) | 2.654101 | 2.810681 | +5.90
+QuadRouter | i[21] -> oc3[1] | forward (ns) | 13.692202 | 9.743679 | -28.84
+QuadRouter | i[21] -> oc3[1] | dynamic_energy (pJ) | 2.624815 | 2.790228 | +6.30
+QuadRouter | i[21] -> od3[4] | forward (ns) | 13.730603 | 9.782356 | -28.76
+QuadRouter | i[21] -> od3[4] | dynamic_energy (pJ) | 2.634067 | 2.806700 | +6.55
+QuadRouter | i[22] -> oc3[2] | forward (ns) | 4.356909 | 3.377447 | -22.48
+QuadRouter | i[22] -> oc3[2] | dynamic_energy (pJ) | 1.329626 | 1.462590 | +10.00
+QuadRouter | i[22] -> od3[5] | forward (ns) | 4.395298 | 3.415701 | -22.29
+QuadRouter | i[22] -> od3[5] | dynamic_energy (pJ) | 1.338806 | 1.476225 | +10.26
+QuadRouter | i[23] -> oc3[3] | forward (ns) | 4.442043 | 3.426497 | -22.86
+QuadRouter | i[23] -> oc3[3] | dynamic_energy (pJ) | 1.313789 | 1.439166 | +9.54
+QuadRouter | i[23] -> od3[6] | forward (ns) | 4.480491 | 3.464849 | -22.67
+QuadRouter | i[23] -> od3[6] | dynamic_energy (pJ) | 1.322654 | 1.456331 | +10.11
+QuadRouter | i[24] -> oc3[4] | forward (ns) | 4.431791 | 3.424946 | -22.72
+QuadRouter | i[24] -> oc3[4] | dynamic_energy (pJ) | 1.245373 | 1.369945 | +10.00
+QuadRouter | i[24] -> od3[7] | forward (ns) | 4.470145 | 3.463293 | -22.52
+QuadRouter | i[24] -> od3[7] | dynamic_energy (pJ) | 1.254269 | 1.381422 | +10.14
+QuadRouter | i[11] -> od0[0],od1[5],od2[5],od3[0] | forward (ns) | 9.214311 | 6.481151 | -29.66
+QuadRouter | i[11] -> od0[0],od1[5],od2[5],od3[0] | recovery (ns) | 1.562649 | 1.544894 | -1.14
+QuadRouter | i[11] -> od0[0],od1[5],od2[5],od3[0] | dynamic_energy (pJ) | 1.765965 | 1.866111 | +5.67
+QuadRouter | i[12] -> od0[1],od1[6],od2[6],od3[1] | forward (ns) | 0.319672 | 0.328618 | +2.80
+QuadRouter | i[12] -> od0[1],od1[6],od2[6],od3[1] | recovery (ns) | 1.289017 | 1.245206 | -3.40
+QuadRouter | i[12] -> od0[1],od1[6],od2[6],od3[1] | dynamic_energy (pJ) | 0.400721 | 0.402819 | +0.52
+QuadRouter | i[13] -> od0[2],od1[7],od2[7],od3[2] | forward (ns) | 0.347104 | 0.361409 | +4.12
+QuadRouter | i[13] -> od0[2],od1[7],od2[7],od3[2] | recovery (ns) | 1.289857 | 1.249969 | -3.09
+QuadRouter | i[13] -> od0[2],od1[7],od2[7],od3[2] | dynamic_energy (pJ) | 0.398183 | 0.398706 | +0.13
+QuadRouter | i[25] -> od0[8],od1[8],od2[8],od3[8] | forward (ns) | 6.008003 | 4.068217 | -32.29
+QuadRouter | i[25] -> od0[8],od1[8],od2[8],od3[8] | recovery (ns) | 1.565110 | 1.544481 | -1.32
+QuadRouter | i[25] -> od0[8],od1[8],od2[8],od3[8] | dynamic_energy (pJ) | 1.287591 | 1.358646 | +5.52
+QuadRouter | stable idle | leakage (uW) | 79.403150 | 80.621627 | +1.53
+
+Recovery observations with explicit boundaries
+-----------------------------------------------
+Serializer: last output nibble valid -> input acknowledge low, external waits removed.
+I[0]: 1.638425 -> 1.530971 ns (-6.56%).
+I[1]: 1.645850 -> 1.520276 ns (-7.63%).
+Output ack high -> output fully spacer, median over all 14 nibbles: 0.374946 -> 0.322797 ns (-13.91%).
+Deserializer: input fully spacer -> input acknowledge low, intermediate
+nonzero nibbles I[6]..I[10] of the same seven-nibble batch.
+This measures the input return component, not an input/output recovery matrix.
+I[6]: 0.282990 -> 0.204812 ns (-27.63%).
+I[7]: 0.283069 -> 0.204831 ns (-27.64%).
+I[8]: 0.282836 -> 0.204974 ns (-27.53%).
+I[9]: 0.282967 -> 0.204771 ns (-27.63%).
+I[10]: 0.285538 -> 0.204875 ns (-28.25%).
+
+QuadRouter: exact internal return path, Child1 decrementer
+All eight input/output dual-rail pairs must be spacer; crossings at VDD/2.
+The input-spacer -> write-ack-low path is internal and contains no testbench wait.
+Read restart refers to the first subsequent ChildServer read request.
+Word | Carry spacer propagation before/after ns | Input spacer -> write ack low before/after ns | Read restart before/after ns
+01 | 1.324343/0.584052 | 1.684949/0.945542 | 0.406231/0.067093
+04 | 1.271576/0.540514 | 1.633072/0.901686 | 0.404576/0.063695
+03 | 1.325222/0.582390 | 1.686265/0.944411 | 0.404795/0.064260
+02 | 1.298551/0.559253 | 1.659576/0.921675 | 0.404432/0.063999
+01 | 1.324181/0.583796 | 1.685346/0.946065 | 0.404845/0.064179
+OC/OD conventional recovery remains N/A where the input handshake completes
+before buffered output validity; the internal reset above is not substituted into that field.
+
+Accepted widths and evidence
+-----------------------------
+Serializer: ser_ack_balanced; /tmp/ferroma_analog_campaign_AenQQALV; additional changed MOS 111/2846; sum(W*L) +1.38%.
+Exact W changes, rationale and all handshake samples: Serializer/spice_mod.txt
+Deserializer: des_completion_strong; /tmp/ferroma_analog_campaign_hvz2YDl6; additional changed MOS 234/3301; sum(W*L) +7.43%.
+Exact W changes, rationale and all handshake samples: Deserializer/spice_mod.txt
+QuadRouter: quad_control_carry; /tmp/ferroma_analog_campaign_jvdOVQlm; additional changed MOS 637/10216; sum(W*L) +4.75%.
+Exact W changes, rationale and all handshake samples: QuadRouter/spice_mod.txt
+
+Scope / reproducibility
+------------------------
+Reference diagnostic runs reproduced prior external timing values within 0.017 ps;
+idle leakage was identical; the largest reference energy deviation was 0.327%.
+Probe/channel-discovery changes do not explain the measured gains.
+Production deck/netlist/environment hashes match the accepted completed jobs.
+All 15 block/subsystem/top prepared-file checks pass; no other circuit definitions changed.
+Subsystem/top embedded netlists retain their earlier widths. The old Router run was not interrupted.
+A fresh PRS-to-SPICE generation overwrites these manual W edits.
+These are measured trade-offs for the tested corner/cases, not exhaustive timing optimization.
+Source for sizing method (driver resistance versus added gate load):
+https://pages.hmc.edu/harris/class/e158/10/lect6.pdf
+Frozen baseline, candidates, scripts and evidence: /home/cad/archives/analog_sim/20260918_recovery_sizing

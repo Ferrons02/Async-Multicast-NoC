@@ -1,0 +1,76 @@
+import "commons/HalfAdderP.act";
+import "commons/FullAdderP.act";
+
+/* Modulo-256 decrement, adding the original constant 0xff with the final carry unused. */
+export defproc CounterDec(bool? reset; DualRail8? I; DualRail8! O)
+{
+    HalfAdderP ha;
+    ha.a.t = I.t[0];
+    ha.a.f = I.f[0];
+    ha.s.t = O.t[0];
+    ha.s.f = O.f[0];
+    ha.reset = reset;
+
+    FullAdderP fa1;
+    fa1.a.t = I.t[1];
+    fa1.a.f = I.f[1];
+    fa1.c.t = ha.d.t;
+    fa1.c.f = ha.d.f;
+    fa1.s.t = O.t[1];
+    fa1.s.f = O.f[1];
+    fa1.reset = reset;
+
+    FullAdderP fa2;
+    fa2.a.t = I.t[2];
+    fa2.a.f = I.f[2];
+    fa2.c.t = fa1.d.t;
+    fa2.c.f = fa1.d.f;
+    fa2.s.t = O.t[2];
+    fa2.s.f = O.f[2];
+    fa2.reset = reset;
+
+    FullAdderP fa3;
+    fa3.a.t = I.t[3];
+    fa3.a.f = I.f[3];
+    fa3.c.t = fa2.d.t;
+    fa3.c.f = fa2.d.f;
+    fa3.s.t = O.t[3];
+    fa3.s.f = O.f[3];
+    fa3.reset = reset;
+
+    FullAdderP fa4;
+    fa4.a.t = I.t[4];
+    fa4.a.f = I.f[4];
+    fa4.c.t = fa3.d.t;
+    fa4.c.f = fa3.d.f;
+    fa4.s.t = O.t[4];
+    fa4.s.f = O.f[4];
+    fa4.reset = reset;
+
+    FullAdderP fa5;
+    fa5.a.t = I.t[5];
+    fa5.a.f = I.f[5];
+    fa5.c.t = fa4.d.t;
+    fa5.c.f = fa4.d.f;
+    fa5.s.t = O.t[5];
+    fa5.s.f = O.f[5];
+    fa5.reset = reset;
+
+    FullAdderP fa6;
+    fa6.a.t = I.t[6];
+    fa6.a.f = I.f[6];
+    fa6.c.t = fa5.d.t;
+    fa6.c.f = fa5.d.f;
+    fa6.s.t = O.t[6];
+    fa6.s.f = O.f[6];
+    fa6.reset = reset;
+
+    FullAdderP fa7;
+    fa7.a.t = I.t[7];
+    fa7.a.f = I.f[7];
+    fa7.c.t = fa6.d.t;
+    fa7.c.f = fa6.d.f;
+    fa7.s.t = O.t[7];
+    fa7.s.f = O.f[7];
+    fa7.reset = reset;
+}

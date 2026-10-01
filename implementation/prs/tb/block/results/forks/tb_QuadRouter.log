@@ -1,0 +1,23 @@
+WARNING: TbStageCheck<4>: substituting chp model (requested prs, not found)
+WARNING: TbStageCheck<4>: substituting chp model (requested prs, not found)
+WARNING: QuadRouterDriver<>: substituting chp model (requested prs, not found)
+WARNING: TbStageCheck<4>: substituting chp model (requested prs, not found)
+WARNING: TbStageCheck<4>: substituting chp model (requested prs, not found)
+WARNING: TbStageCheck<4>: substituting chp model (requested prs, not found)
+WARNING: TbStageCheck<4>: substituting chp model (requested prs, not found)
+WARNING: TbStageCheck<4>: substituting chp model (requested prs, not found)
+WARNING: TbStageCheck<4>: substituting chp model (requested prs, not found)
+WARNING: TbFailure<9>: substituting chp model (requested prs, not found)
+WARNING: TbStageCheck<4>: substituting chp model (requested prs, not found)
+TB_RANDOM_CHOICE off
+TB_WARNING_POLICY resume-on-warn
+TB_STRESS_BEGIN 10000
+[           134656338] <dut.child2>  WARNING: unstable transition on `fd_R_f_7__q7'   [by dut.q2.reg.R.f[7] <- 0]
+TB_STRESS_END 500009991
+[           500033342] <driver>  PASSED: rounds=3575
+TB_FINAL
+done: 1
+fail: 0
+rounds: 3575  (0xdf7)
+TB_X_BEGIN
+TB_X_END

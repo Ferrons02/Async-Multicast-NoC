@@ -1,0 +1,121 @@
+import "commons/Channels.act";
+
+// Literal supplied PRS, including the mixed v/_v polarities.
+// O7=bits31:28, ... O1=bits7:4; every input bit participates in capture.
+export defproc WordBuffer(bool? reset; ActiveDualRail32? I;
+    ActiveDualRail4! O1, O2, O3, O4, O5, O6, O7)
+{
+    bool b[32], _b[32], _i_t[32], _v, v, _i_a, _r, _o1a;
+    bool _c[8], d[4], _e[2], c;
+    bool u1, _u1, _o1t[4];
+    bool u2, _u2, _o2t[4];
+    bool u3, _u3, _o3t[4];
+    bool u4, _u4, _o4t[4];
+    bool u5, _u5, _o5t[4];
+    bool u6, _u6, _o6t[4];
+    bool u7, _u7, _o7t[4];
+    prs {
+        // Four-bit capture/spacer leaves and the supplied completion tree.
+        (k:8:
+            (&j:4: ((I.t[4*k+3-j] & b[4*k+3-j]) |
+                (I.f[4*k+3-j] & _b[4*k+3-j]))) -> _c[k]-
+            (&j:4: (~I.t[4*k+3-j] & ~I.f[4*k+3-j])) -> _c[k]+
+        )
+        (k:4:
+            ~_c[2*k+1] & ~_c[2*k] -> d[k]+
+            _c[2*k+1] & _c[2*k] -> d[k]-
+        )
+        (k:2:
+            d[2*k+1] & d[2*k] -> _e[k]-
+            ~d[2*k+1] & ~d[2*k] -> _e[k]+
+        )
+        ~_e[1] & ~_e[0] -> c+
+        _e[1] & _e[0] -> c-
+        c -> _v-
+        (~c & ~u7 & ~u6 & ~u5 & ~u4 & ~u3 & ~u2 & ~u1) | ~_r -> _v+
+        u1 & _o1a -> _i_a-
+        ~v -> _i_a+
+        (k:32:
+            ~v & ~_i_t[k] -> b[k]+
+            (_v & I.f[k]) | reset -> b[k]-
+        )
+        O1.a -> _u1-
+        ~_i_a | ~_r -> _u1+
+        (k:4:
+            _u1 & v & _i_a & b[4+k] -> _o1t[k]-
+            ~_u1 | ~_r -> _o1t[k]+
+            ~u1 & ~_v & ~I.a & ~b[4+k] -> O1.f[k]+
+            u1 | reset -> O1.f[k]-
+        )
+        O2.a -> _u2-
+        ~_i_a | ~_r -> _u2+
+        (k:4:
+            _u2 & v & _i_a & b[8+k] -> _o2t[k]-
+            ~_u2 | ~_r -> _o2t[k]+
+            ~u2 & ~_v & ~I.a & ~b[8+k] -> O2.f[k]+
+            u2 | reset -> O2.f[k]-
+        )
+        O3.a -> _u3-
+        ~_i_a | ~_r -> _u3+
+        (k:4:
+            _u3 & v & _i_a & b[12+k] -> _o3t[k]-
+            ~_u3 | ~_r -> _o3t[k]+
+            ~u3 & ~_v & ~I.a & ~b[12+k] -> O3.f[k]+
+            u3 | reset -> O3.f[k]-
+        )
+        O4.a -> _u4-
+        ~_i_a | ~_r -> _u4+
+        (k:4:
+            _u4 & v & _i_a & b[16+k] -> _o4t[k]-
+            ~_u4 | ~_r -> _o4t[k]+
+            ~u4 & ~_v & ~I.a & ~b[16+k] -> O4.f[k]+
+            u4 | reset -> O4.f[k]-
+        )
+        O5.a -> _u5-
+        ~_i_a | ~_r -> _u5+
+        (k:4:
+            _u5 & v & _i_a & b[20+k] -> _o5t[k]-
+            ~_u5 | ~_r -> _o5t[k]+
+            ~u5 & ~_v & ~I.a & ~b[20+k] -> O5.f[k]+
+            u5 | reset -> O5.f[k]-
+        )
+        O6.a -> _u6-
+        ~_i_a | ~_r -> _u6+
+        (k:4:
+            _u6 & v & _i_a & b[24+k] -> _o6t[k]-
+            ~_u6 | ~_r -> _o6t[k]+
+            ~u6 & ~_v & ~I.a & ~b[24+k] -> O6.f[k]+
+            u6 | reset -> O6.f[k]-
+        )
+        O7.a -> _u7-
+        ~_i_a | ~_r -> _u7+
+        (k:4:
+            _u7 & v & _i_a & b[28+k] -> _o7t[k]-
+            ~_u7 | ~_r -> _o7t[k]+
+            ~u7 & ~_v & ~I.a & ~b[28+k] -> O7.f[k]+
+            u7 | reset -> O7.f[k]-
+        )
+        ~reset => _r+
+        ~_v => v+
+        ~_i_a => I.a+
+        ~O1.a => _o1a+
+        (k:32:
+            ~b[k] => _b[k]+
+            ~I.t[k] => _i_t[k]+
+        )
+        ~_u1 => u1+
+        (k:4: ~_o1t[k] => O1.t[k]+)
+        ~_u2 => u2+
+        (k:4: ~_o2t[k] => O2.t[k]+)
+        ~_u3 => u3+
+        (k:4: ~_o3t[k] => O3.t[k]+)
+        ~_u4 => u4+
+        (k:4: ~_o4t[k] => O4.t[k]+)
+        ~_u5 => u5+
+        (k:4: ~_o5t[k] => O5.t[k]+)
+        ~_u6 => u6+
+        (k:4: ~_o6t[k] => O6.t[k]+)
+        ~_u7 => u7+
+        (k:4: ~_o7t[k] => O7.t[k]+)
+    }
+}

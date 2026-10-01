@@ -1,0 +1,21 @@
+/* Adopted HSE abstraction of the two-request MUTEX (2026-09-09).
+ * Stock ACTsim's PRS/mk_exclhi event cancellation can remove an unrelated
+ * pending event. Keep only arbitration in HSE so the unmodified simulator
+ * can verify the surrounding PRS design reproducibly.
+ * Each request is the validity of the corresponding input's bit 31 and
+ * must persist until granted. Select one request, hold its grant until
+ * spacer, then release it before selecting again. This does not model
+ * analog metastability or validate a transistor/PRS MUTEX implementation.
+ * Reset prevents reading uninitialized request rails at startup; this model
+ * assumes the same startup-only reset protocol as the Router testbench.
+ * Request and outgoing grant fork delays remain in Arb2.
+ */
+export defproc ArbMutex(bool? r0t, r0f, r1t, r1f; bool! u, v; bool? reset)
+{
+    hse {
+        u-; v-; [~reset];
+        *[[| r0t | r0f -> u+; [~r0t & ~r0f]; u-
+          [] r1t | r1f -> v+; [~r1t & ~r1f]; v-
+        |]]
+    }
+}

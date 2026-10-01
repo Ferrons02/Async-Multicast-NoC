@@ -1,0 +1,437 @@
+WARNING: RouterCollector<4>: substituting chp model (requested prs, not found)
+WARNING: RouterControl<>: substituting chp model (requested prs, not found)
+WARNING: RouterInput<0,10,{2,2,2,2,3,3,4,4,5,3},0>: substituting chp model (requested prs, not found)
+WARNING: RouterMatcher<>: substituting chp model (requested prs, not found)
+WARNING: source_file<32,3,t,3,f>: substituting chp model (requested prs, not found)
+WARNING: RouterCollector<1>: substituting chp model (requested prs, not found)
+WARNING: RouterInput<2,10,{2,2,2,2,3,3,4,4,5,3},20>: substituting chp model (requested prs, not found)
+WARNING: source_file<32,2,t,2,f>: substituting chp model (requested prs, not found)
+WARNING: source_file<32,1,t,1,f>: substituting chp model (requested prs, not found)
+WARNING: source_file<32,0,t,0,f>: substituting chp model (requested prs, not found)
+WARNING: RouterInput<4,16,{2,2,2,2,2,3,3,4,4,5,3,2,3,3,4,2},40>: substituting chp model (requested prs, not found)
+WARNING: RouterInput<3,10,{2,2,2,2,3,3,4,4,5,3},30>: substituting chp model (requested prs, not found)
+WARNING: RouterCollector<0>: substituting chp model (requested prs, not found)
+WARNING: source_file<32,4,t,4,f>: substituting chp model (requested prs, not found)
+WARNING: TbFailure<6>: substituting chp model (requested prs, not found)
+WARNING: RouterCollector<3>: substituting chp model (requested prs, not found)
+WARNING: ArbMutex<>: substituting hse model (requested prs, not found)
+WARNING: ArbMutex<>: substituting hse model (requested prs, not found)
+WARNING: ArbMutex<>: substituting hse model (requested prs, not found)
+WARNING: ArbMutex<>: substituting hse model (requested prs, not found)
+WARNING: ArbMutex<>: substituting hse model (requested prs, not found)
+WARNING: ArbMutex<>: substituting hse model (requested prs, not found)
+WARNING: ArbMutex<>: substituting hse model (requested prs, not found)
+WARNING: ArbMutex<>: substituting hse model (requested prs, not found)
+WARNING: ArbMutex<>: substituting hse model (requested prs, not found)
+WARNING: ArbMutex<>: substituting hse model (requested prs, not found)
+WARNING: ArbMutex<>: substituting hse model (requested prs, not found)
+WARNING: ArbMutex<>: substituting hse model (requested prs, not found)
+WARNING: ArbMutex<>: substituting hse model (requested prs, not found)
+WARNING: ArbMutex<>: substituting hse model (requested prs, not found)
+WARNING: ArbMutex<>: substituting hse model (requested prs, not found)
+WARNING: ArbMutex<>: substituting hse model (requested prs, not found)
+WARNING: ArbMutex<>: substituting hse model (requested prs, not found)
+WARNING: ArbMutex<>: substituting hse model (requested prs, not found)
+WARNING: ArbMutex<>: substituting hse model (requested prs, not found)
+WARNING: ArbMutex<>: substituting hse model (requested prs, not found)
+WARNING: ArbMutex<>: substituting hse model (requested prs, not found)
+WARNING: ArbMutex<>: substituting hse model (requested prs, not found)
+WARNING: ArbMutex<>: substituting hse model (requested prs, not found)
+WARNING: ArbMutex<>: substituting hse model (requested prs, not found)
+WARNING: ArbMutex<>: substituting hse model (requested prs, not found)
+WARNING: ArbMutex<>: substituting hse model (requested prs, not found)
+WARNING: ArbMutex<>: substituting hse model (requested prs, not found)
+WARNING: ArbMutex<>: substituting hse model (requested prs, not found)
+WARNING: ArbMutex<>: substituting hse model (requested prs, not found)
+WARNING: ArbMutex<>: substituting hse model (requested prs, not found)
+WARNING: RouterCollector<2>: substituting chp model (requested prs, not found)
+WARNING: RouterInput<1,10,{2,2,2,2,3,3,4,4,5,3},10>: substituting chp model (requested prs, not found)
+TB_RANDOM_CHOICE off
+TB_WARNING_POLICY resume-on-warn
+TB_STRESS_BEGIN 10000
+[              109557] <driver_Pi>  TB_TX source=4 case=40 value=0xfffff43c
+[              115897] <checker>  TB_MATCH entry=68 port=3 case=40 length=2
+[              118943] <driver_Pi>  TB_TX source=4 case=40 value=0xfffff43f
+[              124361] <driver_C0i>  TB_TX source=0 case=0 value=0x7ffff03e
+[              129376] <driver_Pi>  TB_TX source=4 case=41 value=0xbffff42c
+[              130355] <checker>  TB_MATCH entry=0 port=3 case=0 length=2
+[              134395] <driver_C0i>  TB_TX source=0 case=0 value=0xfffff03f
+[              136133] <checker>  TB_MATCH entry=69 port=2 case=41 length=2
+[              139401] <driver_Pi>  TB_TX source=4 case=41 value=0xfffff42f
+[              139463] <driver_C2i>  TB_TX source=2 case=20 value=0x7ffff23e
+[              146054] <checker>  TB_MATCH entry=34 port=3 case=20 length=2
+[              146109] <driver_C0i>  TB_TX source=0 case=1 value=0x5ffff02e
+[              149567] <driver_Pi>  TB_TX source=4 case=42 value=0x7ffff41c
+[              150102] <driver_C2i>  TB_TX source=2 case=20 value=0xfffff23f
+[              152587] <checker>  TB_MATCH entry=1 port=2 case=1 length=2
+[              155365] <driver_C1i>  TB_TX source=1 case=10 value=0x7ffff13e
+[              155963] <checker>  TB_MATCH entry=70 port=1 case=42 length=2
+[              156063] <driver_C0i>  TB_TX source=0 case=1 value=0xfffff02f
+[              159230] <driver_Pi>  TB_TX source=4 case=42 value=0xfffff41f
+[              161614] <checker>  TB_MATCH entry=17 port=3 case=10 length=2
+[              162079] <driver_C2i>  TB_TX source=2 case=21 value=0x5ffff22e
+[              165379] <driver_C1i>  TB_TX source=1 case=10 value=0xfffff13f
+[              167378] <driver_C0i>  TB_TX source=0 case=2 value=0x3ffff01e
+[              168847] <checker>  TB_MATCH entry=35 port=2 case=21 length=2
+[              169845] <driver_Pi>  TB_TX source=4 case=43 value=0x3ffff40c
+[              171175] <driver_C3i>  TB_TX source=3 case=30 value=0x7ffff33e
+[              172718] <driver_C2i>  TB_TX source=2 case=21 value=0xfffff22f
+[              173931] <checker>  TB_MATCH entry=2 port=1 case=2 length=2
+[              176085] <checker>  TB_MATCH entry=71 port=0 case=43 length=2
+[              177806] <checker>  TB_MATCH entry=51 port=3 case=30 length=2
+[              177865] <driver_C1i>  TB_TX source=1 case=11 value=0x5ffff12e
+[              177949] <driver_C0i>  TB_TX source=0 case=2 value=0xfffff01f
+[              178770] <driver_Pi>  TB_TX source=4 case=43 value=0xfffff40f
+[              181851] <driver_C3i>  TB_TX source=3 case=30 value=0xfffff33f
+[              183817] <driver_C2i>  TB_TX source=2 case=22 value=0x3ffff21e
+[              184536] <checker>  TB_MATCH entry=18 port=2 case=11 length=2
+[              188798] <driver_C1i>  TB_TX source=1 case=11 value=0xfffff12f
+[              189151] <driver_C0i>  TB_TX source=0 case=3 value=0x1ffff00e
+[              190226] <checker>  TB_MATCH entry=36 port=1 case=22 length=2
+[              193927] <driver_C2i>  TB_TX source=2 case=22 value=0xfffff21f
+[              194482] <driver_C3i>  TB_TX source=3 case=31 value=0x5ffff32e
+[              195694] <checker>  TB_MATCH entry=3 port=0 case=3 length=2
+[              199247] <driver_C0i>  TB_TX source=0 case=3 value=0xfffff00f
+[              200199] <driver_C1i>  TB_TX source=1 case=12 value=0x3ffff11e
+[              201593] <checker>  TB_MATCH entry=52 port=2 case=31 length=2
+[              205138] <driver_C3i>  TB_TX source=3 case=31 value=0xfffff32f
+[              205275] <driver_C2i>  TB_TX source=2 case=23 value=0x1ffff20e
+[              206742] <checker>  TB_MATCH entry=19 port=1 case=12 length=2
+[              208623] <driver_C0i>  TB_TX source=0 case=4 value=0xfffff04e
+[              210179] <driver_C1i>  TB_TX source=1 case=12 value=0xfffff11f
+[              212187] <checker>  TB_MATCH entry=37 port=0 case=23 length=2
+[              215825] <driver_C0i>  TB_TX source=0 case=4 value=0xfffff04e
+[              215844] <driver_C2i>  TB_TX source=2 case=23 value=0xfffff20f
+[              216008] <driver_C3i>  TB_TX source=3 case=32 value=0x3ffff31e
+[              221009] <checker>  TB_MATCH entry=4 port=4 case=4 length=3
+[              221546] <driver_C1i>  TB_TX source=1 case=13 value=0x1ffff10e
+[              222726] <checker>  TB_MATCH entry=53 port=1 case=32 length=2
+[              223600] <driver_C0i>  TB_TX source=0 case=4 value=0xfffff04f
+[              225625] <driver_C0i>  TB_TX source=0 case=5 value=0x8000105e
+[              227163] <driver_C3i>  TB_TX source=3 case=32 value=0xfffff31f
+[              227768] <driver_C2i>  TB_TX source=2 case=24 value=0xfffff24e
+[              228051] <checker>  TB_MATCH entry=20 port=0 case=13 length=2
+[              232123] <driver_C1i>  TB_TX source=1 case=13 value=0xfffff10f
+[              235477] <driver_C2i>  TB_TX source=2 case=24 value=0xfffff24e
+[              238119] <driver_C3i>  TB_TX source=3 case=33 value=0x1ffff30e
+[              240842] <checker>  TB_MATCH entry=38 port=4 case=24 length=3
+[              243022] <driver_C2i>  TB_TX source=2 case=24 value=0xfffff24f
+[              244987] <checker>  TB_MATCH entry=54 port=0 case=33 length=2
+[              245190] <driver_C2i>  TB_TX source=2 case=25 value=0x8000125e
+[              248462] <driver_C1i>  TB_TX source=1 case=14 value=0xfffff14e
+[              248494] <driver_C3i>  TB_TX source=3 case=33 value=0xfffff30f
+[              256194] <driver_C1i>  TB_TX source=1 case=14 value=0xfffff14e
+[              261500] <checker>  TB_MATCH entry=21 port=4 case=14 length=3
+[              264125] <driver_C1i>  TB_TX source=1 case=14 value=0xfffff14f
+[              266164] <driver_C1i>  TB_TX source=1 case=15 value=0x8000115e
+[              268974] <driver_C3i>  TB_TX source=3 case=34 value=0xfffff34e
+[              276221] <driver_C3i>  TB_TX source=3 case=34 value=0xfffff34e
+[              280331] <driver_Pi>  TB_TX source=4 case=44 value=0x348d6002
+[              281542] <checker>  TB_MATCH entry=55 port=4 case=34 length=3
+[              284221] <driver_C3i>  TB_TX source=3 case=34 value=0xfffff34f
+[              286371] <driver_C3i>  TB_TX source=3 case=35 value=0x8000135e
+[              289208] <checker>  TB_MATCH entry=73 port=3 case=44 length=2
+[              290165] <checker>  TB_MATCH entry=72 port=2 case=44 length=2
+[              293458] <driver_Pi>  TB_TX source=4 case=44 value=0xbadbad43
+[              296927] <driver_Pi>  TB_TX source=4 case=45 value=0x8000145c
+[              391721] <driver_C0i>  TB_TX source=0 case=5 value=0x348d6002
+[              400253] <checker>  TB_MATCH entry=6 port=3 case=5 length=2
+[              401003] <checker>  TB_MATCH entry=5 port=2 case=5 length=2
+[              404993] <driver_C0i>  TB_TX source=0 case=5 value=0xbadbad03
+[              407077] <driver_C0i>  TB_TX source=0 case=6 value=0x8000105e
+[              501426] <driver_Pi>  TB_TX source=4 case=45 value=0x348d6002
+[              511420] <checker>  TB_MATCH entry=75 port=3 case=45 length=2
+[              512368] <checker>  TB_MATCH entry=74 port=2 case=45 length=2
+[              516209] <driver_Pi>  TB_TX source=4 case=45 value=0xbadbad43
+[              519509] <driver_Pi>  TB_TX source=4 case=46 value=0x8000145c
+[              614130] <driver_C2i>  TB_TX source=2 case=25 value=0x348d6002
+[              623085] <checker>  TB_MATCH entry=40 port=3 case=25 length=2
+[              623798] <checker>  TB_MATCH entry=39 port=2 case=25 length=2
+[              627811] <driver_C2i>  TB_TX source=2 case=25 value=0xbadbad23
+[              629974] <driver_C2i>  TB_TX source=2 case=26 value=0x8000125e
+[              724842] <driver_Pi>  TB_TX source=4 case=46 value=0x348d6002
+[              734594] <checker>  TB_MATCH entry=77 port=3 case=46 length=2
+[              735423] <checker>  TB_MATCH entry=76 port=2 case=46 length=2
+[              739332] <driver_Pi>  TB_TX source=4 case=46 value=0xbadbad43
+[              742541] <driver_Pi>  TB_TX source=4 case=47 value=0x8000145c
+[              837842] <driver_C1i>  TB_TX source=1 case=15 value=0x348d6002
+[              846645] <checker>  TB_MATCH entry=23 port=3 case=15 length=2
+[              847406] <checker>  TB_MATCH entry=22 port=2 case=15 length=2
+[              851457] <driver_C1i>  TB_TX source=1 case=15 value=0xbadbad13
+[              853646] <driver_C1i>  TB_TX source=1 case=16 value=0x8000115e
+[              947692] <driver_Pi>  TB_TX source=4 case=47 value=0x34828112
+[             1007219] <driver_Pi>  TB_TX source=4 case=47 value=0x2
+[             1017044] <checker>  TB_MATCH entry=78 port=2 case=47 length=2
+[             1018083] <checker>  TB_MATCH entry=79 port=3 case=47 length=2
+[             1021156] <driver_Pi>  TB_TX source=4 case=47 value=0xbadbad43
+[             1024720] <driver_Pi>  TB_TX source=4 case=48 value=0x8000145c
+[             1121914] <driver_C3i>  TB_TX source=3 case=35 value=0x348d6002
+[             1130432] <checker>  TB_MATCH entry=57 port=3 case=35 length=2
+[             1131244] <checker>  TB_MATCH entry=56 port=2 case=35 length=2
+[             1135044] <driver_C3i>  TB_TX source=3 case=35 value=0xbadbad33
+[             1136944] <driver_C3i>  TB_TX source=3 case=36 value=0x8000135e
+[             1228661] <driver_Pi>  TB_TX source=4 case=48 value=0x348d6312
+[             1298235] <driver_Pi>  TB_TX source=4 case=48 value=0x84100002
+[             1307932] <checker>  TB_MATCH entry=80 port=2 case=48 length=2
+[             1308745] <checker>  TB_MATCH entry=81 port=3 case=48 length=2
+[             1312474] <driver_Pi>  TB_TX source=4 case=48 value=0xbadbad43
+[             1316029] <driver_Pi>  TB_TX source=4 case=49 value=0x8000145c
+[             1408046] <driver_C0i>  TB_TX source=0 case=6 value=0x34828112
+[             1468608] <driver_C0i>  TB_TX source=0 case=6 value=0x2
+[             1477394] <checker>  TB_MATCH entry=8 port=3 case=6 length=2
+[             1478231] <checker>  TB_MATCH entry=7 port=2 case=6 length=2
+[             1482307] <driver_C0i>  TB_TX source=0 case=6 value=0xbadbad03
+[             1484107] <driver_C0i>  TB_TX source=0 case=7 value=0x8000105e
+[             1576661] <driver_Pi>  TB_TX source=4 case=49 value=0x348c6312
+[             1649056] <driver_Pi>  TB_TX source=4 case=49 value=0x84121482
+[             1744583] <driver_Pi>  TB_TX source=4 case=49 value=0x44212002
+[             1754361] <checker>  TB_MATCH entry=82 port=2 case=49 length=3
+[             1755335] <checker>  TB_MATCH entry=83 port=3 case=49 length=3
+[             1758958] <driver_Pi>  TB_TX source=4 case=49 value=0xbadbad43
+[             1762403] <driver_Pi>  TB_TX source=4 case=50 value=0x8000145c
+[             1855693] <driver_C2i>  TB_TX source=2 case=26 value=0x34828112
+[             1914459] <driver_C2i>  TB_TX source=2 case=26 value=0x2
+[             1923410] <checker>  TB_MATCH entry=42 port=3 case=26 length=2
+[             1924057] <checker>  TB_MATCH entry=41 port=2 case=26 length=2
+[             1928308] <driver_C2i>  TB_TX source=2 case=26 value=0xbadbad23
+[             1930464] <driver_C2i>  TB_TX source=2 case=27 value=0x8000125e
+[             2014524] <driver_Pi>  TB_TX source=4 case=50 value=0xf1248002
+[             2024297] <checker>  TB_MATCH entry=86 port=2 case=50 length=2
+[             2025135] <checker>  TB_MATCH entry=84 port=0 case=50 length=2
+[             2025796] <checker>  TB_MATCH entry=85 port=1 case=50 length=2
+[             2026838] <checker>  TB_MATCH entry=87 port=3 case=50 length=2
+[             2029507] <driver_Pi>  TB_TX source=4 case=50 value=0xbadbad43
+[             2126829] <driver_C1i>  TB_TX source=1 case=16 value=0x34828112
+[             2184623] <driver_C1i>  TB_TX source=1 case=16 value=0x2
+[             2193310] <checker>  TB_MATCH entry=24 port=2 case=16 length=2
+[             2194031] <checker>  TB_MATCH entry=25 port=3 case=16 length=2
+[             2197485] <driver_C1i>  TB_TX source=1 case=16 value=0xbadbad13
+[             2199569] <driver_C1i>  TB_TX source=1 case=17 value=0x8000115e
+[             2294731] <driver_Pi>  TB_TX source=4 case=51 value=0x348d6002
+[             2303622] <checker>  TB_MATCH entry=89 port=3 case=51 length=2
+[             2304602] <checker>  TB_MATCH entry=88 port=2 case=51 length=2
+[             2307745] <driver_Pi>  TB_TX source=4 case=51 value=0xbadbad43
+[             2404591] <driver_C3i>  TB_TX source=3 case=36 value=0x34828112
+[             2463250] <driver_C3i>  TB_TX source=3 case=36 value=0x2
+[             2471288] <checker>  TB_MATCH entry=58 port=2 case=36 length=2
+[             2471980] <checker>  TB_MATCH entry=59 port=3 case=36 length=2
+[             2475556] <driver_C3i>  TB_TX source=3 case=36 value=0xbadbad33
+[             2477532] <driver_C3i>  TB_TX source=3 case=37 value=0x8000135e
+[             2572166] <driver_Pi>  TB_TX source=4 case=52 value=0x34828112
+[             2630082] <driver_Pi>  TB_TX source=4 case=52 value=0x2
+[             2638867] <checker>  TB_MATCH entry=90 port=2 case=52 length=2
+[             2639715] <checker>  TB_MATCH entry=91 port=3 case=52 length=2
+[             2643111] <driver_Pi>  TB_TX source=4 case=52 value=0xbadbad43
+[             2737137] <driver_C0i>  TB_TX source=0 case=7 value=0x348d6312
+[             2806796] <driver_C0i>  TB_TX source=0 case=7 value=0x84100002
+[             2815607] <checker>  TB_MATCH entry=9 port=2 case=7 length=2
+[             2816150] <checker>  TB_MATCH entry=10 port=3 case=7 length=2
+[             2819951] <driver_C0i>  TB_TX source=0 case=7 value=0xbadbad03
+[             2822224] <driver_C0i>  TB_TX source=0 case=8 value=0x8000105e
+[             2910681] <driver_Pi>  TB_TX source=4 case=53 value=0x348d6312
+[             2979212] <driver_Pi>  TB_TX source=4 case=53 value=0x84100002
+[             2988210] <checker>  TB_MATCH entry=92 port=2 case=53 length=2
+[             2989244] <checker>  TB_MATCH entry=93 port=3 case=53 length=2
+[             2992487] <driver_Pi>  TB_TX source=4 case=53 value=0xbadbad43
+[             3085829] <driver_C2i>  TB_TX source=2 case=27 value=0x348d6312
+[             3153874] <driver_C2i>  TB_TX source=2 case=27 value=0x84100002
+[             3162287] <checker>  TB_MATCH entry=44 port=3 case=27 length=2
+[             3163116] <checker>  TB_MATCH entry=43 port=2 case=27 length=2
+[             3167013] <driver_C2i>  TB_TX source=2 case=27 value=0xbadbad23
+[             3168873] <driver_C2i>  TB_TX source=2 case=28 value=0x8000125e
+[             3258292] <driver_Pi>  TB_TX source=4 case=54 value=0x348c6312
+[             3330876] <driver_Pi>  TB_TX source=4 case=54 value=0x84121482
+[             3423628] <driver_Pi>  TB_TX source=4 case=54 value=0x44212002
+[             3432341] <checker>  TB_MATCH entry=95 port=3 case=54 length=3
+[             3433201] <checker>  TB_MATCH entry=94 port=2 case=54 length=3
+[             3435958] <driver_Pi>  TB_TX source=4 case=54 value=0xbadbad43
+[             3528736] <driver_C1i>  TB_TX source=1 case=17 value=0x348d6312
+[             3597655] <driver_C1i>  TB_TX source=1 case=17 value=0x84100002
+[             3605935] <checker>  TB_MATCH entry=27 port=3 case=17 length=2
+[             3606565] <checker>  TB_MATCH entry=26 port=2 case=17 length=2
+[             3610869] <driver_C1i>  TB_TX source=1 case=17 value=0xbadbad13
+[             3612779] <driver_C1i>  TB_TX source=1 case=18 value=0x8000115e
+[             3695932] <driver_Pi>  TB_TX source=4 case=55 value=0xf1248002
+[             3704970] <checker>  TB_MATCH entry=96 port=0 case=55 length=2
+[             3705596] <checker>  TB_MATCH entry=97 port=1 case=55 length=2
+[             3706386] <checker>  TB_MATCH entry=98 port=2 case=55 length=2
+[             3707016] <checker>  TB_MATCH entry=99 port=3 case=55 length=2
+[             3709024] <driver_Pi>  TB_TX source=4 case=55 value=0xbadbad43
+[             3801911] <driver_C3i>  TB_TX source=3 case=37 value=0x348d6312
+[             3869732] <driver_C3i>  TB_TX source=3 case=37 value=0x84100002
+[             3877894] <checker>  TB_MATCH entry=60 port=2 case=37 length=2
+[             3878689] <checker>  TB_MATCH entry=61 port=3 case=37 length=2
+[             3882827] <driver_C3i>  TB_TX source=3 case=37 value=0xbadbad33
+[             3884781] <driver_C3i>  TB_TX source=3 case=38 value=0x8000135e
+[             3975620] <driver_C0i>  TB_TX source=0 case=8 value=0x348c6312
+[             4048430] <driver_C0i>  TB_TX source=0 case=8 value=0x84121482
+[             4144266] <driver_C0i>  TB_TX source=0 case=8 value=0x44212002
+[             4152493] <checker>  TB_MATCH entry=12 port=3 case=8 length=3
+[             4153193] <checker>  TB_MATCH entry=11 port=2 case=8 length=3
+[             4157298] <driver_C0i>  TB_TX source=0 case=8 value=0xbadbad03
+[             4159507] <driver_C0i>  TB_TX source=0 case=9 value=0x8000105e
+[             4361723] <driver_C2i>  TB_TX source=2 case=28 value=0x348c6312
+[             4432031] <driver_C2i>  TB_TX source=2 case=28 value=0x84121482
+[             4525163] <driver_C2i>  TB_TX source=2 case=28 value=0x44212002
+[             4533661] <checker>  TB_MATCH entry=45 port=2 case=28 length=3
+[             4534386] <checker>  TB_MATCH entry=46 port=3 case=28 length=3
+[             4538226] <driver_C2i>  TB_TX source=2 case=28 value=0xbadbad23
+[             4539825] <driver_C2i>  TB_TX source=2 case=29 value=0x8000125e
+[             4742297] <driver_C1i>  TB_TX source=1 case=18 value=0x348c6312
+[             4813612] <driver_C1i>  TB_TX source=1 case=18 value=0x84121482
+[             4906612] <driver_C1i>  TB_TX source=1 case=18 value=0x44212002
+[             4914861] <checker>  TB_MATCH entry=28 port=2 case=18 length=3
+[             4915437] <checker>  TB_MATCH entry=29 port=3 case=18 length=3
+[             4919908] <driver_C1i>  TB_TX source=1 case=18 value=0xbadbad13
+[             4921771] <driver_C1i>  TB_TX source=1 case=19 value=0x8000115e
+[             5127188] <driver_C3i>  TB_TX source=3 case=38 value=0x348c6312
+[             5199171] <driver_C3i>  TB_TX source=3 case=38 value=0x84121482
+[             5293920] <driver_C3i>  TB_TX source=3 case=38 value=0x44212002
+[             5302238] <checker>  TB_MATCH entry=63 port=3 case=38 length=3
+[             5302983] <checker>  TB_MATCH entry=62 port=2 case=38 length=3
+[             5307277] <driver_C3i>  TB_TX source=3 case=38 value=0xbadbad33
+[             5309123] <driver_C3i>  TB_TX source=3 case=39 value=0x8000135e
+[             5562820] <driver_C0i>  TB_TX source=0 case=9 value=0xf1248002
+[             5571719] <checker>  TB_MATCH entry=13 port=0 case=9 length=2
+[             5572480] <checker>  TB_MATCH entry=14 port=1 case=9 length=2
+[             5573485] <checker>  TB_MATCH entry=15 port=2 case=9 length=2
+[             5574310] <checker>  TB_MATCH entry=16 port=3 case=9 length=2
+[             5576599] <driver_C0i>  TB_TX source=0 case=9 value=0xbadbad03
+[             5839252] <driver_C2i>  TB_TX source=2 case=29 value=0xf1248002
+[             5847966] <checker>  TB_MATCH entry=47 port=0 case=29 length=2
+[             5848749] <checker>  TB_MATCH entry=48 port=1 case=29 length=2
+[             5849508] <checker>  TB_MATCH entry=49 port=2 case=29 length=2
+[             5850262] <checker>  TB_MATCH entry=50 port=3 case=29 length=2
+[             5852803] <driver_C2i>  TB_TX source=2 case=29 value=0xbadbad23
+[             6214066] <driver_C1i>  TB_TX source=1 case=19 value=0xf1248002
+[             6222746] <checker>  TB_MATCH entry=30 port=0 case=19 length=2
+[             6223488] <checker>  TB_MATCH entry=31 port=1 case=19 length=2
+[             6224298] <checker>  TB_MATCH entry=32 port=2 case=19 length=2
+[             6225234] <checker>  TB_MATCH entry=33 port=3 case=19 length=2
+[             6226997] <driver_C1i>  TB_TX source=1 case=19 value=0xbadbad13
+[             6413040] <driver_C3i>  TB_TX source=3 case=39 value=0xf1248002
+[             6421171] <checker>  TB_MATCH entry=67 port=3 case=39 length=2
+[             6422035] <checker>  TB_MATCH entry=64 port=0 case=39 length=2
+[             6422813] <checker>  TB_MATCH entry=65 port=1 case=39 length=2
+[             6423587] <checker>  TB_MATCH entry=66 port=2 case=39 length=2
+[             6423854] <checker>  TB_ROUND 1
+[             6426429] <driver_C3i>  TB_TX source=3 case=39 value=0xbadbad33
+[            12066748] <dut.CRT0.US>  WARNING: unstable transition on `fd_a__w_1'   [by dut.CRT0.US.a <- 0]
+[            12427269] <checker>  TB_ROUND 2
+[            18657700] <checker>  TB_ROUND 3
+[            20753131] <dut.MU.IR>  WARNING: unstable transition on `fd_a__p'   [by dut.MU.IR.a <- 0]
+[            32344104] <dut.PRT.CS.left>  WARNING: unstable transition on `fd_a__w_1'   [by dut.PRT.CS.left.a <- 0]
+[            36815339] <dut.CRT2.CS.right>  WARNING: unstable transition on `fd_a__w_1'   [by dut.CRT2.CS.right.a <- 0]
+[            42484266] <dut.CRT0.CS.root>  WARNING: unstable transition on `fd_a__w_1'   [by dut.CRT0.CS.root.a <- 0]
+[            43058959] <dut.CRT1.CS.right>  WARNING: unstable transition on `fd_a__w_1'   [by dut.CRT1.CS.right.a <- 0]
+[            49154832] <dut.CRT1.CS.right>  WARNING: unstable transition on `fd_a__w_1'   [by dut.CRT1.CS.right.a <- 0]
+[            54839220] <dut.CRT0.US>  WARNING: unstable transition on `fd_a__w_1'   [by dut.CRT0.US.a <- 0]
+[            61440081] <dut.CRT1.US>  WARNING: unstable transition on `fd_a__w_1'   [by dut.CRT1.US.a <- 0]
+[            73652023] <dut.CRT1.CS.root>  WARNING: unstable transition on `fd_a__w_1'   [by dut.CRT1.CS.root.a <- 0]
+[            92252621] <dut.CRT3.US>  WARNING: unstable transition on `fd_a__w_1'   [by dut.CRT3.US.a <- 0]
+[            97911698] <dut.CRT2.CS.left>  WARNING: unstable transition on `fd_a__w_1'   [by dut.CRT2.CS.left.a <- 0]
+[           115832254] <dut.MU.IR>  WARNING: unstable transition on `fd_a__p'   [by dut.MU.IR.a <- 0]
+[           121037719] <dut.MU.IR>  WARNING: unstable transition on `fd_a__p'   [by dut.MU.IR.a <- 0]
+[           122504183] <dut.CRT1.CS.root>  WARNING: unstable transition on `fd_a__w_1'   [by dut.CRT1.CS.root.a <- 0]
+[           124804345] <dut.MU.IR>  WARNING: unstable transition on `fd_a__p'   [by dut.MU.IR.a <- 0]
+[           128652635] <dut.CRT2.US>  WARNING: unstable transition on `fd_a__w_1'   [by dut.CRT2.US.a <- 0]
+[           128944320] <dut.CRT3.CS.left>  WARNING: unstable transition on `fd_a__w_1'   [by dut.CRT3.CS.left.a <- 0]
+[           138574646] <dut.PRT.CS.right>  WARNING: unstable transition on `fd_a__w_1'   [by dut.PRT.CS.right.a <- 0]
+[           144927016] <dut.MU.IR>  WARNING: unstable transition on `fd_a__p'   [by dut.MU.IR.a <- 0]
+[           147071535] <dut.CRT2.CS.root>  WARNING: unstable transition on `fd_a__w_1'   [by dut.CRT2.CS.root.a <- 0]
+[           165553254] <dut.CRT1.US>  WARNING: unstable transition on `fd_a__w_1'   [by dut.CRT1.US.a <- 0]
+[           171343635] <dut.CRT2.CS.root>  WARNING: unstable transition on `fd_a__w_1'   [by dut.CRT2.CS.root.a <- 0]
+[           175055926] <dut.PRT.CS.left>  WARNING: unstable transition on `fd_a__w_1'   [by dut.PRT.CS.left.a <- 0]
+[           191289942] <dut.PRT.CS.root>  WARNING: unstable transition on `fd_a__w_1'   [by dut.PRT.CS.root.a <- 0]
+[           203539504] <dut.PRT.CS.root>  WARNING: unstable transition on `fd_a__w_1'   [by dut.PRT.CS.root.a <- 0]
+[           208166868] <dut.CRT2.CS.root>  WARNING: unstable transition on `fd_a__w_1'   [by dut.CRT2.CS.root.a <- 0]
+[           209727880] <dut.MU.IR>  WARNING: unstable transition on `fd_a__p'   [by dut.MU.IR.a <- 0]
+[           213940740] <dut.CRT0.CS.right>  WARNING: unstable transition on `fd_a__w_1'   [by dut.CRT0.CS.right.a <- 0]
+[           229993400] <dut.MU.IR>  WARNING: unstable transition on `fd_a__p'   [by dut.MU.IR.a <- 0]
+[           263527095] <dut.CRT3.CS.root>  WARNING: unstable transition on `fd_a__w_1'   [by dut.CRT3.CS.root.a <- 0]
+[           275581512] <dut.CRT2.US>  WARNING: unstable transition on `fd_a__w_1'   [by dut.CRT2.US.a <- 0]
+[           275901655] <dut.CRT3.CS.right>  WARNING: unstable transition on `fd_a__w_1'   [by dut.CRT3.CS.right.a <- 0]
+[           281745481] <dut.CRT3.US>  WARNING: unstable transition on `fd_a__w_1'   [by dut.CRT3.US.a <- 0]
+[           284111907] <dut.MU.IR>  WARNING: unstable transition on `fd_a__p'   [by dut.MU.IR.a <- 0]
+[           287780716] <dut.CRT2.CS.right>  WARNING: unstable transition on `fd_a__w_1'   [by dut.CRT2.CS.right.a <- 0]
+[           288163439] <dut.CRT3.US>  WARNING: unstable transition on `fd_a__w_1'   [by dut.CRT3.US.a <- 0]
+[           312574973] <dut.CRT3.CS.root>  WARNING: unstable transition on `fd_a__w_1'   [by dut.CRT3.CS.root.a <- 0]
+[           331937711] <dut.MU.IR>  WARNING: unstable transition on `fd_a__p'   [by dut.MU.IR.a <- 0]
+[           336969656] <dut.CRT3.CS.root>  WARNING: unstable transition on `fd_a__w_1'   [by dut.CRT3.CS.root.a <- 0]
+[           349309597] <dut.CRT3.CS.left>  WARNING: unstable transition on `fd_a__w_1'   [by dut.CRT3.CS.left.a <- 0]
+[           355344811] <dut.CRT3.US>  WARNING: unstable transition on `fd_a__w_1'   [by dut.CRT3.US.a <- 0]
+[           357756239] <dut.MU.IR>  WARNING: unstable transition on `fd_a__p'   [by dut.MU.IR.a <- 0]
+[           358921085] <dut.PRT.CS.root>  WARNING: unstable transition on `fd_a__w_1'   [by dut.PRT.CS.root.a <- 0]
+[           362393933] <dut.MU.IR>  WARNING: unstable transition on `fd_a__p'   [by dut.MU.IR.a <- 0]
+[           364681182] <dut.MU.IR>  WARNING: unstable transition on `fd_a__p'   [by dut.MU.IR.a <- 0]
+[           365883558] <dut.MU.IR>  WARNING: unstable transition on `fd_a__p'   [by dut.MU.IR.a <- 0]
+[           379391317] <dut.PRT.CS.root>  WARNING: unstable transition on `fd_a__w_1'   [by dut.PRT.CS.root.a <- 0]
+[           385079794] <dut.CRT0.CS.root>  WARNING: unstable transition on `fd_a__w_1'   [by dut.CRT0.CS.root.a <- 0]
+[           387281725] <dut.MU.IR>  WARNING: unstable transition on `fd_a__p'   [by dut.MU.IR.a <- 0]
+[           395067129] <dut.MU.IR>  WARNING: unstable transition on `fd_a__p'   [by dut.MU.IR.a <- 0]
+[           399703446] <dut.MU.IR>  WARNING: unstable transition on `fd_a__p'   [by dut.MU.IR.a <- 0]
+[           410436767] <dut.CRT3.CS.root>  WARNING: unstable transition on `fd_a__w_1'   [by dut.CRT3.CS.root.a <- 0]
+[           410457234] <dut.CRT1.US>  WARNING: unstable transition on `fd_a__w_1'   [by dut.CRT1.US.a <- 0]
+[           416437137] <dut.CRT2.US>  WARNING: unstable transition on `fd_a__w_1'   [by dut.CRT2.US.a <- 0]
+[           422239752] <dut.MU.IR>  WARNING: unstable transition on `fd_a__p'   [by dut.MU.IR.a <- 0]
+[           426839064] <dut.MU.IR>  WARNING: unstable transition on `fd_a__p'   [by dut.MU.IR.a <- 0]
+[           431060640] <dut.MU.IR>  WARNING: unstable transition on `fd_a__p'   [by dut.MU.IR.a <- 0]
+[           447175052] <dut.CRT3.US>  WARNING: unstable transition on `fd_a__w_1'   [by dut.CRT3.US.a <- 0]
+[           453192446] <dut.CRT1.CS.root>  WARNING: unstable transition on `fd_a__w_1'   [by dut.CRT1.CS.root.a <- 0]
+[           458567793] <dut.CRT0.CS.left>  WARNING: unstable transition on `fd_a__w_1'   [by dut.CRT0.CS.left.a <- 0]
+[           458568191] <dut.CRT0.CS.root>  WARNING: unstable transition on `fd_a__w_1'   [by dut.CRT0.CS.root.a <- 0]
+[           458736683] <dut.CRT0.US>  WARNING: unstable transition on `fd_a__w_1'   [by dut.CRT0.US.a <- 0]
+[           465297646] <dut.CRT1.US>  WARNING: unstable transition on `fd_a__w_1'   [by dut.CRT1.US.a <- 0]
+[           476056524] <dut.MU.IR>  WARNING: unstable transition on `fd_a__p'   [by dut.MU.IR.a <- 0]
+[           485294606] <dut.PRT.CS.left>  WARNING: unstable transition on `fd_a__w_1'   [by dut.PRT.CS.left.a <- 0]
+[           495132673] <dut.MU.PD.cd1>  WARNING: unstable transition on `fd_v__I_a'   [by dut.MU.PD.cd1.v <- 0]
+[           495247811] <dut.CRT0.CS.root>  WARNING: unstable transition on `fd_a__w_1'   [by dut.CRT0.CS.root.a <- 0]
+[           495523837] <dut.CRT2.CS.root>  WARNING: unstable transition on `fd_a__w_1'   [by dut.CRT2.CS.root.a <- 0]
+[           495921779] <dut.CRT1.CS.left>  WARNING: unstable transition on `fd_a__w_1'   [by dut.CRT1.CS.left.a <- 0]
+TB_STRESS_END 500009997
+[           500967285] <control>  PASSED: rounds=81 matched=9486
+TB_FINAL
+done: 1
+fail: 0
+rounds: 81  (0x51)
+TB_X_BEGIN
+TB_X_END
+TB_PROGRESS_BEGIN
+matched_count: 9486  (0x250e)
+tx_count[0]: 2457  (0x999)
+tx_next[0]: 0  (0x0)
+tx_case[0]: 8  (0x8)
+rx_count[0]: 2040  (0x7f8)
+rx_last[0]: 3134958915  (0xbadbad43)
+buffered[0]: 0  (0x0)
+stopped[0]: 1
+tx_count[1]: 2457  (0x999)
+tx_next[1]: 0  (0x0)
+tx_case[1]: 18  (0x12)
+rx_count[1]: 2040  (0x7f8)
+rx_last[1]: 3134958915  (0xbadbad43)
+buffered[1]: 0  (0x0)
+stopped[1]: 1
+tx_count[2]: 2457  (0x999)
+tx_next[2]: 0  (0x0)
+tx_case[2]: 28  (0x1c)
+rx_count[2]: 7691  (0x1e0b)
+rx_last[2]: 3134958899  (0xbadbad33)
+buffered[2]: 0  (0x0)
+stopped[2]: 1
+tx_count[3]: 2457  (0x999)
+tx_next[3]: 0  (0x0)
+tx_case[3]: 38  (0x26)
+rx_count[3]: 7691  (0x1e0b)
+rx_last[3]: 3134958899  (0xbadbad33)
+buffered[3]: 0  (0x0)
+stopped[3]: 1
+tx_count[4]: 5646  (0x160e)
+tx_next[4]: 0  (0x0)
+tx_case[4]: 51  (0x33)
+rx_count[4]: 984  (0x3d8)
+rx_last[4]: 4294964047  (0xfffff34f)
+buffered[4]: 0  (0x0)
+stopped[4]: 1
+TB_PROGRESS_END
+TB_COMPLETION_ASSERTIONS

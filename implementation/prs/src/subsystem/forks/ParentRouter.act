@@ -1,0 +1,199 @@
+import "forks/MltcSel/MltcSel.act";
+import "forks/StopcodeSel/StopcodeSel.act";
+import "forks/ChildSel/ChildSel.act";
+import "forks/commons/Merge.act";
+
+/*
+ * Topology and instance names follow src/ParentRouter.png.
+ * Merge<32,true> uses bit 31 for acknowledgement and releases it on ~O.a.
+ * CS.O0..O3 connect to C0..C3 by port name; ChildSel keeps its existing leaf mapping.
+ * ACT_PATH must include src/block. Reset is shared directly, as in the blocks.
+ * Every channel wire at this level, including external ports, has a CMOS inverter pair
+ * implementing its transport buffer: t/f follow the data direction; a/req travel in the reverse direction.
+ * Both transitions use the same source, following the existing fork-delay style.
+ */
+export defproc ParentRouter(
+    bool? reset;
+    ActiveDualRail32? I;
+    ActiveDualRail32! M, C0, C1, C2, C3
+)
+{
+    /* Logical holding-state senses are unchanged.
+     * Channel restoring inverters retain the public active-high encoding.
+     * inv_* nodes are combinational complements, not additional HSE state. */
+    bool inv_C0_a;
+    bool inv_C1_a;
+    bool inv_C2_a;
+    bool inv_C3_a;
+    bool inv_CS_I_a;
+    bool inv_CS_O0_f[32];
+    bool inv_CS_O0_t[32];
+    bool inv_CS_O1_f[32];
+    bool inv_CS_O1_t[32];
+    bool inv_CS_O2_f[32];
+    bool inv_CS_O2_t[32];
+    bool inv_CS_O3_f[32];
+    bool inv_CS_O3_t[32];
+    bool inv_I_f[32];
+    bool inv_I_t[32];
+    bool inv_M_a;
+    bool inv_M2_I0_a;
+    bool inv_M2_I1_a;
+    bool inv_M2_O_f[32];
+    bool inv_M2_O_t[32];
+    bool inv_MUS_I_a;
+    bool inv_MUS_O0_f[32];
+    bool inv_MUS_O0_t[32];
+    bool inv_MUS_O1_f[32];
+    bool inv_MUS_O1_t[32];
+    bool inv_SS_I_a;
+    bool inv_SS_O0_f[32];
+    bool inv_SS_O0_t[32];
+    bool inv_SS_O1_f[32];
+    bool inv_SS_O1_t[32];
+
+    MltcSel MUS;
+    StopcodeSel SS;
+    ChildSel CS;
+    Merge<32,true> M2;
+
+    MUS.reset = reset;
+    SS.reset = reset;
+    CS.reset = reset;
+
+    prs {
+        // Input to multicast selector.
+        (i:32:
+            ~inv_I_t[i] -> MUS.I.t[i]+
+            inv_I_t[i] -> MUS.I.t[i]-
+            ~inv_I_f[i] -> MUS.I.f[i]+
+            inv_I_f[i] -> MUS.I.f[i]-
+        )
+        ~inv_MUS_I_a -> I.a+
+        inv_MUS_I_a -> I.a-
+
+        // mltc=1: first merge input.
+        (i:32:
+            ~inv_MUS_O0_t[i] -> M2.I0.t[i]+
+            inv_MUS_O0_t[i] -> M2.I0.t[i]-
+            ~inv_MUS_O0_f[i] -> M2.I0.f[i]+
+            inv_MUS_O0_f[i] -> M2.I0.f[i]-
+        )
+        ~inv_M2_I0_a -> MUS.O0.a+
+        inv_M2_I0_a -> MUS.O0.a-
+
+        // mltc=0: test the stopcode.
+        (i:32:
+            ~inv_MUS_O1_t[i] -> SS.I.t[i]+
+            inv_MUS_O1_t[i] -> SS.I.t[i]-
+            ~inv_MUS_O1_f[i] -> SS.I.f[i]+
+            inv_MUS_O1_f[i] -> SS.I.f[i]-
+        )
+        ~inv_SS_I_a -> MUS.O1.a+
+        inv_SS_I_a -> MUS.O1.a-
+
+        // USCODE detected: second merge input.
+        (i:32:
+            ~inv_SS_O0_t[i] -> M2.I1.t[i]+
+            inv_SS_O0_t[i] -> M2.I1.t[i]-
+            ~inv_SS_O0_f[i] -> M2.I1.f[i]+
+            inv_SS_O0_f[i] -> M2.I1.f[i]-
+        )
+        ~inv_M2_I1_a -> SS.O0.a+
+        inv_M2_I1_a -> SS.O0.a-
+
+        // No USCODE: select a child.
+        (i:32:
+            ~inv_SS_O1_t[i] -> CS.I.t[i]+
+            inv_SS_O1_t[i] -> CS.I.t[i]-
+            ~inv_SS_O1_f[i] -> CS.I.f[i]+
+            inv_SS_O1_f[i] -> CS.I.f[i]-
+        )
+        ~inv_CS_I_a -> SS.O1.a+
+        inv_CS_I_a -> SS.O1.a-
+
+        // Merged multicast output.
+        (i:32:
+            ~inv_M2_O_t[i] -> M.t[i]+
+            inv_M2_O_t[i] -> M.t[i]-
+            ~inv_M2_O_f[i] -> M.f[i]+
+            inv_M2_O_f[i] -> M.f[i]-
+        )
+        ~inv_M_a -> M2.O.a+
+        inv_M_a -> M2.O.a-
+
+        // Child 0.
+        (i:32:
+            ~inv_CS_O0_t[i] -> C0.t[i]+
+            inv_CS_O0_t[i] -> C0.t[i]-
+            ~inv_CS_O0_f[i] -> C0.f[i]+
+            inv_CS_O0_f[i] -> C0.f[i]-
+        )
+        ~inv_C0_a -> CS.O0.a+
+        inv_C0_a -> CS.O0.a-
+
+        // Child 1.
+        (i:32:
+            ~inv_CS_O1_t[i] -> C1.t[i]+
+            inv_CS_O1_t[i] -> C1.t[i]-
+            ~inv_CS_O1_f[i] -> C1.f[i]+
+            inv_CS_O1_f[i] -> C1.f[i]-
+        )
+        ~inv_C1_a -> CS.O1.a+
+        inv_C1_a -> CS.O1.a-
+
+        // Child 2.
+        (i:32:
+            ~inv_CS_O2_t[i] -> C2.t[i]+
+            inv_CS_O2_t[i] -> C2.t[i]-
+            ~inv_CS_O2_f[i] -> C2.f[i]+
+            inv_CS_O2_f[i] -> C2.f[i]-
+        )
+        ~inv_C2_a -> CS.O2.a+
+        inv_C2_a -> CS.O2.a-
+
+        // Child 3.
+        (i:32:
+            ~inv_CS_O3_t[i] -> C3.t[i]+
+            inv_CS_O3_t[i] -> C3.t[i]-
+            ~inv_CS_O3_f[i] -> C3.f[i]+
+            inv_CS_O3_f[i] -> C3.f[i]-
+        )
+        ~inv_C3_a -> CS.O3.a+
+        inv_C3_a -> CS.O3.a-
+    }
+
+    // Residual CMOS inverters; no independent HSE sequencing state.
+    prs {
+        ~C0.a => inv_C0_a+
+        ~C1.a => inv_C1_a+
+        ~C2.a => inv_C2_a+
+        ~C3.a => inv_C3_a+
+        ~CS.I.a => inv_CS_I_a+
+        (bi:32: ~CS.O0.f[bi] => inv_CS_O0_f[bi]+)
+        (bi:32: ~CS.O0.t[bi] => inv_CS_O0_t[bi]+)
+        (bi:32: ~CS.O1.f[bi] => inv_CS_O1_f[bi]+)
+        (bi:32: ~CS.O1.t[bi] => inv_CS_O1_t[bi]+)
+        (bi:32: ~CS.O2.f[bi] => inv_CS_O2_f[bi]+)
+        (bi:32: ~CS.O2.t[bi] => inv_CS_O2_t[bi]+)
+        (bi:32: ~CS.O3.f[bi] => inv_CS_O3_f[bi]+)
+        (bi:32: ~CS.O3.t[bi] => inv_CS_O3_t[bi]+)
+        (bi:32: ~I.f[bi] => inv_I_f[bi]+)
+        (bi:32: ~I.t[bi] => inv_I_t[bi]+)
+        ~M.a => inv_M_a+
+        ~M2.I0.a => inv_M2_I0_a+
+        ~M2.I1.a => inv_M2_I1_a+
+        (bi:32: ~M2.O.f[bi] => inv_M2_O_f[bi]+)
+        (bi:32: ~M2.O.t[bi] => inv_M2_O_t[bi]+)
+        ~MUS.I.a => inv_MUS_I_a+
+        (bi:32: ~MUS.O0.f[bi] => inv_MUS_O0_f[bi]+)
+        (bi:32: ~MUS.O0.t[bi] => inv_MUS_O0_t[bi]+)
+        (bi:32: ~MUS.O1.f[bi] => inv_MUS_O1_f[bi]+)
+        (bi:32: ~MUS.O1.t[bi] => inv_MUS_O1_t[bi]+)
+        ~SS.I.a => inv_SS_I_a+
+        (bi:32: ~SS.O0.f[bi] => inv_SS_O0_f[bi]+)
+        (bi:32: ~SS.O0.t[bi] => inv_SS_O0_t[bi]+)
+        (bi:32: ~SS.O1.f[bi] => inv_SS_O1_f[bi]+)
+        (bi:32: ~SS.O1.t[bi] => inv_SS_O1_t[bi]+)
+    }
+}

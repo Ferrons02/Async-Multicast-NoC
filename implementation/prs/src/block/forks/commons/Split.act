@@ -1,0 +1,148 @@
+import "forks/commons/Channels.act";
+
+export defproc Split(bool? reset; PassiveDualRail4? I; PassiveDualRail4! O0; PassiveDualRail4! O1)
+{
+    bool fd_I_f_0__O0_f_0;
+    bool fd_I_f_0__O1_f_0;
+    bool fd_I_f_1__O0_f_1;
+    bool fd_I_f_1__O1_f_1;
+    bool fd_I_f_2__O0_f_2;
+    bool fd_I_f_2__O1_f_2;
+    bool fd_I_f_3__O0_f_3;
+    bool fd_I_f_3__O1_f_3;
+    bool fd_I_t_0__O0_t_0;
+    bool fd_I_t_0__O1_t_0;
+    bool fd_I_t_1__O0_t_1;
+    bool fd_I_t_1__O1_t_1;
+    bool fd_I_t_2__O0_t_2;
+    bool fd_I_t_2__O1_t_2;
+    bool fd_I_t_3__O0_t_3;
+    bool fd_I_t_3__O1_t_3;
+    bool fd_O0_req__I_req;
+    bool fd_O0_req__O0_f_0;
+    bool fd_O0_req__O0_f_1;
+    bool fd_O0_req__O0_f_2;
+    bool fd_O0_req__O0_f_3;
+    bool fd_O0_req__O0_t_0;
+    bool fd_O0_req__O0_t_1;
+    bool fd_O0_req__O0_t_2;
+    bool fd_O0_req__O0_t_3;
+    bool fd_O1_req__I_req;
+    bool fd_O1_req__O1_f_0;
+    bool fd_O1_req__O1_f_1;
+    bool fd_O1_req__O1_f_2;
+    bool fd_O1_req__O1_f_3;
+    bool fd_O1_req__O1_t_0;
+    bool fd_O1_req__O1_t_1;
+    bool fd_O1_req__O1_t_2;
+    bool fd_O1_req__O1_t_3;
+
+    // Original non-bubble PRS, PDF pp. 65.
+    // Reset is common; each guard pair uses one source view.
+    // Only the documented fork groups share views across targets.
+    prs {
+        fd_O0_req__I_req | fd_O1_req__I_req => I.req+
+        fd_O0_req__O0_t_0 & fd_I_t_0__O0_t_0 -> O0.t[0]+
+        ~fd_I_t_0__O0_t_0 -> O0.t[0]-
+        fd_O0_req__O0_f_0 & fd_I_f_0__O0_f_0 -> O0.f[0]+
+        ~fd_I_f_0__O0_f_0 -> O0.f[0]-
+        fd_O1_req__O1_t_0 & fd_I_t_0__O1_t_0 -> O1.t[0]+
+        ~fd_I_t_0__O1_t_0 -> O1.t[0]-
+        fd_O1_req__O1_f_0 & fd_I_f_0__O1_f_0 -> O1.f[0]+
+        ~fd_I_f_0__O1_f_0 -> O1.f[0]-
+        fd_O0_req__O0_t_1 & fd_I_t_1__O0_t_1 -> O0.t[1]+
+        ~fd_I_t_1__O0_t_1 -> O0.t[1]-
+        fd_O0_req__O0_f_1 & fd_I_f_1__O0_f_1 -> O0.f[1]+
+        ~fd_I_f_1__O0_f_1 -> O0.f[1]-
+        fd_O1_req__O1_t_1 & fd_I_t_1__O1_t_1 -> O1.t[1]+
+        ~fd_I_t_1__O1_t_1 -> O1.t[1]-
+        fd_O1_req__O1_f_1 & fd_I_f_1__O1_f_1 -> O1.f[1]+
+        ~fd_I_f_1__O1_f_1 -> O1.f[1]-
+        fd_O0_req__O0_t_2 & fd_I_t_2__O0_t_2 -> O0.t[2]+
+        ~fd_I_t_2__O0_t_2 -> O0.t[2]-
+        fd_O0_req__O0_f_2 & fd_I_f_2__O0_f_2 -> O0.f[2]+
+        ~fd_I_f_2__O0_f_2 -> O0.f[2]-
+        fd_O1_req__O1_t_2 & fd_I_t_2__O1_t_2 -> O1.t[2]+
+        ~fd_I_t_2__O1_t_2 -> O1.t[2]-
+        fd_O1_req__O1_f_2 & fd_I_f_2__O1_f_2 -> O1.f[2]+
+        ~fd_I_f_2__O1_f_2 -> O1.f[2]-
+        fd_O0_req__O0_t_3 & fd_I_t_3__O0_t_3 -> O0.t[3]+
+        ~fd_I_t_3__O0_t_3 -> O0.t[3]-
+        fd_O0_req__O0_f_3 & fd_I_f_3__O0_f_3 -> O0.f[3]+
+        ~fd_I_f_3__O0_f_3 -> O0.f[3]-
+        fd_O1_req__O1_t_3 & fd_I_t_3__O1_t_3 -> O1.t[3]+
+        ~fd_I_t_3__O1_t_3 -> O1.t[3]-
+        fd_O1_req__O1_f_3 & fd_I_f_3__O1_f_3 -> O1.f[3]+
+        ~fd_I_f_3__O1_f_3 -> O1.f[3]-
+
+        // Non-inverting wire delays.
+        I.f[0] -> fd_I_f_0__O0_f_0+
+        ~I.f[0] -> fd_I_f_0__O0_f_0-
+        I.f[0] -> fd_I_f_0__O1_f_0+
+        ~I.f[0] -> fd_I_f_0__O1_f_0-
+        I.f[1] -> fd_I_f_1__O0_f_1+
+        ~I.f[1] -> fd_I_f_1__O0_f_1-
+        I.f[1] -> fd_I_f_1__O1_f_1+
+        ~I.f[1] -> fd_I_f_1__O1_f_1-
+        I.f[2] -> fd_I_f_2__O0_f_2+
+        ~I.f[2] -> fd_I_f_2__O0_f_2-
+        I.f[2] -> fd_I_f_2__O1_f_2+
+        ~I.f[2] -> fd_I_f_2__O1_f_2-
+        I.f[3] -> fd_I_f_3__O0_f_3+
+        ~I.f[3] -> fd_I_f_3__O0_f_3-
+        I.f[3] -> fd_I_f_3__O1_f_3+
+        ~I.f[3] -> fd_I_f_3__O1_f_3-
+        I.t[0] -> fd_I_t_0__O0_t_0+
+        ~I.t[0] -> fd_I_t_0__O0_t_0-
+        I.t[0] -> fd_I_t_0__O1_t_0+
+        ~I.t[0] -> fd_I_t_0__O1_t_0-
+        I.t[1] -> fd_I_t_1__O0_t_1+
+        ~I.t[1] -> fd_I_t_1__O0_t_1-
+        I.t[1] -> fd_I_t_1__O1_t_1+
+        ~I.t[1] -> fd_I_t_1__O1_t_1-
+        I.t[2] -> fd_I_t_2__O0_t_2+
+        ~I.t[2] -> fd_I_t_2__O0_t_2-
+        I.t[2] -> fd_I_t_2__O1_t_2+
+        ~I.t[2] -> fd_I_t_2__O1_t_2-
+        I.t[3] -> fd_I_t_3__O0_t_3+
+        ~I.t[3] -> fd_I_t_3__O0_t_3-
+        I.t[3] -> fd_I_t_3__O1_t_3+
+        ~I.t[3] -> fd_I_t_3__O1_t_3-
+        O0.req -> fd_O0_req__I_req+
+        ~O0.req -> fd_O0_req__I_req-
+        O0.req -> fd_O0_req__O0_f_0+
+        ~O0.req -> fd_O0_req__O0_f_0-
+        O0.req -> fd_O0_req__O0_f_1+
+        ~O0.req -> fd_O0_req__O0_f_1-
+        O0.req -> fd_O0_req__O0_f_2+
+        ~O0.req -> fd_O0_req__O0_f_2-
+        O0.req -> fd_O0_req__O0_f_3+
+        ~O0.req -> fd_O0_req__O0_f_3-
+        O0.req -> fd_O0_req__O0_t_0+
+        ~O0.req -> fd_O0_req__O0_t_0-
+        O0.req -> fd_O0_req__O0_t_1+
+        ~O0.req -> fd_O0_req__O0_t_1-
+        O0.req -> fd_O0_req__O0_t_2+
+        ~O0.req -> fd_O0_req__O0_t_2-
+        O0.req -> fd_O0_req__O0_t_3+
+        ~O0.req -> fd_O0_req__O0_t_3-
+        O1.req -> fd_O1_req__I_req+
+        ~O1.req -> fd_O1_req__I_req-
+        O1.req -> fd_O1_req__O1_f_0+
+        ~O1.req -> fd_O1_req__O1_f_0-
+        O1.req -> fd_O1_req__O1_f_1+
+        ~O1.req -> fd_O1_req__O1_f_1-
+        O1.req -> fd_O1_req__O1_f_2+
+        ~O1.req -> fd_O1_req__O1_f_2-
+        O1.req -> fd_O1_req__O1_f_3+
+        ~O1.req -> fd_O1_req__O1_f_3-
+        O1.req -> fd_O1_req__O1_t_0+
+        ~O1.req -> fd_O1_req__O1_t_0-
+        O1.req -> fd_O1_req__O1_t_1+
+        ~O1.req -> fd_O1_req__O1_t_1-
+        O1.req -> fd_O1_req__O1_t_2+
+        ~O1.req -> fd_O1_req__O1_t_2-
+        O1.req -> fd_O1_req__O1_t_3+
+        ~O1.req -> fd_O1_req__O1_t_3-
+    }
+}

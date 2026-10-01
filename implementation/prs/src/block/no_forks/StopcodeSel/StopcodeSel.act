@@ -1,0 +1,46 @@
+import "no_forks/commons/Channels.act";
+
+/* Literal user-supplied functional PRS (2026-09-14).
+ * r maps to reset and i_a maps to I.a. No extra inversions or wire delays. */
+export defproc StopcodeSel(bool? reset; ActiveDualRail32? I; ActiveDualRail32! O0, O1)
+{
+    bool p, s, f, v, w_0i, w_0, w_1;
+
+    prs {
+        /* Header match: bit 31 true, bits 30..13 false. */
+        ((~w_0i & (I.t[31] & I.f[30] & I.f[29] & I.f[28] & I.f[27] & I.f[26] & I.f[25] & I.f[24] & I.f[23] & I.f[22] & I.f[21] & I.f[20] & I.f[19] & I.f[18] & I.f[17] & I.f[16] & I.f[15] & I.f[14] & I.f[13] & s)) | reset) -> p+
+        (~w_0i & (I.f[31] | I.t[30] | I.t[29] | I.t[28] | I.t[27] | I.t[26] | I.t[25] | I.t[24] | I.t[23] | I.t[22] | I.t[21] | I.t[20] | I.t[19] | I.t[18] | I.t[17] | I.t[16] | I.t[15] | I.t[14] | I.t[13]) & s) -> p-
+
+        (s & (((I.t[31] & I.f[30] & I.f[29] & I.f[28] & I.f[27] & I.f[26] & I.f[25] & I.f[24] & I.f[23] & I.f[22] & I.f[21] & I.f[20] & I.f[19] & I.f[18] & I.f[17] & I.f[16] & I.f[15] & I.f[14] & I.f[13]) & p) | ((I.f[31] | I.t[30] | I.t[29] | I.t[28] | I.t[27] | I.t[26] | I.t[25] | I.t[24] | I.t[23] | I.t[22] | I.t[21] | I.t[20] | I.t[19] | I.t[18] | I.t[17] | I.t[16] | I.t[15] | I.t[14] | I.t[13]) & ~p))) -> w_0i+
+        ((~s & (O0.a | O1.a)) | reset) -> w_0i-
+
+        (w_0i & (~I.t[31] & ~I.f[31] & ~I.t[30] & ~I.f[30] & ~I.t[29] & ~I.f[29] & ~I.t[28] & ~I.f[28] & ~I.t[27] & ~I.f[27] & ~I.t[26] & ~I.f[26] & ~I.t[25] & ~I.f[25] & ~I.t[24] & ~I.f[24] & ~I.t[23] & ~I.f[23] & ~I.t[22] & ~I.f[22] & ~I.t[21] & ~I.f[21] & ~I.t[20] & ~I.f[20] & ~I.t[19] & ~I.f[19] & ~I.t[18] & ~I.f[18] & ~I.t[17] & ~I.f[17] & ~I.t[16] & ~I.f[16] & ~I.t[15] & ~I.f[15] & ~I.t[14] & ~I.f[14] & ~I.t[13] & ~I.f[13] & ~I.t[12] & ~I.f[12] & ~I.t[11] & ~I.f[11] & ~I.t[10] & ~I.f[10] & ~I.t[9] & ~I.f[9] & ~I.t[8] & ~I.f[8] & ~I.t[7] & ~I.f[7] & ~I.t[6] & ~I.f[6] & ~I.t[5] & ~I.f[5] & ~I.t[4] & ~I.f[4] & ~I.t[3] & ~I.f[3] & ~I.t[2] & ~I.f[2] & ~I.t[1] & ~I.f[1] & ~I.t[0] & ~I.f[0])) -> f+
+        (~w_0i | reset) -> f-
+
+        (~s & I.f[0]) -> w_0+
+        ((~s & I.a & (~O0.a & ~O1.a)) | reset) -> w_0-
+        (~s & I.t[0]) -> w_1+
+        ((s & I.a & (~O0.a & ~O1.a)) | reset) -> w_1-
+
+        ((w_1 & I.a & (~O0.a & ~O1.a)) | reset) -> s+
+        (w_0i & ((f & ~I.a) | ~p)) -> s-
+
+        ((O0.a | O1.a) & (w_1 | w_0) & ~w_0i & ~f) -> v+
+        (((~O0.a & ~O1.a) & (~w_1 & ~w_0)) | reset) -> v-
+
+        ((~s & v) | (s & w_0i & p & ~f)) -> I.a+
+        ((~w_0i & ~v) | (s & f) | reset) -> I.a-
+
+        /* Both ports copy their input rails after route selection. */
+        (k:0..31:
+            (p & ~s & I.t[k]) -> O0.t[k]+
+            ~I.t[k] -> O0.t[k]-
+            (p & ~s & I.f[k]) -> O0.f[k]+
+            ~I.f[k] -> O0.f[k]-
+            (~p & ~s & I.t[k]) -> O1.t[k]+
+            ~I.t[k] -> O1.t[k]-
+            (~p & ~s & I.f[k]) -> O1.f[k]+
+            ~I.f[k] -> O1.f[k]-
+        )
+    }
+}

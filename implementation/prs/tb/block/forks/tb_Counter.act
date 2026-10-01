@@ -1,0 +1,68 @@
+import "../../../src/block/forks/Counter/Counter.act";
+import "../testbench_support.act";
+
+/* Cnt is a pull channel: the testbench initiates each read via req.
+ * Keep each three-send group and its read strictly sequential. */
+/* Global controls avoid an actsim state-offset bug for parent-owned CHP
+ * Boolean ports beside the PRS hierarchy. The command file uses these names. */
+bool reset, stop, fail, done, ready;
+int<32> rounds;
+Initialize { actions { ready- } }
+bool bad[1];
+TbPush<4> I;
+TbPull<8> Cnt;
+
+defproc CounterDriver(
+    bool bad_Cnt;
+    TbPush!<4> I;
+    TbPull?<8> Cnt
+)
+{
+    /* ACT disallows nonlocal ports directly in loop guards. Sample the
+     * external stop/fail flags at each completed sequence boundary. */
+    bool running;
+    int<8> out_Cnt;
+    chp {
+        ready := false; stop := false; done := false; rounds := 0;
+        bad_Cnt := false;
+        ready := true; running := true;
+        [~reset];
+        *[running ->
+            I!0xF;
+            I!0xF;
+            I!0xF;
+            Cnt?out_Cnt;
+            [out_Cnt != 12 ->
+                bad_Cnt := true;
+                log("FAILED: Cnt expected ", 12, ", got ", out_Cnt, ", round ", rounds);
+                assert(out_Cnt = 12, "Cnt golden mismatch");
+                [reset]
+            [] else -> skip];
+            I!0;
+            I!0;
+            I!0;
+            Cnt?out_Cnt;
+            [out_Cnt != 0 ->
+                bad_Cnt := true;
+                log("FAILED: Cnt expected ", 0, ", got ", out_Cnt, ", round ", rounds);
+                assert(out_Cnt = 0, "Cnt golden mismatch");
+                [reset]
+            [] else -> skip];
+            rounds := rounds + 1;
+            [stop | fail -> running := false [] else -> skip]
+        ];
+        done := true;
+        [fail -> log("FAILED")
+        [] else -> log("PASSED: rounds=", rounds)]
+    }
+}
+
+defproc tb_Counter()
+{
+    Counter dut;
+    dut.reset = reset;
+    TbPushSender<4> wire_I(I, dut.I.t, dut.I.f, dut.I.a);
+    TbPullReceiver<8> wire_Cnt(Cnt, dut.Cnt.t, dut.Cnt.f, dut.Cnt.req);
+    TbFailure<1> failure(ready, bad, fail);
+    CounterDriver driver(bad[0], I, Cnt);
+}

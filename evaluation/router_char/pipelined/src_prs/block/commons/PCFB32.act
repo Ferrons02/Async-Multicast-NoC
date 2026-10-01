@@ -1,0 +1,66 @@
+import "commons/Channels.act";
+
+/* PCFB32 with completion-interlocked output precharge.
+ * L is the upstream channel; R is the downstream channel; r = reset.
+ * n_c/n_f/n_h/n_m/n_L_a/n_R_t/n_R_f denote the supplied underscored nodes.
+ * inv_R_a is the explicit complement of the downstream acknowledge.
+ */
+export defproc PCFB32(bool? reset; ActiveDualRail32? L; ActiveDualRail32! R)
+{
+    bool n_c[8], d[4], n_f[2], g;
+    bool n_h[8], j[4], n_m[2], n;
+    bool e, n_L_a, inv_R_a, inv_reset, n_R_t[32], n_R_f[32];
+
+    prs {
+        (k:8:
+            (&b:4: (R.t[4*k+b] | R.f[4*k+b])) -> n_c[k]-
+            (&b:4: (~R.t[4*k+b] & ~R.f[4*k+b])) -> n_c[k]+
+        )
+        (k:4:
+            ~n_c[2*k+1] & ~n_c[2*k] -> d[k]+
+            n_c[2*k+1] & n_c[2*k] -> d[k]-
+        )
+        (k:2:
+            d[2*k+1] & d[2*k] -> n_f[k]-
+            ~d[2*k+1] & ~d[2*k] -> n_f[k]+
+        )
+        ~n_f[1] & ~n_f[0] -> g+
+        n_f[1] & n_f[0] -> g-
+
+        (k:8:
+            (&b:4: (~L.t[4*k+b] & ~L.f[4*k+b])) -> n_h[k]+
+            (&b:4: (L.t[4*k+b] | L.f[4*k+b])) -> n_h[k]-
+        )
+        (k:4:
+            ~n_h[2*k+1] & ~n_h[2*k] -> j[k]+
+            n_h[2*k+1] & n_h[2*k] -> j[k]-
+        )
+        (k:2:
+            j[2*k+1] & j[2*k] -> n_m[k]-
+            ~j[2*k+1] & ~j[2*k] -> n_m[k]+
+        )
+        n_m[1] & n_m[0] -> n-
+        ~n_m[1] & ~n_m[0] -> n+
+
+        e & g -> n_L_a-
+        ~n -> n_L_a+
+        ~L.a & ~g & ~reset -> e+
+        L.a | reset -> e-
+
+        (k:32:
+            inv_R_a & e & L.t[k] -> n_R_t[k]-
+            // A fast receiver must not erase R before g -> L.a -> e-.
+            // Otherwise the completion tree can miss R and replay L.
+            (~inv_R_a & ~e) | ~inv_reset -> n_R_t[k]+
+            inv_R_a & e & L.f[k] -> n_R_f[k]-
+            (~inv_R_a & ~e) | ~inv_reset -> n_R_f[k]+
+        )
+        ~R.a => inv_R_a+
+        ~reset => inv_reset+
+        ~n_L_a => L.a+
+        (k:32:
+            ~n_R_t[k] => R.t[k]+
+            ~n_R_f[k] => R.f[k]+
+        )
+    }
+}

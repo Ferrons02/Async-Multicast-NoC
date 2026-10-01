@@ -1,0 +1,49 @@
+import "no_forks/PayloadDispatch/ChildDispatch.act";
+
+export defproc PayloadDispatch(
+    bool? reset;
+    ActiveDualRail32? I;
+    ActiveDualRail4? Ch;
+    ActiveDualRail32! C0;
+    ActiveDualRail32! C1;
+    ActiveDualRail32! C2;
+    ActiveDualRail32! C3
+)
+{
+
+    ChildDispatch cd0, cd1, cd2, cd3;
+    cd0.reset = reset;
+    cd0.C.t[0] = Ch.t[3];
+    cd0.C.f[0] = Ch.f[3];
+    cd0.I.t = I.t;
+    cd0.I.f = I.f;
+    cd0.O = C0;
+    cd1.reset = reset;
+    cd1.C.t[0] = Ch.t[2];
+    cd1.C.f[0] = Ch.f[2];
+    cd1.I.t = I.t;
+    cd1.I.f = I.f;
+    cd1.O = C1;
+    cd2.reset = reset;
+    cd2.C.t[0] = Ch.t[1];
+    cd2.C.f[0] = Ch.f[1];
+    cd2.I.t = I.t;
+    cd2.I.f = I.f;
+    cd2.O = C2;
+    cd3.reset = reset;
+    cd3.C.t[0] = Ch.t[0];
+    cd3.C.f[0] = Ch.f[0];
+    cd3.I.t = I.t;
+    cd3.I.f = I.f;
+    cd3.O = C3;
+
+    // Each receiver retains its own acknowledgement into the C-elements.
+
+    // Original non-bubble PRS: RouterDecompositionBubbleReshuffling.pdf, pp. 65–68 (existing parallel completion).
+    prs {
+        cd0.I.a & cd1.I.a & cd2.I.a & cd3.I.a -> I.a+
+        ~cd0.I.a & ~cd1.I.a & ~cd2.I.a & ~cd3.I.a -> I.a-
+        cd0.C.a & cd1.C.a & cd2.C.a & cd3.C.a -> Ch.a+
+        ~cd0.C.a & ~cd1.C.a & ~cd2.C.a & ~cd3.C.a -> Ch.a-
+    }
+}

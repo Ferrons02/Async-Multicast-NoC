@@ -1,0 +1,18 @@
+import "no_forks/commons/Channels.act";
+
+/* Specialized full adder with the second operand fixed to one. */
+export defproc FullAdderP(bool? reset; DualRailBit? a; DualRailBit? c; DualRailBit! d; DualRailBit! s)
+{
+
+    // Original non-bubble PRS: RouterDecompositionBubbleReshuffling.pdf, pp. 52.
+    prs {
+        a.t | c.t -> d.t+
+        ~a.t & ~a.f & ~c.t & ~c.f -> d.t-
+        a.f & c.f -> d.f+
+        ~a.t & ~a.f & ~c.t & ~c.f -> d.f-
+        (c.t & a.t) | (c.f & a.f) -> s.t+
+        ~c.t & ~c.f -> s.t-
+        (c.f | a.f) & (c.t | a.t) -> s.f+
+        ~c.t & ~c.f -> s.f-
+    }
+}

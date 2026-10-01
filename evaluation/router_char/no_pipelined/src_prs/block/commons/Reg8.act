@@ -1,0 +1,41 @@
+import "commons/Channels.act";
+
+// Supplied Reg8 PRS with an eight-bit capture/spacer completion tree.
+export defproc Reg8(bool? reset; ActiveDualRail8? W; PassiveDualRail8! R)
+{
+    bool x[8], _x[8], _pt[8], _qr, _p_a;
+    bool _c[8], d[4], _e[2], e[2];
+    prs {
+        (j:8:
+            (W.t[j] & x[j]) | (W.f[j] & _x[j]) -> _c[j]-
+            ~W.t[j] & ~W.f[j] -> _c[j]+
+        )
+        (j:4:
+            ~_c[2*j+1] & ~_c[2*j] -> d[j]+
+            _c[2*j+1] & _c[2*j] -> d[j]-
+        )
+        (j:2:
+            d[2*j+1] & d[2*j] -> _e[j]-
+            ~d[2*j+1] & ~d[2*j] -> _e[j]+
+        )
+        // Explicit complements preserve the supplied root guard polarities
+        // while giving its NMOS/PMOS networks implementable gate signals.
+        (j:2: ~_e[j] => e[j]+)
+        e[1] & e[0] -> _p_a-
+        ~e[1] & ~e[0] -> _p_a+
+        (j:8:
+            ~_pt[j] -> x[j]+
+            W.f[j] | reset -> x[j]-
+            ~_qr & ~_x[j] -> R.t[j]+
+            _qr -> R.t[j]-
+            ~_qr & ~x[j] -> R.f[j]+
+            _qr -> R.f[j]-
+        )
+        ~R.req => _qr+
+        (j:8:
+            ~W.t[j] => _pt[j]+
+            ~x[j] => _x[j]+
+        )
+        ~_p_a => W.a+
+    }
+}

@@ -1,0 +1,14 @@
+Module: Router
+Campaign: /tmp/ferroma_analog_campaign_cmCg4mJM
+Status: COMPLETE - functional PASS
+LUT usable: False
+Machine-readable LUT: /home/cad/ferroma/benchmark/analog_sim/archives/router_completed_20260926/async_router_luts.json
+Netlist SHA256: 2b345a7f008ee80763d379fb15966e3f849f7e3a54c5913827f62605cd5f49fd
+Timing uses interpolated physical VDD/2 crossings; events identify FIFO transactions only.
+No-load, handshake, input-valid spacing, accepted spacing and output spacing are distinct.
+Parser timing is the physical internal Serializer input processing handshake, not frontend acceptance II.
+Energy uses isolated whole-DUT windows with every PCFB empty/ready before and after.
+Consumed setup-header processing is an explicitly labeled handshake-based architectural surrogate.
+Validation: {"campaign_hashes_verified": true, "coverage_complete": true, "functional_pass": true, "ii_convergence_validated": false, "isolation_rejections": ["campaign /tmp/ferroma_analog_campaign_PqErqJY6 id 832: Supply not stable within 1% in quiet boundary", "campaign /tmp/ferroma_analog_campaign_PqErqJY6 id 833: Supply not stable within 1% in quiet boundary", "campaign /tmp/ferroma_analog_campaign_cmCg4mJM id 848: Supply not stable within 1% in quiet boundary", "campaign /tmp/ferroma_analog_campaign_cmCg4mJM id 849: Supply not stable within 1% in quiet boundary", "campaign /tmp/ferroma_analog_campaign_cmCg4mJM id 850: Supply not stable within 1% in quiet boundary", "campaign /tmp/ferroma_analog_campaign_cmCg4mJM id 851: Supply not stable within 1% in quiet boundary", "campaign /tmp/ferroma_analog_campaign_cmCg4mJM id 852: Supply not stable within 1% in quiet boundary"], "leakage_validated": true, "missing_entries": [], "multicast_subset_validated": false, "parser_validated": false}
+Parser validation: ["timing_ps: negative base or switch correction; model unsupported", "energy_fj: insufficient independent z/s measurements"]
+All measurements and rejected cases are retained in the JSON audit.

@@ -1,0 +1,17 @@
+import "no_forks/UpdownSel/UpdownSel.act";
+
+/* Left-to-right leaf order is O3, O2, O1, O0. */
+export defproc ChildSel(bool? reset; ActiveDualRail32? I; ActiveDualRail32! O0, O1, O2, O3)
+{
+    UpdownSel root, left, right;
+    root.reset = reset;
+    left.reset = reset;
+    right.reset = reset;
+    root.I = I;
+    root.O0 = left.I;
+    root.O1 = right.I;
+    left.O0 = O3;
+    left.O1 = O2;
+    right.O0 = O1;
+    right.O1 = O0;
+}

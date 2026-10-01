@@ -1,0 +1,61 @@
+import "no_forks/commons/Channels.act";
+
+/* Write is a push channel; read returns data in response to R.req. */
+export defproc Reg8(bool? reset; ActiveDualRail8? W; PassiveDualRail8! R)
+{
+    bool x_0, x_1, x_2, x_3, x_4, x_5, x_6, x_7;
+
+    // Original non-bubble PRS: RouterDecompositionBubbleReshuffling.pdf, pp. 58.
+    prs {
+        (((W.t[7] & x_7) | (W.f[7] & ~x_7)) & ((W.t[6] & x_6) | (W.f[6] & ~x_6)) & ((W.t[5] & x_5) | (W.f[5] & ~x_5)) & ((W.t[4] & x_4) | (W.f[4] & ~x_4)) & ((W.t[3] & x_3) | (W.f[3] & ~x_3)) & ((W.t[2] & x_2) | (W.f[2] & ~x_2)) & ((W.t[1] & x_1) | (W.f[1] & ~x_1)) & ((W.t[0] & x_0) | (W.f[0] & ~x_0))) -> W.a+
+        (&i:8: (~W.t[i] & ~W.f[i])) -> W.a-
+        W.t[7] -> x_7+
+        W.f[7] | reset -> x_7-
+        R.req & x_7 -> R.t[7]+
+        ~R.req -> R.t[7]-
+        R.req & ~x_7 -> R.f[7]+
+        ~R.req -> R.f[7]-
+        W.t[6] -> x_6+
+        W.f[6] | reset -> x_6-
+        R.req & x_6 -> R.t[6]+
+        ~R.req -> R.t[6]-
+        R.req & ~x_6 -> R.f[6]+
+        ~R.req -> R.f[6]-
+        W.t[5] -> x_5+
+        W.f[5] | reset -> x_5-
+        R.req & x_5 -> R.t[5]+
+        ~R.req -> R.t[5]-
+        R.req & ~x_5 -> R.f[5]+
+        ~R.req -> R.f[5]-
+        W.t[4] -> x_4+
+        W.f[4] | reset -> x_4-
+        R.req & x_4 -> R.t[4]+
+        ~R.req -> R.t[4]-
+        R.req & ~x_4 -> R.f[4]+
+        ~R.req -> R.f[4]-
+        W.t[3] -> x_3+
+        W.f[3] | reset -> x_3-
+        R.req & x_3 -> R.t[3]+
+        ~R.req -> R.t[3]-
+        R.req & ~x_3 -> R.f[3]+
+        ~R.req -> R.f[3]-
+        W.t[2] -> x_2+
+        W.f[2] | reset -> x_2-
+        R.req & x_2 -> R.t[2]+
+        ~R.req -> R.t[2]-
+        R.req & ~x_2 -> R.f[2]+
+        ~R.req -> R.f[2]-
+        W.t[1] -> x_1+
+        W.f[1] | reset -> x_1-
+        R.req & x_1 -> R.t[1]+
+        ~R.req -> R.t[1]-
+        R.req & ~x_1 -> R.f[1]+
+        ~R.req -> R.f[1]-
+        W.t[0] -> x_0+
+        W.f[0] | reset -> x_0-
+        R.req & x_0 -> R.t[0]+
+        ~R.req -> R.t[0]-
+        R.req & ~x_0 -> R.f[0]+
+        ~R.req -> R.f[0]-
+    }
+}

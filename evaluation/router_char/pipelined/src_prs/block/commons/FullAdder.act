@@ -1,0 +1,22 @@
+import "commons/Channels.act";
+
+export defproc FullAdder(DualRailBit? a; DualRailBit? b; DualRailBit? c; DualRailBit! d; DualRailBit! s)
+{
+
+    // Literal user-supplied PRS with complemented holding nodes.
+    bool _dt, _df, _st, _sf;
+    prs {
+        (a.t & b.t) | ((a.t | b.t) & c.t) -> _dt-
+        ~a.t & ~a.f & ~b.t & ~b.f -> _dt+
+        (a.f & b.f) | ((a.f | b.f) & c.f) -> _df-
+        ~a.t & ~a.f & ~b.t & ~b.f -> _df+
+        (c.t & ((a.t & b.t) | (a.f & b.f))) | (c.f & ((a.t & b.f) | (a.f & b.t))) -> _st-
+        ~c.t & ~c.f -> _st+
+        (c.f & ((a.t & b.t) | (a.f & b.f))) | (c.t & ((a.t & b.f) | (a.f & b.t))) -> _sf-
+        ~c.t & ~c.f -> _sf+
+        ~_dt => d.t+
+        ~_df => d.f+
+        ~_st => s.t+
+        ~_sf => s.f+
+    }
+}

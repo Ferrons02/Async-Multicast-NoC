@@ -1,0 +1,22 @@
+import "no_forks/commons/Merge.act";
+import "no_forks/commons/Reg8.act";
+
+export defproc QVar(bool? reset; ActiveDualRail8? W0; ActiveDualRail8? W1; PassiveDualRail8! R)
+{
+    Merge<8,false> merge;
+    merge.I0.t[0..7] = W0.t[0..7];
+    merge.I0.f[0..7] = W0.f[0..7];
+    merge.I0.a = W0.a;
+    merge.I1.t[0..7] = W1.t[0..7];
+    merge.I1.f[0..7] = W1.f[0..7];
+    merge.I1.a = W1.a;
+
+    Reg8 reg;
+    reg.W.t[0..7] = merge.O.t[0..7];
+    reg.W.f[0..7] = merge.O.f[0..7];
+    reg.W.a = merge.O.a;
+    reg.R.t[0..7] = R.t[0..7];
+    reg.R.f[0..7] = R.f[0..7];
+    reg.R.req = R.req;
+    reg.reset = reset;
+}

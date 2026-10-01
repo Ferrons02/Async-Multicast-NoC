@@ -1,0 +1,71 @@
+WARNING: SubsystemCheck<2,{4294967134,4294967135},4>: substituting chp model (requested prs, not found)
+WARNING: ChildRouterDriver<>: substituting chp model (requested prs, not found)
+WARNING: SubsystemCheck<2,{4294909758,4294967103},3>: substituting chp model (requested prs, not found)
+WARNING: TbFailure<6>: substituting chp model (requested prs, not found)
+WARNING: SubsystemCheck<3,{4294958926,4294967118,4294967119},5>: substituting chp model (requested prs, not found)
+WARNING: SubsystemCheck<2,{4294909742,4294967087},2>: substituting chp model (requested prs, not found)
+WARNING: SubsystemCheck<2,{4294909710,4294967055},0>: substituting chp model (requested prs, not found)
+WARNING: SubsystemCheck<2,{4294909726,4294967071},1>: substituting chp model (requested prs, not found)
+TB_RANDOM_CHOICE off
+TB_WARNING_POLICY resume-on-warn
+TB_STRESS_BEGIN 10000
+[               12363] <check_C3>  TB_RX channel=3 count=1 value=4294909758
+[               13080] <driver>  TB_TX count=1 value=2147483454
+[               14379] <check_C3>  TB_RX channel=3 count=2 value=4294967103
+[               15247] <driver>  TB_TX count=2 value=4294967103
+[               16770] <check_C2>  TB_RX channel=2 count=1 value=4294909742
+[               17480] <driver>  TB_TX count=3 value=1610612526
+[               18876] <check_C2>  TB_RX channel=2 count=2 value=4294967087
+[               19709] <driver>  TB_TX count=4 value=4294967087
+[               21452] <check_C1>  TB_RX channel=1 count=1 value=4294909726
+[               22054] <driver>  TB_TX count=5 value=1073741598
+[               23484] <check_C1>  TB_RX channel=1 count=2 value=4294967071
+[               24475] <driver>  TB_TX count=6 value=4294967071
+[               25857] <check_C0>  TB_RX channel=0 count=1 value=4294909710
+[               26732] <driver>  TB_TX count=7 value=536870670
+[               28259] <check_C0>  TB_RX channel=0 count=2 value=4294967055
+[               29160] <driver>  TB_TX count=8 value=4294967055
+[               30200] <check_P>  TB_RX channel=5 count=1 value=4294958926
+[               30566] <driver>  TB_TX count=9 value=4294967118
+[               31522] <check_P>  TB_RX channel=5 count=2 value=4294967118
+[               31893] <driver>  TB_TX count=10 value=4294967118
+[               32669] <check_P>  TB_RX channel=5 count=3 value=4294967119
+[               33130] <driver>  TB_TX count=11 value=4294967119
+[               33497] <driver>  TB_TX count=12 value=2147491678
+[               34171] <check_M>  TB_RX channel=4 count=1 value=4294967134
+[               34357] <driver>  TB_TX count=13 value=4294967134
+[               35050] <check_M>  TB_RX channel=4 count=2 value=4294967135
+[               35168] <driver>  TB_TX count=14 value=4294967135
+TB_STRESS_END 500010000
+[           500017901] <driver>  PASSED: rounds=20604
+TB_FINAL
+done: 1
+fail: 0
+rounds: 20604  (0x507c)
+TB_PROGRESS_BEGIN
+issued: 20604  (0x507c)
+tx_count: 288456  (0x466c8)
+tx_last: 4294967135  (0xffffff5f)
+tx_next: 0  (0x0)
+rx_count[0]: 41208  (0xa0f8)
+rx_last[0]: 4294967055  (0xffffff0f)
+rx_next[0]: 4294909710  (0xffff1f0e)
+rx_count[1]: 41208  (0xa0f8)
+rx_last[1]: 4294967071  (0xffffff1f)
+rx_next[1]: 4294909726  (0xffff1f1e)
+rx_count[2]: 41208  (0xa0f8)
+rx_last[2]: 4294967087  (0xffffff2f)
+rx_next[2]: 4294909742  (0xffff1f2e)
+rx_count[3]: 41208  (0xa0f8)
+rx_last[3]: 4294967103  (0xffffff3f)
+rx_next[3]: 4294909758  (0xffff1f3e)
+rx_count[4]: 41208  (0xa0f8)
+rx_last[4]: 4294967135  (0xffffff5f)
+rx_next[4]: 4294967134  (0xffffff5e)
+rx_count[5]: 61812  (0xf174)
+rx_last[5]: 4294967119  (0xffffff4f)
+rx_next[5]: 4294958926  (0xffffdf4e)
+TB_PROGRESS_END
+TB_X_BEGIN
+TB_X_END
+TB_COMPLETION_ASSERTIONS

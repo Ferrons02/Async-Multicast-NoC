@@ -1,0 +1,915 @@
+namespace cell {
+
+export defcell g0n1n2n3n4n5n6n7naaaaaaa8no_0x0 (bool? in[9]; bool! out)
+{
+   prs {
+   in[0] -> out-
+   ~in[0] & ~in[1] & ~in[2] & ~in[3] & ~in[4] & ~in[5] & ~in[6] & ~in[7] | ~in[8] -> out+
+   }
+}
+
+export defcell g0n1n2n3n4n5n6naaaaaa_17ox0 (bool? in[8]; bool! out)
+{
+   prs {
+   in[1] | in[7] -> out-
+   ~in[0] & ~in[1] & ~in[2] & ~in[3] & ~in[4] & ~in[5] & ~in[6] -> out+
+   }
+}
+
+export defcell g0n1n2n3n4n5n6noooaoa_10a7ox0 (bool? in[8]; bool! out)
+{
+   prs {
+   in[1] & in[0] | in[7] -> out-
+   ~in[0] & (~in[1] | ~in[2] & (~in[3] | ~in[4] | ~in[5] | ~in[6])) -> out+
+   }
+}
+
+export defcell g0n1n2n3n4na5n6n7noaoaaa_7683a4oaa9ox0 (bool? in[10]; bool! out)
+{
+   prs {
+   in[7] & in[6] & (in[8] & in[3] | in[4]) | in[9] -> out-
+   ~in[0] & ~in[1] & ~in[2] & (~in[3] & ~in[4] | ~in[5] & (~in[6] | ~in[7])) -> out+
+   }
+}
+
+export defcell g0n1n2n3n4naaaa_01234oooox0 (bool? in[5]; bool! out)
+{
+   prs {
+   ~~(in[0] | in[1] | in[2] | in[3] | in[4]) -> out-
+   ~(in[0] | in[1] | in[2] | in[3] | in[4]) -> out+
+   }
+}
+
+export defcell g0n1n2n3n4naaaa_05ox0 (bool? in[6]; bool! out)
+{
+   prs {
+   in[0] | in[5] -> out-
+   ~in[0] & ~in[1] & ~in[2] & ~in[3] & ~in[4] -> out+
+   }
+}
+
+export defcell g0n1n2n3n4naaaa_1234aaa5ox0 (bool? in[6]; bool! out)
+{
+   prs {
+   in[1] & in[2] & in[3] & in[4] | in[5] -> out-
+   ~in[0] & ~in[1] & ~in[2] & ~in[3] & ~in[4] -> out+
+   }
+}
+
+export defcell g0n1n2n3n4noaaa_34ax0 (bool? in[5]; bool! out)
+{
+   prs {
+   in[3] & in[4] -> out-
+   ~in[0] & ~in[1] & ~in[2] & (~in[3] | ~in[4]) -> out+
+   }
+}
+
+export defcell g0n1n2n3naaa4no_5671aa8oax0 (bool? in[9]; bool! out)
+{
+   prs {
+   in[5] & (in[6] & in[7] & in[1] | in[8]) -> out-
+   ~in[0] & ~in[1] & ~in[2] & ~in[3] | ~in[4] -> out+
+   }
+}
+
+export defcell g0n1n2n3naaa4no_5678aaax0 (bool? in[9]; bool! out)
+{
+   prs {
+   in[5] & in[6] & in[7] & in[8] -> out-
+   ~in[0] & ~in[1] & ~in[2] & ~in[3] | ~in[4] -> out+
+   }
+}
+
+export defcell g0n1n2n3naaa4no_5x0 (bool? in[6]; bool! out)
+{
+   prs {
+   in[5] -> out-
+   ~in[0] & ~in[1] & ~in[2] & ~in[3] | ~in[4] -> out+
+   }
+}
+
+export defcell g0n1n2n3naaa6no_01o23o45aaax0 (bool? in[7]; bool! out)
+{
+   prs {
+   (in[0] | in[1]) & (in[2] | in[3]) & in[4] & in[5] -> out-
+   ~in[0] & ~in[1] & ~in[2] & ~in[3] | ~in[6] -> out+
+   }
+}
+
+export defcell g0n1n2n3naaa_0123aaax0 (bool? in[4]; bool! out)
+{
+   prs {
+   in[0] & in[1] & in[2] & in[3] -> out-
+   ~in[0] & ~in[1] & ~in[2] & ~in[3] -> out+
+   }
+}
+
+export defcell g0n1n2n3naaa_01o23o4aax0 (bool? in[5]; bool! out)
+{
+   prs {
+   (in[0] | in[1]) & (in[2] | in[3]) & in[4] -> out-
+   ~in[0] & ~in[1] & ~in[2] & ~in[3] -> out+
+   }
+}
+
+export defcell g0n1n2n3naaa_04a3ox0 (bool? in[5]; bool! out)
+{
+   prs {
+   in[0] & in[4] | in[3] -> out-
+   ~in[0] & ~in[1] & ~in[2] & ~in[3] -> out+
+   }
+}
+
+export defcell g0n1n2n3naaa_04ox0 (bool? in[5]; bool! out)
+{
+   prs {
+   in[0] | in[4] -> out-
+   ~in[0] & ~in[1] & ~in[2] & ~in[3] -> out+
+   }
+}
+
+export defcell g0n1n2n3naaa_0x0 (bool? in[4]; bool! out)
+{
+   prs {
+   in[0] -> out-
+   ~in[0] & ~in[1] & ~in[2] & ~in[3] -> out+
+   }
+}
+
+export defcell g0n1n2na3n4naoa_056oa7ox0 (bool? in[8]; bool! out)
+{
+   prs {
+   in[0] & (in[5] | in[6]) | in[7] -> out-
+   ~in[0] & (~in[1] & ~in[2] | ~in[3] & ~in[4]) -> out+
+   }
+}
+
+export defcell g0n1n2na3n4naoa_05a6ox0 (bool? in[7]; bool! out)
+{
+   prs {
+   in[0] & in[5] | in[6] -> out-
+   ~in[0] & (~in[1] & ~in[2] | ~in[3] & ~in[4]) -> out+
+   }
+}
+
+export defcell g0n1n2naa3n4n5naa6n2naoo_24ax0 (bool? in[7]; bool! out)
+{
+   prs {
+   in[2] & in[4] -> out-
+   ~in[0] & ~in[1] & ~in[2] | ~in[3] & ~in[4] & ~in[5] | ~in[6] & ~in[2] -> out+
+   }
+}
+
+export defcell g0n1n2naa3no_40ax0 (bool? in[5]; bool! out)
+{
+   prs {
+   in[4] & in[0] -> out-
+   ~in[0] & ~in[1] & ~in[2] | ~in[3] -> out+
+   }
+}
+
+export defcell g0n1n2naa_03ox0 (bool? in[4]; bool! out)
+{
+   prs {
+   in[0] | in[3] -> out-
+   ~in[0] & ~in[1] & ~in[2] -> out+
+   }
+}
+
+export defcell g0n1n2naa_345aa6ox0 (bool? in[7]; bool! out)
+{
+   prs {
+   in[3] & in[4] & in[5] | in[6] -> out-
+   ~in[0] & ~in[1] & ~in[2] -> out+
+   }
+}
+
+export defcell g0n1n2nao_12ax0 (bool? in[3]; bool! out)
+{
+   prs {
+   in[1] & in[2] -> out-
+   ~in[0] | ~in[1] & ~in[2] -> out+
+   }
+}
+
+export defcell g0n1n2no3n4no5n6na7n8naoaaa_34a9ox0 (bool? in[10]; bool! out)
+{
+   prs {
+   in[3] & in[4] | in[9] -> out-
+   ~in[0] & (~in[1] | ~in[2]) & (~in[3] | ~in[4]) & (~in[5] & ~in[6] | ~in[7] & ~in[8]) -> out+
+   }
+}
+
+export defcell g0n1na2no_01o2ax0 (bool? in[3]; bool! out)
+{
+   prs {
+   (in[0] | in[1]) & in[2] -> out-
+   ~in[0] & ~in[1] | ~in[2] -> out+
+   }
+}
+
+export defcell g0n1na2no_34ax0 (bool? in[5]; bool! out)
+{
+   prs {
+   in[3] & in[4] -> out-
+   ~in[0] & ~in[1] | ~in[2] -> out+
+   }
+}
+
+export defcell g0n1na_02a3ox0 (bool? in[4]; bool! out)
+{
+   prs {
+   in[0] & in[2] | in[3] -> out-
+   ~in[0] & ~in[1] -> out+
+   }
+}
+
+export defcell g0n1na_02ax0 (bool? in[3]; bool! out)
+{
+   prs {
+   in[0] & in[2] -> out-
+   ~in[0] & ~in[1] -> out+
+   }
+}
+
+export defcell g0n1na_02ox0 (bool? in[3]; bool! out)
+{
+   prs {
+   in[0] | in[2] -> out-
+   ~in[0] & ~in[1] -> out+
+   }
+}
+
+export defcell g0n1na_123aa4ox0 (bool? in[5]; bool! out)
+{
+   prs {
+   in[1] & in[2] & in[3] | in[4] -> out-
+   ~in[0] & ~in[1] -> out+
+   }
+}
+
+export defcell g0n1na_12ox0 (bool? in[3]; bool! out)
+{
+   prs {
+   in[1] | in[2] -> out-
+   ~in[0] & ~in[1] -> out+
+   }
+}
+
+export defcell g0n1na_201aox0 (bool? in[3]; bool! out)
+{
+   prs {
+   in[2] | in[0] & in[1] -> out-
+   ~in[0] & ~in[1] -> out+
+   }
+}
+
+export defcell g0n1na_20a3ox0 (bool? in[4]; bool! out)
+{
+   prs {
+   in[2] & in[0] | in[3] -> out-
+   ~in[0] & ~in[1] -> out+
+   }
+}
+
+export defcell g0n1na_234aa5ox0 (bool? in[6]; bool! out)
+{
+   prs {
+   in[2] & in[3] & in[4] | in[5] -> out-
+   ~in[0] & ~in[1] -> out+
+   }
+}
+
+export defcell g0n1na_23a4ox0 (bool? in[5]; bool! out)
+{
+   prs {
+   in[2] & in[3] | in[4] -> out-
+   ~in[0] & ~in[1] -> out+
+   }
+}
+
+export defcell g0n1no2n3no4n5no6naaa_012345aaaaa6ox0 (bool? in[7]; bool! out)
+{
+   prs {
+   in[0] & in[1] & in[2] & in[3] & in[4] & in[5] | in[6] -> out-
+   (~in[0] | ~in[1]) & (~in[2] | ~in[3]) & (~in[4] | ~in[5]) & ~in[6] -> out+
+   }
+}
+
+export defcell g0n1no2n3noa_014aax0 (bool? in[5]; bool! out)
+{
+   prs {
+   in[0] & in[1] & in[4] -> out-
+   (~in[0] | ~in[1]) & (~in[2] | ~in[3]) -> out+
+   }
+}
+
+export defcell g0n1no_02341aaoa5ox0 (bool? in[6]; bool! out)
+{
+   prs {
+   in[0] & (in[2] | in[3] & in[4] & in[1]) | in[5] -> out-
+   ~in[0] | ~in[1] -> out+
+   }
+}
+
+export defcell g0n2n1n3naaa_01a23aox0 (bool? in[4]; bool! out)
+{
+   prs {
+   in[0] & in[1] | in[2] & in[3] -> out-
+   ~in[0] & ~in[2] & ~in[1] & ~in[3] -> out+
+   }
+}
+
+export defcell g0n2n1n3naaa_01ax0 (bool? in[4]; bool! out)
+{
+   prs {
+   in[0] & in[1] -> out-
+   ~in[0] & ~in[2] & ~in[1] & ~in[3] -> out+
+   }
+}
+
+export defcell g0n2n1n3naaa_01ox0 (bool? in[4]; bool! out)
+{
+   prs {
+   in[0] | in[1] -> out-
+   ~in[0] & ~in[2] & ~in[1] & ~in[3] -> out+
+   }
+}
+
+export defcell g0n2n3n1naaa_01a23aox0 (bool? in[4]; bool! out)
+{
+   prs {
+   in[0] & in[1] | in[2] & in[3] -> out-
+   ~in[0] & ~in[2] & ~in[3] & ~in[1] -> out+
+   }
+}
+
+export defcell g0n2n3n4naaa5no_01ax0 (bool? in[6]; bool! out)
+{
+   prs {
+   in[0] & in[1] -> out-
+   ~in[0] & ~in[2] & ~in[3] & ~in[4] | ~in[5] -> out+
+   }
+}
+
+export defcell g0n2na3no_01ax0 (bool? in[4]; bool! out)
+{
+   prs {
+   in[0] & in[1] -> out-
+   ~in[0] & ~in[2] | ~in[3] -> out+
+   }
+}
+
+export defcell g0n2na_01a23aox0 (bool? in[4]; bool! out)
+{
+   prs {
+   in[0] & in[1] | in[2] & in[3] -> out-
+   ~in[0] & ~in[2] -> out+
+   }
+}
+
+export defcell g0n2na_01a2ox0 (bool? in[3]; bool! out)
+{
+   prs {
+   in[0] & in[1] | in[2] -> out-
+   ~in[0] & ~in[2] -> out+
+   }
+}
+
+export defcell g0n3n1n4naaa_01a01o2aox0 (bool? in[5]; bool! out)
+{
+   prs {
+   in[0] & in[1] | (in[0] | in[1]) & in[2] -> out-
+   ~in[0] & ~in[3] & ~in[1] & ~in[4] -> out+
+   }
+}
+
+export defcell g0n4no_0123aaax0 (bool? in[5]; bool! out)
+{
+   prs {
+   in[0] & in[1] & in[2] & in[3] -> out-
+   ~in[0] | ~in[4] -> out+
+   }
+}
+
+export defcell g0n4no_0123oaax0 (bool? in[5]; bool! out)
+{
+   prs {
+   in[0] & in[1] & (in[2] | in[3]) -> out-
+   ~in[0] | ~in[4] -> out+
+   }
+}
+
+export defcell g0n5na6no_012a34aoax0 (bool? in[7]; bool! out)
+{
+   prs {
+   in[0] & (in[1] & in[2] | in[3] & in[4]) -> out-
+   ~in[0] & ~in[5] | ~in[6] -> out+
+   }
+}
+
+export defcell g0n5na_012a34aoa514a32aoaox0 (bool? in[6]; bool! out)
+{
+   prs {
+   in[0] & (in[1] & in[2] | in[3] & in[4]) | in[5] & (in[1] & in[4] | in[3] & in[2]) -> out-
+   ~in[0] & ~in[5] -> out+
+   }
+}
+
+export defcell g0n_012oax0 (bool? in[3]; bool! out)
+{
+   prs {
+   in[0] & (in[1] | in[2]) -> out-
+   ~in[0] -> out+
+   }
+}
+
+export defcell g0n_123aa4ox0 (bool? in[5]; bool! out)
+{
+   prs {
+   in[1] & in[2] & in[3] | in[4] -> out-
+   ~in[0] -> out+
+   }
+}
+
+export defcell g0n_12ox0 (bool? in[3]; bool! out)
+{
+   prs {
+   in[1] | in[2] -> out-
+   ~in[0] -> out+
+   }
+}
+
+export defcell g1n2no_0x0 (bool? in[3]; bool! out)
+{
+   prs {
+   in[0] -> out-
+   ~in[1] | ~in[2] -> out+
+   }
+}
+
+export defcell g1n3na4no_012aax0 (bool? in[5]; bool! out)
+{
+   prs {
+   in[0] & in[1] & in[2] -> out-
+   ~in[1] & ~in[3] | ~in[4] -> out+
+   }
+}
+
+export defcell g1n4na3n2nao_012a345aaoax0 (bool? in[6]; bool! out)
+{
+   prs {
+   in[0] & (in[1] & in[2] | in[3] & in[4] & in[5]) -> out-
+   ~in[1] & ~in[4] | ~in[3] & ~in[2] -> out+
+   }
+}
+
+export defcell g1n5n2nao_01a234aaox0 (bool? in[6]; bool! out)
+{
+   prs {
+   in[0] & in[1] | in[2] & in[3] & in[4] -> out-
+   ~in[1] | ~in[5] & ~in[2] -> out+
+   }
+}
+
+export defcell g1n5na3n2na6noo_012a345aaoax0 (bool? in[7]; bool! out)
+{
+   prs {
+   in[0] & (in[1] & in[2] | in[3] & in[4] & in[5]) -> out-
+   ~in[1] & ~in[5] | ~in[3] & ~in[2] | ~in[6] -> out+
+   }
+}
+
+export defcell g1n7na8no_01a2345ooo6aox0 (bool? in[9]; bool! out)
+{
+   prs {
+   in[0] & in[1] | (in[2] | in[3] | in[4] | in[5]) & in[6] -> out-
+   ~in[1] & ~in[7] | ~in[8] -> out+
+   }
+}
+
+export defcell g1n_01234aoaax0 (bool? in[5]; bool! out)
+{
+   prs {
+   in[0] & in[1] & (in[2] | in[3] & in[4]) -> out-
+   ~in[1] -> out+
+   }
+}
+
+export defcell g1n_01ax0 (bool? in[2]; bool! out)
+{
+   prs {
+   in[0] & in[1] -> out-
+   ~in[1] -> out+
+   }
+}
+
+export defcell g2n0n3n1naaa_01ax0 (bool? in[4]; bool! out)
+{
+   prs {
+   in[0] & in[1] -> out-
+   ~in[2] & ~in[0] & ~in[3] & ~in[1] -> out+
+   }
+}
+
+export defcell g2n0n3n1naaa_01ox0 (bool? in[4]; bool! out)
+{
+   prs {
+   in[0] | in[1] -> out-
+   ~in[2] & ~in[0] & ~in[3] & ~in[1] -> out+
+   }
+}
+
+export defcell g2n0na_01o23oax0 (bool? in[4]; bool! out)
+{
+   prs {
+   (in[0] | in[1]) & (in[2] | in[3]) -> out-
+   ~in[2] & ~in[0] -> out+
+   }
+}
+
+export defcell g2n3n4n5naaa6no_01ax0 (bool? in[7]; bool! out)
+{
+   prs {
+   in[0] & in[1] -> out-
+   ~in[2] & ~in[3] & ~in[4] & ~in[5] | ~in[6] -> out+
+   }
+}
+
+export defcell g2n_01ax0 (bool? in[3]; bool! out)
+{
+   prs {
+   in[0] & in[1] -> out-
+   ~in[2] -> out+
+   }
+}
+
+export defcell g3n0n4n1naaa_01a01o2aox0 (bool? in[5]; bool! out)
+{
+   prs {
+   in[0] & in[1] | (in[0] | in[1]) & in[2] -> out-
+   ~in[3] & ~in[0] & ~in[4] & ~in[1] -> out+
+   }
+}
+
+export defcell g3n1na0n5na6noo_01a2345aaaox0 (bool? in[7]; bool! out)
+{
+   prs {
+   in[0] & in[1] | in[2] & in[3] & in[4] & in[5] -> out-
+   ~in[3] & ~in[1] | ~in[0] & ~in[5] | ~in[6] -> out+
+   }
+}
+
+export defcell g3n2na1n4nao_012a34aoax0 (bool? in[5]; bool! out)
+{
+   prs {
+   in[0] & (in[1] & in[2] | in[3] & in[4]) -> out-
+   ~in[3] & ~in[2] | ~in[1] & ~in[4] -> out+
+   }
+}
+
+export defcell g3n4n0naa5no_012aax0 (bool? in[6]; bool! out)
+{
+   prs {
+   in[0] & in[1] & in[2] -> out-
+   ~in[3] & ~in[4] & ~in[0] | ~in[5] -> out+
+   }
+}
+
+export defcell g3n4no_012aax0 (bool? in[5]; bool! out)
+{
+   prs {
+   in[0] & in[1] & in[2] -> out-
+   ~in[3] | ~in[4] -> out+
+   }
+}
+
+export defcell g3n4no_01o2ax0 (bool? in[5]; bool! out)
+{
+   prs {
+   (in[0] | in[1]) & in[2] -> out-
+   ~in[3] | ~in[4] -> out+
+   }
+}
+
+export defcell g3n_01a2ox0 (bool? in[4]; bool! out)
+{
+   prs {
+   in[0] & in[1] | in[2] -> out-
+   ~in[3] -> out+
+   }
+}
+
+export defcell g4n5na6no_01o23aax0 (bool? in[7]; bool! out)
+{
+   prs {
+   (in[0] | in[1]) & in[2] & in[3] -> out-
+   ~in[4] & ~in[5] | ~in[6] -> out+
+   }
+}
+
+export defcell g5n0na_012a34aoa514a32aoaox0 (bool? in[6]; bool! out)
+{
+   prs {
+   in[0] & (in[1] & in[2] | in[3] & in[4]) | in[5] & (in[1] & in[4] | in[3] & in[2]) -> out-
+   ~in[5] & ~in[0] -> out+
+   }
+}
+
+export defcell g5n3n2naa_0123o4aaax0 (bool? in[6]; bool! out)
+{
+   prs {
+   in[0] & in[1] & (in[2] | in[3]) & in[4] -> out-
+   ~in[5] & ~in[3] & ~in[2] -> out+
+   }
+}
+
+export defcell g5n6na7no_012a34aoax0 (bool? in[8]; bool! out)
+{
+   prs {
+   in[0] & (in[1] & in[2] | in[3] & in[4]) -> out-
+   ~in[5] & ~in[6] | ~in[7] -> out+
+   }
+}
+
+export defcell g6n7na8no_01a23456aaaaox0 (bool? in[9]; bool! out)
+{
+   prs {
+   in[0] & in[1] | in[2] & in[3] & in[4] & in[5] & in[6] -> out-
+   ~in[6] & ~in[7] | ~in[8] -> out+
+   }
+}
+
+export defcell g7n5n4n3n6na8noaaa9no_01o2345oaa6oax0 (bool? in[10]; bool! out)
+{
+   prs {
+   (in[0] | in[1]) & (in[2] & in[3] & (in[4] | in[5]) | in[6]) -> out-
+   ~in[7] & ~in[5] & ~in[4] & (~in[3] & ~in[6] | ~in[8]) | ~in[9] -> out+
+   }
+}
+
+export defcell g_i1x0 (bool? in[0]; bool! out)
+{
+   prs {
+   true -> out-
+   }
+}
+
+export defcell gac1x0 (bool? in[2]; bool! out)
+{
+   prs {
+   in[0] & in[1] -> out-
+   ~in[0] -> out+
+   }
+}
+
+export defcell gac3x0 (bool? in[2]; bool! out)
+{
+   prs {
+   in[0] -> out-
+   ~in[0] & ~in[1] -> out+
+   }
+}
+
+export defcell gac4x0 (bool? in[2]; bool! out)
+{
+   prs {
+   in[1] -> out-
+   ~in[0] & ~in[1] -> out+
+   }
+}
+
+export defcell gcelem2x0 (bool? in[2]; bool! out)
+{
+   prs {
+   in[0] & in[1] -> out-
+   ~in[0] & ~in[1] -> out+
+   }
+}
+
+export defcell ggc3n11x0 (bool? in[3]; bool! out)
+{
+   prs {
+   in[0] & in[1] & in[2] -> out-
+   ~in[0] -> out+
+   }
+}
+
+export defcell ggc3n13x0 (bool? in[3]; bool! out)
+{
+   prs {
+   in[0] & in[1] & in[2] -> out-
+   ~in[2] -> out+
+   }
+}
+
+export defcell ggc3p13x0 (bool? in[3]; bool! out)
+{
+   prs {
+   in[2] -> out-
+   ~in[0] & ~in[1] & ~in[2] -> out+
+   }
+}
+
+export defcell ginvx0 (bool? in[1]; bool! out)
+{
+   prs {
+   ~~in[0] -> out-
+   ~in[0] -> out+
+   }
+}
+
+export defcell gnor2x0 (bool? in[2]; bool! out)
+{
+   prs {
+   in[0] | in[1] -> out-
+   ~in[0] & ~in[1] -> out+
+   }
+}
+
+export defcell gpd1x0 (bool? in[1]; bool! out)
+{
+   prs {
+   in[0] -> out-
+   }
+}
+
+export defcell gv0nv1nv2nav3nv4naov5nv6nav7nv8naov9nv10nav11nv12naov13nv14nav15nv16naoaaaa_v1v3v5v7v9v11v13v15aaaaaaax0 (bool? in[17]; bool! out)
+{
+   prs {
+   in[1] & in[3] & in[5] & in[7] & in[9] & in[11] & in[13] & in[15] -> out-
+   ~in[0] & (~in[1] & ~in[2] | ~in[3] & ~in[4]) & (~in[5] & ~in[6] | ~in[7] & ~in[8]) & (~in[9] & ~in[10] | ~in[11] & ~in[12]) & (~in[13] & ~in[14] | ~in[15] & ~in[16]) -> out+
+   }
+}
+
+export defcell gv0nv1nv2nav3nv4naov5nv6nav7nv8naov9nv10nav11nv12naov13nv14nav15nv16naov17nv18nav19nv20naov21nv22nav23nv24naov25nv26nav27nv28naov29nv30nav31nv32naoaaaaaaaa_v33v34v35av36v37aov38v39av40v41aov42v43av44v45aov46v47av48v49aoaaaav50v51oox0 (bool? in[52]; bool! out)
+{
+   prs {
+   in[33] & (in[34] & in[35] | in[36] & in[37]) & (in[38] & in[39] | in[40] & in[41]) & (in[42] & in[43] | in[44] & in[45]) & (in[46] & in[47] | in[48] & in[49]) | in[50] | in[51] -> out-
+   ~in[0] & (~in[1] & ~in[2] | ~in[3] & ~in[4]) & (~in[5] & ~in[6] | ~in[7] & ~in[8]) & (~in[9] & ~in[10] | ~in[11] & ~in[12]) & (~in[13] & ~in[14] | ~in[15] & ~in[16]) & (~in[17] & ~in[18] | ~in[19] & ~in[20]) & (~in[21] & ~in[22] | ~in[23] & ~in[24]) & (~in[25] & ~in[26] | ~in[27] & ~in[28]) & (~in[29] & ~in[30] | ~in[31] & ~in[32]) -> out+
+   }
+}
+
+export defcell gv0nv1nv2nv3nv4noooa_v5v6v7v8v9v10v11v12v13aaaaaaaav14ox0 (bool? in[15]; bool! out)
+{
+   prs {
+   in[5] & in[6] & in[7] & in[8] & in[9] & in[10] & in[11] & in[12] & in[13] | in[14] -> out-
+   ~in[0] & (~in[1] | ~in[2] | ~in[3] | ~in[4]) -> out+
+   }
+}
+
+export defcell gv0nv1nv2nv3nv4nv5naaaaav6no_v7v8v9v10v11aaaax0 (bool? in[12]; bool! out)
+{
+   prs {
+   in[7] & in[8] & in[9] & in[10] & in[11] -> out-
+   ~in[0] & ~in[1] & ~in[2] & ~in[3] & ~in[4] & ~in[5] | ~in[6] -> out+
+   }
+}
+
+export defcell gv0nv1nv2nv3nv4nv5noooaa_v1v6v7v8v9v10aaaaav11ox0 (bool? in[12]; bool! out)
+{
+   prs {
+   in[1] & in[6] & in[7] & in[8] & in[9] & in[10] | in[11] -> out-
+   ~in[0] & ~in[1] & (~in[2] | ~in[3] | ~in[4] | ~in[5]) -> out+
+   }
+}
+
+export defcell gv0nv1nv2nv3nv4nv5nv6nv7nv8nv9naaaaaaaaa_v0v10ox0 (bool? in[11]; bool! out)
+{
+   prs {
+   in[0] | in[10] -> out-
+   ~in[0] & ~in[1] & ~in[2] & ~in[3] & ~in[4] & ~in[5] & ~in[6] & ~in[7] & ~in[8] & ~in[9] -> out+
+   }
+}
+
+export defcell gv0nv1nv2nv3nv4nv5nv6nv7nv8nv9nv10nv11nv12nv13nv14nv15nv16nv17naaaaaaaaaaaaaaaaa_v0v18v19v20v21v22v23v24v25aaaaaaaav1v26oox0 (bool? in[27]; bool! out)
+{
+   prs {
+   in[0] & in[18] & in[19] & in[20] & in[21] & in[22] & in[23] & in[24] & in[25] | in[1] | in[26] -> out-
+   ~in[0] & ~in[1] & ~in[2] & ~in[3] & ~in[4] & ~in[5] & ~in[6] & ~in[7] & ~in[8] & ~in[9] & ~in[10] & ~in[11] & ~in[12] & ~in[13] & ~in[14] & ~in[15] & ~in[16] & ~in[17] -> out+
+   }
+}
+
+export defcell gv0nv1nv2nv3nv4nv5nv6nv7nv8nv9nv10nv11nv12nv13nv14nv15nv16nv17naaaaaaaaaaaaaaaaa_v0x0 (bool? in[18]; bool! out)
+{
+   prs {
+   in[0] -> out-
+   ~in[0] & ~in[1] & ~in[2] & ~in[3] & ~in[4] & ~in[5] & ~in[6] & ~in[7] & ~in[8] & ~in[9] & ~in[10] & ~in[11] & ~in[12] & ~in[13] & ~in[14] & ~in[15] & ~in[16] & ~in[17] -> out+
+   }
+}
+
+export defcell gv0nv1nv2nv3nv4nv5nv6nv7nv8nv9nv10nv11nv12nv13nv14nv15nv16nv17nv18nv19nv20naaaaaaaaaaaaaaaaaaaav21no_v22v23v24v25v26v27v28v29v30v31v32v33v34v35v36v37v38v39v40v41oooooooooooooooooov42aax0 (bool? in[43]; bool! out)
+{
+   prs {
+   in[22] & (in[23] | in[24] | in[25] | in[26] | in[27] | in[28] | in[29] | in[30] | in[31] | in[32] | in[33] | in[34] | in[35] | in[36] | in[37] | in[38] | in[39] | in[40] | in[41]) & in[42] -> out-
+   ~in[0] & ~in[1] & ~in[2] & ~in[3] & ~in[4] & ~in[5] & ~in[6] & ~in[7] & ~in[8] & ~in[9] & ~in[10] & ~in[11] & ~in[12] & ~in[13] & ~in[14] & ~in[15] & ~in[16] & ~in[17] & ~in[18] & ~in[19] & ~in[20] | ~in[21] -> out+
+   }
+}
+
+export defcell gv0nv1nv2nv3nv4nv5nv6nv7nv8nv9nv10nv11nv12nv13nv14nv15nv16nv17nv18nv19nv20naaaaaaaaaaaaaaaaaaav21nv22nv23nv24nv25nv26nv27nv28nv29nv30nv31nv32nv33nv34nv35nv36nv37nv38nv39noooooooooooooooooov40naoa_v0v41v42oav43ox0 (bool? in[44]; bool! out)
+{
+   prs {
+   in[0] & (in[41] | in[42]) | in[43] -> out-
+   ~in[0] & (~in[1] & ~in[2] & ~in[3] & ~in[4] & ~in[5] & ~in[6] & ~in[7] & ~in[8] & ~in[9] & ~in[10] & ~in[11] & ~in[12] & ~in[13] & ~in[14] & ~in[15] & ~in[16] & ~in[17] & ~in[18] & ~in[19] & ~in[20] | (~in[21] | ~in[22] | ~in[23] | ~in[24] | ~in[25] | ~in[26] | ~in[27] | ~in[28] | ~in[29] | ~in[30] | ~in[31] | ~in[32] | ~in[33] | ~in[34] | ~in[35] | ~in[36] | ~in[37] | ~in[38] | ~in[39]) & ~in[40]) -> out+
+   }
+}
+
+export defcell gv0nv1nv2nv3nv4nv5nv6nv7nv8nv9nv10nv11nv12nv13nv14nv15nv16nv17nv18nv19nv20nv21nv22nv23nv24nv25nv26nv27nv28nv29nv30nv31nv32nv33nv34nv35nv36nv37nv38nv39nv40nv41nv42nv43nv44nv45nv46nv47nv48nv49nv50nv51nv52nv53nv54nv55nv56nv57nv58nv59nv60nv61nv62nv63nv64naaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa_v0v65ox0 (bool? in[66]; bool! out)
+{
+   prs {
+   in[0] | in[65] -> out-
+   ~in[0] & ~in[1] & ~in[2] & ~in[3] & ~in[4] & ~in[5] & ~in[6] & ~in[7] & ~in[8] & ~in[9] & ~in[10] & ~in[11] & ~in[12] & ~in[13] & ~in[14] & ~in[15] & ~in[16] & ~in[17] & ~in[18] & ~in[19] & ~in[20] & ~in[21] & ~in[22] & ~in[23] & ~in[24] & ~in[25] & ~in[26] & ~in[27] & ~in[28] & ~in[29] & ~in[30] & ~in[31] & ~in[32] & ~in[33] & ~in[34] & ~in[35] & ~in[36] & ~in[37] & ~in[38] & ~in[39] & ~in[40] & ~in[41] & ~in[42] & ~in[43] & ~in[44] & ~in[45] & ~in[46] & ~in[47] & ~in[48] & ~in[49] & ~in[50] & ~in[51] & ~in[52] & ~in[53] & ~in[54] & ~in[55] & ~in[56] & ~in[57] & ~in[58] & ~in[59] & ~in[60] & ~in[61] & ~in[62] & ~in[63] & ~in[64] -> out+
+   }
+}
+
+export defcell gv0nv1nv2nv3nv4nv5nv6nv7nv8nv9nv10nv11nv12nv13nv14nv15nv16nv17nv18nv19nv20nv21nv22nv23nv24nv25nv26nv27nv28nv29nv30nv31nv32nv33nv34nv35nv36nv37nv38nv39nv40nv41nv42nv43nv44nv45nv46nv47nv48nv49nv50nv51nv52nv53nv54nv55nv56nv57nv58nv59nv60nv61nv62nv63nv64nv65naaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa_v1v66ox0 (bool? in[67]; bool! out)
+{
+   prs {
+   in[1] | in[66] -> out-
+   ~in[0] & ~in[1] & ~in[2] & ~in[3] & ~in[4] & ~in[5] & ~in[6] & ~in[7] & ~in[8] & ~in[9] & ~in[10] & ~in[11] & ~in[12] & ~in[13] & ~in[14] & ~in[15] & ~in[16] & ~in[17] & ~in[18] & ~in[19] & ~in[20] & ~in[21] & ~in[22] & ~in[23] & ~in[24] & ~in[25] & ~in[26] & ~in[27] & ~in[28] & ~in[29] & ~in[30] & ~in[31] & ~in[32] & ~in[33] & ~in[34] & ~in[35] & ~in[36] & ~in[37] & ~in[38] & ~in[39] & ~in[40] & ~in[41] & ~in[42] & ~in[43] & ~in[44] & ~in[45] & ~in[46] & ~in[47] & ~in[48] & ~in[49] & ~in[50] & ~in[51] & ~in[52] & ~in[53] & ~in[54] & ~in[55] & ~in[56] & ~in[57] & ~in[58] & ~in[59] & ~in[60] & ~in[61] & ~in[62] & ~in[63] & ~in[64] & ~in[65] -> out+
+   }
+}
+
+export defcell gv0nv2nv4nv6nv8nv10nv12nv14naaaaaaa_v0v1av2v3aov4v5av6v7aov8v9av10v11aov12v13av14v15aoaaax0 (bool? in[16]; bool! out)
+{
+   prs {
+   (in[0] & in[1] | in[2] & in[3]) & (in[4] & in[5] | in[6] & in[7]) & (in[8] & in[9] | in[10] & in[11]) & (in[12] & in[13] | in[14] & in[15]) -> out-
+   ~in[0] & ~in[2] & ~in[4] & ~in[6] & ~in[8] & ~in[10] & ~in[12] & ~in[14] -> out+
+   }
+}
+
+export defcell gv0nv2nv4nv6nv8nv10nv12nv14nv16nv18nv20nv22nv24nv26nv28nv30naaaaaaaaaaaaaaa_v0v1av2v3aov4v5av6v7aov8v9av10v11aov12v13av14v15aov16v17av18v19aov20v21av22v23aov24v25av26v27aov28v29av30v31aoaaaaaaax0 (bool? in[32]; bool! out)
+{
+   prs {
+   (in[0] & in[1] | in[2] & in[3]) & (in[4] & in[5] | in[6] & in[7]) & (in[8] & in[9] | in[10] & in[11]) & (in[12] & in[13] | in[14] & in[15]) & (in[16] & in[17] | in[18] & in[19]) & (in[20] & in[21] | in[22] & in[23]) & (in[24] & in[25] | in[26] & in[27]) & (in[28] & in[29] | in[30] & in[31]) -> out-
+   ~in[0] & ~in[2] & ~in[4] & ~in[6] & ~in[8] & ~in[10] & ~in[12] & ~in[14] & ~in[16] & ~in[18] & ~in[20] & ~in[22] & ~in[24] & ~in[26] & ~in[28] & ~in[30] -> out+
+   }
+}
+
+export defcell gv5nv6nv7nv8nv9nv10naaaaav11no_v0v1v2v3v4v5aaaaax0 (bool? in[12]; bool! out)
+{
+   prs {
+   in[0] & in[1] & in[2] & in[3] & in[4] & in[5] -> out-
+   ~in[5] & ~in[6] & ~in[7] & ~in[8] & ~in[9] & ~in[10] | ~in[11] -> out+
+   }
+}
+
+export defcell gv5nv6nv7nv8nv9nv10nv11naaaaaav12no_v0v1v2v3v4aaaox0 (bool? in[13]; bool! out)
+{
+   prs {
+   in[0] | in[1] & in[2] & in[3] & in[4] -> out-
+   ~in[5] & ~in[6] & ~in[7] & ~in[8] & ~in[9] & ~in[10] & ~in[11] | ~in[12] -> out+
+   }
+}
+
+export defcell gv6nv1nav3nv4nov7nv8nov9nv10nov11nv12nov13nv14nov15nv16nov17nv18nov19nv20noaaaaaaav21noo_v0v1av2v3v4v5aaaox0 (bool? in[22]; bool! out)
+{
+   prs {
+   in[0] & in[1] | in[2] & in[3] & in[4] & in[5] -> out-
+   ~in[6] & ~in[1] | (~in[3] | ~in[4]) & (~in[7] | ~in[8]) & (~in[9] | ~in[10]) & (~in[11] | ~in[12]) & (~in[13] | ~in[14]) & (~in[15] | ~in[16]) & (~in[17] | ~in[18]) & (~in[19] | ~in[20]) | ~in[21] -> out+
+   }
+}
+
+export defcell gv9nv10nv11naav12no_v0v1v2v3v4v5v6v7v8oooooooax0 (bool? in[13]; bool! out)
+{
+   prs {
+   in[0] & (in[1] | in[2] | in[3] | in[4] | in[5] | in[6] | in[7] | in[8]) -> out-
+   ~in[9] & ~in[10] & ~in[11] | ~in[12] -> out+
+   }
+}
+
+export template<pint w,l> defcell p0(bool? in[2]; bool! out) {
+  prs { passp<w,l> (in[0],in[1],out) }
+}
+
+export template<pint w,l> defcell n0(bool? in[2]; bool! out) {
+  prs { passn<w,l> (in[0],in[1],out) }
+}
+
+export template<pint w,l> defcell t0(bool? in[3]; bool! out) {
+  prs { transgate<w,l> (in[0],in[1],in[2],out) }
+}
+
+export defcell p1(bool? in[2]; bool! out) {
+  prs { passp (in[0],in[1],out) }
+}
+
+export defcell n1(bool? in[2]; bool! out) {
+  prs { passn (in[0],in[1],out) }
+}
+
+export defcell t1(bool? in[3]; bool! out) {
+  prs { transgate (in[0],in[1],in[2],out) }
+}
+
+export template<pint w,l> defcell c0(bool in; bool out) {
+  prs { cap<w,l> (in,out) }
+}
+
+export defcell c1(bool in; bool out) {
+  prs { cap (in,out) }
+}
+
+
+
+}

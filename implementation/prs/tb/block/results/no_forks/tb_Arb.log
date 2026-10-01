@@ -1,0 +1,106 @@
+WARNING: ArbDriver<>: substituting chp model (requested prs, not found)
+WARNING: ArbMutex<>: substituting hse model (requested prs, not found)
+WARNING: ArbMutex<>: substituting hse model (requested prs, not found)
+WARNING: ArbMutex<>: substituting hse model (requested prs, not found)
+WARNING: ArbMutex<>: substituting hse model (requested prs, not found)
+WARNING: ArbMutex<>: substituting hse model (requested prs, not found)
+WARNING: TbFailure<1>: substituting chp model (requested prs, not found)
+TB_RANDOM_CHOICE off
+TB_WARNING_POLICY resume-on-warn
+TB_STRESS_BEGIN 10000
+[             6774048] <dut.ar3>  WARNING: interference on `_w0'   [by dut.ar3.s <- 0]
+WARNING: timing constraint in [ dut.ar3:Arb2<> ]  f- : _f+ < [0] s- violated!
+>> time: 6774049
+[             6774049] <dut.ar3>  WARNING: weak-interference on `w0'   [by dut.ar3._w0 <- X]
+[            15469559] <dut.ar2>  WARNING: interference on `_w0'   [by dut.ar2.s <- 0]
+WARNING: timing constraint in [ dut.ar2:Arb2<> ]  f- : _f+ < [0] s- violated!
+>> time: 15469560
+[            15469560] <dut.ar2>  WARNING: weak-interference on `w0'   [by dut.ar2._w0 <- X]
+[            21235056] <dut.ar0>  WARNING: interference on `_w0'   [by dut.ar0.s <- 0]
+[            21235057] <dut.ar0>  WARNING: weak-interference on `w0'   [by dut.ar0._w0 <- X]
+WARNING: timing constraint in [ dut.ar0:Arb2<> ]  f- : _f+ < [0] s- violated!
+>> time: 21235060
+[            51011924] <dut.ar2>  WARNING: interference on `_w0'   [by dut.ar2.s <- 0]
+[            51011925] <dut.ar2>  WARNING: weak-interference on `w0'   [by dut.ar2._w0 <- X]
+WARNING: timing constraint in [ dut.ar2:Arb2<> ]  f- : _f+ < [0] s- violated!
+>> time: 51011941
+[            73993247] <dut.ar1>  WARNING: interference on `_w0'   [by dut.ar1.s <- 0]
+[            73993248] <dut.ar1>  WARNING: weak-interference on `w0'   [by dut.ar1._w0 <- X]
+WARNING: timing constraint in [ dut.ar1:Arb2<> ]  f- : _f+ < [0] s- violated!
+>> time: 73993249
+[            75584547] <dut.ar2>  WARNING: interference on `_w0'   [by dut.ar2.s <- 0]
+[            75584548] <dut.ar2>  WARNING: weak-interference on `w0'   [by dut.ar2._w0 <- X]
+WARNING: timing constraint in [ dut.ar2:Arb2<> ]  f- : _f+ < [0] s- violated!
+>> time: 75584562
+[           130950419] <dut.ar0>  WARNING: interference on `_w0'   [by dut.ar0.s <- 0]
+[           130950420] <dut.ar0>  WARNING: weak-interference on `w0'   [by dut.ar0._w0 <- X]
+WARNING: timing constraint in [ dut.ar0:Arb2<> ]  f- : _f+ < [0] s- violated!
+>> time: 130950422
+[           148046511] <dut.ar4>  WARNING: interference on `_w0'   [by dut.ar4.s <- 0]
+[           148046512] <dut.ar4>  WARNING: weak-interference on `w0'   [by dut.ar4._w0 <- X]
+WARNING: timing constraint in [ dut.ar4:Arb2<> ]  f- : _f+ < [0] s- violated!
+>> time: 148046530
+[           197812379] <dut.ar2>  WARNING: interference on `_w0'   [by dut.ar2.s <- 0]
+[           197812380] <dut.ar2>  WARNING: weak-interference on `w0'   [by dut.ar2._w0 <- X]
+WARNING: timing constraint in [ dut.ar2:Arb2<> ]  f- : _f+ < [0] s- violated!
+>> time: 197812391
+[           216801110] <dut.ar3>  WARNING: interference on `_w0'   [by dut.ar3.s <- 0]
+[           216801111] <dut.ar3>  WARNING: weak-interference on `w0'   [by dut.ar3._w0 <- X]
+WARNING: timing constraint in [ dut.ar3:Arb2<> ]  f- : _f+ < [0] s- violated!
+>> time: 216801116
+[           235585141] <dut.ar3>  WARNING: interference on `_w0'   [by dut.ar3.s <- 0]
+[           235585142] <dut.ar3>  WARNING: weak-interference on `w0'   [by dut.ar3._w0 <- X]
+WARNING: timing constraint in [ dut.ar3:Arb2<> ]  f- : _f+ < [0] s- violated!
+>> time: 235585150
+[           262952423] <dut.ar3>  WARNING: interference on `_w0'   [by dut.ar3.s <- 0]
+[           262952424] <dut.ar3>  WARNING: weak-interference on `w0'   [by dut.ar3._w0 <- X]
+WARNING: timing constraint in [ dut.ar3:Arb2<> ]  f- : _f+ < [0] s- violated!
+>> time: 262952427
+[           266255368] <dut.ar4>  WARNING: interference on `_w0'   [by dut.ar4.s <- 0]
+[           266255369] <dut.ar4>  WARNING: weak-interference on `w0'   [by dut.ar4._w0 <- X]
+WARNING: timing constraint in [ dut.ar4:Arb2<> ]  f- : _f+ < [0] s- violated!
+>> time: 266255394
+[           329644334] <dut.ar3>  WARNING: interference on `_w0'   [by dut.ar3.s <- 0]
+[           329644335] <dut.ar3>  WARNING: weak-interference on `w0'   [by dut.ar3._w0 <- X]
+WARNING: timing constraint in [ dut.ar3:Arb2<> ]  f- : _f+ < [0] s- violated!
+>> time: 329644340
+[           349932740] <dut.ar3>  WARNING: interference on `_w0'   [by dut.ar3.s <- 0]
+[           349932741] <dut.ar3>  WARNING: weak-interference on `w0'   [by dut.ar3._w0 <- X]
+WARNING: timing constraint in [ dut.ar3:Arb2<> ]  f- : _f+ < [0] s- violated!
+>> time: 349932746
+[           351024835] <dut.ar4>  WARNING: interference on `_w0'   [by dut.ar4.s <- 0]
+WARNING: timing constraint in [ dut.ar4:Arb2<> ]  f- : _f+ < [0] s- violated!
+>> time: 351024836
+[           351024836] <dut.ar4>  WARNING: weak-interference on `w0'   [by dut.ar4._w0 <- X]
+[           385871408] <dut.ar1>  WARNING: interference on `_w0'   [by dut.ar1.s <- 0]
+[           385871409] <dut.ar1>  WARNING: weak-interference on `w0'   [by dut.ar1._w0 <- X]
+WARNING: timing constraint in [ dut.ar1:Arb2<> ]  f- : _f+ < [0] s- violated!
+>> time: 385871426
+[           397224752] <dut.ar4>  WARNING: interference on `_w0'   [by dut.ar4.s <- 0]
+[           397224753] <dut.ar4>  WARNING: weak-interference on `w0'   [by dut.ar4._w0 <- X]
+WARNING: timing constraint in [ dut.ar4:Arb2<> ]  f- : _f+ < [0] s- violated!
+>> time: 397224768
+[           454732519] <dut.ar2>  WARNING: interference on `_w0'   [by dut.ar2.s <- 0]
+[           454732520] <dut.ar2>  WARNING: weak-interference on `w0'   [by dut.ar2._w0 <- X]
+WARNING: timing constraint in [ dut.ar2:Arb2<> ]  f- : _f+ < [0] s- violated!
+>> time: 454732522
+[           459823781] <dut.ar4>  WARNING: interference on `_w0'   [by dut.ar4.s <- 0]
+[           459823782] <dut.ar4>  WARNING: weak-interference on `w0'   [by dut.ar4._w0 <- X]
+WARNING: timing constraint in [ dut.ar4:Arb2<> ]  f- : _f+ < [0] s- violated!
+>> time: 459823802
+[           471690098] <dut.ar2>  WARNING: interference on `_w0'   [by dut.ar2.s <- 0]
+[           471690099] <dut.ar2>  WARNING: weak-interference on `w0'   [by dut.ar2._w0 <- X]
+WARNING: timing constraint in [ dut.ar2:Arb2<> ]  f- : _f+ < [0] s- violated!
+>> time: 471690121
+[           493391959] <dut.ar1>  WARNING: interference on `_w0'   [by dut.ar1.s <- 0]
+[           493391960] <dut.ar1>  WARNING: weak-interference on `w0'   [by dut.ar1._w0 <- X]
+WARNING: timing constraint in [ dut.ar1:Arb2<> ]  f- : _f+ < [0] s- violated!
+>> time: 493391965
+TB_STRESS_END 500009957
+[           500018406] <driver>  PASSED: rounds=20134
+TB_FINAL
+done: 1
+fail: 0
+rounds: 20134  (0x4ea6)
+TB_X_BEGIN
+TB_X_END

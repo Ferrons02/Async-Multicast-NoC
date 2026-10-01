@@ -1,0 +1,222 @@
+# UpdownSel: no explicit RCs; standard PTM65 TT test PASS at 112.68 ns.
+# Former RC branches below are now connected directly.
+# p -> w__0i
+# inv__p -> w__0i
+# a -> s
+# a -> w__0
+# inv__a -> s
+# a -> n__I__a
+# O0_aa -> n__I__a
+# O1_aa -> n__I__a
+# O0_aa -> a
+# O1_aa -> a
+# inv__s -> a
+# inv__s -> inv__w__1
+# n__I__a -> I_aa
+
+# StopcodeSel: no explicit RCs; standard PTM65 TT test PASS at 122.66 ns.
+# Former RC branches below are now connected directly.
+# p -> w__0i
+# inv__p -> w__0i
+# O0_aa -> n__v
+# O1_aa -> n__v
+# n__I__a -> I_aa
+# inv__s -> n__w__1
+# inv__I__t_513_6 -> w__0i
+# inv__I__f_513_6 -> w__0i
+# inv__I__t_514_6 -> w__0i
+# inv__I__f_514_6 -> w__0i
+# inv__I__t_515_6 -> w__0i
+# inv__I__f_515_6 -> w__0i
+# inv__I__t_516_6 -> w__0i
+# inv__I__f_516_6 -> w__0i
+# inv__I__t_517_6 -> w__0i
+# inv__I__f_517_6 -> w__0i
+# inv__I__t_518_6 -> w__0i
+# inv__I__f_518_6 -> w__0i
+# inv__I__t_519_6 -> w__0i
+# inv__I__f_519_6 -> w__0i
+# inv__I__t_520_6 -> w__0i
+# inv__I__f_520_6 -> w__0i
+# inv__I__t_521_6 -> w__0i
+# inv__I__f_521_6 -> w__0i
+# inv__I__t_522_6 -> w__0i
+# inv__I__f_522_6 -> w__0i
+# inv__I__t_523_6 -> w__0i
+# inv__I__f_523_6 -> w__0i
+# inv__I__t_524_6 -> w__0i
+# inv__I__f_524_6 -> w__0i
+# inv__I__t_525_6 -> w__0i
+# inv__I__f_525_6 -> w__0i
+# inv__I__t_526_6 -> w__0i
+# inv__I__f_526_6 -> w__0i
+# inv__I__t_527_6 -> w__0i
+# inv__I__f_527_6 -> w__0i
+# inv__I__t_528_6 -> w__0i
+# inv__I__f_528_6 -> w__0i
+# inv__I__t_529_6 -> w__0i
+# inv__I__f_529_6 -> w__0i
+# inv__I__t_530_6 -> w__0i
+# inv__I__f_530_6 -> w__0i
+# inv__I__t_531_6 -> w__0i
+# inv__I__f_531_6 -> w__0i
+# inv__w__0i -> n__v
+
+# StopcodeSel former analog settling fix (also removed)
+# inv__w__0i -> p  # M554_ gate only; R=100k, C=10f
+
+# Arb (each Arb2 instance: ar0..ar4): no explicit RC devices.
+# User-authorized removal: full Arb passes the standard PTM65 TT test at 140 ns.
+# Former fork RC branches below are now connected directly. This functional
+# result does not establish the fork timing inequalities across physical layouts.
+# p -> w0i
+# inv__p -> w0i
+# O_aa -> n__I0__a
+# O_aa -> n__I1__a
+# inv__f -> n__w0
+# inv__f -> n__w1
+# f -> n__I0__a
+# f -> n__I1__a
+# I0_af_50_6 -> n__O__f_50_6
+# I1_af_50_6 -> n__O__f_50_6
+# u -> f
+# v -> f
+# ia0_core -> I0_aa (former internal node merged into public port)
+# ia1_core -> I1_aa (former internal node merged into public port)
+# The two 2.5meg/1f settling RCs per Arb2 were also removed.
+
+# ChildSel: inherited UpdownSel forks, applied separately in root/left/right.
+# Baseline HSPICE PASS at 123.59 ns: six inputs, O3=3/O1=3, O0/O2 quiet; no added RCs.
+# u = XDUT.xroot, XDUT.xleft, or XDUT.xright; names below are local SPICE nodes.
+# Top wiring: root.O0=left.I, root.O1=right.I; leaves O3,O2,O1,O0.
+u.p -> u.w__0i | inherited UpdownSel selection fork | RC NOT USED
+u.inv__p -> u.w__0i | inherited UpdownSel selection fork | RC NOT USED
+u.a -> u.s | inherited UpdownSel completion feedback fork | RC NOT USED
+u.a -> u.w__0 | inherited UpdownSel completion/body reset fork | RC NOT USED
+u.inv__a -> u.s | inherited UpdownSel completion feedback fork | RC NOT USED
+u.a -> u.n__I__a | inherited UpdownSel completion/ack reset fork | RC NOT USED
+u.O0_aa -> u.n__I__a | inherited UpdownSel output acknowledge fork | RC NOT USED
+u.O1_aa -> u.n__I__a | inherited UpdownSel output acknowledge fork | RC NOT USED
+u.O0_aa -> u.a | inherited UpdownSel output acknowledge/completion fork | RC NOT USED
+u.O1_aa -> u.a | inherited UpdownSel output acknowledge/completion fork | RC NOT USED
+u.inv__s -> u.a | inherited UpdownSel mode/completion fork | RC NOT USED
+u.inv__s -> u.inv__w__1 | inherited UpdownSel mode/tail reset fork | RC NOT USED
+u.n__I__a -> u.I_aa | inherited UpdownSel input acknowledge/producer fork | RC NOT USED
+
+# MltcSel: candidate branches only; no artificial delay in the baseline.
+# Baseline PTM65 TT HSPICE PASS at 106.55 ns: four inputs, O0=2/O1=2; no RCs needed.
+# Local SPICE names; PUN/PDN = pull-up/pull-down network of the named holding node.
+# Duplicate i_a->s fork descriptions are combined. The stray v in the s->o
+# inequality is absent from this PRS; use the preceding stated path without v.
+p -> w__0i(PUN) | p->w0i->s->o must follow p->o | RC NOT USED
+inv__p -> w__0i(PUN) | complementary selection branch of the same p fork | RC NOT USED
+O0_aa -> n__I__a(PDN) | O0.a->i_a->s+/w- must follow O0.a->s+/w- | RC NOT USED
+O1_aa -> n__I__a(PDN) | O1.a->i_a->s+/w- must follow O1.a->s+/w- | RC NOT USED
+n__I__a -> I_aa | i_a down->producer->i up->w1 up->s+ must follow local i_a down->s+ | RC NOT USED
+inv__s -> n__w__1(PUN) | s up->w1 down->i_a down->i up->o+/w0+ must follow s up->o+/w0+ | RC NOT USED
+
+# InputRouter: supplied a-stage forks; candidate branches only, baseline has no added RC.
+# PTM65 TT HSPICE baseline PASS at 106.58 ns: six inputs, O0=3/O1=3; 1491 MOS (747 NMOS, 744 PMOS), including keepers.
+# Local SPICE names: __w0/1=_w0/1, __a=_a, __p=_p, I_aa=i_a; logical w down is __w up.
+# PUN/PDN identify the pull-up/pull-down guard network; k=0..31 and rho=t,f.
+O0_aa -> __o0a(inverter) | O0.a up->I.a up->__i__a down->a+ must follow direct O0.a up->a+ disable | RC NOT USED
+O1_aa -> __o1a(inverter) | O1.a up->I.a up->__i__a down->a+ must follow direct O1.a up->a+ disable | RC NOT USED
+p -> __p(inverter) | p up->__p down->__w0 up->I.a down->I up->O up must follow p up at output enables | RC NOT USED
+p -> __w1(PUN) | p down->__w1 up->I.a down->I up->O up must follow p down at output enables | RC NOT USED
+__a -> I_aa(PDN) | a down->__a up->I.a down->I up->__w0/1 down must follow __a up at __w0/1 PUN disable | RC NOT USED
+__a -> I_aa(PDN) | a down->__a up->I.a down->I up->__w down->p must follow a down at p PDN and __a up at p PUN | RC NOT USED
+__a -> __w0(PUN) | a up->__a down->__w0 up->I.a- must follow __a down at I.a PDN disable | RC NOT USED
+__a -> __w1(PUN) | a up->__a down->__w1 up->I.a- must follow __a down at I.a PDN disable | RC NOT USED
+
+# Serializer: supplied WordBuffer and Sequencer forks; no artificial RC added.
+# PTM65 TT baseline PASS at 119.03 ns: 2 inputs, 14 output quartets, all handshakes complete.
+# Supplied four-bit completion tree: _c -> d -> _e -> c -> _v. All RCs NOT USED.
+# Functional nominal pass; individual fork margins/PVT/layout not characterized.
+# ACT-local identifiers below; Serializer instances wb and seq.
+# _x denotes the supplied complement. j=1..7, k=0..3, i=4j+k, rho=t/f.
+# WordBuffer
+_i_a -> _u_j(PUN) | I.a up->u_j down->O_jrho+ must follow I.a up->O_jrho+ disable | RC NOT USED
+O1.a -> _o1a(inverter) | O1.a down->I.a up->u1- must follow O1.a down->u1+ disable | RC NOT USED
+v -> _i_a(PUN) | v down->I.a down->O_jrho+ must follow v down->O_jrho+ disable | RC NOT USED
+b[i] -> _c[i/4](PDN) | b[i] up->_c down->d up->_e down->c up->v up->O_jrho+ must follow b[i] up at both output guards | RC NOT USED
+# Sequencer = commons/Seq7.act. A0..A6 map to a7..a1, q7..q1.
+# m=0..6, n=(m+1)%7: A[m].a is the previous acknowledge for A[n].req.
+A[m].a -> _a[m](inverter) | A[m].a up->q_(7-n) up->A[n].req+ must follow direct A[m].a up->A[n].req+ disable | RC NOT USED
+# QSlicer acknowledgement O.a=I.a=A.a is one net (ACT aliases), without gates.
+# No additional forks were supplied for QSlicer or Merge.
+
+# PayloadDispatch: four ChildDispatch instances cd0..cd3, parallel I.a/Ch.a C-elements.
+# Existing reference constraints: no_forks/PayloadDispatch/ChildDispatch.act spec;
+# protocol fork descriptions in benchmark/RouterDecompositionLatex.txt.txt (ChildDispatch).
+# PTM65 TT baseline PASS at 131.95 ns: controls=2, inputs=4, C0=4/C1=1/C2=4/C3=1.
+# No new forks inferred; all candidate RCs inactive. Nominal functional check, not PVT/layout signoff.
+# Names are local SPICE nodes inside XDUT.xcd0..xcd3; __oa=_oa, I_aa=local I.a.
+# The reference prose calls the w guard '+' once; the actual I.a & ~O.a guard is w-.
+u.__oa -> u.I_aa(PUN) | O.a up->I.a up->w0-/w1-/c- must follow O.a up->w0-/w1-/c- disable | RC NOT USED
+u.__it0 -> u.w0(PUN) | I.a down->producer->I.t0 up->w0 up->c- must follow local I.a down->c- disable | RC NOT USED
+u.__if0 -> u.w1(PUN) | I.a down->producer->I.f0 up->w1+ must follow local I.a down->w1- disable (reference timing I.a- < w1+) | RC NOT USED
+
+# Counter: existing fork constraints from no_forks/Counter/CounterLogic.act spec
+# and benchmark/RouterDecompositionLatex.txt.txt, Counter PRS discussion.
+# Revised CounterLogic PRS: PTM65 TT baseline PASS at 126.67 ns; reads 12 and 0.
+# Six inputs, two reads, full handshakes; no artificial delay. Nominal check only.
+# ACT-local identifiers inside Counter.logic (SPICE XDUT.xlogic).
+# _pa is now the local complement of P.a; Reg8 keeps its own internal _p_a.
+I.a -> Sb.{t,f}[7](PDN) | I.a up->Sb7 down->_sb7 up->_qr down must follow _ia down at _qr PDN disable | RC NOT USED
+I.{t,f}[3] -> _k(PDN) | I.a down->producer->I3 up->k+ must follow _ia up at _k PUN disable | RC NOT USED
+P.a -> _ia(PDN) | P.a up->I.a up->_k up must follow P.a up at _k PUN disable | RC NOT USED
+P.a -> v(PDN) | P.a up->v down->k+ must follow _pa down at _k PDN disable | RC NOT USED
+k -> _ia(PUN) | k down->I.a down->producer->I up->Sa+ must follow _k up at Sa PUN disable | RC NOT USED
+k -> _ia(PUN) | k down->I.a down->Q.req+ must follow k down at _qr PDN disable | RC NOT USED
+_cr -> v(PUN) | Cnt.req up->_cr down->v up->w+ must follow direct Cnt.req up at w PUN disable | RC NOT USED
+# Public Sa rails are driven directly; local input-rail inverters follow the supplied PRS.
+# No additional adder/register fork constraints were supplied or invented.
+
+# Deserializer: user-supplied InputAnalyzer and QBuffer forks.
+# PTM65 TT baseline PASS at 151.39 ns: 16 inputs, 3 outputs, full handshakes.
+# Raw prs2net, no artificial RC. Names below are ACT-local. Nominal check only.
+# InputAnalyzer: Deserializer.analyzer / SPICE XDUT.xanalyzer.
+_or -> m(PUN) | O.req up->m up->v+ and I.a+ must follow direct O.req up at v+/I.a+ disable | RC NOT USED
+_or -> k(PUN) | O.req up->k up->_f down must follow _or down at _f PDN disable | RC NOT USED
+_it[j] -> m(PUN) | I.a down->producer->I.t[j] up->m+ must follow I.a down at m PDN disable | RC NOT USED
+_if[j] -> k(PDN) | I.a up->producer->I.f spacer->k down->_f up must follow direct I.a up at _f PUN disable | RC NOT USED
+_m -> I.a(PDN) | m down->I.a down->producer->I up->O+ must follow m down at _ot/_of PDN disable | RC NOT USED
+_lr -> L.a(PDN) | L.req down->L.a down->R.req up->_s up must follow direct L.req down at _s PDN disable | RC NOT USED
+L.req -> _s(PDN) | L.req up->_s down->L.a up->R.req+ must follow direct L.req up at R.req PUN disable | RC NOT USED
+# R.req positive guard also depends directly on _s. Direct L.req must arrive before that enable.
+L.req -> R.req(PUN) | L.a up->requester->L.req down->R.req+ must follow direct L.a up at R.req PUN disable | RC NOT USED
+_if[j] -> k(PUN) | I.f[j] up->k up->_of[j] down must follow direct I.f[j] up at _of[j] PUN disable | RC NOT USED
+# j=0..3. Any RC debug must follow the measured path and leave unrelated fanout unchanged.
+# QBuffer: Deserializer.qb0..qb7 / SPICE XDUT.xqb0..xqb7.
+# Register extracted into QBuffer.reg / SPICE xreg; W/R ports are aliases.
+# The control forks below remain in QBuffer, with the same paths and guards.
+L.a -> _a(PDN) | L.a up->_a down->I.req+ must follow direct L.a up at I.req PUN disable | RC NOT USED
+R.a -> _c(PDN) | R.a up->_c down->q_r+ must follow direct R.a up at q_r PUN disable | RC NOT USED
+p_a -> _b(PDN) | p_a up->_b down->R.req+ must follow direct p_a up at R.req PUN disable | RC NOT USED
+_oa -> _c(PUN) | O.a up->_oa down->_c up->c down->L.a+ must follow direct O.a up at L.a PUN disable | RC NOT USED
+# Split: no additional fork constraints supplied. QBuffer data wires are aliases.
+
+# QuadRouter: reference timing specs in no_forks/QuadRouter/{ChildServer,SUpdate}.act
+# and fork prose in benchmark/RouterDecompositionLatex.txt.txt (lines 2400-2410,2720-2723).
+# Current supplied PRS is authoritative; no later redesigned guards are imported.
+# PTM65 TT baseline PASS at 423.68 ns: 26 inputs, 16 Cnt responses, 58 outputs, 12 stages.
+# Raw prs2net, no artificial RC. ACT-local names below; nominal functional check only.
+# ChildServer: QuadRouter.child0..child3 / XDUT.xchild0..xchild3.
+p0 -> s(PDN) | p0 up->s down->R.req+ must follow direct p0 up at R.req PUN disable | RC NOT USED
+# The reference p0->s->R.req paragraph is filed under SUpdate, but its signals identify ChildServer.
+j -> _p0(PDN) | j up->_p0 down->dec.I/Oc/Od+ must follow direct j up at those PUNs disable | RC NOT USED
+_wa -> _p0(PUN) | W.a up->p0 down->R.req+ must follow direct W.a up at R.req PUN disable | RC NOT USED
+_wa -> A.a(PUN) | W.a up->A.a up->s down->R.req+ must follow direct W.a up at R.req PUN disable | RC NOT USED
+_it/_if -> j(PDN) | I.a up->producer->I spacer->j down->dec.I/Oc/Od+ must follow direct I.a up at those PUNs disable | RC NOT USED
+_rt/_rf -> s(PUN) | R.rail up->s up->j+ must follow direct R.rail up at j PUN disable | RC NOT USED
+# SUpdate: QuadRouter.update / XDUT.xupdate.
+k -> _ia(PDN) | k up->I.a up->W/Ch+ must follow direct k up at W/Ch PUN disable | RC NOT USED
+p0 -> _ia(PUN) | p0 down->I.a down->Od.f+ must follow _p0 up at Od.f PUN disable | RC NOT USED
+_it -> p1(PUN) | I.a down->producer->I up->p1 up->W/Ch+ must follow _ia up at W/Ch PUN disable | RC NOT USED
+p1 -> _p1(inverter) | p1 up->k up->I.a+ must follow direct p1 up at _ia PUN disable | RC NOT USED
+Od0.a..Od3.a -> _ia(PDN) | Od.a up->I.a up->_p0 up and s+ must follow direct Od.a up at _p0/s PUN disable | RC NOT USED
+W0.a..W3.a,Ch.a -> s(PDN) | ack up->s down->p1- must follow _wa/_cha down at p1 PDN disable | RC NOT USED
+# Sequencer: QuadRouter.seq; same supplied acknowledge->request fork as Serializer.
+A[m].a -> _a[m](inverter) | A[m].a up->q_next up->A[next].req+ must follow direct A[m].a up at A[next].req PUN disable | RC NOT USED
+# QVar reuses the existing Merge<8,false> and Reg8; OD merges use Merge<4,false>.
+# No additional adder or merger forks supplied. The initial run does not activate candidate delays.

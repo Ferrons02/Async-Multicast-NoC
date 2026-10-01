@@ -1,0 +1,55 @@
+import "commons/Channels.act";
+
+// User's Sequencer PRS, using the shared Seq7 interface.
+// A0..A6 correspond to a7..a1; acknowledgement predecessor wraps A6->A0.
+export defproc Seq7(bool? reset; Dataless! A0, A1, A2, A3, A4, A5, A6)
+{
+    bool q7, q6, q5, q4, q3, q2, q1;
+    bool _q7, _q6, _q5, _q4, _q3, _q2, _q1;
+    bool _r, _a[7];
+    prs {
+        ~_r | (~_a[6] & ~q6) -> q7+
+        (_a[6] & q6) -> q7-
+        (~_a[0] & ~q5) -> q6+
+        reset | (_a[0] & q5) -> q6-
+        (~_a[1] & ~q4) -> q5+
+        reset | (_a[1] & q4) -> q5-
+        (~_a[2] & ~q3) -> q4+
+        reset | (_a[2] & q3) -> q4-
+        (~_a[3] & ~q2) -> q3+
+        reset | (_a[3] & q2) -> q3-
+        (~_a[4] & ~q1) -> q2+
+        reset | (_a[4] & q1) -> q2-
+        (~_a[5] & ~q7) -> q1+
+        reset | (_a[5] & q7) -> q1-
+        ~_q7 & ~A6.a -> A0.req+
+        _q7 -> A0.req-
+        ~_q6 & ~A0.a -> A1.req+
+        _q6 -> A1.req-
+        ~_q5 & ~A1.a -> A2.req+
+        _q5 -> A2.req-
+        ~_q4 & ~A2.a -> A3.req+
+        _q4 -> A3.req-
+        ~_q3 & ~A3.a -> A4.req+
+        _q3 -> A4.req-
+        ~_q2 & ~A4.a -> A5.req+
+        _q2 -> A5.req-
+        ~_q1 & ~A5.a -> A6.req+
+        _q1 -> A6.req-
+        ~reset => _r+
+        ~A0.a => _a[0]+
+        ~A1.a => _a[1]+
+        ~A2.a => _a[2]+
+        ~A3.a => _a[3]+
+        ~A4.a => _a[4]+
+        ~A5.a => _a[5]+
+        ~A6.a => _a[6]+
+        ~q7 => _q7+
+        ~q6 => _q6+
+        ~q5 => _q5+
+        ~q4 => _q4+
+        ~q3 => _q3+
+        ~q2 => _q2+
+        ~q1 => _q1+
+    }
+}

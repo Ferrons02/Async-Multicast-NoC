@@ -1,0 +1,143 @@
+import "../../../src/subsystem/no_forks/MltcUnit.act";
+import "../testbench_support.act";
+
+/* Goldens are unchanged; case 2 adds the documented missing terminator.
+ * One sequential input, independent persistent output checkers.
+ * Join all expected receives before launching the next sequence. */
+TbPush<32> I;
+TbPush<32> C0;
+pint GOLD_C0[2];
+GOLD_C0[0] = 0x10000002;
+GOLD_C0[1] = 0xBADBAD13;
+TbPush<32> C1;
+pint GOLD_C1[2];
+GOLD_C1[0] = 0x20000002;
+GOLD_C1[1] = 0xBADBAD13;
+TbPush<32> C2;
+pint GOLD_C2[11];
+GOLD_C2[0] = 0x4D000002;
+GOLD_C2[1] = 0xBADBAD13;
+GOLD_C2[2] = 0x42100002;
+GOLD_C2[3] = 0xBADBAD13;
+GOLD_C2[4] = 0x4D318002;
+GOLD_C2[5] = 0xBADBAD13;
+GOLD_C2[6] = 0x4C311212;
+GOLD_C2[7] = 0x44200002;
+GOLD_C2[8] = 0xBADBAD13;
+GOLD_C2[9] = 0x40000002;
+GOLD_C2[10] = 0xBADBAD13;
+TbPush<32> C3;
+pint GOLD_C3[11];
+GOLD_C3[0] = 0x86000002;
+GOLD_C3[1] = 0xBADBAD13;
+GOLD_C3[2] = 0x88100002;
+GOLD_C3[3] = 0xBADBAD13;
+GOLD_C3[4] = 0x86410002;
+GOLD_C3[5] = 0xBADBAD13;
+GOLD_C3[6] = 0x86844812;
+GOLD_C3[7] = 0x20000002;
+GOLD_C3[8] = 0xBADBAD13;
+GOLD_C3[9] = 0x80000002;
+GOLD_C3[10] = 0xBADBAD13;
+
+defproc MltcUnitDriver(TbPush!<32> I)
+{
+    bool running;
+    chp {
+        ready := false; stop := false; done := false;
+        rounds := 0; issued := 0; tx_count := 0; tx_last := 0; tx_next := 0;
+        bad[4] := false; initialized[4] := true;
+        rx_count[4] := 0; rx_last[4] := 0; rx_next[4] := 0;
+        bad[5] := false; initialized[5] := true;
+        rx_count[5] := 0; rx_last[5] := 0; rx_next[5] := 0;
+        [(&i:6: initialized[i])];
+        ready := true; running := true;
+        [~reset];
+        *[running ->
+            issued := rounds + 1;
+            tx_next := 0x348D6002;
+            I!0x348D6002;
+            tx_count := tx_count + 1; tx_last := 0x348D6002;
+            [rounds = 0 -> log("TB_TX count=", tx_count, " value=", tx_last) [] else -> skip];
+            tx_next := 0xBADBAD13;
+            I!0xBADBAD13;
+            tx_count := tx_count + 1; tx_last := 0xBADBAD13;
+            [rounds = 0 -> log("TB_TX count=", tx_count, " value=", tx_last) [] else -> skip];
+            tx_next := 0x34828112;
+            I!0x34828112;
+            tx_count := tx_count + 1; tx_last := 0x34828112;
+            [rounds = 0 -> log("TB_TX count=", tx_count, " value=", tx_last) [] else -> skip];
+            /* Case 2: a full routing flit needs an explicit zero terminator.
+             * Evidence: Level3v6/tb_Router.act test6 sends pi!2 here;
+             * InputRouter remains in route mode until bits 7..4 are zero.
+             * This adds a missing input; all specified goldens stay intact. */
+            tx_next := 0x00000002;
+            I!0x00000002;
+            tx_count := tx_count + 1; tx_last := 0x00000002;
+            [rounds = 0 -> log("TB_TX count=", tx_count, " value=", tx_last) [] else -> skip];
+            tx_next := 0xBADBAD13;
+            I!0xBADBAD13;
+            tx_count := tx_count + 1; tx_last := 0xBADBAD13;
+            [rounds = 0 -> log("TB_TX count=", tx_count, " value=", tx_last) [] else -> skip];
+            tx_next := 0x348D6312;
+            I!0x348D6312;
+            tx_count := tx_count + 1; tx_last := 0x348D6312;
+            [rounds = 0 -> log("TB_TX count=", tx_count, " value=", tx_last) [] else -> skip];
+            tx_next := 0x84100002;
+            I!0x84100002;
+            tx_count := tx_count + 1; tx_last := 0x84100002;
+            [rounds = 0 -> log("TB_TX count=", tx_count, " value=", tx_last) [] else -> skip];
+            tx_next := 0xBADBAD13;
+            I!0xBADBAD13;
+            tx_count := tx_count + 1; tx_last := 0xBADBAD13;
+            [rounds = 0 -> log("TB_TX count=", tx_count, " value=", tx_last) [] else -> skip];
+            tx_next := 0x348C6312;
+            I!0x348C6312;
+            tx_count := tx_count + 1; tx_last := 0x348C6312;
+            [rounds = 0 -> log("TB_TX count=", tx_count, " value=", tx_last) [] else -> skip];
+            tx_next := 0x84121482;
+            I!0x84121482;
+            tx_count := tx_count + 1; tx_last := 0x84121482;
+            [rounds = 0 -> log("TB_TX count=", tx_count, " value=", tx_last) [] else -> skip];
+            tx_next := 0x44212003;
+            I!0x44212003;
+            tx_count := tx_count + 1; tx_last := 0x44212003;
+            [rounds = 0 -> log("TB_TX count=", tx_count, " value=", tx_last) [] else -> skip];
+            tx_next := 0xBADBAD13;
+            I!0xBADBAD13;
+            tx_count := tx_count + 1; tx_last := 0xBADBAD13;
+            [rounds = 0 -> log("TB_TX count=", tx_count, " value=", tx_last) [] else -> skip];
+            tx_next := 0xF1248002;
+            I!0xF1248002;
+            tx_count := tx_count + 1; tx_last := 0xF1248002;
+            [rounds = 0 -> log("TB_TX count=", tx_count, " value=", tx_last) [] else -> skip];
+            tx_next := 0xBADBAD13;
+            I!0xBADBAD13;
+            tx_count := tx_count + 1; tx_last := 0xBADBAD13;
+            [rounds = 0 -> log("TB_TX count=", tx_count, " value=", tx_last) [] else -> skip];
+            tx_next := 0;
+            [rx_count[0] = issued * 2 & rx_count[1] = issued * 2 & rx_count[2] = issued * 11 & rx_count[3] = issued * 11];
+            rounds := rounds + 1;
+            [stop | fail -> running := false [] else -> skip]
+        ];
+        done := true;
+        [fail -> log("FAILED") [] else -> log("PASSED: rounds=", rounds)]
+    }
+}
+
+defproc tb_MltcUnit()
+{
+    MltcUnit dut;
+    dut.reset = reset;
+    TbPushSender<32> wire_I(I, dut.I.t, dut.I.f, dut.I.a);
+    TbPushReceiver<32> wire_C0(C0, dut.C0.t, dut.C0.f, dut.C0.a);
+    SubsystemCheck<2,GOLD_C0,0> check_C0(C0);
+    TbPushReceiver<32> wire_C1(C1, dut.C1.t, dut.C1.f, dut.C1.a);
+    SubsystemCheck<2,GOLD_C1,1> check_C1(C1);
+    TbPushReceiver<32> wire_C2(C2, dut.C2.t, dut.C2.f, dut.C2.a);
+    SubsystemCheck<11,GOLD_C2,2> check_C2(C2);
+    TbPushReceiver<32> wire_C3(C3, dut.C3.t, dut.C3.f, dut.C3.a);
+    SubsystemCheck<11,GOLD_C3,3> check_C3(C3);
+    TbFailure<6> failure(ready, bad, fail);
+    MltcUnitDriver driver(I);
+}

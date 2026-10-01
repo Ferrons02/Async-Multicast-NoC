@@ -1,0 +1,35 @@
+import "no_forks/commons/Channels.act";
+
+// Four-bit register extracted from Deserializer/QBuffer, with the same PRS.
+export defproc Reg4(bool? reset; ActiveDualRail4? W; PassiveDualRail4! R)
+{
+    bool x0, x1, x2, x3;
+    prs {
+        (((W.t[3] & x3) | (W.f[3] & ~x3)) & ((W.t[2] & x2) | (W.f[2] & ~x2)) & ((W.t[1] & x1) | (W.f[1] & ~x1)) & ((W.t[0] & x0) | (W.f[0] & ~x0))) -> W.a+
+        (&i:4: (~W.t[i] & ~W.f[i])) -> W.a-
+        W.t[3] -> x3+
+        W.f[3] | reset -> x3-
+        R.req & x3 -> R.t[3]+
+        ~R.req -> R.t[3]-
+        R.req & ~x3 -> R.f[3]+
+        ~R.req -> R.f[3]-
+        W.t[2] -> x2+
+        W.f[2] | reset -> x2-
+        R.req & x2 -> R.t[2]+
+        ~R.req -> R.t[2]-
+        R.req & ~x2 -> R.f[2]+
+        ~R.req -> R.f[2]-
+        W.t[1] -> x1+
+        W.f[1] | reset -> x1-
+        R.req & x1 -> R.t[1]+
+        ~R.req -> R.t[1]-
+        R.req & ~x1 -> R.f[1]+
+        ~R.req -> R.f[1]-
+        W.t[0] -> x0+
+        W.f[0] | reset -> x0-
+        R.req & x0 -> R.t[0]+
+        ~R.req -> R.t[0]-
+        R.req & ~x0 -> R.f[0]+
+        ~R.req -> R.f[0]-
+    }
+}

@@ -1,0 +1,130 @@
+import "../../../src/subsystem/forks/ChildRouter.act";
+import "../testbench_support.act";
+
+/* Stimulus and goldens are unchanged from the subsystem task.
+ * One sequential input, independent persistent output checkers.
+ * Join all expected receives before launching the next sequence. */
+TbPush<32> I;
+TbPush<32> C0;
+pint GOLD_C0[2];
+GOLD_C0[0] = 0xFFFF1F0E;
+GOLD_C0[1] = 0xFFFFFF0F;
+TbPush<32> C1;
+pint GOLD_C1[2];
+GOLD_C1[0] = 0xFFFF1F1E;
+GOLD_C1[1] = 0xFFFFFF1F;
+TbPush<32> C2;
+pint GOLD_C2[2];
+GOLD_C2[0] = 0xFFFF1F2E;
+GOLD_C2[1] = 0xFFFFFF2F;
+TbPush<32> C3;
+pint GOLD_C3[2];
+GOLD_C3[0] = 0xFFFF1F3E;
+GOLD_C3[1] = 0xFFFFFF3F;
+TbPush<32> M;
+pint GOLD_M[2];
+GOLD_M[0] = 0xFFFFFF5E;
+GOLD_M[1] = 0xFFFFFF5F;
+TbPush<32> P;
+pint GOLD_P[3];
+GOLD_P[0] = 0xFFFFDF4E;
+GOLD_P[1] = 0xFFFFFF4E;
+GOLD_P[2] = 0xFFFFFF4F;
+
+defproc ChildRouterDriver(TbPush!<32> I)
+{
+    bool running;
+    chp {
+        ready := false; stop := false; done := false;
+        rounds := 0; issued := 0; tx_count := 0; tx_last := 0; tx_next := 0;
+        [(&i:6: initialized[i])];
+        ready := true; running := true;
+        [~reset];
+        *[running ->
+            issued := rounds + 1;
+            tx_next := 0x7FFFFF3E;
+            I!0x7FFFFF3E;
+            tx_count := tx_count + 1; tx_last := 0x7FFFFF3E;
+            [rounds = 0 -> log("TB_TX count=", tx_count, " value=", tx_last) [] else -> skip];
+            tx_next := 0xFFFFFF3F;
+            I!0xFFFFFF3F;
+            tx_count := tx_count + 1; tx_last := 0xFFFFFF3F;
+            [rounds = 0 -> log("TB_TX count=", tx_count, " value=", tx_last) [] else -> skip];
+            tx_next := 0x5FFFFF2E;
+            I!0x5FFFFF2E;
+            tx_count := tx_count + 1; tx_last := 0x5FFFFF2E;
+            [rounds = 0 -> log("TB_TX count=", tx_count, " value=", tx_last) [] else -> skip];
+            tx_next := 0xFFFFFF2F;
+            I!0xFFFFFF2F;
+            tx_count := tx_count + 1; tx_last := 0xFFFFFF2F;
+            [rounds = 0 -> log("TB_TX count=", tx_count, " value=", tx_last) [] else -> skip];
+            tx_next := 0x3FFFFF1E;
+            I!0x3FFFFF1E;
+            tx_count := tx_count + 1; tx_last := 0x3FFFFF1E;
+            [rounds = 0 -> log("TB_TX count=", tx_count, " value=", tx_last) [] else -> skip];
+            tx_next := 0xFFFFFF1F;
+            I!0xFFFFFF1F;
+            tx_count := tx_count + 1; tx_last := 0xFFFFFF1F;
+            [rounds = 0 -> log("TB_TX count=", tx_count, " value=", tx_last) [] else -> skip];
+            tx_next := 0x1FFFFF0E;
+            I!0x1FFFFF0E;
+            tx_count := tx_count + 1; tx_last := 0x1FFFFF0E;
+            [rounds = 0 -> log("TB_TX count=", tx_count, " value=", tx_last) [] else -> skip];
+            tx_next := 0xFFFFFF0F;
+            I!0xFFFFFF0F;
+            tx_count := tx_count + 1; tx_last := 0xFFFFFF0F;
+            [rounds = 0 -> log("TB_TX count=", tx_count, " value=", tx_last) [] else -> skip];
+            tx_next := 0xFFFFFF4E;
+            I!0xFFFFFF4E;
+            tx_count := tx_count + 1; tx_last := 0xFFFFFF4E;
+            [rounds = 0 -> log("TB_TX count=", tx_count, " value=", tx_last) [] else -> skip];
+            tx_next := 0xFFFFFF4E;
+            I!0xFFFFFF4E;
+            tx_count := tx_count + 1; tx_last := 0xFFFFFF4E;
+            [rounds = 0 -> log("TB_TX count=", tx_count, " value=", tx_last) [] else -> skip];
+            tx_next := 0xFFFFFF4F;
+            I!0xFFFFFF4F;
+            tx_count := tx_count + 1; tx_last := 0xFFFFFF4F;
+            [rounds = 0 -> log("TB_TX count=", tx_count, " value=", tx_last) [] else -> skip];
+            tx_next := 0x80001F5E;
+            I!0x80001F5E;
+            tx_count := tx_count + 1; tx_last := 0x80001F5E;
+            [rounds = 0 -> log("TB_TX count=", tx_count, " value=", tx_last) [] else -> skip];
+            tx_next := 0xFFFFFF5E;
+            I!0xFFFFFF5E;
+            tx_count := tx_count + 1; tx_last := 0xFFFFFF5E;
+            [rounds = 0 -> log("TB_TX count=", tx_count, " value=", tx_last) [] else -> skip];
+            tx_next := 0xFFFFFF5F;
+            I!0xFFFFFF5F;
+            tx_count := tx_count + 1; tx_last := 0xFFFFFF5F;
+            [rounds = 0 -> log("TB_TX count=", tx_count, " value=", tx_last) [] else -> skip];
+            tx_next := 0;
+            [rx_count[0] = issued * 2 & rx_count[1] = issued * 2 & rx_count[2] = issued * 2 & rx_count[3] = issued * 2 & rx_count[4] = issued * 2 & rx_count[5] = issued * 3];
+            rounds := rounds + 1;
+            [stop | fail -> running := false [] else -> skip]
+        ];
+        done := true;
+        [fail -> log("FAILED") [] else -> log("PASSED: rounds=", rounds)]
+    }
+}
+
+defproc tb_ChildRouter()
+{
+    ChildRouter dut;
+    dut.reset = reset;
+    TbPushSender<32> wire_I(I, dut.I.t, dut.I.f, dut.I.a);
+    TbPushReceiver<32> wire_C0(C0, dut.C0.t, dut.C0.f, dut.C0.a);
+    SubsystemCheck<2,GOLD_C0,0> check_C0(C0);
+    TbPushReceiver<32> wire_C1(C1, dut.C1.t, dut.C1.f, dut.C1.a);
+    SubsystemCheck<2,GOLD_C1,1> check_C1(C1);
+    TbPushReceiver<32> wire_C2(C2, dut.C2.t, dut.C2.f, dut.C2.a);
+    SubsystemCheck<2,GOLD_C2,2> check_C2(C2);
+    TbPushReceiver<32> wire_C3(C3, dut.C3.t, dut.C3.f, dut.C3.a);
+    SubsystemCheck<2,GOLD_C3,3> check_C3(C3);
+    TbPushReceiver<32> wire_M(M, dut.M.t, dut.M.f, dut.M.a);
+    SubsystemCheck<2,GOLD_M,4> check_M(M);
+    TbPushReceiver<32> wire_P(P, dut.P.t, dut.P.f, dut.P.a);
+    SubsystemCheck<3,GOLD_P,5> check_P(P);
+    TbFailure<6> failure(ready, bad, fail);
+    ChildRouterDriver driver(I);
+}
